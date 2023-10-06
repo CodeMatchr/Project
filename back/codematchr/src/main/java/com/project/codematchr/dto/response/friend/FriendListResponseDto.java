@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.project.codematchr.entity.FriendViewEntity;
+import com.project.codematchr.entity.UserEntity;
+import com.project.codematchr.entity.UserViewEntity;
 import com.project.codematchr.entity.resultSet.FriendListResultSet;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +27,7 @@ public class FriendListResponseDto {
     this.userProfileImageUrl = friendViewEntity.getUserProfileImageUrl();
   }
 
-   public static List<FriendListResponseDto> copyfriendList(List<FriendViewEntity> friendViewEntities) {
+   public static List<FriendListResponseDto> copyFriendList(List<FriendViewEntity> friendViewEntities) {
     List<FriendListResponseDto> friendList = new ArrayList<>();
 
     for(FriendViewEntity friendViewEntity: friendViewEntities) {
@@ -43,7 +45,7 @@ public class FriendListResponseDto {
     this.userProfileImageUrl = friendListResultSet.getUserProfileImageUrl();
   }
 
-   public static List<FriendListResponseDto> copyfriendLists(List<FriendListResultSet> friendListResultSets) {
+   public static List<FriendListResponseDto> copyFriendLists(List<FriendListResultSet> friendListResultSets) {
     List<FriendListResponseDto> friendList = new ArrayList<>();
 
     for(FriendListResultSet friendListResultSet: friendListResultSets) {
@@ -53,6 +55,22 @@ public class FriendListResponseDto {
     return friendList;
   }
  
+    // description : 전체 친구 목록 조회  //
+    public FriendListResponseDto(UserViewEntity userViewEntity) {
+        this.friendEmail = userViewEntity.getUserEmail();
+        this.userNickname = userViewEntity.getUserNickname();
+        this.userStateMessage = userViewEntity.getUserStateMessage();
+        this.userProfileImageUrl = userViewEntity.getUserProfileImageUrl();
+      }
 
+    public static List<FriendListResponseDto> copyFriendTotalList(List<UserViewEntity> userViewEntities) {
+      List<FriendListResponseDto> friendList = new ArrayList<>();
+
+      for(UserViewEntity userViewEntity:userViewEntities ) {
+        FriendListResponseDto friend = new FriendListResponseDto(userViewEntity);
+        friendList.add(friend);
+      }
+      return friendList;
+
+  }
 }
-

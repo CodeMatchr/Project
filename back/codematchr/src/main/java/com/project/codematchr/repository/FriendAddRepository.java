@@ -15,7 +15,7 @@ public interface FriendAddRepository extends JpaRepository<FriendAddEntity, Stri
     // description : 존재하는 유저(친구)인지 검증 //
     boolean existsByFriendEmail(String friendEmail);
 
-    
+    // description : 친구 추가 //
     @Query(value = 
     "SELECT " +
     "friend_my_email, " +

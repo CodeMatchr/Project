@@ -3,6 +3,7 @@ package com.project.codematchr.controller;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ public class FriendController {
   // API : 친구 전체 리스트 조회 //
   @GetMapping("/{friendMyEmail}")
   public ResponseEntity<? super GetFriendTotalListResponseDto> getFriendTotalList(
-    @PathVariable String friendMyEmail
+    @AuthenticationPrincipal String friendMyEmail
   ){
     ResponseEntity<? super GetFriendTotalListResponseDto> response = friendService.getFriendTotalList(friendMyEmail);
     return response;
@@ -39,7 +40,7 @@ public class FriendController {
   // API : 친구 추가된 리스트 조회 //
   @GetMapping("/list/{friendMyEmail}")
   public ResponseEntity<? super GetAddFriendListResponseDto> getFriendList(
-    @PathVariable String friendMyEmail
+    @AuthenticationPrincipal String friendMyEmail
     ){
     ResponseEntity<? super GetAddFriendListResponseDto> response = friendService.getFriendList(friendMyEmail);
     return response;
@@ -48,7 +49,7 @@ public class FriendController {
   // API : 친구 추가 //
   @PostMapping("/{friendMyEmail}/addFriend")
   public ResponseEntity<? super PostAddFriendResponseDto> addFriend(
-    @PathVariable String friendMyEmail,
+    @AuthenticationPrincipal String friendMyEmail,
     @RequestBody @Valid PostAddFriendRequestDto requestbody
   ){
     ResponseEntity<? super PostAddFriendResponseDto> response = friendService.addFriend(friendMyEmail, requestbody);
@@ -58,7 +59,7 @@ public class FriendController {
   // API : 친구 삭제 //
   @DeleteMapping("/{friendMyEmail}/{friendEmail}")
   public ResponseEntity<? super DeleteFriendResponseDto> deleteFriend(
-    String friendMyEmail,
+    @AuthenticationPrincipal String friendMyEmail,
     @PathVariable String friendEmail
   ){
     ResponseEntity <? super DeleteFriendResponseDto> response = friendService.deleteFriend(friendMyEmail, friendEmail);

@@ -2,7 +2,6 @@ package com.project.codematchr.controller;
 
 import javax.validation.Valid;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +15,6 @@ import com.project.codematchr.dto.response.authentication.SignUpResponseDto;
 import com.project.codematchr.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
-
 
 
 // 인증 컨트롤러 //
