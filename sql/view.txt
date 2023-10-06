@@ -1,0 +1,38 @@
+/* board_view */
+CREATE VIEW board_view AS
+SELECT
+B.board_number AS board_number,
+B.board_title AS title,
+B.board_contents AS contents,
+B.board_image_url AS image_url,
+B.board_view_count AS view_count,
+B.board_comment_count AS comment_count,
+B.board_favorite_count AS favorite_count,
+B.board_write_datetime AS write_datetime,
+U.user_email AS writer_email,
+U.user_profile_image_url AS writer_profile_image_url,
+U.user_nickname AS writer_nickname
+FROM board AS B
+INNER JOIN user AS U
+ON B.board_writer_email = U.user_email;
+
+/* friend_view */
+CREATE VIEW friend_view AS
+SELECT 
+    F.friend_my_email AS friend_my_email,
+    F.friend_email AS friend_email,
+    U.user_nickname AS user_nickname, 
+    U.user_state_message AS user_state_message, 
+    U.user_profile_image_url AS user_profile_image_url 
+    FROM friend AS F
+    INNER JOIN `user`AS U
+    ON F.friend_email = U.user_email;
+
+/* user_view */
+CREATE VIEW user_view AS
+SELECT 
+    U.user_email AS user_email,
+    U.user_nickname AS user_nickname, 
+    U.user_state_message AS user_state_message, 
+    U.user_profile_image_url AS user_profile_image_url 
+    FROM `user` AS U;
