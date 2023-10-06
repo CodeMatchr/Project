@@ -305,10 +305,16 @@ public ResponseEntity<? super PatchBoardResponseDto> patchBoard(String boardWrit
             FavoriteEntity favoriteEntity = new FavoriteEntity(favoriteBoardNumber, favoriteUserEmail);
 
             // description : 이미 좋아요 한 경우 //
-            if(isFavorite) favoriteRepository.delete(favoriteEntity);
+            if(isFavorite) {
+                favoriteRepository.delete(favoriteEntity);
+                boardEntity.decreaceFavoriteCount();
+            }
             
             // description : 아직 좋아요 하지 않은 경우 //
-            if(!isFavorite) favoriteRepository.save(favoriteEntity);
+            if(!isFavorite) {
+                favoriteRepository.save(favoriteEntity);
+                boardEntity.increaceFavoriteCount();
+            }
             
             // description : DB에 저장 //
             boardRepository.save(boardEntity);

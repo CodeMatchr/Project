@@ -17,11 +17,12 @@ import com.project.codematchr.service.AuthService;
 import lombok.RequiredArgsConstructor;
 
 
+
 // 인증 컨트롤러 //
 @RestController
 @RequestMapping("/api/v1/authentication")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthenticationController {
 
     private final AuthService authService;
     

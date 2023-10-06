@@ -1,0 +1,123 @@
+/* User Table */
+/* user_email : VARCHAR(100) PK, NN, UQ */
+/* user_password : VARCHAR(225) NN */
+/* user_nickname : VARCHAR(30) NN, UQ */
+/* user_state_message : VARCHAR(50) */
+/* user_telnumber : VARCHAR(15) NN, UQ */
+/* user_address : TEXT NN */
+/* user_address_detail : TEXT NN */
+/* user_profile_image_url : TEXT */
+CREATE TABLE user (
+    user_email VARCHAR(100) PRIMARY KEY NOT NULL UNIQUE,
+    user_password VARCHAR(255) NOT NULL,
+    user_nickname VARCHAR(30) NOT NULL UNIQUE,
+    user_state_message VARCHAR(50),
+    user_telnumber VARCHAR(15) NOT NULL UNIQUE,
+    user_address TEXT NOT NULL,
+    user_address_detail TEXT NOT NULL,
+    user_profile_image_url TEXT
+);
+
+/* Board Table */
+/* board_number : INT PK, NN, UQ, AI */
+/* board_title : TEXT NN */
+/* board_contents : TEXT NN */
+/* board_image_url : TEXT */
+/* board_view_count : INT NN, DF(0) */
+/* board_comment_count : INT NN, DF(0) */
+/* board_favorite_count : INT NN, DF(0) */
+/* board_write_datetime : DATETIME NN, DF(NOW) */
+/* board_writer_email : VARCHAR(100), FK, NN */
+CREATE TABLE board (
+    board_number INT PRIMARY KEY NOT null UNIQUE AUTO_INCREMENT,
+    board_title TEXT NOT NULL,
+    board_contents TEXT NOT NULL,
+    board_image_url TEXT,
+    board_view_count INT NOT NULL DEFAULT(0),
+    board_comment_count INT NOT NULL DEFAULT(0),
+    board_favorite_count INT NOT NULL DEFAULT(0),
+    board_write_datetime DATETIME NOT NULL DEFAULT NOW(),
+    board_writer_email VARCHAR(100) NOT NULL,
+    FOREIGN KEY (board_writer_email) REFERENCES user (user_email)
+);
+
+/* comment Table */
+/* comment_number : INT PK, NN, UQ, AI */
+/* comment_board_number : INT FK, NN */
+/* comment_user_email : VARCHAR(100) FK, NN */
+/* comment_contents : TEXT NN */
+/* comment_write_datetime : DATETIME NN, DF(NOW) */
+CREATE TABLE comment (
+    comment_number INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
+    comment_board_number INT NOT NULL,
+    comment_user_email VARCHAR(100) NOT NULL,
+    comment_contents TEXT NOT NULL,
+    comment_write_datetime DATETIME NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (comment_board_number) REFERENCES board (board_number),
+    FOREIGN KEY (comment_user_email) REFERENCES user (user_email)
+);
+
+
+/* favorite Table */
+/* favorite_board_number : INT PK, NN, UQ, AI */
+/* favorite_user_email : VARCHAR(100) PK, FK, NN, UQ */
+CREATE TABLE favorite (
+   favorite_board_number INT NOT NULL UNIQUE AUTO_INCREMENT,
+   favorite_user_email VARCHAR(100) NOT NULL UNIQUE,
+   PRIMARY KEY (favorite_board_number, favorite_user_email),
+   FOREIGN KEY (favorite_user_email) REFERENCES user (user_email)
+);
+
+/* room Table */
+/* room_number : INT PK, NN, UQ, AI */
+/* room_title : TEXT NN */
+/* room_image_url : TEXT */
+/* room_password : VARCHAR(255) NN */
+/* room_user_email : VARCHAR(100) FK, NN */
+/* room_manager_email : VARCHAR(100) FK, NN */
+/* room_accessor_email : VARCHAR(100) FK, NN */
+/* room_member_count : INT NN */
+/* room_is_multi : TINYINT(1) NN */
+CREATE TABLE room (
+   room_number INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
+   room_title TEXT NOT NULL,
+   room_image_url TEXT,
+   room_password VARCHAR(255) NOT NULL,
+   room_datetime DATETIME NOT NULL DEFAULT NOW(),
+   room_user_email VARCHAR(100) NOT NULL,
+   room_manager_email VARCHAR(100) NOT NULL,
+   room_accessor_email VARCHAR(100) NOT NULL,
+   room_member_count INT NOT NULL,
+   room_is_multi TINYINT(1) NOT NULL,
+   FOREIGN KEY (room_user_email) REFERENCES user (user_email),
+   FOREIGN KEY (room_manager_email) REFERENCES user (user_email),
+   FOREIGN KEY (room_accessor_email) REFERENCES user (user_email)
+);
+
+/* compare Table */
+/* compare_result_number : INT PK, NN, UQ, AI */
+/* compare_control_group : TEXT NN */
+/* compare_experimental_group : TEXT NN */
+/* compare_datetime : DATETIME NN, DF(NOW) */
+/* compare_result : TEXT NN */
+/* compare_user_email : VARCHAR(100) FK, NN */
+CREATE TABLE compare (
+   compare_result_number INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
+   compare_control_group TEXT NOT NULL,
+   compare_experimental_group TEXT NOT NULL,
+   compare_datetime DATETIME NOT NULL DEFAULT NOW(),
+   compare_result TEXT NOT NULL,
+   compare_user_email VARCHAR(100) NOT NULL,
+   FOREIGN KEY (compare_user_email) REFERENCES user (user_email)
+);
+
+/* friend Table */
+/* friend_my_email : VARCHAR(100) PK, FK, NN, UQ */
+/* friend_email : VARCHAR(100) PK, FK */
+CREATE TABLE friend (
+   friend_my_email VARCHAR(100) NOT NULL UNIQUE,
+   friend_email VARCHAR(100) NOT NULL,
+   PRIMARY KEY (friend_my_email, friend_email),
+   FOREIGN KEY (friend_my_email) REFERENCES user (user_email),
+   FOREIGN KEY (friend_email) REFERENCES user (user_email)
+);
