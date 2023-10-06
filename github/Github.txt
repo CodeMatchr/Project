@@ -1,0 +1,28 @@
+git clone {clone 할 repository 주소}
+
+git add .
+git status
+git commit -m "commit message"
+git branch {브랜치 이름} - 브랜치 생성
+git checkout {브랜치 이름} - 브랜치 위치 설정
+git push origin {브랜치 이름} - 브랜치에 작업 업로드
+git pull origin {브랜치 이름} - 해당 브랜치의 작업 들고오기
+
+// 건들지 마세요
+git merge {대상 브랜치} - 병합
+
+git config --global user.name
+해당 하는 user.name이 본인게 맞는지 확인
+git config --global user.email
+해당 하는 user.email이 본인게 맞는지 확인
+Window 자격증명관리 -> github 관련된 계정이 본인게 아니라면 삭제
+git config --global user.name "{본인 user.name}"
+git config --global user.email "{본인 user.email}"
+git config --list 변경 내역 확인
+
+(깃허브 권한 변경 설정 - People 탭에서 )
+
+
+
+
+
