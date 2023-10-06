@@ -1,7 +1,5 @@
 package com.project.codematchr.dto.response.board;
 
-import javax.net.ssl.HttpsURLConnection;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

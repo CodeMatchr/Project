@@ -1,7 +1,5 @@
 package com.project.codematchr.service;
 
-import javax.validation.Valid;
-
 import org.springframework.http.ResponseEntity;
 
 import com.project.codematchr.dto.request.board.PatchBoardRequestDto;

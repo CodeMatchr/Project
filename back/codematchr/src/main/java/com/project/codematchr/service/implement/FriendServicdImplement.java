@@ -14,9 +14,11 @@ import com.project.codematchr.dto.response.friend.GetFriendTotalListResponseDto;
 import com.project.codematchr.dto.response.friend.PostAddFriendResponseDto;
 import com.project.codematchr.entity.FriendAddEntity;
 import com.project.codematchr.entity.FriendViewEntity;
+import com.project.codematchr.entity.UserEntity;
+import com.project.codematchr.entity.UserViewEntity;
 import com.project.codematchr.repository.FriendAddRepository;
 import com.project.codematchr.repository.FriendRepository;
-import com.project.codematchr.repository.UserRepository;
+import com.project.codematchr.repository.FriendTotalListRespository;
 import com.project.codematchr.service.FriendService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,8 +29,8 @@ import lombok.RequiredArgsConstructor;
 public class FriendServicdImplement implements FriendService {
 
 private final FriendRepository friendRepository;
-private final UserRepository userRepository;
 private final FriendAddRepository friendAddRepository;
+private final FriendTotalListRespository friendTotalListRespository;
 
   // description : 친구 전체 리스트 조회 //
   @Override
@@ -37,11 +39,8 @@ private final FriendAddRepository friendAddRepository;
     List<FriendListResponseDto> friendList = null;
 
     try {
-      // description : friendMyEmail 기준으로 다른 사용자 조회 //
-      List<FriendViewEntity> friendViewEntities = friendRepository.getFriendList(friendMyEmail);
-
-      // description : 저장 //
-      friendList = FriendListResponseDto.copyfriendList(friendViewEntities);
+      List<UserViewEntity> userEntities = friendTotalListRespository.getFriendList(friendMyEmail);
+      friendList = FriendListResponseDto.copyFriendTotalList(userEntities);
 
       } catch (Exception exception) {
         exception.printStackTrace();
@@ -61,9 +60,8 @@ private final FriendAddRepository friendAddRepository;
     try {
 
       List<FriendViewEntity> friendViewEntities = friendRepository.findByFriendMyEmailOrderByFriendEmailDesc(friendMyEmail);
-      System.out.println(friendViewEntities.toString());
 
-      friendList = FriendListResponseDto.copyfriendList(friendViewEntities);
+      friendList = FriendListResponseDto.copyFriendList(friendViewEntities);
       
     } catch (Exception exception) {
       exception.printStackTrace();

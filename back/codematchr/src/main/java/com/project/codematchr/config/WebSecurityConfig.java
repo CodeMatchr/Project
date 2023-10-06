@@ -40,6 +40,7 @@ public class WebSecurityConfig {
             .antMatchers("/", "/api/v1/authentication/**", "/api/v1/file/**" ).permitAll()
             .antMatchers(HttpMethod.GET , "/api/v1/board/**").permitAll()
             .antMatchers(HttpMethod.GET , "/api/v1/user/*").permitAll()
+            .antMatchers(HttpMethod.GET , "/api/v1/friend/**").permitAll()
             .anyRequest().authenticated().and()
             .exceptionHandling().authenticationEntryPoint(new FailedAuthenticationEntryPoint());
 

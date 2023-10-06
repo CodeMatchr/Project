@@ -28,6 +28,4 @@ public class FriendViewEntity {
   private String userNickname;
   private String userStateMessage;
   private String userProfileImageUrl;
-
-  
 }

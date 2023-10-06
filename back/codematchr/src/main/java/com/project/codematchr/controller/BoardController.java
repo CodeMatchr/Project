@@ -3,6 +3,7 @@ package com.project.codematchr.controller;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -43,10 +44,9 @@ public class BoardController {
     private final BoardService boardService;
 
     // API : 게시물 작성 메서드 //
-    // todo : @AuthenticationPrincipal 은 security //
     @PostMapping("")
     public ResponseEntity<? super PostBoardResponseDto> postBoard(
-        String boardWriterEmail,
+        @AuthenticationPrincipal String boardWriterEmail,
         @RequestBody @Valid PostBoardRequestDto requestBody
     ){
         ResponseEntity<? super PostBoardResponseDto> response = boardService.postBoard(boardWriterEmail, requestBody);
@@ -54,10 +54,9 @@ public class BoardController {
     }
 
     // API : 게시물 수정 메서드 //
-    // todo : @AuthenticationPrincipal 은 security //
     @PatchMapping("/{boardNumber}")
     public ResponseEntity<? super PatchBoardResponseDto> patchBoard(
-        String boardWriterEmail,
+        @AuthenticationPrincipal String boardWriterEmail,
         @PathVariable Integer boardNumber, 
         @RequestBody @Valid PatchBoardRequestDto dto
         ){
@@ -66,10 +65,9 @@ public class BoardController {
     }
 
     // API : 게시물 삭제 메서드 //
-    // todo : @AuthenticationPrincipal 은 security //
     @DeleteMapping("/{boardNumber}")
     public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(
-        String userEmail,
+        @AuthenticationPrincipal String userEmail,
         @PathVariable Integer boardNumber
     ){
         ResponseEntity<? super DeleteBoardResponseDto> response = boardService.deleteBoard(userEmail, boardNumber);
@@ -86,10 +84,9 @@ public class BoardController {
     }
 
     // API : 댓글 작성 메서드 //
-    // todo : @AuthenticationPrincipal 은 security //
     @PostMapping("/{commentBoardNumber}/comment")
     public ResponseEntity<? super PostCommentResponseDto> postComment(
-        String commentUserEmail,
+        @AuthenticationPrincipal String commentUserEmail,
         @PathVariable Integer commentBoardNumber,
         @RequestBody @Valid PostcommentRequestDto requestbody
     ){
@@ -99,9 +96,8 @@ public class BoardController {
 
     // API : 좋아요 기능 메서드 //
     @PutMapping("/{favoriteBoardNumber}/favorite")
-    // todo : @AuthenticationPrincipal 은 security //
     public ResponseEntity<? super PutFavoriteResponseDto> putFavorite(
-        String favoriteUserEmail,
+        @AuthenticationPrincipal String favoriteUserEmail,
         @PathVariable Integer favoriteBoardNumber
     ){
         ResponseEntity<? super PutFavoriteResponseDto> response = boardService.putFavorite(favoriteBoardNumber, favoriteUserEmail);
