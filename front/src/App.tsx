@@ -2,13 +2,39 @@ import React from 'react';
 import './App.css';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
-import Authentication from './views/Authentication';
+import Main from './views/Main';
+import { AUTHENTICATION_PATH, BOARD_PATH, COMPARE_PATH, MAIN_PATH, ROOM_PATH, USER_PATH } from './constants';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <>
       <Header/>
-      <Authentication />
+
+      <Routes>
+
+        {/* 메인화면 MAIN */}
+        <Route path={MAIN_PATH} element={<Main/>} />
+
+        {/* 로그인 / 회원가입 화면 AUTHENTICATION */}
+        <Route path={AUTHENTICATION_PATH} />
+
+        {/* 유저 화면(마이페이지) USER */}
+        <Route path={USER_PATH} />
+
+        {/* 게시글 관련 화면 BOARD */}
+        <Route path={BOARD_PATH} />
+        <Route path={BOARD_PATH} />
+        <Route path={BOARD_PATH} />
+
+        {/* 다인원 채팅방 화면 ROOM */}
+        <Route path={ROOM_PATH} />
+
+        {/* 비교 분석 결과 화면 COMPARE */}
+        <Route path={COMPARE_PATH} />
+
+      </Routes>
+      
       <Footer/>
     </>
   );
