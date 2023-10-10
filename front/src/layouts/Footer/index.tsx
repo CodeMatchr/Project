@@ -25,7 +25,7 @@ export default function Footer() {
             <div className='footer-right'>
                 <div className='footer-right-github'>
                     <div className='footer-right-github-text'>About CodeMatchr's Code?</div>
-                    <a className='footer-right-github-icon' href="https://github.com/CodeMatchr/Project">github</a>
+                    <a className='footer-right-github-icon' href="https://github.com/CodeMatchr/Project" target='_blank' rel='noreferrer noopener'>github</a>
                 </div>
             </div>
         </div>
