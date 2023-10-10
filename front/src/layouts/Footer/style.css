@@ -1,0 +1,21 @@
+#footer{
+    display: flex;
+    justify-content: center;
+    background-color: lightslategray;
+    height: 100px;
+}
+
+.footer-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1400px;
+}
+
+.footer-left-logo{
+    display: flex;
+}
+
+.footer-right-github{
+    display: flex;
+}
