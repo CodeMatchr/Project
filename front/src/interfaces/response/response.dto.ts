@@ -1,4 +1,4 @@
 export default interface ResponseDto {
-    code: string;
-    message: string;
+    code : string;
+    message : string;
 }
