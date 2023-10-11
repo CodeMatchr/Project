@@ -1,0 +1,237 @@
+#popup-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  width: 960px;
+  height: 500px;
+}
+
+.popup-header {
+  background-color: rgba(0,0,0,0.2);
+
+  width: 960px;
+  height: 70px;
+}
+
+.popup-header-title {
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+  display: flex;
+  
+  justify-content: center;
+  align-items: center;
+
+  font-size: 38px;
+  font-weight: 600;
+
+  text-shadow: 2px 2px 2px gray;
+}
+
+.popup-main{
+  margin-top: 5px;
+
+  width: 960px;
+  height: 400px;
+
+  display: flex;
+
+  background-color: rgba(255,255,255,1);
+}
+
+.popup-main-box {
+  margin: 10px;
+
+  width: 940px;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: rgba(0,0,0,0.2);
+}
+
+.popup-main-box-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-main-top-title {
+  padding-top: 24px;
+  padding-bottom: 5px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.popup-main-top-image-box {
+  display: flex;
+  flex-direction: row; 
+
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.popup-main-image-text {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.popup-main-image-button {
+  margin-right: 30px;
+
+  width: 24px;
+  height: 24px;
+
+  background-color: aqua;
+}
+
+.popup-main-box-bottom {
+  margin: 15px;
+  height: 250px;
+
+  background-color: rgba(255,255,255,1);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-main-bottom-room-name-box {
+  margin-top: 20px;
+  margin-left: 100px;
+
+  display: flex;
+  flex-direction: row;
+
+  gap: 20px;
+
+}
+
+.popup-main-bottom-room-name {
+  width: 120px;
+  height: 52px;
+
+  border: none;
+  border-radius: 15px;
+  background-color: rgba(0,0,0,0.2);
+
+  display: flex;
+
+  font-size: 22px;
+  font-weight: 600;
+
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-main-bottom-room-input {
+  width: 520px;
+  height: 52px;
+
+  border: none;
+  border-radius: 15px;
+  background-color: rgba(0,0,0,0.2);
+
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  font-size: 22px;
+}
+
+.popup-main-bottom-room-password-box {
+  margin-top: 10px;
+  margin-left: 100px;
+
+  display: flex;
+  flex-direction: row;
+
+  gap: 20px;
+
+}
+
+.popup-main-bottom-room-password {
+  width: 120px;
+  height: 52px;
+
+  border: none;
+  border-radius: 15px;
+  background-color: rgba(0,0,0,0.2);
+
+  display: flex;
+
+  font-size: 22px;
+  font-weight: 600;
+
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-main-bottom-room-password-input {
+  width: 520px;
+  height: 52px;
+
+  border: none;
+  border-radius: 15px;
+  background-color: rgba(0,0,0,0.2);
+
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  font-size: 22px;
+}
+
+.popup-main-bottom-button-box {
+  margin-top: 40px;
+
+  height: 50px;
+
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-main-bottom-button-create {
+  width: 150px;
+  height: 48px;
+
+  font-size: 28px;
+  font-weight: 500;
+
+  border: none;
+  border-radius: 10px;
+
+}
+
+.popup-main-bottom-button-create:hover{
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.popup-main-bottom-button-cancel {
+  width: 150px;
+  height: 48px;
+
+  font-size: 28px;
+  font-weight: 500;
+
+  border: none;
+  border-radius: 10px;
+}
+
+.popup-main-bottom-button-cancel:hover{
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.3);
+}

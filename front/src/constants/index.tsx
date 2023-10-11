@@ -25,4 +25,7 @@ export const ROOM_PATH = '/room';
 // Compare
 export const COMPARE_PATH = '/compare';
 
-// Friend ??팝업창??
+// Friend 
+
+// Pop Up
+export const POPUP_PATH = '/pop-up';

@@ -3,9 +3,10 @@ import './App.css';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 import Main from './views/Main';
-import { AUTHENTICATION_PATH, BOARD_PATH, COMPARE_PATH, MAIN_PATH, ROOM_PATH, USER_PATH } from './constants';
+import { AUTHENTICATION_PATH, BOARD_PATH, COMPARE_PATH, MAIN_PATH, POPUP_PATH, ROOM_PATH, USER_PATH } from './constants';
 import { Route, Routes } from 'react-router-dom';
 import Authentication from './views/Authentication';
+import PopUp from './components/PopUp/ChatRoomPopUp';
 
 function App() {
   return (
@@ -33,6 +34,10 @@ function App() {
 
         {/* 비교 분석 결과 화면 COMPARE */}
         <Route path={COMPARE_PATH} />
+
+        {/* 팝업창 PopUp */}
+        <Route path={POPUP_PATH} element={<PopUp/>} />
+
 
       </Routes>
       
