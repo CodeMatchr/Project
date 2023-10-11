@@ -1,6 +1,6 @@
 // Main //
 
-import BoardListResponseDto from "../interface/response/board/board-list.response.dto";
+import BoardListResponseDto from "../interfaces/response/board/board-list.response.dto";
 
 // Main - Top 3 board //
 export const top3ViewBoardListMock: BoardListResponseDto[] = [

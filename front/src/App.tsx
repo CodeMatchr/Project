@@ -5,6 +5,7 @@ import Header from './layouts/Header';
 import Main from './views/Main';
 import { AUTHENTICATION_PATH, BOARD_PATH, COMPARE_PATH, MAIN_PATH, ROOM_PATH, USER_PATH } from './constants';
 import { Route, Routes } from 'react-router-dom';
+import Authentication from './views/Authentication';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Route path={MAIN_PATH} element={<Main/>} />
 
         {/* 로그인 / 회원가입 화면 AUTHENTICATION */}
-        <Route path={AUTHENTICATION_PATH} />
+        <Route path={AUTHENTICATION_PATH} element={<Authentication/>} />
 
         {/* 유저 화면(마이페이지) USER */}
         <Route path={USER_PATH} />

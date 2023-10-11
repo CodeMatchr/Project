@@ -166,7 +166,7 @@
     display: flex;
     flex-direction: column;
   
-    gap: 20px;
+    gap: 5px;
   }
   
   .authentication-bottom-line-box {
@@ -284,13 +284,38 @@
     font-weight: 600;
   }
 
+  .authentication-bottom-button-error {
+    margin-top: 15px;
+    margin-left: 5px;
+
+    height: 52px;
+
+    border: 2px solid rgba(255,0,0,1);
+    border-radius: 10px;
+
+    background-color: rgba(255,255,255,1);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .authentication-bottom-button-error:hover {
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.1);
+  }
+
   .authentication-bottom-button:hover {
     cursor: pointer;
     background-color: rgba(0,0,0,0.1);
   }
 
   .authentication-bottom-button-text{
-    margin-top: 10px;
+    margin-top: 1px;
 
     display: flex;
     flex-direction: row;

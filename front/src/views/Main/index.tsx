@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './style.css'
 import Pagination from '../../components/Pagination';
-import BoardListResponseDto from '../../interface/response/board/board-list.response.dto';
+import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import Top3ListItem from '../../components/Top3ListItem';
 import { top3ViewBoardListMock } from '../../mocks';
 

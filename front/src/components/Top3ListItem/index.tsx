@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './style.css';
-import BoardListResponseDto from '../../interface/response/board/board-list.response.dto';
+import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import { dateFormat } from '../../utils';
 
 interface Props{
