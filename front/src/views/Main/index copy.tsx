@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './style.css'
 import Pagination from '../../components/Pagination';
-import BoardListResponseDto from '../../interface/response/board/board-list.response.dto';
-import Top3ListItem from '../../components/Top3ListItem';
-import { top3ViewBoardListMock } from '../../mocks';
 
 // component //
 
-export default function Main() {
+export default function Maina() {
 
   // state //
 
@@ -57,8 +54,6 @@ export default function Main() {
   const MainMid = () => {
 
     // state //
-    // Top3 조회수 Board 리스트 상태 //
-    const[top3ViewBoardList, setTop3ViewBoardList] = useState<BoardListResponseDto[]>(top3ViewBoardListMock);
 
     // function //
 
@@ -83,7 +78,62 @@ export default function Main() {
             </div>
             <div className='main-mid-top3-board-list-bottom'>
               {/* map 함수로 돌릴것 3개씩 */}
-              {top3ViewBoardList.map((item) => (<Top3ListItem item={item}/>))}
+              <div className='main-mid-top3-board-list-bottom-board'>
+                <div className='main-mid-top3-board-list-bottom-board-top'>
+                  <div className='main-mid-top3-board-list-bottom-board-top-profile'>profile</div>
+                  <div className='main-mid-top3-board-list-bottom-board-top-box'>
+                    <div className='main-mid-top3-board-list-bottom-board-top-profile-nickname'>게시물 작성자 닉네임</div>
+                    <div className='main-mid-top3-board-list-bottom-board-top-board-date'>작성 일자</div>
+                  </div>
+                </div>
+                <div className='main-mid-top3-board-list-bottom-board-mid'>
+                  <div className='main-mid-top3-board-list-bottom-board-mid-title'>게시물 제목</div>
+                  <div className='main-mid-top3-board-list-bottom-board-mid-contents'>게시물 내용</div>
+                </div>
+                <div className='main-mid-top3-board-list-bottom-board-bottom'>
+                  <div className='main-mid-top3-board-list-bottom-board-bottom-comment'>댓글</div>
+                  <div className='main-mid-top3-board-list-bottom-board-bottom-favorite'>좋아요</div>
+                  <div className='main-mid-top3-board-list-bottom-board-bottom-view'>조회수</div>
+                </div>
+              </div>
+
+              <div className='main-mid-top3-board-list-bottom-board'>
+                <div className='main-mid-top3-board-list-bottom-board-top'>
+                  <div className='main-mid-top3-board-list-bottom-board-top-profile'>profile</div>
+                  <div className='main-mid-top3-board-list-bottom-board-top-box'>
+                    <div className='main-mid-top3-board-list-bottom-board-top-profile-nickname'>게시물 작성자 닉네임</div>
+                    <div className='main-mid-top3-board-list-bottom-board-top-board-date'>작성 일자</div>
+                  </div>
+                </div>
+                <div className='main-mid-top3-board-list-bottom-board-mid'>
+                  <div className='main-mid-top3-board-list-bottom-board-mid-title'>게시물 제목</div>
+                  <div className='main-mid-top3-board-list-bottom-board-mid-contents'>게시물 내용</div>
+                </div>
+                <div className='main-mid-top3-board-list-bottom-board-bottom'>
+                  <div className='main-mid-top3-board-list-bottom-board-bottom-comment'>댓글</div>
+                  <div className='main-mid-top3-board-list-bottom-board-bottom-favorite'>좋아요</div>
+                  <div className='main-mid-top3-board-list-bottom-board-bottom-view'>조회수</div>
+                </div>
+              </div>
+
+              <div className='main-mid-top3-board-list-bottom-board'>
+                <div className='main-mid-top3-board-list-bottom-board-top'>
+                  <div className='main-mid-top3-board-list-bottom-board-top-profile'>profile</div>
+                  <div className='main-mid-top3-board-list-bottom-board-top-box'>
+                    <div className='main-mid-top3-board-list-bottom-board-top-profile-nickname'>게시물 작성자 닉네임</div>
+                    <div className='main-mid-top3-board-list-bottom-board-top-board-date'>작성 일자</div>
+                  </div>
+                </div>
+                <div className='main-mid-top3-board-list-bottom-board-mid'>
+                  <div className='main-mid-top3-board-list-bottom-board-mid-title'>게시물 제목</div>
+                  <div className='main-mid-top3-board-list-bottom-board-mid-contents'>게시물 내용</div>
+                </div>
+                <div className='main-mid-top3-board-list-bottom-board-bottom'>
+                  <div className='main-mid-top3-board-list-bottom-board-bottom-comment'>댓글</div>
+                  <div className='main-mid-top3-board-list-bottom-board-bottom-favorite'>좋아요</div>
+                  <div className='main-mid-top3-board-list-bottom-board-bottom-view'>조회수</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
