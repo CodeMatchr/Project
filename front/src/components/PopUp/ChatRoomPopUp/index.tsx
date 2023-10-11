@@ -49,11 +49,31 @@ const onRoomPasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
           <div className='popup-main-box-bottom'>
             <div className='popup-main-bottom-room-name-box'>
               <div className='popup-main-bottom-room-name'>방 이름</div>
-              <input className='popup-main-bottom-room-input' type='text' placeholder='방 이름을 입력해주세요.' onChange={onRoomNameHandler}/>
+              {roomNameError ? 
+              <input className='popup-main-bottom-room-name-input-error' type='text' placeholder='방 이름을 입력해주세요.' onChange={onRoomNameHandler}/>
+              :
+              <input className='popup-main-bottom-room-name-input' type='text' placeholder='방 이름을 입력해주세요.' onChange={onRoomNameHandler}/>
+              }
+            </div>
+            <div className='popup-main-bottom-room-input-error-box'>
+              {roomNameError ? 
+              <div className='popup-main-bottom-room-input-name-error'>채팅방 이름을 입력하지 않았습니다. 다시 입력해주세요.</div>
+              :
+              <></>}
             </div>
             <div className='popup-main-bottom-room-password-box'>
               <div className='popup-main-bottom-room-password'>비밀번호</div>
+              {roomPasswordError ? 
+              <input className='popup-main-bottom-room-password-input-error' type='text' placeholder='방 비밀번호를 입력해주세요.' onChange={onRoomPasswordHandler} />
+              :
               <input className='popup-main-bottom-room-password-input' type='text' placeholder='방 비밀번호를 입력해주세요.' onChange={onRoomPasswordHandler} />
+              }
+            </div>
+            <div className='popup-main-bottom-room-input-error-box'>
+              {roomPasswordError ? 
+              <div className='popup-main-bottom-room-input-password-error'>비밀번호를 입력하지 않았습니다. 다시 입력해주세요.</div> 
+              :
+              <></>}
             </div>
             <div className='popup-main-bottom-button-box'>
               <button className='popup-main-bottom-button-create'>생성</button>
