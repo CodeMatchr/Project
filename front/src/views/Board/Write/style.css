@@ -85,3 +85,60 @@ align-items: center;
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.08);
 }
+
+.board-image-container {
+    position: relative;
+    top: 100px;
+
+    width: 97%;
+    height: 1px;
+}
+
+
+.image-upload {
+    width: 70px;
+    height: 30px;
+
+    border-radius: 15px;
+
+    background-color: white;
+
+    text-align: center;
+    line-height: 30px;
+
+    float: right;
+}
+
+.image-upload:hover {
+    cursor: pointer;
+
+    background-color:aliceblue;
+}
+.board-write-image-container {  
+    position: relative;
+}
+
+.board-write-image {
+    width: 100%;
+
+    display: block;
+
+}
+
+/**.board-write-image-delete-button{
+    width: 24px;
+    height: 24px;
+
+    position: absolute;
+
+    top: 20px;
+    right: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}**/
+
+.board-write-image-delete-button:hover {
+    cursor: pointer;
+}

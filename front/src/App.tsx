@@ -7,8 +7,8 @@ import { AUTHENTICATION_PATH, BOARD_PATH, COMPARE_PATH, MAIN_PATH, POPUP_MANAGER
 import { Route, Routes } from 'react-router-dom';
 import Authentication from './views/Authentication';
 import PopUp from './components/PopUp/ChatRoomPopUp';
-import ChatRoomPopUp from './components/PopUp/ChatRoomPopUp';
-import ChatManagerPopUp from './components/PopUp/ChatManagerPopUp';
+import BoardWrite from './views/Board/Write';
+import BoardDetail from './views/Board/Detail';
 
 function App() {
   return (
@@ -44,7 +44,6 @@ function App() {
 
       </Routes>
       
-      <Footer/>
     </>
   );
 }

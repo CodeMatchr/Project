@@ -114,4 +114,51 @@
 
 }
 
+.board-detail-box {
+    margin-bottom: 10px;
 
+    width: 79%;
+    
+    display: flex;
+    justify-content: flex-end;
+    
+
+}
+
+.board-detail-modify-box{
+   margin-right: 10px;
+   
+   width: 100px;
+   height: 30px;
+
+   border-radius: 15px;
+
+   background-color: #D9D9D9;
+   
+   text-align: center;
+   line-height: 30px;
+}
+
+.board-detail-delete-box{
+    width: 100px;
+    height: 30px;
+ 
+    border-radius: 15px;
+
+    background-color: #D9D9D9;
+
+    text-align: center;
+    line-height: 30px;
+}
+
+.board-detail-modify-box:hover {
+    cursor: pointer;
+
+    background-color: aliceblue;
+}
+
+.board-detail-delete-box:hover {
+    cursor: pointer;
+
+    background-color: aliceblue;
+}
