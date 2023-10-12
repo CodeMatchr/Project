@@ -11,6 +11,7 @@ import BoardWrite from './views/Board/Write';
 import BoardDetail from './views/Board/Detail';
 import ChatRoomPopUp from './components/PopUp/ChatRoomPopUp';
 import ChatManagerPopUp from './components/PopUp/ChatManagerPopUp';
+import UserPage from './views/UserPage';
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
         <Route path={AUTHENTICATION_PATH} element={<Authentication/>} />
 
         {/* 유저 화면(마이페이지) USER */}
-        <Route path={USER_PATH} />
+        <Route path={USER_PATH} element={<UserPage/>} />
 
         {/* 게시글 관련 화면 BOARD */}
         <Route path={BOARD_PATH} element={<BoardDetail/>} />
@@ -46,6 +47,7 @@ function App() {
 
       </Routes>
       
+      <Footer/>
     </>
   );
 }

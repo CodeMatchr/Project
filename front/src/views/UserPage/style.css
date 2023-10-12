@@ -1,0 +1,141 @@
+#userpage-wrapper {
+  width: 100%;
+  height: 1960px;
+
+  background-color: rgba(0,0,0,0.1);
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 15px;
+}
+
+.userpage-wrapper-box {
+  margin: 30px;
+
+  background-color: rgba(0,0,0,0.1);
+
+  display: flex;
+}
+
+.userpage-top-wrapper {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 196px;
+
+  background-color: rgba(255,255,255,1);
+}
+
+.userpage-profile-box {
+  flex: 1;
+}
+
+.userpage-profile-image{
+  margin-left: 30px;
+
+  width: 120px;
+  height: 120px;
+
+  background-color: aqua;
+  border-radius: 120px;
+}
+
+.userpage-profile-image:hover {
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.userpage-user-info-box {
+  flex: 7;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.userpage-user-nickname-box {
+  flex: 3;
+  
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.userpage-user-nickname {
+  display: flex;
+  flex-direction: column;
+
+  text-shadow: 2px 2px 2px gray;
+
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.userpage-user-nickname:hover{
+  cursor: pointer;
+}
+
+.userpage-user-email {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.userpage-user-message-box {
+  flex: 7;
+}
+
+.userpage-user-message-text {
+  height: 100%;
+
+  display: flex;
+
+  justify-content: flex-start;
+  align-items: center;
+
+  text-align: center;
+
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.userpage-button-box {
+  flex: 2;
+  height: 120px;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.userpage-button-text-box {
+  height: 100%;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.userpage-button-text {
+  width: 180px;
+  height: 50px;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 24px;
+  font-weight: 500;
+
+  border-radius: 15px;
+  border: none;
+}
+
+.userpage-button-text:hover{
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.1);
+}
