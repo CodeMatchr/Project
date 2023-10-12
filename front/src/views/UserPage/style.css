@@ -66,6 +66,30 @@
   gap: 5px;
 }
 
+.userpage-user-nickname-input-box {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+
+  text-shadow: 2px 2px 2px gray;
+
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.userpage-user-nickname-input {
+  display: flex;
+
+  text-shadow: 2px 2px 2px gray;
+
+  font-size: 30px;
+  font-weight: 600;
+
+  border-radius: 10px;
+  border: none;
+}
+
 .userpage-user-nickname {
   display: flex;
   flex-direction: column;
@@ -74,9 +98,22 @@
 
   font-size: 30px;
   font-weight: 600;
+
+  text-align: center;
 }
 
-.userpage-user-nickname:hover{
+.userpage-user-nickname-button {
+  width: 24px;
+  height: 24px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  background-color: aqua;
+}
+
+.userpage-user-nickname-button:hover {
   cursor: pointer;
 }
 
