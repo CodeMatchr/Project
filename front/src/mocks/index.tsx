@@ -1,5 +1,6 @@
 // Main //
 
+import BoardDetailResponseDto from "../interfaces/response/board/board-detail.response.dto";
 import BoardListResponseDto from "../interfaces/response/board/board-list.response.dto";
 
 // Main - Top 3 board //
@@ -40,4 +41,22 @@ export const top3ViewBoardListMock: BoardListResponseDto[] = [
         boardWriterNickname : 'Nickname 3',
         boardWriterProfileImageUrl : '',
     }
+    
 ];
+    export const boardDetailMock:BoardDetailResponseDto[] = [{
+        boardNumber : 3,
+        boardTitle : 'top3 View Board Title 1',
+        boardContents : 'top3 View Board Contents1',
+        boardImageUrl : 'https://assets.blog.engoo.com/wp-content/uploads/sites/2/2022/09/21164602/cat_idioms_cover.jpg',
+        boardViewCount : 10,
+        boardCommentCount : 10,
+        boardFavoriteCount : 10,
+        boardWriteDatetime : '2023. 10. 11',
+        boardWriterNickname : 'Nickname 3',
+        boardWriterProfileImageUrl : '',
+  }
+]
+
+  export const likeListMock = {
+
+  }
