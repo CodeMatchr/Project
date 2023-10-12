@@ -29,7 +29,7 @@ function App() {
         <Route path={USER_PATH} />
 
         {/* 게시글 관련 화면 BOARD */}
-        <Route path={BOARD_PATH} />
+        <Route path={BOARD_PATH} element={<BoardDetail/>} />
         <Route path={BOARD_PATH} />
         <Route path={BOARD_PATH} />
 
