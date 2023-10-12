@@ -29,6 +29,8 @@ export const COMPARE_PATH = '/compare';
 
 // Pop Up
 export const POPUP_PATH = '/pop-up';
+export const POPUP_ROOM_PATH = '/pop-up/room';
+export const POPUP_MANAGER_PATH = '/pop-up/manager';
 
 // Main - chat(room) pagination //
 export const MAIN_ROOM_COUNT_BY_PAGE = 3;

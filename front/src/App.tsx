@@ -9,6 +9,8 @@ import Authentication from './views/Authentication';
 import PopUp from './components/PopUp/ChatRoomPopUp';
 import BoardWrite from './views/Board/Write';
 import BoardDetail from './views/Board/Detail';
+import ChatRoomPopUp from './components/PopUp/ChatRoomPopUp';
+import ChatManagerPopUp from './components/PopUp/ChatManagerPopUp';
 
 function App() {
   return (
