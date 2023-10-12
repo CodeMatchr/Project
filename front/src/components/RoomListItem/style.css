@@ -1,0 +1,52 @@
+.room-list{
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+
+    width: 1000px;
+    height: 150px;
+    border-radius: 15px;
+    background-color: aquamarine;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.room-list:hover{
+    transform: scale(1.03);
+}
+
+.room-list-room-profile{
+    margin-left: 30px;
+
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    background-color: lightcyan;
+    text-align: center;
+    line-height: 100px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.room-list-room-title{
+    margin-left: 30px;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.room-list-room-manager-nickname{
+    margin-left: 30px;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.room-list-room-member-count{
+    margin-left: 500px;
+
+    font-size: 16px;
+    font-weight: 600;
+}

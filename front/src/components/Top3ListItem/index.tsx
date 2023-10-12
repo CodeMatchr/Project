@@ -4,7 +4,7 @@ import './style.css';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import { dateFormat } from '../../utils';
 
-interface Props{
+interface Props {
     item: BoardListResponseDto;
 }
 
@@ -44,7 +44,7 @@ export default function Top3ListItem({item} : Props) {
                 <div className='top3-board-list-bottom'>
                     <div className='top3-board-list-bottom-comment'>{`댓글 ${boardCommentCount}`}</div>
                     <div className='top3-board-list-bottom-favorite'>{`좋아요 ${boardFavoriteCount}`}</div>
-                     <div className='top3-board-list-bottom-view'>{`조회수 ${boardFavoriteCount}`}</div>
+                     <div className='top3-board-list-bottom-view'>{`조회수 ${boardViewCount}`}</div>
                 </div>
         </div>
     )
