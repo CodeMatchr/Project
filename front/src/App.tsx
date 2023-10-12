@@ -3,10 +3,12 @@ import './App.css';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 import Main from './views/Main';
-import { AUTHENTICATION_PATH, BOARD_PATH, COMPARE_PATH, MAIN_PATH, POPUP_PATH, ROOM_PATH, USER_PATH } from './constants';
+import { AUTHENTICATION_PATH, BOARD_PATH, COMPARE_PATH, MAIN_PATH, POPUP_MANAGER_PATH, POPUP_PATH, POPUP_ROOM_PATH, ROOM_PATH, USER_PATH } from './constants';
 import { Route, Routes } from 'react-router-dom';
 import Authentication from './views/Authentication';
 import PopUp from './components/PopUp/ChatRoomPopUp';
+import ChatRoomPopUp from './components/PopUp/ChatRoomPopUp';
+import ChatManagerPopUp from './components/PopUp/ChatManagerPopUp';
 
 function App() {
   return (
@@ -36,7 +38,8 @@ function App() {
         <Route path={COMPARE_PATH} />
 
         {/* 팝업창 PopUp */}
-        <Route path={POPUP_PATH} element={<PopUp/>} />
+        <Route path={POPUP_ROOM_PATH} element={<ChatRoomPopUp/>} />
+        <Route path={POPUP_MANAGER_PATH} element={<ChatManagerPopUp/>} />
 
 
       </Routes>

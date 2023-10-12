@@ -29,3 +29,5 @@ export const COMPARE_PATH = '/compare';
 
 // Pop Up
 export const POPUP_PATH = '/pop-up';
+export const POPUP_ROOM_PATH = '/pop-up/room';
+export const POPUP_MANAGER_PATH = '/pop-up/manager';

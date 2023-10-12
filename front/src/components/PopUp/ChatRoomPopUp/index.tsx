@@ -1,12 +1,18 @@
-import React, { Dispatch, SetStateAction, useState, ChangeEvent } from 'react'
+import React, { Dispatch, SetStateAction, useState, ChangeEvent, useRef } from 'react'
 import './style.css'; 
+import { useNavigate } from 'react-router-dom';
+import { MAIN_PATH, ROOM_PATH } from '../../../constants';
 
 
 
 //            component           //
 // description : 채팅방 만들기 팝업창 // 
-export default function PopUp() {
+export default function ChatRoomPopUp() {
 //            state           //
+// description : 네비게이터 //
+const navigator = useNavigate();
+
+// todo : 상태 string / boolean 확인 잘하기, 받아오는 값 //
 // description : 방 이름 상태 //
 const [roomName, setRoomName] = useState<string>('');
 // description : 방 비밀번호 상태 //
@@ -15,6 +21,9 @@ const [roomPassword, setPassword] = useState<string>('');
 const [roomNameError, setRoomNameError] = useState<boolean>(false);
 // description : 방 비밀번호 에러 상태 //
 const [roomPasswordError, setRoomPasswordError] = useState<boolean>(false);
+
+// description : 파일 업로드 버튼 요소에 대한 참조 상태 //
+const fileInputRef = useRef<HTMLInputElement>(null);
 
 //            function           //
 //            event handler           //
@@ -27,8 +36,22 @@ const onRoomNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
 const onRoomPasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
   const roomPassword = event.target.value;
   setPassword(roomPassword);
-
 }
+// description : 채팅방 만들기 생성 클릭 이벤트 //
+// todo : 이동 위치 확인해서 수정하기 //
+const onCreateClickHandler = () => {
+  navigator(ROOM_PATH);
+}
+// description : 채팅방 만들기 취소 클릭 이벤트 //
+const onCancelClickHandler = () => {
+  navigator(MAIN_PATH);
+}
+// description : 파일 업로드 버튼 클릭 이벤트 //
+const onFileUploadClickHandler = () => {
+  if(!fileInputRef.current) return;
+  fileInputRef.current.click();
+}
+
 //            component           //
 //            effect           //
 //            render           //
@@ -43,16 +66,18 @@ const onRoomPasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
             <div className='popup-main-top-title'>채팅방 만들기</div>
             <div className='popup-main-top-image-box'>
               <div className='popup-main-image-text'>채팅방 이미지 업로드</div>
-              <div className='popup-main-image-button'></div>
+              <div className='popup-main-image-button' onClick={onFileUploadClickHandler}>
+              <input ref={fileInputRef} type='file' accept='image/*' style={{ display: 'none' }}/>
+              </div>
             </div>
           </div>
           <div className='popup-main-box-bottom'>
             <div className='popup-main-bottom-room-name-box'>
               <div className='popup-main-bottom-room-name'>방 이름</div>
               {roomNameError ? 
-              <input className='popup-main-bottom-room-name-input-error' type='text' placeholder='방 이름을 입력해주세요.' onChange={onRoomNameHandler}/>
-              :
-              <input className='popup-main-bottom-room-name-input' type='text' placeholder='방 이름을 입력해주세요.' onChange={onRoomNameHandler}/>
+                <input className='popup-main-bottom-room-name-input-error' type='text' placeholder='방 이름을 입력해주세요.' onChange={onRoomNameHandler}/>
+                :
+                <input className='popup-main-bottom-room-name-input' type='text' placeholder='방 이름을 입력해주세요.' onChange={onRoomNameHandler}/>
               }
             </div>
             <div className='popup-main-bottom-room-input-error-box'>
@@ -76,8 +101,8 @@ const onRoomPasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
               <></>}
             </div>
             <div className='popup-main-bottom-button-box'>
-              <button className='popup-main-bottom-button-create'>생성</button>
-              <button className='popup-main-bottom-button-cancel'>취소</button>
+              <button className='popup-main-bottom-button-create' onClick={onCreateClickHandler} >생성</button>
+              <button className='popup-main-bottom-button-cancel' onClick={onCancelClickHandler} >취소</button>
             </div>
           </div>
         </div>

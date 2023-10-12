@@ -92,6 +92,10 @@
   background-color: aqua;
 }
 
+.popup-main-image-button:hover{
+  cursor: pointer;
+}
+
 .popup-main-box-bottom {
   margin: 15px;
   height: 250px;
