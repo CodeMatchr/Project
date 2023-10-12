@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css'
 import Pagination from '../../components/Pagination';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import Top3ListItem from '../../components/Top3ListItem';
-import { top3ViewBoardListMock } from '../../mocks';
+import { top3CommentBoardListMock, top3FavoriteBoardListMock, top3ViewBoardListMock, roomListMock } from '../../mocks';
+import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
+import RoomListItem from '../../components/RoomListItem';
+import { usePagination } from '../../hooks';
+import { MAIN_ROOM_COUNT_BY_PAGE } from '../../constants';
 
 // component //
 
@@ -57,12 +61,52 @@ export default function Main() {
   const MainMid = () => {
 
     // state //
-    // Top3 조회수 Board 리스트 상태 //
-    const[top3ViewBoardList, setTop3ViewBoardList] = useState<BoardListResponseDto[]>(top3ViewBoardListMock);
+    // Top3 에 해당하는 Board 리스트 상태 (View(default), Favorite, Comment) //
+    const[currentTop3BoardList, setCurrentTop3BoardList] = useState<BoardListResponseDto[]>(top3ViewBoardListMock);
+    // Top3 조회수 Board 리스트 Tab 버튼 클릭 상태 //
+    const[top3ViewBoardListTabState, setTop3ViewBoardListTabState] = useState<boolean>(true);
+    // Top3 좋아요 수 Board 리스트 Tab 버튼 클릭 상태 //
+    const[top3FavoriteBoardListTabState, setTop3FavoriteBoardListTabState] = useState<boolean>(false);
+    // Top3 댓글수 Board 리스트 Tab 버튼 클릭 상태 //
+    const[top3CommentBoardListTabState, setTop3CommentBoardListTabState] = useState<boolean>(false);
+
+
 
     // function //
 
     // event handler //
+
+    // Top3 조회수 Board 리스트 Tab 버튼 클릭 이벤트 //
+    const onTop3ViewBoardListTabClickhandler = () => {
+      if (!top3ViewBoardListTabState) {
+        setTop3ViewBoardListTabState(true);
+        setTop3FavoriteBoardListTabState(false);
+        setTop3CommentBoardListTabState(false);
+        setCurrentTop3BoardList(top3ViewBoardListMock);
+      }
+      
+    }
+
+    // Top3 좋아요 수 Board 리스트 Tab 버튼 클릭 이벤트 //
+    const onTop3FavoriteBoardListTabClickHandler = () => {
+      if (!top3FavoriteBoardListTabState) {
+        setTop3FavoriteBoardListTabState(true);
+        setTop3ViewBoardListTabState(false);
+        setTop3CommentBoardListTabState(false);
+        setCurrentTop3BoardList(top3FavoriteBoardListMock);
+      }
+    }
+
+    // Top3 댓글수 Board 리스트 Tab 버튼 클릭 이벤트 //
+    const onTop3CommentBoardListTabClickHandler = () => {
+      if (!top3CommentBoardListTabState) {
+        setTop3CommentBoardListTabState(true);
+        setTop3ViewBoardListTabState(false);
+        setTop3FavoriteBoardListTabState(false);
+        setCurrentTop3BoardList(top3CommentBoardListMock);
+      }
+      
+    }
 
     // effect //
 
@@ -72,9 +116,9 @@ export default function Main() {
         <div className='main-mid-title'>TOP 3 Board</div>
         <div className='main-mid-top3-board'>
           <div className='main-mid-top3-board-tab'>
-            <div className='main-mid-top3-board-tab-view-count-button'>조회수</div>
-            <div className='main-mid-top3-board-tab-favorite-count-button'>좋아요 수</div>
-            <div className='main-mid-top3-board-tab-comment-count-button'>댓글 수</div>
+            <div className='main-mid-top3-board-tab-view-count-button' onClick={ onTop3ViewBoardListTabClickhandler } style={{ backgroundColor: top3ViewBoardListTabState ? "gray" : "white" }}>조회수</div>
+            <div className='main-mid-top3-board-tab-favorite-count-button' onClick={ onTop3FavoriteBoardListTabClickHandler } style={{ backgroundColor: top3FavoriteBoardListTabState ? "gray" : "white" }}>좋아요 수</div>
+            <div className='main-mid-top3-board-tab-comment-count-button' onClick={ onTop3CommentBoardListTabClickHandler } style={{ backgroundColor: top3CommentBoardListTabState ? "gray" : "white" }}>댓글 수</div>
           </div>
           <div className='main-mid-top3-board-list'>
             <div className='main-mid-top3-board-list-top'>
@@ -82,8 +126,7 @@ export default function Main() {
               <div className='main-mid-top3-board-list-top-plus-button'>icon</div>
             </div>
             <div className='main-mid-top3-board-list-bottom'>
-              {/* map 함수로 돌릴것 3개씩 */}
-              {top3ViewBoardList.map((item) => (<Top3ListItem item={item}/>))}
+              {currentTop3BoardList.map((item) => (<Top3ListItem item={item}/>))}
             </div>
           </div>
         </div>
@@ -96,12 +139,39 @@ export default function Main() {
   const MainBottom = () => {
 
     // state //
+    // 페이지네이션과 관련된 상태 및 함수
+    const {totalPage, currentPage, currentSection, onPageClickHandler, onPreviousClickHandler, onNextClickHandler, changeSection} = usePagination();
+    // Room 에 해당하는 전체 리스트 상태
+    const[currentRoomList, setCurrentRoomList] = useState<RoomListResponseDto[]>(roomListMock);
+    // Room 에 해당하는 전체 갯수 상태
+    const[roomCount, setRoomCount] = useState<number>(1);
+    // Room 현재 페이지에서 보여줄 Room 게시물 리스트 상태
+    const[pageRoomList, setPageRoomList] = useState<RoomListResponseDto[]>([])
+
+
 
     // function //
+    const getPageRoomList = (roomList : RoomListResponseDto[]) => {
+      const startIndex = MAIN_ROOM_COUNT_BY_PAGE * (currentPage - 1);
+      const lastIndex = roomList.length > MAIN_ROOM_COUNT_BY_PAGE * currentPage ?
+        MAIN_ROOM_COUNT_BY_PAGE * currentPage : roomList.length;
+      const pageRoomList = roomList.slice(startIndex, lastIndex);
+
+      setPageRoomList(pageRoomList);
+    }
 
     // event handler //
 
     // effect //
+    // 현재 페이지가 바뀔때 마다 Room 리스트 변경//
+    useEffect(() => {
+      getPageRoomList(currentRoomList);
+    }, [currentPage])
+
+    // 현재 섹션이 바뀔때 마다 페이지 리스트 변경 //
+    useEffect(() => {
+      changeSection(currentRoomList.length, MAIN_ROOM_COUNT_BY_PAGE);
+    }, [currentSection]);
 
     // render //
     return(
@@ -118,33 +188,15 @@ export default function Main() {
           <div className='main-bottom-bottom-plus-button'>icon</div>
           <div className='main-bottom-bottom-list-box'>
             {/* map 함수 돌릴것 3개 */}
-            <div className='main-bottom-bottom-list-room'>
-              <div className='main-bottom-bottom-list-room-profile'>이미지</div>
-              <div className='main-bottom-bottom-list-room-title'>채팅방 제목</div>
-              <div className='main-bottom-bottom-list-room-manager-nickname'>방장 닉네임</div>
-              <div className='main-bottom-bottom-list-room-member-count'>채팅방 인원수</div>
-            </div>
-            <div className='main-bottom-bottom-list-room'>
-              <div className='main-bottom-bottom-list-room-profile'>이미지</div>
-              <div className='main-bottom-bottom-list-room-title'>채팅방 제목</div>
-              <div className='main-bottom-bottom-list-room-manager-nickname'>방장 닉네임</div>
-              <div className='main-bottom-bottom-list-room-member-count'>채팅방 인원수</div>
-            </div>
-            <div className='main-bottom-bottom-list-room'>
-              <div className='main-bottom-bottom-list-room-profile'>이미지</div>
-              <div className='main-bottom-bottom-list-room-title'>채팅방 제목</div>
-              <div className='main-bottom-bottom-list-room-manager-nickname'>방장 닉네임</div>
-              <div className='main-bottom-bottom-list-room-member-count'>채팅방 인원수</div>
-            </div>
-            {/* <div className='main-bottom-bottom-list-room'>
-
-            </div>
-            <div className='main-bottom-bottom-list-room'>
-
-            </div> */}
+            {pageRoomList.map((item) => <RoomListItem item={item}/>)}
           </div>
         </div>
-        {/* <Pagination/> */}
+        <Pagination
+        totalPage={totalPage}
+        currentPage={currentPage}
+        onPreviousClickHandler={onPreviousClickHandler}
+        onNextClickHandler={onNextClickHandler}
+        onPageClickHandler={onPageClickHandler}/>
       </div>
     );
   }

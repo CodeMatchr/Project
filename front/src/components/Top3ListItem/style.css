@@ -5,6 +5,15 @@
     height: 500px;
     background-color: lightblue;
     border-radius: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.top3-board-list:hover{
+    transform: scale(1.03);
 }
 
 .top3-board-list-top{
@@ -25,9 +34,12 @@
     text-align: center;
     line-height: 50px;
     background-color: white;
+    
 }
 
-.top3-board-list-top-box{}
+.top3-board-list-top-box{
+
+}
 
 .top3-board-list-top-profile-nickname{
     font-size: 16px;

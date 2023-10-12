@@ -1,0 +1,83 @@
+.pagination{
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-button{
+    margin: 0px 10px;
+    
+    display: flex;
+    align-items: center;
+
+    transition: all 0.3s;
+}
+
+.pagination-button:hover .pagination-button-text{
+    cursor: pointer;
+    border-bottom: 1px solid black;
+}
+
+.pagination-left-icon{
+    margin: 0px 4px;
+
+    width: 16px;
+    height: 16px;
+
+    background-image: url(./assets/expand_left_light.png);
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+}
+
+.pagination-right-icon{
+    margin: 0px 4px;
+
+    width: 16px;
+    height: 16px;
+
+    background-image: url(./assets/expand_right_light.png);
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+}
+
+.pagination-button-text{
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 100%;
+}
+
+.pagination-text{
+    margin: 0px 10px;
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 100%;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.pagination-page{
+    margin: 0px 10px;
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 100%;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.pagination-page:hover{
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: 700;
+    border-bottom: 1px solid black;
+}
+
+.pagination-page-active{
+    margin: 0px 10px;
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 100%;
+    color: rgba(0, 0, 0, 1);
+}
