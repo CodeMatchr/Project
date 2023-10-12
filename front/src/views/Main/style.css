@@ -63,11 +63,17 @@
 
     width: 50px;
     height: 50px;
-    background-color: white;
     border-radius: 50%;
-    text-align: center;
-    line-height: 50px;
+    transition: all 0.3s;
+    background-image: url(./assets/free-icon-exchange-8944294\ \(1\).png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
+    cursor: pointer;
+}
 
+.main-top-compare-switch-button:hover{
+    background-color: white;
 }
 
 .main-top-compare-right{
@@ -140,6 +146,13 @@
     margin-top: 30px;
     font-size: 32px;
     font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.main-mid-title:hover{
+    text-decoration: underline;
+    color: rgba(0, 0, 0, 0.6);
 }
 
 .main-mid-top3-board{
@@ -227,6 +240,16 @@
     border-radius: 50%;
     text-align: center;
     line-height: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-image: url(./assets/plus-button-icon.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.main-mid-top3-board-list-top-plus-button:hover{
+    background-color: white;
 }
 
 .main-mid-top3-board-list-bottom{
@@ -249,6 +272,13 @@
     margin-top: 30px;
     font-size: 32px;
     font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.main-bottom-title:hover{
+    text-decoration: underline;
+    color: rgba(0, 0, 0, 0.6);
 }
 
 .main-bottom-top{
@@ -257,10 +287,33 @@
 }
 
 .main-bottom-top-search{
+    display: flex;
+    justify-content: space-between;
 
+    width: 180px;
+    height: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-sizing: border-box;
 }
 
-.main-bottom-top-search-input{}
+.main-bottom-top-search-input{
+    border: none;
+    outline: none;
+    width: 150px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: transparent;
+    box-sizing: border-box;
+    padding-left: 10px;
+}
+
+.main-bottom-top-search-input::placeholder{color: #ccc;}
+
+.main-bottom-top-search-icon-only{
+    width: 30px;
+    height: 30px;
+}
 
 .main-bottom-top-search-icon-button{
     width: 30px;
@@ -268,7 +321,16 @@
     text-align: center;
     line-height: 30px;
     border-radius: 50%;
-    background-color: dodgerblue;
+    background-image: url(./assets/search-button-icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    cursor:  pointer;
+    transition: all 0.3s;
+}
+
+.main-bottom-top-search-icon-button:hover{
+    background-color: white;
 }
 
 .main-bottom-top-create-button{
@@ -290,17 +352,29 @@
     border-radius: 15px;
 }
 
+.main-bottom-bottom-top-box{
+    display: flex;
+    justify-content: flex-end;
+}
+
 .main-bottom-bottom-plus-button{
-    float: right;
+    margin: 10px 10px 20px 0px;
     
-
-
     width: 30px;
     height: 30px;
     text-align: center;
     line-height: 30px;
     border-radius: 50%;
-    background-color: dodgerblue;
+    transition: all 0.3s;
+    cursor: pointer;
+    background-image: url(./assets/plus-button-icon.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.main-bottom-bottom-plus-button:hover{
+    background-color: white;
 }
 
 .main-bottom-bottom-list-box{

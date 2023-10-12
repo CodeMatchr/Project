@@ -16,6 +16,7 @@
 
 .header-left{
     display: flex;
+    cursor: pointer;
 }
 
 .header-right{
@@ -49,6 +50,7 @@
     height: 30px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 15px;
+    box-sizing: border-box;
 }
 
 .header-right-search-input{
@@ -73,9 +75,18 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: white;
     text-align: center;
     line-height: 30px;
+    transition: all 0.3s;
+    cursor: pointer;
+    background-image: url(./assets/search-button-icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.header-right-search-icon-button:hover{
+    background-color: white;
 }
 
 .header-right-profile-button{
