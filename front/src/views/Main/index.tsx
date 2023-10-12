@@ -7,15 +7,17 @@ import { top3CommentBoardListMock, top3FavoriteBoardListMock, top3ViewBoardListM
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-import { MAIN_ROOM_COUNT_BY_PAGE } from '../../constants';
+import { BOARD_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH } from '../../constants';
+import { useNavigate } from 'react-router-dom';
 
 // component //
-
 export default function Main() {
 
   // state //
 
   // function //
+  // 페이지 이동을 위한 네비게이트 함수 //
+  const navigator = useNavigate();
 
   // event handler //
 
@@ -42,7 +44,7 @@ export default function Main() {
             <div className='main-top-compare-left-title'>Controll Code</div>
             <input className='main-top-compare-left-input' placeholder='텍스트를 입력하거나 파일을 업로드 해주세요. (기준 대상)' />
           </div>
-          <div className='main-top-compare-switch-button'>icon</div>
+          <div className='main-top-compare-switch-button'></div>
           <div className='main-top-compare-right'>
             <div className='main-top-compare-right-title'>Experimental Code</div>
             <input className='main-top-compare-right-input' placeholder='텍스트를 입력하거나 파일을 업로드 해주세요. (비교 대상)' />
@@ -75,9 +77,13 @@ export default function Main() {
     // function //
 
     // event handler //
+    // Board 리스트 페이지 이동 버튼 클릭 이벤트 //
+    const onBoardListClickHandler = () => {
+      navigator(BOARD_PATH);
+    }
 
     // Top3 조회수 Board 리스트 Tab 버튼 클릭 이벤트 //
-    const onTop3ViewBoardListTabClickhandler = () => {
+    const onTop3ViewBoardListTabClickHandler = () => {
       if (!top3ViewBoardListTabState) {
         setTop3ViewBoardListTabState(true);
         setTop3FavoriteBoardListTabState(false);
@@ -113,17 +119,17 @@ export default function Main() {
     // render //
     return(
       <div className='main-mid'>
-        <div className='main-mid-title'>TOP 3 Board</div>
+        <div className='main-mid-title' onClick={ onBoardListClickHandler }>TOP 3 Board</div>
         <div className='main-mid-top3-board'>
           <div className='main-mid-top3-board-tab'>
-            <div className='main-mid-top3-board-tab-view-count-button' onClick={ onTop3ViewBoardListTabClickhandler } style={{ backgroundColor: top3ViewBoardListTabState ? "gray" : "white" }}>조회수</div>
+            <div className='main-mid-top3-board-tab-view-count-button' onClick={ onTop3ViewBoardListTabClickHandler } style={{ backgroundColor: top3ViewBoardListTabState ? "gray" : "white" }}>조회수</div>
             <div className='main-mid-top3-board-tab-favorite-count-button' onClick={ onTop3FavoriteBoardListTabClickHandler } style={{ backgroundColor: top3FavoriteBoardListTabState ? "gray" : "white" }}>좋아요 수</div>
             <div className='main-mid-top3-board-tab-comment-count-button' onClick={ onTop3CommentBoardListTabClickHandler } style={{ backgroundColor: top3CommentBoardListTabState ? "gray" : "white" }}>댓글 수</div>
           </div>
           <div className='main-mid-top3-board-list'>
             <div className='main-mid-top3-board-list-top'>
               <div className='main-mid-top3-board-list-top-title'>조회수 TOP 3</div>
-              <div className='main-mid-top3-board-list-top-plus-button'>icon</div>
+              <div className='main-mid-top3-board-list-top-plus-button' onClick={ onBoardListClickHandler }></div>
             </div>
             <div className='main-mid-top3-board-list-bottom'>
               {currentTop3BoardList.map((item) => (<Top3ListItem item={item}/>))}
@@ -147,8 +153,10 @@ export default function Main() {
     const[roomCount, setRoomCount] = useState<number>(1);
     // Room 현재 페이지에서 보여줄 Room 게시물 리스트 상태
     const[pageRoomList, setPageRoomList] = useState<RoomListResponseDto[]>([])
-
-
+    // 검색어 상태 //
+    const [searchWord, setSearchWord] = useState<String>('');
+    // 검색 아이콘 버튼 클릭 상태 //
+    const [searchIconState, setSearchIconState] = useState<boolean>(false);
 
     // function //
     const getPageRoomList = (roomList : RoomListResponseDto[]) => {
@@ -161,6 +169,16 @@ export default function Main() {
     }
 
     // event handler //
+    // Room 리스트 페이지 이동 버튼 클릭 이벤트 //
+    const onRoomListButtonClickHandler = () => {
+      navigator(ROOM_PATH);
+    }
+
+    // 검색 아이콘 버튼 클릭 이벤트 //
+    const onSearchIconButtonClickHandler = () => {
+      if (searchIconState) setSearchIconState(false);
+      else setSearchIconState(true);
+  }
 
     // effect //
     // 현재 페이지가 바뀔때 마다 Room 리스트 변경//
@@ -176,16 +194,27 @@ export default function Main() {
     // render //
     return(
       <div className='main-bottom'>
-        <div className='main-bottom-title'>Room</div>
+        <div className='main-bottom-title' onClick={ onRoomListButtonClickHandler }>Room</div>
         <div className='main-bottom-top'>
-          <div className='main-bottom-top-search'>
-            {/* <input className='main-bottom-top-search-input' /> */}
-            <div className='main-bottom-top-search-icon-button'>icon</div>
-          </div>
+          {(searchIconState) ? (
+            <div className='main-bottom-top-search'>
+              <input className='main-bottom-top-search-input' placeholder='검색어를 입력해주세요.' />
+              <div className='main-bottom-top-search-icon-button' onClick={ onSearchIconButtonClickHandler }></div>
+            </div>
+          ) : (
+            <div className='main-bottom-top-search-icon-only'>
+              <div className='main-bottom-top-search-icon-button' onClick={ onSearchIconButtonClickHandler }></div>
+            </div>
+          )
+
+          }
+          
           <div className='main-bottom-top-create-button'>생성</div>
         </div>
         <div className='main-bottom-bottom'>
-          <div className='main-bottom-bottom-plus-button'>icon</div>
+          <div className='main-bottom-bottom-top-box'>
+            <div className='main-bottom-bottom-plus-button' onClick={ onRoomListButtonClickHandler }></div>
+          </div>
           <div className='main-bottom-bottom-list-box'>
             {/* map 함수 돌릴것 3개 */}
             {pageRoomList.map((item) => <RoomListItem item={item}/>)}
