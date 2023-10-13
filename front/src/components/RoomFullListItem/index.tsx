@@ -4,10 +4,11 @@ import './style.css';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 
 interface Props {
+    onClick: () => void
     item: RoomListResponseDto;
 }
 
-export default function RoomFullListItem({item} : Props) {
+export default function RoomFullListItem({onClick, item} : Props) {
   // state //
   const { roomNumber, roomTitle, roomImageUrl } = item;
   const { roomMemberCount } = item;
@@ -25,15 +26,15 @@ export default function RoomFullListItem({item} : Props) {
 
   // render //
   return (
-      <div className='room-list'>
-            <div className='room-list-room-left'>
-                <div className='room-list-room-left-profile' style={roomImageBackground}></div>
-                <div className='room-list-room-left-title'>{roomTitle}</div>
+      <div className='room-list-full' onClick={onClick}>
+            <div className='room-list-full-room-left'>
+                <div className='room-list-full-room-left-profile' style={roomImageBackground}></div>
+                <div className='room-list-full-room-left-title'>{roomTitle}</div>
             </div>
-            <div className='room-list-room-right'>
-                <div className='room-list-room-right-member-count'>{`인원수 ${roomMemberCount}`}</div>
-                <div className='room-list-room-right-manager-profile' style={roomManagerImageBackground}></div>
-                <div className='room-list-room-right-manager-nickname'>{roomManagerNickname}</div>
+            <div className='room-list-full-room-right'>
+                <div className='room-list-full-room-right-member-count'>{`인원수 ${roomMemberCount}`}</div>
+                <div className='room-list-full-room-right-manager-profile' style={roomManagerImageBackground}></div>
+                <div className='room-list-full-room-right-manager-nickname'>{roomManagerNickname}</div>
             </div>
       </div>
   )

@@ -1,8 +1,8 @@
-.room-list{
+.room-list-full{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
+    /* position: relative; */
     margin-bottom: 20px;
 
     width: 1400px;
@@ -13,16 +13,17 @@
     cursor: pointer;
 }
 
-.room-list:hover{
+.room-list-full:hover{
     transform: scale(1.03);
+    position: static;
 }
 
-.room-list-room-left{
+.room-list-full-room-left{
     display: flex;
     align-items: center;
 }
 
-.room-list-room-left-profile{
+.room-list-full-room-left-profile{
     margin-left: 30px;
 
     width: 150px;
@@ -36,14 +37,14 @@
     background-size: cover;
 }
 
-.room-list-room-left-title{
+.room-list-full-room-left-title{
     margin-left: 30px;
 
     font-size: 18px;
     font-weight: 600;
 }
 
-.room-list-room-right{
+.room-list-full-room-right{
     height: 200px;
     display: flex;
     flex-direction: column;
@@ -52,7 +53,7 @@
     position: relative;
 }
 
-.room-list-room-right-member-count{
+.room-list-full-room-right-member-count{
     margin-top: 20px;
     top: 10px;
     font-size: 16px;
@@ -60,7 +61,7 @@
     text-align: center;
 }
 
-.room-list-room-right-manager-profile{
+.room-list-full-room-right-manager-profile{
     margin-top: 15px;
     width: 100px;
     height: 100px;
@@ -69,7 +70,7 @@
     background-size: cover;
 }
 
-.room-list-room-right-manager-nickname{
+.room-list-full-room-right-manager-nickname{
     font-size: 14px;
     font-weight: 600;
 }

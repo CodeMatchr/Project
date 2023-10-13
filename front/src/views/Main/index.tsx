@@ -10,6 +10,7 @@ import { usePagination } from '../../hooks';
 import { BOARD_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
+import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
 
 // component //
 export default function Main() {
@@ -158,8 +159,12 @@ export default function Main() {
     const [searchWord, setSearchWord] = useState<String>('');
     // 검색 아이콘 버튼 클릭 상태 //
     const [searchIconState, setSearchIconState] = useState<boolean>(false);
-    // 채팅방 생성 팝업창 상태 //
+    // 채팅방 팝업창 상태 //
     const [popUpVisible, setPopUpVisible] = useState<boolean>(false);
+    // 채팅방 팝업창 상태 //
+    const [popUpRoomVisible, setPopUpRoomVisible] = useState<boolean>(false);
+    // 채팅방 팝업창 상태 //
+    const [selectRoomNumber, setSelectRoomNumber] = useState<number>(-1);
   
 
     // function //
@@ -189,6 +194,13 @@ export default function Main() {
       if (popUpVisible) setPopUpVisible(false);
       else setPopUpVisible(true);
     }
+
+    const onRoomListItemClickHandler = (roomNumber: number) => {
+      setPopUpRoomVisible(true);
+      setSelectRoomNumber(roomNumber);
+    }
+
+    
 
     // effect //
     // 현재 페이지가 바뀔때 마다 Room 리스트 변경//
@@ -228,7 +240,8 @@ export default function Main() {
           </div>
           <div className='main-bottom-bottom-list-box'>
             {/* map 함수 돌릴것 3개 */}
-            {pageRoomList.map((item) => <RoomListItem item={item}/>)}
+            {pageRoomList.map((item) => <><RoomListItem onClick={() => onRoomListItemClickHandler(item.roomNumber)} item={item}/></>)}
+            {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP roomNumber={selectRoomNumber} /></div>}
           </div>
         </div>
         <Pagination

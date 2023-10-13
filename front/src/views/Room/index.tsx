@@ -8,6 +8,7 @@ import { MAIN_ROOM_COUNT_BY_PAGE_FUll } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import { usePagination } from '../../hooks';
 import RoomFullListItem from '../../components/RoomFullListItem';
+import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
 
 // component //
 export default function Room() {
@@ -24,6 +25,10 @@ export default function Room() {
   const[searchWord, setSearchWord] = useState<string>('');
   // 검색 아이콘 버튼 클릭 상태 //
   const[searchIconState, setSearchIconState] = useState<boolean>(false);
+  // 채팅방 팝업창 상태 //
+  const [popUpRoomVisible, setPopUpRoomVisible] = useState<boolean>(false);
+  // 채팅방 팝업창 상태 //
+  const [selectRoomNumber, setSelectRoomNumber] = useState<number>(-1);
   // function //
   const navigator = useNavigate();
 
@@ -41,6 +46,11 @@ export default function Room() {
   const onSearchIconButtonClickHandler = () => {
     if (searchIconState == true) setSearchIconState(false);
     else setSearchIconState(true);
+  }
+
+  const onRoomListItemClickHandler = (roomNumber: number) => {
+    setPopUpRoomVisible(true);
+    setSelectRoomNumber(roomNumber);
   }
 
   // effect //
@@ -71,7 +81,8 @@ export default function Room() {
           )}
       </div>
       <div className='room-bottom'>
-        {pageRoomList.map((item) => <RoomFullListItem item={item}/>)}
+        {pageRoomList.map((item) => <RoomFullListItem onClick={() => onRoomListItemClickHandler(item.roomNumber)} item={item}/>)}
+        {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP roomNumber={selectRoomNumber} /></div>}
       </div>
       <Pagination
         totalPage={totalPage}
