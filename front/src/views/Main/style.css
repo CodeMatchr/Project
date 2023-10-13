@@ -65,7 +65,7 @@
     height: 50px;
     border-radius: 50%;
     transition: all 0.3s;
-    background-image: url(./assets/free-icon-exchange-8944294\ \(1\).png);
+    background-image: url(./assets/exchange-button-icon.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70% 70%;
@@ -318,8 +318,6 @@
 .main-bottom-top-search-icon-button{
     width: 30px;
     height: 30px;
-    text-align: center;
-    line-height: 30px;
     border-radius: 50%;
     background-image: url(./assets/search-button-icon.png);
     background-repeat: no-repeat;
@@ -340,6 +338,19 @@
     line-height: 30px;
     border-radius: 15px;
     background-color: dodgerblue;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.main-bottom-top-create-button:hover{
+    background-color: blanchedalmond;
+}
+
+.chat-room-pop-up{
+    z-index: 999;
+    position: fixed;
+    top: 25%;
+    left: 25%;
 }
 
 .main-bottom-bottom{

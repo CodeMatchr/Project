@@ -12,6 +12,7 @@ import BoardDetail from './views/Board/Detail';
 import ChatRoomPopUp from './components/PopUp/ChatRoomPopUp';
 import ChatManagerPopUp from './components/PopUp/ChatManagerPopUp';
 import UserPage from './views/UserPage';
+import Room from './views/Room';
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
         <Route path={BOARD_PATH} />
 
         {/* 다인원 채팅방 화면 ROOM */}
-        <Route path={ROOM_PATH} />
+        <Route path={ROOM_PATH} element={<Room/>} />
 
         {/* 비교 분석 결과 화면 COMPARE */}
         <Route path={COMPARE_PATH} />
@@ -46,8 +47,6 @@ function App() {
 
 
       </Routes>
-
-      <Footer/>
       
       <Footer/>
     </>

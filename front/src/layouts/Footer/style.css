@@ -18,4 +18,22 @@
 
 .footer-right-github{
     display: flex;
+    align-items: center;
+}
+
+.footer-right-github-icon{
+    margin-left: 10px;
+
+    width: 30px;
+    height: 30px;
+    background-image: url(./assets/github-button-logo-icon.png);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.footer-right-github-icon:hover{
+    background-color: white;
 }

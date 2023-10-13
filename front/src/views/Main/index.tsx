@@ -9,6 +9,7 @@ import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
 import { BOARD_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 
 // component //
 export default function Main() {
@@ -146,7 +147,7 @@ export default function Main() {
 
     // state //
     // 페이지네이션과 관련된 상태 및 함수
-    const {totalPage, currentPage, currentSection, onPageClickHandler, onPreviousClickHandler, onNextClickHandler, changeSection} = usePagination();
+    const{totalPage, currentPage, currentSection, onPageClickHandler, onPreviousClickHandler, onNextClickHandler, changeSection} = usePagination();
     // Room 에 해당하는 전체 리스트 상태
     const[currentRoomList, setCurrentRoomList] = useState<RoomListResponseDto[]>(roomListMock);
     // Room 에 해당하는 전체 갯수 상태
@@ -157,6 +158,9 @@ export default function Main() {
     const [searchWord, setSearchWord] = useState<String>('');
     // 검색 아이콘 버튼 클릭 상태 //
     const [searchIconState, setSearchIconState] = useState<boolean>(false);
+    // 채팅방 생성 팝업창 상태 //
+    const [popUpVisible, setPopUpVisible] = useState<boolean>(false);
+  
 
     // function //
     const getPageRoomList = (roomList : RoomListResponseDto[]) => {
@@ -178,7 +182,13 @@ export default function Main() {
     const onSearchIconButtonClickHandler = () => {
       if (searchIconState) setSearchIconState(false);
       else setSearchIconState(true);
-  }
+    }
+
+    // 채팅방 생성 버튼 클릭 이벤트
+    const onRoomCreateIconButtonmClickHandler = () => {
+      if (popUpVisible) setPopUpVisible(false);
+      else setPopUpVisible(true);
+    }
 
     // effect //
     // 현재 페이지가 바뀔때 마다 Room 리스트 변경//
@@ -209,7 +219,8 @@ export default function Main() {
 
           }
           
-          <div className='main-bottom-top-create-button'>생성</div>
+          <div className='main-bottom-top-create-button' onClick={onRoomCreateIconButtonmClickHandler}>생성</div>
+          {popUpVisible && <div className='chat-room-pop-up'><ChatRoomPopUp /></div>}
         </div>
         <div className='main-bottom-bottom'>
           <div className='main-bottom-bottom-top-box'>

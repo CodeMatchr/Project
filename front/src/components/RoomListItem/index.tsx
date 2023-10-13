@@ -31,6 +31,7 @@ export default function RoomListItem({item} : Props) {
             <div className='room-list-room-title'>{roomTitle}</div>
             <div className='room-list-room-manager-nickname'>{roomManagerNickname}</div>
             <div className='room-list-room-member-count'>{`인원수 ${roomMemberCount}`}</div>
+            <div></div>
         </div>
     )
 }
