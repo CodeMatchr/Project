@@ -36,6 +36,8 @@ export const POPUP_COME_PATH = '/pop-up/come';
 export const POPUP_ROOM_PATH = '/pop-up/room';
 export const POPUP_MANAGER_PATH = '/pop-up/manager';
 
+export const USER_ITEM_PATH = '/user/item';
+
 // Main - chat(room) pagination //
 export const MAIN_ROOM_COUNT_BY_PAGE = 3;
 export const MAIN_ROOM_COUNT_BY_PAGE_BY_SECTION = 5;

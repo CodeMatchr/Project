@@ -2,6 +2,9 @@ import React, { ChangeEvent, useRef, useState } from 'react'
 import './style.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BOARD_DETAIL_PATH, BOARD_PATH, BOARD_WRITE_PATH } from '../../constants';
+import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
+import UserBoardItem from '../../components/UserBoardItem';
+import { top3ViewBoardListMock } from '../../mocks';
 
 //            component           //
 // description : 마이페이지 컴포넌트 //
@@ -117,6 +120,9 @@ const [userPage, setUserPage] = useState<boolean>(false);
   // description : 마이페이지 내 게시물 //
   const UserPageBoard = () => {
     //            state           //
+    // description: 현재 페이지에서 보여줄 게시물 리스트 상태 //
+    const [pageBoardList, setPageBoardList] = useState<BoardListResponseDto[]>(top3ViewBoardListMock);
+    
     //            function           //
     //            event handler           //
     //            component           //
@@ -124,7 +130,14 @@ const [userPage, setUserPage] = useState<boolean>(false);
     
     //            render           //
     return (
-      <div></div>
+      <div className='userpage-board-wrapper'>
+        <div className='userpage-board-title'>내 게시물</div>
+        <div className='userpage-board-contents-list'>
+          {pageBoardList.map((item) => (<UserBoardItem item={item} />))}
+        </div>
+        <div className='divider'></div>
+        <div className='userpage-board-pagination'></div>
+      </div>
     );
   } 
 
@@ -139,7 +152,7 @@ const [userPage, setUserPage] = useState<boolean>(false);
     
     //            render           //
     return (
-      <div></div>
+      <div className='userpage-code-wrapper'></div>
     );
   } 
 
@@ -154,7 +167,7 @@ const [userPage, setUserPage] = useState<boolean>(false);
 
     //            render           //
     return (
-      <div></div>
+      <div className='userpage-chat-wrapper'></div>
     );
   } 
 //            effect           //

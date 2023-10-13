@@ -1,0 +1,114 @@
+#user-board-wrapper {
+    position: relative;
+
+    width: 1200px;
+    height: 200px;
+    background-color: lightblue;
+    border-radius: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition: all 0.3s;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.user-board-left-box {
+    margin: 30px;
+
+    flex: 8;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.user-board-info-box {
+    flex: 2.5;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.user-board-info-profile {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    background-color: aqua;
+
+    border-radius: 20px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.user-board-info-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-board-info-nickname {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.user-board-info-datetime {
+    font-size: 12px;
+    font-weight: 400;
+
+    color: rgba(0,0,0,0.4);
+}
+
+.user-board-text-box {
+    flex: 6;
+
+    margin: 10px;
+}
+
+.user-board-text-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.user-board-text-contents{
+    font-size: 16px;
+    font-weight: 500;
+
+    opacity: 0.5;
+
+}
+
+.user-board-count-box {
+    flex: 1.5;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    opacity: 0.7;
+}
+
+.user-board-right-box {
+    flex: 2;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-board-right-image {
+    margin: 10px;
+
+    width: 180px;
+    height: 180px;
+
+    background-color: black;
+
+    border-radius: 15px;
+}
