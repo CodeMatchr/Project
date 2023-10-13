@@ -18,6 +18,9 @@ export const MAIN_PATH = '/';
 export const AUTHENTICATION_PATH = '/authentication';
 // Board
 export const BOARD_PATH = '/board';
+export const BOARD_DETAIL_PATH = '/board/detail';
+export const BOARD_UPDATE_PATH = '/board/update';
+export const BOARD_WRITE_PATH = '/board/write';
 // User
 export const USER_PATH = '/user';
 // Room
@@ -29,6 +32,7 @@ export const COMPARE_PATH = '/compare';
 
 // Pop Up
 export const POPUP_PATH = '/pop-up';
+export const POPUP_COME_PATH = '/pop-up/come';
 export const POPUP_ROOM_PATH = '/pop-up/room';
 export const POPUP_MANAGER_PATH = '/pop-up/manager';
 

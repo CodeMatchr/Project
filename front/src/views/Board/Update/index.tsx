@@ -42,7 +42,7 @@ const getBoardResponseHandler = (responseBody : GetBoardResponseDto | ResponseDt
     setBoardTitle(boardTitle);
     setBoardContent(boardContents);
     setBoardImageUrl(boardImageUrl);
-
+}
 //          event handler          //
 //description : 제목이 바뀔시 실행될 이벤트 //
 const onTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -113,5 +113,5 @@ return (
         
     </div>
     )
-}
+
 }

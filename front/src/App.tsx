@@ -3,7 +3,7 @@ import './App.css';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 import Main from './views/Main';
-import { AUTHENTICATION_PATH, BOARD_PATH, COMPARE_PATH, MAIN_PATH, POPUP_MANAGER_PATH, POPUP_PATH, POPUP_ROOM_PATH, ROOM_PATH, USER_PATH } from './constants';
+import { AUTHENTICATION_PATH, BOARD_DETAIL_PATH, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, COMPARE_PATH, MAIN_PATH, POPUP_COME_PATH, POPUP_MANAGER_PATH, POPUP_PATH, POPUP_ROOM_PATH, ROOM_PATH, USER_PATH } from './constants';
 import { Route, Routes } from 'react-router-dom';
 import Authentication from './views/Authentication';
 import PopUp from './components/PopUp/ChatRoomPopUp';
@@ -12,7 +12,8 @@ import BoardDetail from './views/Board/Detail';
 import ChatRoomPopUp from './components/PopUp/ChatRoomPopUp';
 import ChatManagerPopUp from './components/PopUp/ChatManagerPopUp';
 import UserPage from './views/UserPage';
-import Room from './views/Room';
+import BoardUpdate from './views/Board/Update';
+import ChatComePopUP from './components/PopUp/ChatComePopUp';
 
 function App() {
   return (
@@ -32,8 +33,9 @@ function App() {
 
         {/* 게시글 관련 화면 BOARD */}
         <Route path={BOARD_PATH} element={<BoardDetail/>} />
-        <Route path={BOARD_PATH} />
-        <Route path={BOARD_PATH} />
+        <Route path={BOARD_DETAIL_PATH} element={<BoardDetail/>} />
+        <Route path={BOARD_WRITE_PATH} element={<BoardWrite/>} />
+        <Route path={BOARD_UPDATE_PATH} element={<BoardUpdate/>} />
 
         {/* 다인원 채팅방 화면 ROOM */}
         <Route path={ROOM_PATH} element={<Room/>} />
@@ -43,11 +45,11 @@ function App() {
 
         {/* 팝업창 PopUp */}
         <Route path={POPUP_ROOM_PATH} element={<ChatRoomPopUp/>} />
+        <Route path={POPUP_COME_PATH} element={<ChatComePopUP/>} />
         <Route path={POPUP_MANAGER_PATH} element={<ChatManagerPopUp/>} />
 
 
       </Routes>
-      
       <Footer/>
     </>
   );
