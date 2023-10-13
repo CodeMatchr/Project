@@ -3,7 +3,7 @@ import './App.css';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 import Main from './views/Main';
-import { AUTHENTICATION_PATH, BOARD_DETAIL_PATH, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, COMPARE_PATH, MAIN_PATH, POPUP_COME_PATH, POPUP_MANAGER_PATH, POPUP_PATH, POPUP_ROOM_PATH, ROOM_PATH, USER_PATH } from './constants';
+import { AUTHENTICATION_PATH, BOARD_DETAIL_PATH, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, COMPARE_PATH, MAIN_PATH, POPUP_COME_PATH, POPUP_MANAGER_PATH, POPUP_PATH, POPUP_ROOM_PATH, ROOM_PATH, USER_ITEM_PATH, USER_PATH } from './constants';
 import { Route, Routes } from 'react-router-dom';
 import Authentication from './views/Authentication';
 import PopUp from './components/PopUp/ChatRoomPopUp';
@@ -14,7 +14,11 @@ import ChatManagerPopUp from './components/PopUp/ChatManagerPopUp';
 import UserPage from './views/UserPage';
 import BoardUpdate from './views/Board/Update';
 import ChatComePopUP from './components/PopUp/ChatComePopUp';
+<<<<<<< HEAD
 import Room from './views/Room';
+=======
+import UserBoardItem from './components/UserBoardItem';
+>>>>>>> 9bf7a080b17e4b25ed89cbeb78c7b81f465bbe32
 
 function App() {
   return (
@@ -48,7 +52,7 @@ function App() {
         <Route path={POPUP_ROOM_PATH} element={<ChatRoomPopUp/>} />
         {/* <Route path={POPUP_COME_PATH} element={<ChatComePopUP/>} /> */}
         <Route path={POPUP_MANAGER_PATH} element={<ChatManagerPopUp/>} />
-
+      
 
       </Routes>
       <Footer/>
