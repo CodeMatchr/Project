@@ -1,10 +1,15 @@
-import React, { ChangeEvent, useRef, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './style.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BOARD_DETAIL_PATH, BOARD_PATH, BOARD_WRITE_PATH } from '../../constants';
+import { BOARD_DETAIL_PATH, BOARD_PATH, BOARD_WRITE_PATH, MAIN_ROOM_COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll } from '../../constants';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import UserBoardItem from '../../components/UserBoardItem';
-import { top3ViewBoardListMock } from '../../mocks';
+import { roomListMock, top3ViewBoardListMock, userpageBoardListMock } from '../../mocks';
+import Pagination from '../../components/Pagination';
+import { usePagination } from '../../hooks';
+import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
+import RoomListItem from '../../components/RoomListItem';
+import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
 
 //            component           //
 // description : 마이페이지 컴포넌트 //
@@ -119,24 +124,53 @@ const [userPage, setUserPage] = useState<boolean>(false);
   //            component           //
   // description : 마이페이지 내 게시물 //
   const UserPageBoard = () => {
+
     //            state           //
-    // description: 현재 페이지에서 보여줄 게시물 리스트 상태 //
-    const [pageBoardList, setPageBoardList] = useState<BoardListResponseDto[]>(top3ViewBoardListMock);
+    // description : 페이지네이션 관련 상태 및 함수 //
+    const {totalPage, currentPage, currentSection, onPageClickHandler, onNextClickHandler, onPreviousClickHandler, changeSection} = usePagination();
+    
+    // description : board 에 해당하는 전체 리스트 상태 //
+    const[currentBoardList, setCurrentBoardList] = useState<BoardListResponseDto[]>(userpageBoardListMock);
+    // description: 현재 페이지에서 보여줄 board 리스트 상태 //
+    const [viewBoardList, setViewBoardList] = useState<BoardListResponseDto[]>([]);
     
     //            function           //
+    // description : 페이지네이션 함수 //
+    const getViewBoardList = (boardList : BoardListResponseDto[]) => {
+      const startIndex = MAIN_ROOM_COUNT_BY_PAGE * (currentPage -1);
+      const lastIndex = boardList.length > MAIN_ROOM_COUNT_BY_PAGE * currentPage ? 
+                        MAIN_ROOM_COUNT_BY_PAGE * currentPage : boardList.length;
+      const viewBoardList = boardList.slice(startIndex, lastIndex);
+      setViewBoardList(viewBoardList);
+    }
+
     //            event handler           //
     //            component           //
     //            effect           //
+    // description : 현재 페이지가 바뀔 때마다 board 리스트 변경 //
+    useEffect(() => {
+      getViewBoardList(currentBoardList);
+    }, [currentPage]);
     
+    // description : 현재 섹션이 바뀔 때마다 board 리스트 변경 //
+    useEffect(() => {
+      changeSection(currentBoardList.length, MAIN_ROOM_COUNT_BY_PAGE);
+    }, [currentSection]);
+
     //            render           //
     return (
       <div className='userpage-board-wrapper'>
         <div className='userpage-board-title'>내 게시물</div>
         <div className='userpage-board-contents-list'>
-          {pageBoardList.map((item) => (<UserBoardItem item={item} />))}
+          {viewBoardList.map((item) => (<UserBoardItem item={item} />))}
         </div>
-        <div className='divider'></div>
-        <div className='userpage-board-pagination'></div>
+        <Pagination
+          totalPage={totalPage}
+          currentPage={currentPage}
+          onPageClickHandler={onPageClickHandler}
+          onNextClickHandler={onNextClickHandler}
+          onPreviousClickHandler={onPreviousClickHandler}
+        />
       </div>
     );
   } 
@@ -145,6 +179,7 @@ const [userPage, setUserPage] = useState<boolean>(false);
   // description : 마이페이지 코드 비교 로그 //
   const UserPageCodeLog = () => {
     //            state           //
+    
     //            function           //
     //            event handler           //
     //            component           //
@@ -160,14 +195,66 @@ const [userPage, setUserPage] = useState<boolean>(false);
   // description : 마이페이지 채팅방 //
   const UserPageChat = () => {
     //            state           //
+    // description : 페이지네이션 //
+    const {totalPage, currentPage, currentSection, onPageClickHandler, onNextClickHandler, onPreviousClickHandler, changeSection} = usePagination();
+    // description: 현재 페이지에서 보여줄 채팅방 리스트 상태 //
+    const [viewChatList, setViewChatList] = useState<RoomListResponseDto[]>([]);
+    // description : Chat 에 해당하는 전체 리스트 상태 //
+    const[currentChatList, setCurrentChatList] = useState<RoomListResponseDto[]>(roomListMock);
+    // description : 채팅방 팝업창 상태 //
+    const [popUpRoomVisible, setPopUpRoomVisible] = useState<boolean>(false);
+    // description : 채팅방 팝업창 상태 //
+    const [selectRoomNumber, setSelectRoomNumber] = useState<number>(-1);
+
     //            function           //
+    // description : 페이지네이션 함수 //
+    const getViewChatList = (chatList : RoomListResponseDto[]) => {
+      const startIndex = MAIN_ROOM_COUNT_BY_PAGE * (currentPage -1);
+      const lastIndex = chatList.length > MAIN_ROOM_COUNT_BY_PAGE * currentPage ? 
+      MAIN_ROOM_COUNT_BY_PAGE * currentPage : chatList.length;
+      
+      const viewChatList = chatList.slice(startIndex, lastIndex);
+      setViewChatList(viewChatList);
+    }
+    
     //            event handler           //
+    // description : 팝업창 //
+    const onRoomListItemClickHandler = (roomNumber: number) => {
+      setPopUpRoomVisible(true);
+      setSelectRoomNumber(roomNumber);
+    }
     //            component           //
     //            effect           //
+    // description : 현재 페이지가 바뀔 때마다 chat 리스트 변경 //
+    useEffect(() => {
+      getViewChatList(currentChatList);
+    }, [currentPage]);
+    
+    // description : 현재 섹션이 바뀔 때마다 chat 리스트 변경 //
+    useEffect(() => {
+      changeSection(currentChatList.length, MAIN_ROOM_COUNT_BY_PAGE);
+    }, [currentSection]);
 
     //            render           //
     return (
-      <div className='userpage-chat-wrapper'></div>
+      <div className='userpage-chat-wrapper'>
+        <div className='userpage-chat-title'>
+          <div className='userpage-chat-text'>내 채팅방</div>
+        </div>
+        <div className='userpage-chat-room'>
+          {viewChatList.map((item) => (<RoomListItem item={item} onClick={() =>onRoomListItemClickHandler(item.roomNumber) } />))}
+          {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP roomNumber={selectRoomNumber} /></div>}
+        </div>
+        <div className='userpage-chat-pagination'>
+          <Pagination
+            totalPage={totalPage}
+            currentPage={currentPage}
+            onPageClickHandler={onPageClickHandler}
+            onNextClickHandler={onNextClickHandler}
+            onPreviousClickHandler={onPreviousClickHandler}
+          />
+        </div>
+      </div>
     );
   } 
 //            effect           //
