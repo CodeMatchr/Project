@@ -14,7 +14,11 @@ import ChatManagerPopUp from './components/PopUp/ChatManagerPopUp';
 import UserPage from './views/UserPage';
 import BoardUpdate from './views/Board/Update';
 import ChatComePopUP from './components/PopUp/ChatComePopUp';
+<<<<<<< HEAD
 import UserBoardItem from './components/UserBoardItem';
+=======
+import Room from './views/Room';
+>>>>>>> 8036138381073fe3b6522271aba00fca9cad9d37
 
 function App() {
   return (
@@ -39,19 +43,18 @@ function App() {
         <Route path={BOARD_UPDATE_PATH} element={<BoardUpdate/>} />
 
         {/* 다인원 채팅방 화면 ROOM */}
-        <Route path={ROOM_PATH} />
+        <Route path={ROOM_PATH} element={<Room/>} />
 
         {/* 비교 분석 결과 화면 COMPARE */}
         <Route path={COMPARE_PATH} />
 
         {/* 팝업창 PopUp */}
         <Route path={POPUP_ROOM_PATH} element={<ChatRoomPopUp/>} />
-        <Route path={POPUP_COME_PATH} element={<ChatComePopUP/>} />
+        {/* <Route path={POPUP_COME_PATH} element={<ChatComePopUP/>} /> */}
         <Route path={POPUP_MANAGER_PATH} element={<ChatManagerPopUp/>} />
       
 
       </Routes>
-
       <Footer/>
     </>
   );

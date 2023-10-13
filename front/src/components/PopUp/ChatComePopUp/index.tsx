@@ -3,8 +3,12 @@ import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_PATH, ROOM_PATH } from '../../../constants';
 
+interface Props {
+    roomNumber?: number;
+}
+
 //                      component                       //
-export default function ChatComePopUP() {
+export default function ChatComePopUP({ roomNumber }: Props) {
 //                      state                       //
 // description : 네비게이터 //
 const navigator = useNavigate();

@@ -3,6 +3,7 @@
     align-items: center;
     position: relative;
     margin-bottom: 20px;
+    position: relative;
 
     width: 1000px;
     height: 150px;
@@ -45,8 +46,15 @@
 }
 
 .room-list-room-member-count{
-    margin-left: 500px;
+    margin-left: 480px;
 
     font-size: 16px;
     font-weight: 600;
+}
+
+.chat-room-pop-up{
+    z-index: 999;
+    position: fixed;
+    top: 25%;
+    left: 25%;
 }

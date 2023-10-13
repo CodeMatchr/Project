@@ -3,8 +3,6 @@ import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_PATH, ROOM_PATH } from '../../../constants';
 
-
-
 //            component           //
 // description : 채팅방 만들기 팝업창 // 
 export default function ChatRoomPopUp() {

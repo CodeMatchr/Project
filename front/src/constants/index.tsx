@@ -40,6 +40,8 @@ export const USER_ITEM_PATH = '/user/item';
 
 // Main - chat(room) pagination //
 export const MAIN_ROOM_COUNT_BY_PAGE = 3;
+export const MAIN_ROOM_COUNT_BY_PAGE_FUll = 5;
+
 export const MAIN_ROOM_COUNT_BY_PAGE_BY_SECTION = 5;
 export const COUNT_BY_MAIN_ROOM_SECTION = MAIN_ROOM_COUNT_BY_PAGE * MAIN_ROOM_COUNT_BY_PAGE_BY_SECTION;
 

@@ -5,4 +5,5 @@ export default interface RoomListResponseDto {
     roomMemberCount : number;
     
     roomManagerNickname : string;
+    roomManagerProfileImageUrl : string | null;
 }
