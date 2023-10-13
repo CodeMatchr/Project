@@ -76,12 +76,15 @@
 
   font-size: 30px;
   font-weight: 600;
+
+  gap: 10px;
 }
 
 .userpage-user-nickname-input {
   display: flex;
 
   text-shadow: 2px 2px 2px gray;
+  box-sizing: border-box;
 
   font-size: 30px;
   font-weight: 600;
@@ -98,6 +101,7 @@
 
   font-size: 30px;
   font-weight: 600;
+  box-sizing: border-box;
 
   text-align: center;
 }
@@ -105,11 +109,18 @@
 .userpage-user-nickname-button {
   width: 24px;
   height: 24px;
-  
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  box-sizing: border-box;
+}
+
+.userpage-user-nickname-icon{
+  margin-top: 10px;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+
   background-color: aqua;
 }
 
@@ -124,10 +135,15 @@
 
 .userpage-user-message-box {
   flex: 7;
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
 }
 
 .userpage-user-message-text {
-  height: 100%;
+  height: 65px;
+  line-height: 65px;
 
   display: flex;
 
@@ -138,6 +154,28 @@
 
   font-size: 28px;
   font-weight: 600;
+
+  left: 10px;
+}
+
+.userpage-user-message-text-input {
+  height: 65px;
+  line-height: 65px;
+
+  display: flex;
+
+  justify-content: flex-start;
+  align-items: center;
+
+  text-align: center;
+
+  font-size: 28px;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 20px;
+  left: 10px;
+
 }
 
 .userpage-button-box {
@@ -176,3 +214,22 @@
   cursor: pointer;
   background-color: rgba(0,0,0,0.1);
 }
+
+.userpage-user-message-button {
+  margin-top: 10px;
+  margin-left: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 24px;
+  height: 24px;
+  
+  background-color: aqua;
+}
+
+.userpage-user-message-button:hover {
+  cursor: pointer;
+}
+
