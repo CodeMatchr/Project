@@ -14,11 +14,8 @@ import ChatManagerPopUp from './components/PopUp/ChatManagerPopUp';
 import UserPage from './views/UserPage';
 import BoardUpdate from './views/Board/Update';
 import ChatComePopUP from './components/PopUp/ChatComePopUp';
-<<<<<<< HEAD
-import Room from './views/Room';
-=======
 import UserBoardItem from './components/UserBoardItem';
->>>>>>> 9bf7a080b17e4b25ed89cbeb78c7b81f465bbe32
+import Room from './views/Room';
 
 function App() {
   return (
