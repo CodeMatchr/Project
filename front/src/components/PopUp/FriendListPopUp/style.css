@@ -1,0 +1,175 @@
+.friend-list{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.friend-list-wrap{
+    width: 1200px;
+    height: 1200px;
+    display: flex;
+    flex-direction: column;
+    background-color: brown;
+    border-radius: 15px;
+    position: relative;
+}
+
+.friend-list-exit-button{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+
+    width: 30px;
+    height: 30px;
+    background-color: chocolate;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.friend-list-exit-button:hover{
+    background-color: blueviolet;
+}
+
+.friend-list-title{
+    margin-top: 45px;
+    margin-left: 15px;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.friend-list-mine{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.friend-list-mine-title{
+    margin-top: 15px;
+
+    width: 1100px;
+    font-size: 23px;
+    font-weight: 500;
+}
+
+.friend-list-mine-box{
+    margin-top: 15px;
+    
+    display: flex;
+    align-items: center;
+    width: 1100px;
+}
+
+.friend-list-mine-friend-profile{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: chocolate;
+    text-align: center;
+    line-height: 50px;
+}
+
+.friend-list-mine-friend-nickname{
+    margin-left: 10px;
+
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.friend-list-mine-friend-state-message{
+    margin-left: 30px;
+}
+
+.friend-list-recommend{
+    margin-top: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.friend-list-recommend-top{
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.friend-list-recommend-title{
+    margin-left: 15px;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.friend-list-recommend-refresh{
+    margin-right: 15px;
+    width: 100px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: burlywood;
+    text-align: center;
+    line-height: 30px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.friend-list-recommend-refresh:hover{
+    background-color: cornflowerblue;
+}
+
+.friend-list-recommend-bottom{
+    margin-top: 15px;
+    
+    display: flex;
+    align-items: center;
+    width: 1100px;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 15px;
+}
+
+.friend-list-recommend-bottom:hover{
+    background-color: yellow;
+}
+
+.friend-list-recommend-bottom-left{
+    display: flex;
+    align-items: center;
+}
+
+.friend-list-recommend-profile{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: chocolate;
+    text-align: center;
+    line-height: 50px;
+}
+
+.friend-list-recommend-nickname{
+    margin-left: 10px;
+
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.friend-list-recommend-state-message{
+    margin-left: 30px;
+}
+
+.friend-add-button{
+    width: 100px;
+    height: 30px;
+    background-color: aquamarine;
+    border-radius: 15px;
+    text-align: center;
+    line-height: 30px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.friend-add-button:hover{
+    background-color: cornflowerblue;
+}
