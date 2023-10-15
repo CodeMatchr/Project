@@ -8,11 +8,11 @@ import { roomListMock, top3ViewBoardListMock, userpageBoardListMock } from '../.
 import Pagination from '../../components/Pagination';
 import { usePagination } from '../../hooks';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
-import RoomListItem from '../../components/RoomListItem';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
+import RoomFullListItem from '../../components/RoomFullListItem';
 
 //            component           //
-// description : 마이페이지 컴포넌트 //
+// description : 마이페이지 컴포넌트 // 
 export default function UserPage() {
 //            state           //
 // description : 네비게이터 //
@@ -145,6 +145,7 @@ const [userPage, setUserPage] = useState<boolean>(false);
     }
 
     //            event handler           //
+   
     //            component           //
     //            effect           //
     // description : 현재 페이지가 바뀔 때마다 board 리스트 변경 //
@@ -242,7 +243,7 @@ const [userPage, setUserPage] = useState<boolean>(false);
           <div className='userpage-chat-text'>내 채팅방</div>
         </div>
         <div className='userpage-chat-room'>
-          {viewChatList.map((item) => (<RoomListItem item={item} onClick={() =>onRoomListItemClickHandler(item.roomNumber) } />))}
+          {viewChatList.map((item) => (<RoomFullListItem onClick={() => onRoomListItemClickHandler(item.roomNumber)} item={item}/>))}
           {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP roomNumber={selectRoomNumber} /></div>}
         </div>
         <div className='userpage-chat-pagination'>

@@ -18,13 +18,22 @@ export const MAIN_PATH = '/';
 export const AUTHENTICATION_PATH = '/authentication';
 // Board
 export const BOARD_PATH = '/board';
-export const BOARD_DETAIL_PATH = '/board/detail';
+export const DETAIL_PATH = (boardNumber : number | string) => `detail/${boardNumber}`;
+export const BOARD_DETAIL_PATH = (boardNumber : number | string) => `${BOARD_PATH}/${DETAIL_PATH(boardNumber)}`;
 export const BOARD_UPDATE_PATH = '/board/update';
 export const BOARD_WRITE_PATH = '/board/write';
+
+export const BOARD_NUMBER_PATH_VARIABLE = ':boardNumber';
+
 // User
 export const USER_PATH = '/user';
-// Room
+// Room | Chat
 export const ROOM_PATH = '/room';
+export const ROOM_DETAIL_PATH = (roomNumber : number | string) => `detail/${roomNumber}`;
+export const ROOM_LIST_PATH = (roomNumber : number | string) => `${ROOM_PATH}/${ROOM_DETAIL_PATH(roomNumber)}`;
+
+export const ROOM_NUMBER_PATH_VARIABLE = ':roomNumber';
+
 // Compare
 export const COMPARE_PATH = '/compare';
 
@@ -35,6 +44,7 @@ export const POPUP_PATH = '/pop-up';
 export const POPUP_COME_PATH = '/pop-up/come';
 export const POPUP_ROOM_PATH = '/pop-up/room';
 export const POPUP_MANAGER_PATH = '/pop-up/manager';
+export const POPUP_BOARD_PATH = '/pop-up/board';
 
 export const USER_ITEM_PATH = '/user/item';
 
