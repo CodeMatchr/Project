@@ -15,6 +15,7 @@ import UserPage from './views/UserPage';
 import BoardUpdate from './views/Board/Update';
 import ChatComePopUP from './components/PopUp/ChatComePopUp';
 import Room from './views/Room';
+import ChatRoomList from './components/ChatRoomList';
 
 function App() {
   return (
@@ -49,6 +50,8 @@ function App() {
         {/* <Route path={POPUP_COME_PATH} element={<ChatComePopUP/>} /> */}
         <Route path={POPUP_MANAGER_PATH} element={<ChatManagerPopUp/>} />
       
+        {/* 채팅방 Chat */}
+        <Route path={'/chat'} element={<ChatRoomList/>} />
 
       </Routes>
       <Footer/>
