@@ -349,8 +349,9 @@
 .chat-room-pop-up{
     z-index: 999;
     position: fixed;
-    top: 25%;
-    left: 25%;
+    top: 50%;
+    left: 50%;
+    argin-left: -420px;
 }
 
 .main-bottom-bottom{

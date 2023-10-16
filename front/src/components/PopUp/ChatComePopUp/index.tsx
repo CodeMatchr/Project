@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
-import { MAIN_PATH, ROOM_PATH } from '../../../constants';
+import { CHAT_PATH, MAIN_PATH, ROOM_PATH } from '../../../constants';
 
 interface Props {
     roomNumber?: number;
@@ -24,7 +24,7 @@ const [roomPasswordError, setRoomPasswordError] = useState<boolean>(false);
 // description : 입장 버튼 클릭 이벤트 //
 // todo : 입장버튼 클릭시 해당 채팅방으로 이동하게 구현해야함, 사용자 검증도 필요함//
 const onComeClickHandler = () => {
-    navigator(ROOM_PATH);
+    navigator(CHAT_PATH);
 }
 // description : 취소 버튼 클릭 이벤트 //
 // todo : 취소버튼 클릭시 채팅방 리스트 화면으로 이동하게 다시 해야함 //
