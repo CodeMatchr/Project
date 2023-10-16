@@ -216,7 +216,12 @@
   .authentication-bottom-oauth-login-github-logo {
     margin-left: 15px;
   
-    background-color: aqua;
+    width: 30px;
+    height: 30px;
+    background-image: url(./assets/github-button-logo-icon.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   
   }
   
@@ -226,7 +231,7 @@
   }
   
   .authentication-bottom-oauth-login-github {
-    margin-right: 20px;
+    margin-right: 30px;
   
     font-size: 16px;
     font-weight: 500;
@@ -247,9 +252,12 @@
   
   .authentication-bottom-oauth-login-kakao-logo {
     margin-left: 15px;
-  
-    background-color: aqua;
-  
+    width: 30px;
+    height: 30px;
+    background-image: url(./assets/kakao-button-logo-icon.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   
   .authentication-bottom-oauth-login-kakao-logo:hover {
@@ -258,7 +266,7 @@
   }
   
   .authentication-bottom-oauth-login-kakao {
-    margin-right: 20px;
+    margin-right: 30px;
   
     font-size: 16px;
     font-weight: 500;

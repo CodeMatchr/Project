@@ -1,6 +1,8 @@
 import React from 'react'
 import './style.css';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
+import { useNavigate } from 'react-router-dom';
+import { BOARD_DETAIL_PATH } from '../../constants';
 
 
 interface Props {
@@ -11,6 +13,9 @@ interface Props {
 export default function UserBoardItem({item} :Props) {
 
 //                      state                       //
+// description : 네비게이터 함수 //
+const navigator = useNavigate();
+
 // description: 속성으로 받아오는 게시물 관련 상태 //
 const { boardNumber, boardTitle, boardContents, boardImageUrl } = item;
 const { boardWriterProfileImageUrl, boardWriterNickname, boardWriteDatetime } = item;
@@ -21,13 +26,17 @@ const roomImageBackground = boardWriterProfileImageUrl ? {backgroundImage : `url
 
 //                      function                       //
 //                      event handler                       //
+// description : 컴포넌트 클릭 이벤트 //
+const onclickHandler = () => {
+    navigator(BOARD_DETAIL_PATH(boardNumber));
+}
 //                      component                       //
 //                      effect                       //
 
 
 //                      render                       //
   return (
-    <div id='user-board-wrapper'>
+    <div id='user-board-wrapper' onClick={onclickHandler}>
         <div className='user-board-left-box'>
             <div className='user-board-info-box'>
                 <div className='user-board-info-profile'>{boardWriterProfileImageUrl}</div>

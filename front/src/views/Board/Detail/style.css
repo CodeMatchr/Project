@@ -1,4 +1,4 @@
-.board-detail{
+.board-detail-wrapper{
     margin-top: 65px;
 }
 .board-detail-container{
@@ -162,3 +162,125 @@
 
     background-color: aliceblue;
 }
+
+.favorite-list-box {
+    margin-top: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 20px;
+  }
+  .favorite-list-title {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 100%;
+  }
+  
+  .favorite-list-title-emphasis {
+    font-weight: 700;
+  }
+  
+  .favorite-list-container {
+    margin-top: 20px;
+  }
+  
+  .favorite-list-item {
+    margin-bottom: 20px;
+    margin-right: 30px;
+  
+    display: inline-flex;
+  
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .favorite-user-profile {
+    border-radius: 32px;
+    width: 32px;
+    height: 32px;
+  
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+  }
+  
+  .favorite-user-nickname {
+    margin-left: 8px;
+  
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 100%;
+  }
+  .comment-list-box {
+    margin-top: 20px;
+  }
+  
+  .comment-list-top {
+    padding: 0 20px;
+  }
+  
+  .comment-list-title {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 100%;
+  }
+  
+  .comment-list-title-emphasis {
+    font-weight: 700;
+  }
+  
+  .comment-list-container {
+    margin: 5px 0;
+  }
+  
+  .comment-box {
+    margin-top: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 20px;
+  }
+  
+  .comment-textarea {
+    display: block;
+  
+    width: 100%;
+  
+    border: none;
+    outline: none;
+    background: none;
+    resize: none;
+  
+    overflow: hidden;
+  
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+  }
+  
+  .comment-button-box {
+    display: flex;
+  
+    justify-content: flex-end;
+  }
+  
+  .comment-button {
+    margin-left: 15px;
+  
+    border-radius: 46px;
+  
+    width: 95px;
+    height: 30px;
+  
+    background-color: #000000;
+  
+    color: #ffffff;
+  
+    font-size: 14px;
+    font-weight: 500;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .comment-button:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.7);
+  }

@@ -39,10 +39,10 @@
 }
 
 .userpage-profile-image{
-  margin-left: 30px;
+  margin-left: 50px;
 
-  width: 120px;
-  height: 120px;
+  width: 90px;
+  height: 90px;
 
   background-color: aqua;
   border-radius: 120px;
@@ -142,6 +142,7 @@
   flex-direction: row;
 
   align-items: center;
+
 }
 
 .userpage-user-message-text {
@@ -243,15 +244,63 @@
   height: 100%;
 }
 
+.userpage-board-title{ 
+  margin: 20px 0 15px 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 32px;
+  font-weight: 600;
+} 
+
 .userpage-board-contents-list {
   display: flex;
   flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 25px;
 }
 
 .userpage-code-wrapper{
   flex: 2;
+
+  width: 100%;
+  height: 100%;
+
 }
 
 .userpage-chat-wrapper{
   flex: 3.5;
+
+  width: 100%;
+  height: 100%;
+}
+
+.userpage-chat-title{ 
+  margin: 20px 0 15px 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 32px;
+  font-weight: 600;
+} 
+
+.userpage-chat-room {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 25px;
+}
+
+.userpage-chat-room-box {
+  
 }
