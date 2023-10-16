@@ -35,5 +35,10 @@ public class FileController {
         return resource;
     }
     
-    // API : 코딩 파일 //
+    // API : 코딩 파일 텍스트로 변환하여 불러오기 메서드 //
+    @GetMapping(value="/code/{fileName}", produces = {MediaType.TEXT_PLAIN_VALUE})
+    public Resource getTextFile(@PathVariable(value = "fileName", required = true) String fileName) {
+        Resource resource = fileService.getFile(fileName);
+        return resource;
+    }
 }

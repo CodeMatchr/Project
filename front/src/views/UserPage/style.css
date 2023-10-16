@@ -6,6 +6,7 @@
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   gap: 15px;
 }
@@ -28,7 +29,7 @@
   justify-content: center;
   align-items: center;
 
-  width: 100%;
+  width: 1400px;
   height: 196px;
 
   background-color: rgba(255,255,255,1);
@@ -110,25 +111,29 @@
 }
 
 .userpage-user-nickname-button {
-  width: 24px;
-  height: 24px;
+  margin-top: 10px;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
+  width: 30px;
+  height: 30px;
+
+  border-radius: 50%;
   box-sizing: border-box;
+  background-image: url(./assets/update-button-icon.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+  transition: all 0.3s;
+  cursor: pointer;
+  
 }
 
-.userpage-user-nickname-icon{
-  margin-top: 10px;
-  box-sizing: border-box;
-  width: 24px;
-  height: 24px;
-
-  background-color: aqua;
-}
 
 .userpage-user-nickname-button:hover {
-  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .userpage-user-email {
@@ -227,14 +232,20 @@
   justify-content: center;
   align-items: center;
 
-  width: 24px;
-  height: 24px;
-  
-  background-color: aqua;
+  width: 30px;
+  height: 30px;
+
+  border-radius: 50%;
+  background-image: url(./assets/update-button-icon.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+  transition: all 0.3s;
+  cursor: pointer;
 }
 
 .userpage-user-message-button:hover {
-  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .userpage-board-wrapper{

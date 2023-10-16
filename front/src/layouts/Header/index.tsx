@@ -53,7 +53,7 @@ export default function Header() {
         <div id='header'>
             <div className='header-box'>
                 <div className='header-left' onClick={ onLogoButtonClickHandler }>
-                    <div className='header-left-logo-icon'>logo</div>
+                    <div className='header-left-logo-icon'></div>
                     <div className='header-left-logo-text'>Code Matchr</div>
                 </div>
                 <div className='header-right'>
