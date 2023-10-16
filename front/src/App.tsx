@@ -17,7 +17,6 @@ import ChatComePopUP from './components/PopUp/ChatComePopUp';
 import UserBoardItem from './components/UserBoardItem';
 import Room from './views/Room';
 import Chat from './views/Chat';
-import FriendListPopUp from './components/PopUp/FriendListPopUp';
 
 function App() {
   return (
@@ -53,13 +52,9 @@ function App() {
         {/* 팝업창 PopUp */}
         <Route path={POPUP_ROOM_PATH} element={<ChatRoomPopUp/>} />
         <Route path={POPUP_COME_PATH} element={<ChatComePopUP/>} />
-        <Route path={POPUP_MANAGER_PATH} element={<ChatManagerPopUp/>} />
-
-        
-
+        {/* <Route path={POPUP_MANAGER_PATH} element={<ChatManagerPopUp/>} /> */}
 
       </Routes>
-      <FriendListPopUp/>
       <Footer/>
     </>
   );
