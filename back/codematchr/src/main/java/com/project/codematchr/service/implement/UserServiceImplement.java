@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.codematchr.dto.request.user.PatchUserProfileImageUrlRequestDto;
+import com.project.codematchr.dto.request.user.PatchStateMessageRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserNicknameRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserPasswordRequestDto;
 import com.project.codematchr.dto.response.ResponseDto;
@@ -14,6 +15,7 @@ import com.project.codematchr.dto.response.user.GetUserResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserNicknameResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserPasswordResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserProfileImageUrlResponseDto;
+import com.project.codematchr.dto.response.user.PatchUserStateMessageResponseDto;
 import com.project.codematchr.entity.UserEntity;
 import com.project.codematchr.repository.UserRepository;
 import com.project.codematchr.service.UserService;
@@ -92,6 +94,31 @@ public class UserServiceImplement implements UserService {
         }
 
         return PatchUserNicknameResponseDto.success();
+    }
+
+    // 사용자 상태 메세지 수정
+    @Override
+    public ResponseEntity<? super PatchUserStateMessageResponseDto> patchUserStateMessage(String userEmail, PatchStateMessageRequestDto patchStateMessageRequestDto) {
+
+        String userStateMessage = patchStateMessageRequestDto.getUserStateMessage();
+
+        try {
+            // 존재하는 사용자 이메일 확인
+            UserEntity userEntity = userRepository.findByUserEmail(userEmail);
+            if(userEntity == null) return PatchUserStateMessageResponseDto.noExistedUserEmail();
+
+            // 상태메세지 수정
+            userEntity.setUserStateMessage(userStateMessage);
+
+            // 상태메세지 수정 데이터베이스 저장
+            userRepository.save(userEntity);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return PatchUserStateMessageResponseDto.success();
+
     }
 
     // 사용자 프로필 이미지 Url 수정

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
-import { AUTHENTICATION_PATH, MAIN_PATH, USER_PATH } from '../../constants';
+import { AUTHENTICATION_PATH, MAIN_PATH, USER_PAGE_PATH_VARIABLE, USER_PATH } from '../../constants';
 
 // component //
 export default function Header() {
@@ -37,7 +37,7 @@ export default function Header() {
 
     // 마이 페이지 이동 버튼 클릭 이벤트(로그인을 한 회원만) //
     const onUserButtonClickHandler = () => {
-        navigator(USER_PATH);
+        navigator(USER_PATH(USER_PAGE_PATH_VARIABLE));
     }
 
     // 검색 아이콘 버튼 클릭 이벤트 //

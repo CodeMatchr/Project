@@ -4,6 +4,7 @@ interface User {
      userEmail: string;
      userNickname: string;
      userProfileImageUrl: string;
+     userStateMessage: string;
    }
 
 interface UserStore {

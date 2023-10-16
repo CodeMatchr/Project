@@ -26,7 +26,10 @@ export const BOARD_WRITE_PATH = '/board/write';
 export const BOARD_NUMBER_PATH_VARIABLE = ':boardNumber';
 
 // User
-export const USER_PATH = '/user';
+export const USER_PATH = (userEmail:string) => `/user/${userEmail}`;
+export const USER_PAGE_PATH_VARIABLE = ':userEmail';
+
+
 // Room | Chat
 export const ROOM_PATH = '/room';
 export const ROOM_DETAIL_PATH = (roomNumber : number | string) => `detail/${roomNumber}`;
