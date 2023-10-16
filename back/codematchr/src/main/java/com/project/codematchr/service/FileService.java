@@ -12,5 +12,5 @@ public interface FileService {
     Resource getFile(String fileName);
 
     // 코딩 관련 파일 (텍스트 변환) 업로드 메서드 //
-
+    Resource getTextFile(String fileName);
 }

@@ -17,7 +17,30 @@
 .header-left{
     display: flex;
     cursor: pointer;
+    transition: all;
+    cursor: pointer;
 }
+
+.header-left:hover{
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+.header-left-logo-icon{
+    margin-right: 15px;
+
+    width: 30px;
+    height: 30px;
+    background-image: url(./assets/code-matchr-logo-icon.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.header-left-logo-text{
+    font-weight: 600;
+}
+
 
 .header-right{
     display: flex;
