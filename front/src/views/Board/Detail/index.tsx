@@ -35,13 +35,13 @@ export default function BoardDetail() {
   // description: 페이지 이동을 위한 네비게이트 함수 //
   const navigator = useNavigate();
   // description: 현재 페이지의 댓글 리스트 분류 함수 //
-  const getPageCommentList = () => {
-    const lastIndex = CommentListMock.length > COUNT_BY_PAGE_COMMENT * currentPage ?
-      COUNT_BY_PAGE_COMMENT * currentPage : CommentListMock.length;
-    const startIndex = COUNT_BY_PAGE_COMMENT * (currentPage - 1);
-    const pageCommentList = CommentListMock.slice(startIndex, lastIndex);
-    setPageCommentList(pageCommentList);
-  }
+  // const getPageCommentList = () => {
+  //   const lastIndex = CommentListMock.length > COUNT_BY_PAGE_COMMENT * currentPage ?
+  //     COUNT_BY_PAGE_COMMENT * currentPage : CommentListMock.length;
+  //   const startIndex = COUNT_BY_PAGE_COMMENT * (currentPage - 1);
+  //   const pageCommentList = CommentListMock.slice(startIndex, lastIndex);
+  //   setPageCommentList(pageCommentList);
+  // }
 
   //    component     //
   //  description : 실제 게시물 컴포넌트 //
@@ -171,7 +171,7 @@ export default function BoardDetail() {
         <div className='comment-list-top'>
           <div className='comment-list-title'>댓글 <span className='comment-list-title-emphasis'>{commentList.length}</span></div>
           <div className='comment-list-container'>
-            {pageCommentList.map((item) => (<CommentListItem item={item} />)) }
+            {/* {pageCommentList.map((item) => (<CommentListItem item={item} />)) } */}
           </div>
         </div>
         <div className='divider'></div>
@@ -203,21 +203,21 @@ export default function BoardDetail() {
     setBoard(BoardDetailMock);
     setLikeList(LikeListMock);
     setCommentList(CommentListMock);
+  });
 
+//     getPageCommentList();
 
-    getPageCommentList();
-
-    changeSection(CommentListMock.length, COUNT_BY_PAGE_COMMENT);
-  }, [boardNumber]);
-  // description: 현재 페이지가 바뀔때 마다 검색 게시물 분류하기 //
-  useEffect(() => {
-    getPageCommentList();
-  }, [currentPage]);
+//     changeSection(CommentListMock.length, COUNT_BY_PAGE_COMMENT);
+//   }, [boardNumber]);
+//   // description: 현재 페이지가 바뀔때 마다 검색 게시물 분류하기 //
+//   useEffect(() => {
+//     getPageCommentList();
+//   }, [currentPage]);
   
-  // description: 현재 페이지가 바뀔때 마다 페이지 리스트 변경 //
-  useEffect(() => {
-    changeSection(CommentListMock.length, COUNT_BY_PAGE_COMMENT);
- }, [currentSection]);
+//   // description: 현재 페이지가 바뀔때 마다 페이지 리스트 변경 //
+//   useEffect(() => {
+//     changeSection(CommentListMock.length, COUNT_BY_PAGE_COMMENT);
+//  }, [currentSection]);
   
 
   //          render          //

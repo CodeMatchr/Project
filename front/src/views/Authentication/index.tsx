@@ -92,11 +92,11 @@ const navigator = useNavigate();
             </div>
             <div className='authentication-bottom-oauth-login-box'>
               <div className='authentication-bottom-oauth-login-github-box'>
-                <div className='authentication-bottom-oauth-login-github-logo'>로고</div>
+                <div className='authentication-bottom-oauth-login-github-logo'></div>
                 <div className='authentication-bottom-oauth-login-github'>Github</div>
               </div>
               <div className='authentication-bottom-oauth-login-kakao-box'>
-                <div className='authentication-bottom-oauth-login-kakao-logo'>로고</div>
+                <div className='authentication-bottom-oauth-login-kakao-logo'></div>
                 <div className='authentication-bottom-oauth-login-kakao'>Kakao</div>
               </div>
             </div>
