@@ -43,7 +43,11 @@ export const COMPARE_PATH = '/compare';
 export const POPUP_PATH = '/pop-up';
 export const POPUP_COME_PATH = '/pop-up/come';
 export const POPUP_ROOM_PATH = '/pop-up/room';
-export const POPUP_MANAGER_PATH = '/pop-up/manager';
+export const POPUP_MANAGER_NAME_PATH = '/pop-up/name';
+export const POPUP_MANAGER_PASSWORD_PATH = '/pop-up/password';
+export const POPUP_MANAGER_IMAGE_PATH = '/pop-up/image';
+export const POPUP_MANAGER_BYE_PATH = '/pop-up/bye';
+
 export const POPUP_BOARD_PATH = '/pop-up/board';
 
 export const USER_ITEM_PATH = '/user/item';

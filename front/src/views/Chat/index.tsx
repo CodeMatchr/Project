@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 
 import './style.css';
-import ChatManagerPopUp from '../../components/PopUp/ChatManagerPopUp';
+import ChatManagerPopUp from '../../components/PopUp/ChatManagerNamePopUp';
+import ChatManagerNamePopUp from '../../components/PopUp/ChatManagerNamePopUp';
+import ChatManagerPasswordPopUp from '../../components/PopUp/ChatManagerPasswordPopUp';
+import ChatManagerImagePopUp from '../../components/PopUp/ChatManagerImagePopUp';
+import ChatManagerByePopUp from '../../components/PopUp/ChatManagerByePopUp';
 
 // component //
 export default function Chat() {
@@ -52,13 +56,13 @@ export default function Chat() {
             <div className='chat-top-left'>채팅방에 입장하였습니다.</div>
             <div className='chat-top-right'>
                 <div className='chat-top-right-name-button' onClick={onNameIconButtonClickHandler}>이름 변경</div>
-                {popUpNameState && <div className='chat-manager-pop-up'><ChatManagerPopUp/></div>}
+                {popUpNameState && <div className='chat-manager-pop-up'><ChatManagerNamePopUp/></div>}
                 <div className='chat-top-right-password-button' onClick={onPasswordIconButtonClickHandler}>비밀번호 변경</div>
-                {popUpPasswordState && <div className='chat-manager-pop-up'><ChatManagerPopUp/></div>}
+                {popUpPasswordState && <div className='chat-manager-pop-up'><ChatManagerPasswordPopUp/></div>}
                 <div className='chat-top-right-iamge-button' onClick={onImageIconButtonClickHandler}>이미지 변경</div>
-                {popUpImageState && <div className='chat-manager-pop-up'><ChatManagerPopUp/></div>}
+                {popUpImageState && <div className='chat-manager-pop-up'><ChatManagerImagePopUp/></div>}
                 <div className='chat-top-right-exit-button' onClick={onExitIconButtonClickHandler}>나가기</div>
-                {popUpExitState && <div className='chat-manager-pop-up'><ChatManagerPopUp/></div>}
+                {popUpExitState && <div className='chat-manager-pop-up'><ChatManagerByePopUp/></div>}
             </div>
         </div>
         <div className='chat-mid'>코드 비교 영역</div>
