@@ -3,6 +3,11 @@ import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_PATH, ROOM_PATH } from '../../../constants';
 
+// interface Props {
+//     popUpType: string
+// { popUpType }: Props
+// }
+
 //            component           //
 // description : 채팅방 매니저 팝업창 //
 export default function ChatManagerPopUp() {
@@ -37,6 +42,7 @@ export default function ChatManagerPopUp() {
     // description : 파일 업로드 버튼 //
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+
     //            function           //
     //            event handler           //
     // description : 변경 버튼 클릭 이벤트 //
@@ -66,12 +72,7 @@ export default function ChatManagerPopUp() {
     <div id='popup-manager-wrapper'>
         <div className='popup-manager-box'>
             <div className='popup-manager-top-box'>
-                {
-                roomChanege &&  roomNameChange ? <div className='popup-manager-top-title'>채팅방 이름 변경</div> :
-                                roomPasswordChanege ? <div className='popup-manager-top-title'>채팅방 비밀번호 변경</div> : 
-                                roomImageChanege ? <div className='popup-manager-top-title'>채팅방 이미지 변경</div> : 
-                                <div className='popup-manager-top-title'>채팅방 나가기</div>
-                }
+                <div className='popup-manager-top-title'>채팅방 이름 변경</div>
             </div>
             <div className='popup-manager-middle-box'>
                 <div className='popop-manager-middle-file-box'>
@@ -84,23 +85,13 @@ export default function ChatManagerPopUp() {
                 </div>
                 <div className='popup-manager-middle-text-box'>
                     <div className='popup-manager-middle-text'>
-                        {
-                        roomInputChange && roomNameInputChange ? <input className='popup-manager-middle-text-input' placeholder='변경할 이름을 입력해주세요.'></input> :
-                                            roomPasswordInputChange ? <input className='popup-manager-middle-text-input' placeholder='변경할 비밀번호를 입력해주세요.'></input> :
-                                            roomImageInputChange ? <input className='popup-manager-middle-text-input-detail' placeholder='변경할 채팅방 이미지 파일을 업로드해주세요.' readOnly></input> :
-                                            <div className='popup-manager-middle-text-input-box'>
-                                                <textarea className='popup-manager-middle-text-input-detail' placeholder='채팅방을 나가시겠습니까?&#13;&#10;방장의 경우 채팅방이 전체 삭제됩니다.' readOnly/>
-                                            </div>
-                        }
+                        <input className='popup-manager-middle-text-input' placeholder='변경할 이름을 입력해주세요.'></input>
                     </div>
                 </div>
             </div>
             <div className='popup-manager-bottom-box'>
                 <div className='popup-manager-bottom-button-change-box'>
-                    {
-                    roomExit ? <button className='popup-manager-bottom-button-change' onClick={onExitClickHandler}>나가기</button> :
-                        <button className='popup-manager-bottom-button-change' onClick={onChangeClickHandler}>변경</button> 
-                    }
+                    <button className='popup-manager-bottom-button-change' onClick={onExitClickHandler}>나가기</button>
                 </div>
                 <div className='popup-manager-bottom-button-cancel-box'>
                     <button className='popup-manager-bottom-button-cancel' onClick={onCancelClickHandler}>취소</button>
