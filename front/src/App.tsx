@@ -15,7 +15,6 @@ import UserPage from './views/UserPage';
 import BoardUpdate from './views/Board/Update';
 import ChatComePopUP from './components/PopUp/ChatComePopUp';
 import Room from './views/Room';
-import BoardPopUp from './components/PopUp/BoardPopUp';
 
 function App() {
   return (
@@ -37,7 +36,6 @@ function App() {
         <Route path={BOARD_PATH} element={<BoardDetail/>} />
         <Route path={BOARD_DETAIL_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardDetail/>} />
         <Route path={BOARD_WRITE_PATH} element={<BoardWrite/>} />
-        {/* <Route path={BOARD_UPDATE_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardUpdate/>} /> */}
 
         {/* 다인원 채팅방 화면 ROOM */}
         <Route path={ROOM_PATH} element={<Room/>} />
@@ -47,11 +45,8 @@ function App() {
 
         {/* 팝업창 PopUp */}
         <Route path={POPUP_ROOM_PATH} element={<ChatRoomPopUp/>} />
-        {/* <Route path={POPUP_COME_PATH} element={<ChatComePopUP/>} /> */}
-        <Route path={POPUP_MANAGER_PATH} element={<ChatManagerPopUp/>} />
-        <Route path={POPUP_BOARD_PATH} element={<BoardPopUp/>} />
-      
-        {/* 채팅방 Chat */}
+        <Route path={POPUP_COME_PATH} element={<ChatComePopUP/>} />
+        {/* <Route path={POPUP_MANAGER_PATH} element={<ChatManagerPopUp/>} /> */}
 
       </Routes>
       <Footer/>
