@@ -1,7 +1,7 @@
 #user-board-wrapper {
     position: relative;
 
-    width: 1200px;
+    width: 2000px;
     height: 200px;
     background-color: lightblue;
     border-radius: 15px;
@@ -13,6 +13,7 @@
 
     display: flex;
     flex-direction: row;
+
 }
 
 .user-board-left-box {
