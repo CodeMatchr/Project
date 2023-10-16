@@ -16,8 +16,4 @@ export default function BoardPopUp() {
       </div>
     </div>
   )
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 886fa1b5c59433cd260fda25eb24197429ae19a9

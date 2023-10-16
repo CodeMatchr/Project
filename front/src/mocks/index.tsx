@@ -324,3 +324,57 @@ export const userpageBoardListMock: BoardListResponseDto[] = [
         boardWriterProfileImageUrl : '',
     },
 ]
+
+export const BoardDetailMock = {
+    boardNumber : 3,
+    boardTitle : 'top3 View Board Title 1',
+    boardContents : 'top3 View Board Contents1',
+    boardImageUrl : 'https://assets.blog.engoo.com/wp-content/uploads/sites/2/2022/09/21164602/cat_idioms_cover.jpg',
+    boardViewCount : 10,
+    boardCommentCount : 10,
+    boardFavoriteCount : 10,
+    boardWriteDatetime : '2023. 10. 11',
+    boardWriterNickname : 'Nickname 3',
+    boardWriterProfileImageUrl : '',
+}
+
+export const CommentListMock = [
+    {
+      writerProfileImage: 'https://cdn.thebilliards.kr/news/photo/202305/20293_20326_517.jpg',
+      writerNickName: 'commentListMock1',
+      writeTime: '3분전',
+      comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    },
+    {
+      writerProfileImage: 'https://cdn.thebilliards.kr/news/photo/202305/20293_20326_517.jpg',
+      writerNickName: 'commentListMock2',
+      writeTime: '3분전',
+      comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    },
+    {
+      writerProfileImage: 'https://cdn.thebilliards.kr/news/photo/202305/20293_20326_517.jpg',
+      writerNickName: 'commentListMock3',
+      writeTime: '3분전',
+      comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    },
+         
+  ]
+
+export const LikeListMock = [
+    {
+      likeUserProfileImage: 'https://cdn.thebilliards.kr/news/photo/202305/20293_20326_517.jpg',
+      likeUserNickname: 'LikeListMock1',
+      likeUserEmail: 'email@email.com',
+    },
+    {
+      likeUserProfileImage: 'https://cdn.thebilliards.kr/news/photo/202305/20293_20326_517.jpg',
+      likeUserNickname: 'LikeListMock2',
+      likeUserEmail: 'email@email.com',
+    },
+    {
+      likeUserProfileImage: 'https://cdn.thebilliards.kr/news/photo/202305/20293_20326_517.jpg',
+      likeUserNickname: 'LikeListMock3',
+      likeUserEmail: 'email@email.com',
+    },
+    
+  ]
