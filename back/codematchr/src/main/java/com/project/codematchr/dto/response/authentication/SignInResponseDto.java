@@ -26,8 +26,8 @@ public class SignInResponseDto extends ResponseDto{
         SignInResponseDto result = new SignInResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS, token);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
-    public static ResponseEntity<ResponseDto> signInDataMismatch() {
-        ResponseDto result = new ResponseDto(ResponseCode.REQUEST_PARAMETER_VALIDATION_FAIL, ResponseMessage.REQUEST_PARAMETER_VALIDATION_FAIL);
+    public static ResponseEntity<ResponseDto> signInFail() {
+        ResponseDto result = new ResponseDto(ResponseCode.SIGN_IN_FAIL, ResponseMessage.SIGN_IN_FAIL);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
       }
 

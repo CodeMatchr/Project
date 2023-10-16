@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 import Main from './views/Main';
 import { AUTHENTICATION_PATH, BOARD_DETAIL_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, CHAT_PATH, COMPARE_PATH, MAIN_PATH, POPUP_BOARD_PATH, POPUP_COME_PATH, POPUP_MANAGER_BYE_PATH, POPUP_MANAGER_IMAGE_PATH, POPUP_MANAGER_NAME_PATH, POPUP_MANAGER_PASSWORD_PATH,  POPUP_PATH, POPUP_ROOM_PATH, ROOM_LIST_PATH, ROOM_NUMBER_PATH_VARIABLE, ROOM_PATH, USER_ITEM_PATH, USER_PATH } from './constants';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Authentication from './views/Authentication';
 import BoardWrite from './views/Board/Write';
 import BoardDetail from './views/Board/Detail';
@@ -17,8 +17,40 @@ import ChatManagerNamePopUp from './components/PopUp/ChatManagerNamePopUp';
 import ChatManagerPasswordPopUp from './components/PopUp/ChatManagerPasswordPopUp';
 import ChatManagerImagePopUp from './components/PopUp/ChatManagerImagePopUp';
 import ChatManagerByePopUp from './components/PopUp/ChatManagerByePopUp';
+import { useCookies } from 'react-cookie';
+import GetLoginUserResponseDto from './interfaces/response/User/get-login-user.response.dto';
+import ResponseDto from './interfaces/response/response.dto';
+import { useUserStore } from './store';
+import { getSignInUserRequest } from './apis';
+
 
 function App() {
+// state //
+// 현재페이지 url 상태 //
+const {pathname} = useLocation();
+// 유저 스토어 상태 //
+const {user, setUser} = useUserStore();
+
+// Cookies 상태 //
+const [cookies, setCookie] = useCookies();
+
+// function //
+const getSignInUserResponseHandler = (result : GetLoginUserResponseDto | ResponseDto) => {
+  const {code} = result;
+
+  if(code === 'DE') alert('데이터 베이스 오류입니다.');
+  if(code !== 'SU') return;
+
+  setUser({...result as GetLoginUserResponseDto});
+}
+
+// effect //
+useEffect(() => {
+  const accessToken = cookies.accessToken;
+  console.log(accessToken);
+  if(!user && accessToken) getSignInUserRequest(accessToken).then(getSignInUserResponseHandler);
+}, [pathname]);
+
   return (
     <>
       <Header/>

@@ -40,11 +40,12 @@ public class AuthServiceImplement implements AuthService {
         UserEntity userEntity = userRepository.findByUserEmail(userEmail);
         
         // description: 존재하지 않는 email 확인 //
-         if (userEntity == null) return SignInResponseDto.signInDataMismatch();
+         if (userEntity == null) return SignInResponseDto.signInFail();
+         
          // description: 비밀번호 일치여부 확인 //
          String encodePassword = userEntity.getUserPassword();
          boolean equalPassword = passwordEncoder.matches(userPassword, encodePassword);
-         if (!equalPassword) return SignInResponseDto.signInDataMismatch();
+         if (!equalPassword) return SignInResponseDto.signInFail();
 
          // description : JWT 생성 //
          token = jwtProvider.create(userEmail);

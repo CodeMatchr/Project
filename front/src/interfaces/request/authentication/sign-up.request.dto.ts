@@ -1,8 +1,8 @@
 export default interface SignUpRequestDto {
-    email : string;
-    password : string;
-    nickname : string;
-    telnumber : string;
-    address : string;
-    addressDetail : string;
+    userEmail : string;
+    userPassword : string;
+    userNickname : string;
+    userTelnumber : string;
+    userAddress : string;
+    userAddressDetail : string;
 }
