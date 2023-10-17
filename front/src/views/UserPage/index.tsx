@@ -57,7 +57,7 @@ const navigator = useNavigate();
     // description : 유저 정보 응답 처리 함수 //
     const getUserResponseHandler = (result: GetUserResponseDto | ResponseDto) => {
       const { code } = result;
-      if (code === 'NU') alert('존재하지 않는 유저입니다.');
+      if (code === 'NE') alert('존재하지 않는 사용자 이메일 입니다.');
       if (code === 'DE') alert('데이터베이스 오류입니다.');
       if (code !== 'SU') return;
 
@@ -76,7 +76,7 @@ const navigator = useNavigate();
     // description: 닉네임 변경 응답 처리 함수 //
     const patchNicknameResponseHandler = (code: string) => {
       if (!user) return;
-      if (code === 'NU') alert('존재하지 않는 유저입니다.');
+      if (code === 'NE') alert('존재하지 않는 사용자 이메일 입니다.');
       if (code === 'EN') alert('중복되는 닉네임입니다.');
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
@@ -91,7 +91,7 @@ const navigator = useNavigate();
     // description : stateMessage 변경 응답 처리 함수 //
     const patchStateMessageResponseHandler = (code: string) => {
       if (!user) return;
-      if (code === 'NU') alert('존재하지 않는 사용자 이메일입니다.');
+      if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
       if (code === 'SU') {
@@ -106,7 +106,7 @@ const navigator = useNavigate();
     // description: 프로필 이미지 변경 응답 처리 함수 //
     const patchProfileImageResponseHandler = (code: string) => {
       if (!user) return;
-      if (code === 'NU') alert('존재하지않는 유저입니다.');
+      if (code === 'NE') alert('존재하지 않는 사용자 이메일 입니다.');
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
       if (code === 'SU') {
@@ -192,6 +192,7 @@ const navigator = useNavigate();
       }
 
     }, [userEmail, user]);
+    // user 제거하고 다시 해보기//
     
     //            render           //
     return (
@@ -204,9 +205,9 @@ const navigator = useNavigate();
         <div className='userpage-user-info-box'>
           <div className='userpage-user-nickname-box'>
             <div className='userpage-user-nickname-input-box'>
-            {nicknameChange ? (
+              {nicknameChange ? (
                 <input className='userpage-user-nickname-input' type='text' value={userNickname} onChange={onNicknameChangeHandler} /> // false
-              ) :(
+                ) :(
                 <input className='userpage-user-nickname-input' type='text' value={userNickname} readOnly /> // true
                 )}
               <div className='userpage-user-nickname-button' onClick={onNicknameButtonClickHandler}></div>
