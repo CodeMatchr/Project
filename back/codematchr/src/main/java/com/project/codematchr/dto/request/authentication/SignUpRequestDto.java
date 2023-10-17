@@ -20,6 +20,9 @@ public class SignUpRequestDto {
     private String userPassword;
     @NotBlank
     private String userNickname;
+    
+    private String userStateMessage;
+
     @NotBlank @Pattern(regexp="^[0-9]{11,12}$")
     private String userTelnumber;
     @NotBlank

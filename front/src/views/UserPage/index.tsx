@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './style.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BOARD_DETAIL_PATH, BOARD_PATH, BOARD_WRITE_PATH, MAIN_ROOM_COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll } from '../../constants';
+import { BOARD_DETAIL_PATH, BOARD_PATH, BOARD_WRITE_PATH, COUNT_BY_PAGE, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll } from '../../constants';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import UserBoardItem from '../../components/UserBoardItem';
 import { roomListMock, top3ViewBoardListMock, userpageBoardListMock } from '../../mocks';
@@ -10,43 +10,126 @@ import { usePagination } from '../../hooks';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
 import RoomFullListItem from '../../components/RoomFullListItem';
+import { useUserStore } from 'src/store';
+import { useCookies } from 'react-cookie';
+import { GetUserBoardListResponseDto, GetUserResponseDto } from 'src/interfaces/response/User';
+import ResponseDto from 'src/interfaces/response/response.dto';
+import { getSignInUserRequest, getUserRequest, patchNicknameRequest, patchProfileImageUrlRequest, patchStateMessageRequest } from 'src/apis';
+import { PatchNicknameRequestDto, PatchProfileImageUrlRequestDto, PatchStateMessageRequestDto } from 'src/interfaces/request/user';
 
 //            component           //
 // description : 마이페이지 컴포넌트 // 
 export default function UserPage() {
 //            state           //
-// description : 네비게이터 //
-const navigator = useNavigate();
 // description : 유저 이메일 상태 //
 const { userEmail } = useParams();
 // description : 유저페이지 여부 상태 //
 const [userPage, setUserPage] = useState<boolean>(false);
+// description : 로그인 유저 정보 상태 //
+const {user, setUser} = useUserStore();
+// description : Cookies 상태 //
+const [cookies, setCookie] = useCookies();
 
 //            function           //
+// description : 네비게이터 //
+const navigator = useNavigate();
 //            event handler           //
 
   //            component           //
-  // description : 마이페이지 상단(유저 정보) //
-  // todo : 유저 이메일 상태에 따라 변경되는 부분 확인해서 추가, 수정해야함 //
   const UserPageTop = () => {
     //            state           //
     // description: 인풋 요소 상태 //
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // description : 프로필 이미지 상태 //
-    const [profileImageUrl, setProfileImageUrl] = useState<string>('');
+    const [userProfileImageUrl, setUserProfileImageUrl] = useState<string>('');
     // description : 이메일 상태 //
-    const [email, setEmail] = useState<string>('email@email.com');
+    // const [userEmail, setUserEmail] = useState<string>('');
     // description : 닉네임 상태 //
-    const [nickname, setNickname] = useState<string>('nickname');
+    const [userNickname, setUserNickname] = useState<string>('');
     // description : 닉네임 변경 버튼 상태 //
     const [nicknameChange, setNicknameChange] = useState<boolean>(false);
     // description : 상태메세지 상태 //
-    const [message, setMessage] = useState<string>('state message');
+    const [userStateMessage, setUserStateMessage] = useState<string>('');
     // description : 상태메시지 변경 버튼 상태 //
     const [messageChange, setMessageChange] = useState<boolean>(false);
 
     //            function           //
+    // description : 유저 정보 응답 처리 함수 //
+    const getUserResponseHandler = (result : GetUserResponseDto | ResponseDto) => {
+      const {code} = result;
+        if(code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+        if(code === 'DE') alert('데이터 베이스 오류입니다.');
+        if(code !== 'SU') navigator(MAIN_PATH);
+        
+        const {userNickname, userProfileImageUrl, userStateMessage} = result as GetUserResponseDto;
+        setUserNickname(userNickname);
+        setUserStateMessage(userStateMessage);
+        
+        if(userProfileImageUrl) setUserProfileImageUrl(userProfileImageUrl);
+        // todo : 디폴트 이미지 넣을지 말지 //
+
+        if(userEmail === user?.userEmail){
+          const after = { userEmail : userEmail as string, userNickname, userProfileImageUrl, userStateMessage };
+          setUser(after);
+        }
+    }
+    // description : nickname 변경 응답 처리 함수 //
+    const patchNicknameResponseHandler = (code:string) => {
+      if(!user) return;
+
+      if(code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+      if(code === 'EN') alert('존재하는 사용자 닉네임입니다.');
+      if(code === 'DE' ) alert('데이터 베이스 에러입니다.');
+      if(code !== 'SU' ) {
+        setUserNickname(user.userNickname);
+        return;
+      }
+      getUserRequest(user.userEmail).then(getUserResponseHandler);
+    }
+    
+    // description : stateMessage 변경 응답 처리 함수 //
+    const patchStateMessageResponseHandler = (code : string) => {
+      if(!user) return;
+
+      if(code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+      if(code === 'DE') alert('데이터 베이스 에러입니다.');
+      if(code !== 'SU') {
+        setUserStateMessage(user.userStateMessage);
+        return;
+      }
+      getUserRequest(user.userStateMessage).then(getUserResponseHandler);
+    }
+    
+    // description : profileImageUrl 변경 응답 처리 함수 //
+    const patchProfileImageUrlResponseHandler = (code:string) => {
+      if(!user) return;
+
+      if(code === 'NE') alert('존재하지 않는 사용자 이메일 입니다.');
+      if(code === 'VF') alert('잘못된 입력입니다.');
+      if(code === 'DE') alert('데이터 베이스 에러입니다.');
+      if(code !== 'SU') {
+        setUserProfileImageUrl(user.userProfileImageUrl);
+        return;
+      }
+      getUserRequest(user.userEmail).then(getUserResponseHandler);
+    }
+    
+    // description : profileImageUrl 업로드 응답 처리 함수 //
+    const profileUploadResponseHandler = (url: string | null) => {
+      if(!user) return;
+
+      if(!url) {
+        setUserProfileImageUrl(user.userProfileImageUrl);
+        return;
+      }
+
+      const data:PatchProfileImageUrlRequestDto = {userProfileImageUrl: url};
+      const token = cookies.accessToken;
+
+      patchProfileImageUrlRequest(data, token).then(patchProfileImageUrlResponseHandler);
+    }
+
     //            event handler           //
     // description: 프로필 이미지 클릭시 파일 인풋창 열림 이벤트 //
     const onProfileClickHandler = () => {
@@ -54,12 +137,16 @@ const [userPage, setUserPage] = useState<boolean>(false);
     }
     // description : 닉네임 변경 이벤트 //
     const onNicknameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-      setNickname(event.target.value);
+      setUserNickname(event.target.value);
     }
     // description : 닉네임 변경 버튼 클릭 이벤트 //
     const onNicknameClickHandler = () => {
-      setNickname(nickname);
-      setNicknameChange(nicknameChange);
+      if(nicknameChange) {
+        const data : PatchNicknameRequestDto = {userNickname};
+        const token = cookies.accessToken;
+        patchNicknameRequest(data, token).then(patchNicknameResponseHandler);
+      }
+      setNicknameChange(!nicknameChange);
     }
     // description : 글쓰기 버튼 클릭 이벤트 //
     const onWriteClickHandler = () => {
@@ -67,17 +154,35 @@ const [userPage, setUserPage] = useState<boolean>(false);
     }
     // description : 상태메세지 변경 이벤트 //
     const onMessageChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-      setMessage(event.target.value);
+      setUserStateMessage(event.target.value);
     }
-    // description : 상태메세지 변경 이벤트 //
+    // description : 상태메세지 변경 버튼 클릭 이벤트 //
     const onMessageClickHandler = () => {
-      setMessage(message);
-      setMessageChange(messageChange);
+      if(messageChange) {
+        const data : PatchStateMessageRequestDto = {userStateMessage};
+        const token = cookies.accessToken;
+        patchStateMessageRequest(data, token).then(patchStateMessageResponseHandler);
+      }
+      setMessageChange(!messageChange);
     }
 
     
     //            component           //
     //            effect           //
+    // description : userEmail 상태가 바뀔때마다 //
+    useEffect(() => {
+      if(!userEmail) navigator(MAIN_PATH);
+
+      const myPage = user?.userEmail === userEmail;
+      if(myPage) {
+        if(user?.userProfileImageUrl) setUserProfileImageUrl(user?.userProfileImageUrl);
+        // todo : 디폴트 이미지 //
+        setUserNickname(user?.userNickname as string);
+      }
+      else {
+        getUserRequest(userEmail as string).then(getUserResponseHandler);
+      }
+    }, [userEmail, user]);
     
     //            render           //
     return (
@@ -91,21 +196,21 @@ const [userPage, setUserPage] = useState<boolean>(false);
           <div className='userpage-user-nickname-box'>
             <div className='userpage-user-nickname-input-box'>
               {nicknameChange ? (
-                <input className='userpage-user-nickname-input' type='text' value={nickname} onChange={onNicknameChangeHandler} size={nickname.length}/>
+                <input className='userpage-user-nickname-input' type='text' value={userNickname} onChange={onNicknameChangeHandler}/>
               ) : (
-                <div className='userpage-user-nickname'>{nickname}</div>
+                <div className='userpage-user-nickname'>{userNickname}</div>
               )}
               <div className='userpage-user-nickname-button' onClick={onNicknameClickHandler}>
 
               </div>
             </div>
-            <div className='userpage-user-email'>{email}</div>
+            <div className='userpage-user-email'>{userEmail}</div>
           </div>
           <div className='userpage-user-message-box'>
             {messageChange ? (
-              <input className='userpage-user-message-text-input' type='text' value={message} onChange={onMessageChangeHandler} size={message.length} ></input>
+              <input className='userpage-user-message-text-input' type='text' value={userStateMessage} onChange={onMessageChangeHandler} ></input>
             ) : (
-              <div className='userpage-user-message-text'>{message}</div>
+              <div className='userpage-user-message-text'>{userStateMessage}</div>
             )}
             <div className='userpage-user-message-button' onClick={onMessageClickHandler}></div>
           </div>
@@ -142,6 +247,17 @@ const [userPage, setUserPage] = useState<boolean>(false);
       setViewBoardList(viewBoardList);
     }
 
+    // description : 사용자 작성 게시물 리스트 불러오기 응답 처리 함수 //
+    const getUserBoardListResponseHandler = (responseBody:GetUserResponseDto | ResponseDto) => {
+      const {code} = responseBody;
+      if(code === 'DE') alert('데이터베이스 에러입니다.');
+      if(code !== 'SU') return;
+
+      const {boardList} = responseBody as GetUserBoardListResponseDto;
+      setCurrentBoardList(boardList);
+      getViewBoardList(boardList);
+      changeSection(boardList.length, COUNT_BY_PAGE);
+    }
     //            event handler           //
    
     //            component           //
@@ -257,6 +373,14 @@ const [userPage, setUserPage] = useState<boolean>(false);
     );
   } 
 //            effect           //
+// description : 유저 이메일 상태가 바뀔때마다 실행 //
+useEffect(() => {
+  if(!userEmail) navigator(MAIN_PATH);
+
+  const myPage = user?.userEmail === userEmail;
+  setUserPage(myPage);
+}, [userEmail, user]);
+
 //            render           //
   return (
     <div id='userpage-wrapper'>

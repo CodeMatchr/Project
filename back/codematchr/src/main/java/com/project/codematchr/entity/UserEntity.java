@@ -30,6 +30,7 @@ public class UserEntity {
     this.userEmail = dto.getUserEmail();
     this.userPassword = dto.getUserPassword();
     this.userNickname = dto.getUserNickname();
+    this.userStateMessage = dto.getUserStateMessage();
     this.userTelnumber = dto.getUserTelnumber();
     this.userAddress = dto.getUserAddress();
     this.userAddressDetail = dto.getUserAddressDetail();
@@ -38,6 +39,11 @@ public class UserEntity {
     // 사용자 닉네임 수정
     public void setUserNickname(String userNickname) {
         this.userNickname = userNickname;
+    }
+
+     // 상태메세지 수정
+    public void setUserStateMessage(String userStateMessage) {
+        this.userStateMessage = userStateMessage;
     }
 
     // 사용자 프로필 이미지 Url 수정
