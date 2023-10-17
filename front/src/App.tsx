@@ -3,7 +3,7 @@ import './App.css';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 import Main from './views/Main';
-import { AUTHENTICATION_PATH, BOARD_DETAIL_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, CHAT_PATH, COMPARE_PATH, MAIN_PATH, POPUP_BOARD_PATH, POPUP_COME_PATH, POPUP_MANAGER_BYE_PATH, POPUP_MANAGER_IMAGE_PATH, POPUP_MANAGER_NAME_PATH, POPUP_MANAGER_PASSWORD_PATH,  POPUP_PATH, POPUP_ROOM_PATH, ROOM_LIST_PATH, ROOM_NUMBER_PATH_VARIABLE, ROOM_PATH, USER_ITEM_PATH, USER_PAGE_PATH_VARIABLE, USER_PATH } from './constants';
+import { AUTHENTICATION_PATH, BOARD_DETAIL_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, CHAT_PATH, COMPARE_PATH, MAIN_PATH, POPUP_BOARD_PATH, POPUP_COME_PATH, POPUP_MANAGER_BYE_PATH, POPUP_MANAGER_IMAGE_PATH, POPUP_MANAGER_NAME_PATH, POPUP_MANAGER_PASSWORD_PATH,  POPUP_PATH, POPUP_ROOM_PATH, ROOM_LIST_PATH, ROOM_NUMBER_PATH_VARIABLE, ROOM_PATH, USER_ITEM_PATH, USER_PAGE_PATH_VARIABLE, USER_PATH, WRITE_PATH } from './constants';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Authentication from './views/Authentication';
 import BoardWrite from './views/Board/Write';
@@ -72,7 +72,7 @@ useEffect(() => {
         {/* 게시글 관련 화면 BOARD */}
         <Route path={BOARD_PATH} element={<BoardDetail/>} />
         <Route path={BOARD_DETAIL_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardDetail/>} />
-        <Route path={BOARD_WRITE_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardWrite/>} />
+        <Route path={WRITE_PATH} element={<BoardWrite />} />
 
         {/* 다인원 채팅방 화면 ROOM */}
         <Route path={ROOM_PATH} element={<Room/>} />

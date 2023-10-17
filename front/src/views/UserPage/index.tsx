@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './style.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BOARD_DETAIL_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_WRITE_PATH, COUNT_BY_PAGE, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll } from '../../constants';
+import { BOARD_DETAIL_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_WRITE_PATH, COUNT_BY_PAGE, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll, WRITE_PATH } from '../../constants';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import UserBoardItem from '../../components/UserBoardItem';
 import { roomListMock, top3ViewBoardListMock, userpageBoardListMock } from '../../mocks';
@@ -171,8 +171,9 @@ const navigator = useNavigate();
       setMessageChange(!messageChange);
     }
     // description : 글쓰기 버튼 클릭 이벤트 //
+    // todo : 위치 다시 확인해서 연결 //
     const onWriteClickHandler = () => {
-      navigator(BOARD_WRITE_PATH(BOARD_NUMBER_PATH_VARIABLE));
+      navigator(BOARD_WRITE_PATH());
     }
 
     
