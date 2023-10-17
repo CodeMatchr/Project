@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './style.css'
+import './style.css';
 import Pagination from '../../components/Pagination';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import Top3ListItem from '../../components/Top3ListItem';
@@ -11,6 +11,7 @@ import { BOARD_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH } from '../../constants'
 import { useNavigate } from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
+import CompareCode from 'src/components/CompareCode';
 
 // component //
 export default function Main() {
@@ -30,73 +31,16 @@ export default function Main() {
   const MainTop = () => {
 
     // state //
-    // // description :  요소에 대한 참조 상태 Controll Group (왼쪽) //
-    // const textLeftAreaRef = useRef<HTMLTextAreaElement>(null);
-    // // description :  요소에 대한 참조 상태 Experimental Group (오른쪽) //
-    // const textRightAreaRef = useRef<HTMLTextAreaElement>(null);
-
-    // Controll Group (왼쪽)
-    const [leftText, setLeftText] = useState<string>('');
-    // Experimental Group (오른쪽)
-    const [rightText, setRightText] = useState<string>('');
-
-    // description : file input 요소에 대한 참조 상태 //
-    const fileInputRef = useRef<HTMLInputElement>(null);
-
-    // 비교 분석 결과 정보를 저장할 상태
-
 
     // function //
-    
 
     // event handler //
-    const compareButtonClickHandler = () => {
-      if(leftText.trim() === "" && rightText.trim() === "") {
-        alert("텍스트를 입력해주세요.");
-      } else if (leftText.trim() === "") {
-        alert("기준이 되는 텍스트를 입력해주세요.");
-      } else if (rightText.trim() === "") {
-        alert("비교하려는 텍스트를 입력해 주세요.");
-      } else if (leftText === rightText) {
-        alert("두 텍스트들이 서로 일치합니다");
-      } else {
-        alert("두 텍스트들이 서로 일치하지 않습니다.");
-      }
-    }
-
-    const resetButtonClickHandler = () => {
-      setLeftText('');
-      setRightText('');
-    }
-
-    const switchButtonClickHandler = () => {
-      setLeftText(rightText);
-      setRightText(leftText);
-    }
-    
 
     // effect //
 
     // render //
     return(
-      <div className='main-top'>
-        <div className='main-top-title'>Compare Code</div>
-        <div className='main-top-compare'>
-          <div className='main-top-compare-left'>
-            <div className='main-top-compare-left-title'>Controll Code</div>
-            <textarea className='main-top-compare-left-input' placeholder='텍스트를 입력하거나 파일을 업로드 해주세요. (기준 대상)' value={leftText} onChange={(e) => setLeftText(e.target.value)}/>
-          </div>
-          <div className='main-top-compare-switch-button' onClick={switchButtonClickHandler}></div>
-          <div className='main-top-compare-right'>
-            <div className='main-top-compare-right-title'>Experimental Code</div>
-            <textarea className='main-top-compare-right-input' placeholder='텍스트를 입력하거나 파일을 업로드 해주세요. (비교 대상)' value={rightText} onChange={(e) => setRightText(e.target.value)} />
-          </div>
-        </div>
-        <div className='main-top-compare-result'>
-          <div className='main-top-compare-result-button' onClick={compareButtonClickHandler}>compare</div>
-          <div className='main-top-compare-result-save-button'>save</div>
-        </div>
-      </div>
+        <CompareCode/>
     );
   }
 
