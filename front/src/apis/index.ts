@@ -61,19 +61,19 @@ export const signUpRequest = async (data : SignUpRequestDto) => {
 }
 
 // 로그인 사용자 //
-export const getSignInUserRequest = async (token:string) => {
+export const getSignInUserRequest = async (token: string) => {
     const headers = { headers: { 'Authorization': `Bearer ${token}` } };
     const result = await axios.get(GET_SIGN_IN_USER_URL(), headers)
-        .then((response) => {
-            const responseBody: GetLoginUserResponseDto = response.data;
-            return responseBody;
-        })
-        .catch((error) => {
-            const responseBody: ResponseDto = error.response.data;
-            return responseBody;
-        });
-        return result;
-}
+    .then((response) => {
+      const responseBody: GetLoginUserResponseDto = response.data;
+      return responseBody;
+    })
+    .catch((error) => {
+      const responseBody: ResponseDto = error.response.data;
+      return responseBody;
+    });
+    return result;
+  }
 
 // 사용자 //
 export const getUserRequest = async (userEmail:string) => {
@@ -91,7 +91,7 @@ export const getUserRequest = async (userEmail:string) => {
 
 // 닉네임 변경 //
 export const patchNicknameRequest = async (data: PatchNicknameRequestDto, token: string) => {
-    const result = await axios.patch(PATCH_USER_NICKNAME_URL(), data, { headers: { 'Authorization': `Bearer ${token}` } })
+    const result = await axios.patch(PATCH_USER_NICKNAME_URL(), data, { headers: { Authorization: `Bearer ${token}` } })
         .then((response) => {
             const responseBody:PatchNicknameResponseDto = response.data;
             const {code} = responseBody;
@@ -107,7 +107,7 @@ export const patchNicknameRequest = async (data: PatchNicknameRequestDto, token:
 
 // 프로필 이미지 변경 //
 export const patchProfileImageUrlRequest = async (data: PatchProfileImageUrlRequestDto, token:string) => {
-    const result = await axios.patch(PATCH_USER_PROFILE_URL(), data, { headers: { 'Authorization': `Bearer ${token}` } })
+    const result = await axios.patch(PATCH_USER_PROFILE_URL(), data, { headers: { Authorization: `Bearer ${token}` } })
         .then((response) => {
             const responseBody:PatchProfileImageUrlResponseDto = response.data;
             const {code} = responseBody;
@@ -123,7 +123,7 @@ export const patchProfileImageUrlRequest = async (data: PatchProfileImageUrlRequ
 
 // 상태메세지 변경 //
 export const patchStateMessageRequest = async (data: PatchStateMessageRequestDto, token:string) => {
-    const result = await axios.patch(PATCH_USER_STATE_MESSAGE_URL(), data, { headers: { 'Authorization': `Bearer ${token}` } })
+    const result = await axios.patch(PATCH_USER_STATE_MESSAGE_URL(), data, { headers: { Authorization: `Bearer ${token}` } })
         .then((response) => {
             const responseBody:PatchStateMessageResponseDto = response.data;
             const {code} = responseBody;

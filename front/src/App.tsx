@@ -35,10 +35,10 @@ const {user, setUser} = useUserStore();
 const [cookies, setCookie] = useCookies();
 
 // function //
+// 로그인 사용자 //
 const getSignInUserResponseHandler = (result : GetLoginUserResponseDto | ResponseDto) => {
   const {code} = result;
-
-  console.log(result);
+  console.log("로그인" + result);
 
   if(code === 'DE') alert('데이터 베이스 오류입니다.');
   if(code !== 'SU') return;
@@ -47,6 +47,7 @@ const getSignInUserResponseHandler = (result : GetLoginUserResponseDto | Respons
 }
 
 // effect //
+// 로그인 사용자 //
 useEffect(() => {
   const accessToken = cookies.accessToken;
   if(!user && accessToken) getSignInUserRequest(accessToken).then(getSignInUserResponseHandler);
@@ -82,12 +83,12 @@ useEffect(() => {
         <Route path={CHAT_PATH} element={<Chat/>} />
 
         {/* 팝업창 PopUp */}
-        <Route path={POPUP_ROOM_PATH} element={<ChatRoomPopUp/>} />
+        {/* <Route path={POPUP_ROOM_PATH} element={<ChatRoomPopUp/>} />
         <Route path={POPUP_COME_PATH} element={<ChatComePopUP/>} />
         <Route path={POPUP_MANAGER_NAME_PATH} element={<ChatManagerNamePopUp/>} />
         <Route path={POPUP_MANAGER_PASSWORD_PATH} element={<ChatManagerPasswordPopUp/>} />
         <Route path={POPUP_MANAGER_IMAGE_PATH} element={<ChatManagerImagePopUp/>} />
-        <Route path={POPUP_MANAGER_BYE_PATH} element={<ChatManagerByePopUp/>} />
+        <Route path={POPUP_MANAGER_BYE_PATH} element={<ChatManagerByePopUp/>} /> */}
 
       </Routes>
       <Footer/>
