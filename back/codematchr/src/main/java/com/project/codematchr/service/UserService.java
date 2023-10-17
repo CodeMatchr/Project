@@ -3,7 +3,7 @@ package com.project.codematchr.service;
 import org.springframework.http.ResponseEntity;
 
 import com.project.codematchr.dto.request.user.PatchUserProfileImageUrlRequestDto;
-import com.project.codematchr.dto.request.user.PatchStateMessageRequestDto;
+import com.project.codematchr.dto.request.user.PatchUserStateMessageRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserNicknameRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserPasswordRequestDto;
 import com.project.codematchr.dto.response.user.GetSignInUserResponseDto;
@@ -24,7 +24,7 @@ public interface UserService {
     ResponseEntity<? super PatchUserNicknameResponseDto> patchUserNickname(String userEmail, PatchUserNicknameRequestDto patchUserNicknameRequestDto);
    
     // Method : 사용자 상태메세지 메서드 //
-    ResponseEntity<? super PatchUserStateMessageResponseDto> patchUserStateMessage(String userEmail, PatchStateMessageRequestDto patchStateMessageRequestDto);
+    ResponseEntity<? super PatchUserStateMessageResponseDto> patchUserStateMessage(String userEmail, PatchUserStateMessageRequestDto patchStateMessageRequestDto);
 
     // Method : 사용자 비밀번호 변경 메서드 //
     ResponseEntity<? super PatchUserPasswordResponseDto> patchUserPassword(String userEmail, PatchUserPasswordRequestDto patchUserPasswordRequestDto);

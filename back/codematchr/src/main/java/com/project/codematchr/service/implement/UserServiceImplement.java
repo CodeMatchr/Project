@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.codematchr.dto.request.user.PatchUserProfileImageUrlRequestDto;
-import com.project.codematchr.dto.request.user.PatchStateMessageRequestDto;
+import com.project.codematchr.dto.request.user.PatchUserStateMessageRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserNicknameRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserPasswordRequestDto;
 import com.project.codematchr.dto.response.ResponseDto;
@@ -98,7 +98,7 @@ public class UserServiceImplement implements UserService {
 
     // 사용자 상태 메세지 수정
     @Override
-    public ResponseEntity<? super PatchUserStateMessageResponseDto> patchUserStateMessage(String userEmail, PatchStateMessageRequestDto patchStateMessageRequestDto) {
+    public ResponseEntity<? super PatchUserStateMessageResponseDto> patchUserStateMessage(String userEmail, PatchUserStateMessageRequestDto patchStateMessageRequestDto) {
 
         String userStateMessage = patchStateMessageRequestDto.getUserStateMessage();
 

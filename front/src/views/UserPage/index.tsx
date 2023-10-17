@@ -44,7 +44,7 @@ const navigator = useNavigate();
     // description : 프로필 이미지 상태 //
     const [userProfileImageUrl, setUserProfileImageUrl] = useState<string>('');
     // description : 이메일 상태 //
-    // const [userEmail, setUserEmail] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
     // description : 닉네임 상태 //
     const [userNickname, setUserNickname] = useState<string>('');
     // description : 닉네임 변경 버튼 상태 //
@@ -133,6 +133,7 @@ const navigator = useNavigate();
     //            event handler           //
     // description: 프로필 이미지 클릭시 파일 인풋창 열림 이벤트 //
     const onProfileClickHandler = () => {
+      if (userEmail !== user?.userEmail) return;
       fileInputRef.current?.click();
     }
     // description : 닉네임 변경 이벤트 //
@@ -204,7 +205,7 @@ const navigator = useNavigate();
 
               </div>
             </div>
-            <div className='userpage-user-email'>{userEmail}</div>
+            <div className='userpage-user-email'>{email}</div>
           </div>
           <div className='userpage-user-message-box'>
             {messageChange ? (
