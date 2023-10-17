@@ -25,7 +25,7 @@ export default function UserPage() {
 // description : 유저 이메일 상태 //
 const { userEmail } = useParams();
 // description : 유저페이지 여부 상태 //
-const [userPage, setUserPage] = useState<boolean>(true);
+const [userPage, setUserPage] = useState<boolean>(false);
 // description : 로그인 유저 정보 상태 //
 const {user, setUser} = useUserStore();
 // description : Cookies 상태 //
@@ -47,11 +47,11 @@ const navigator = useNavigate();
     // description : 닉네임 상태 //
     const [userNickname, setUserNickname] = useState<string>('');
     // description : 닉네임 변경 버튼 상태 //
-    const [nicknameChange, setNicknameChange] = useState<boolean>(true);
+    const [nicknameChange, setNicknameChange] = useState<boolean>(false);
     // description : 상태메세지 상태 //
     const [userStateMessage, setUserStateMessage] = useState<string>('');
     // description : 상태메시지 변경 버튼 상태 //
-    const [messageChange, setMessageChange] = useState<boolean>(true);
+    const [messageChange, setMessageChange] = useState<boolean>(false);
 
     //            function           //
     // description : 유저 정보 응답 처리 함수 //
@@ -258,6 +258,7 @@ const navigator = useNavigate();
       setCurrentBoardList(boardList);
       getViewBoardList(boardList);
       changeSection(boardList.length, COUNT_BY_PAGE);
+      
     }
     //            event handler           //
    

@@ -8,6 +8,11 @@ import com.project.codematchr.common.response.ResponseMessage;
 import com.project.codematchr.dto.response.ResponseDto;
 import com.project.codematchr.entity.RoomEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public class GetRoomResponseDto extends ResponseDto {
     private int roomNumber;
     private String roomTitle;

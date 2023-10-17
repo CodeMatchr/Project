@@ -44,6 +44,7 @@ const getSignInUserResponseHandler = (result : GetLoginUserResponseDto | Respons
   if(code !== 'SU') return;
 
   setUser({...result as GetLoginUserResponseDto});
+  console.log("1" + user);
 }
 
 // effect //
