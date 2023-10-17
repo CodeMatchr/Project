@@ -25,26 +25,66 @@ export default function Chat() {
     // event handler //
     // 이름 변경 버튼 클릭 이벤트 //
     const onNameIconButtonClickHandler = () => {
-        if(popUpNameState) setPopUpNameState(false);
-        else setPopUpNameState(true);
+        if(popUpNameState) {
+            setPopUpNameState(false);
+            setPopUpPasswordState(false);
+            setPopUpImageState(false);
+            setPopUpExitState(false);
+        }
+        else {
+            setPopUpNameState(true);
+            setPopUpPasswordState(false);
+            setPopUpImageState(false);
+            setPopUpExitState(false);
+        }
     }
 
     // 비밀번호 변경 버튼 클릭 이벤트
     const onPasswordIconButtonClickHandler = () => {
-        if(popUpPasswordState) setPopUpPasswordState(false);
-        else setPopUpPasswordState(true);
+        if(popUpPasswordState) {
+            setPopUpNameState(false);
+            setPopUpPasswordState(false);
+            setPopUpImageState(false);
+            setPopUpExitState(false);
+        }
+        else {
+            setPopUpNameState(false);
+            setPopUpPasswordState(true);
+            setPopUpImageState(false);
+            setPopUpExitState(false);
+        }
     }
 
     // 이미지 변경 버튼 클릭 이벤트
     const onImageIconButtonClickHandler = () => {
-        if(popUpImageState) setPopUpImageState(false);
-        else setPopUpImageState(true);
+        if(popUpImageState) {
+            setPopUpNameState(false);
+            setPopUpPasswordState(false);
+            setPopUpImageState(false);
+            setPopUpExitState(false);
+        }
+        else {
+            setPopUpImageState(true);
+            setPopUpNameState(false);
+            setPopUpPasswordState(false);
+            setPopUpExitState(false);
+        }
     }
 
     // 나가기 버튼 클릭 이벤트
     const onExitIconButtonClickHandler = () => {
-        if(popUpExitState) setPopUpExitState(false);
-        else setPopUpExitState(true);
+        if(popUpExitState) {
+            setPopUpNameState(false);
+            setPopUpPasswordState(false);
+            setPopUpImageState(false);
+            setPopUpExitState(false);
+        }
+        else {
+            setPopUpExitState(true);
+            setPopUpNameState(false);
+            setPopUpPasswordState(false);
+            setPopUpImageState(false);
+        }
     }
 
     // effect //

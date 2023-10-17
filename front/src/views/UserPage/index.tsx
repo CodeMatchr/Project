@@ -96,7 +96,7 @@ const [userPage, setUserPage] = useState<boolean>(false);
                 <div className='userpage-user-nickname'>{nickname}</div>
               )}
               <div className='userpage-user-nickname-button' onClick={onNicknameClickHandler}>
-                <div className='userpage-user-nickname-icon'></div>
+
               </div>
             </div>
             <div className='userpage-user-email'>{email}</div>
@@ -107,9 +107,7 @@ const [userPage, setUserPage] = useState<boolean>(false);
             ) : (
               <div className='userpage-user-message-text'>{message}</div>
             )}
-            <div className='userpage-user-message-button' onClick={onMessageClickHandler}>
-              <div className='userpafe-user-message-icon'></div>
-            </div>
+            <div className='userpage-user-message-button' onClick={onMessageClickHandler}></div>
           </div>
         </div>
         <div className='userpage-button-box'>

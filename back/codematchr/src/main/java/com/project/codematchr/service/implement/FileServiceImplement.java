@@ -1,12 +1,20 @@
 package com.project.codematchr.service.implement;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.UUID;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.codematchr.service.FileService;
@@ -16,6 +24,14 @@ public class FileServiceImplement implements FileService {
 
     @Value("${file.path}") private String filePath;
     @Value("${file.url}") private String fileUrl;
+
+    private final ResourceLoader resourceLoader;
+
+    @Autowired
+    public FileServiceImplement(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
 
     // 파일 업로드 //
     @Override
@@ -64,6 +80,27 @@ public class FileServiceImplement implements FileService {
         }
 
         return resource;
+    }
+
+    @Override
+    public Resource getTextFile(String fileName) {
+        try {
+            // 파일 경로를 파일 시스템과 URL 두 가지 방법 중 선택
+            String fileLocation = fileUrl.equalsIgnoreCase("true") ? filePath : "file:" + filePath + fileName;
+
+            Resource resource = new UrlResource(fileLocation);
+
+            // 파일이 실제로 존재하는지 확인
+            if (!resource.exists()) {
+                throw new IOException("file:" + filePath + fileName);
+            }
+
+            // 리소스 반환
+            return resource;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
     }
     
 }
