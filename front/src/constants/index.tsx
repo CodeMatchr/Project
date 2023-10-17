@@ -18,10 +18,15 @@ export const MAIN_PATH = '/';
 export const AUTHENTICATION_PATH = '/authentication';
 // Board
 export const BOARD_PATH = '/board';
+export const UPDATE_PATH = (boardNumber : number | string) => `/update/${boardNumber}`;
+export const BOARD_UPDATE_PATH = (boardNumber : number | string) => `${BOARD_PATH}/${UPDATE_PATH(boardNumber)}`;
+
 export const DETAIL_PATH = (boardNumber : number | string) => `detail/${boardNumber}`;
 export const BOARD_DETAIL_PATH = (boardNumber : number | string) => `${BOARD_PATH}/${DETAIL_PATH(boardNumber)}`;
-export const BOARD_UPDATE_PATH = '/board/update';
-export const BOARD_WRITE_PATH = '/board/write';
+
+export const WRITE_PATH = (boardNumber : number | string) => `/write/${boardNumber}`;
+export const BOARD_WRITE_PATH = (boardNumber : number | string) => `${BOARD_PATH}/${WRITE_PATH(boardNumber)}`;
+
 
 export const BOARD_NUMBER_PATH_VARIABLE = ':boardNumber';
 

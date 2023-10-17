@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './style.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BOARD_DETAIL_PATH, BOARD_PATH, BOARD_WRITE_PATH, COUNT_BY_PAGE, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll } from '../../constants';
+import { BOARD_DETAIL_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_WRITE_PATH, COUNT_BY_PAGE, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll } from '../../constants';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import UserBoardItem from '../../components/UserBoardItem';
 import { roomListMock, top3ViewBoardListMock, userpageBoardListMock } from '../../mocks';
@@ -12,10 +12,11 @@ import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
 import RoomFullListItem from '../../components/RoomFullListItem';
 import { useUserStore } from 'src/store';
 import { useCookies } from 'react-cookie';
-import { GetUserBoardListResponseDto, GetUserResponseDto } from 'src/interfaces/response/User';
+import { GetUserBoardListResponseDto, GetUserResponseDto, GetUserRoomListResponseDto } from 'src/interfaces/response/User';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { getSignInUserRequest, getUserRequest, patchNicknameRequest, patchProfileImageUrlRequest, patchStateMessageRequest } from 'src/apis';
+import { getSignInUserRequest, getUserBoardListRequest, getUserRequest, getUserRoomListRequest, patchNicknameRequest, patchProfileImageUrlRequest, patchStateMessageRequest } from 'src/apis';
 import { PatchNicknameRequestDto, PatchProfileImageUrlRequestDto, PatchStateMessageRequestDto } from 'src/interfaces/request/user';
+
 
 //            component           //
 // description : 마이페이지 컴포넌트 // 
@@ -72,6 +73,7 @@ const navigator = useNavigate();
         if(userEmail === user?.userEmail){
           const after = { userEmail : userEmail as string, userNickname, userProfileImageUrl, userStateMessage };
           setUser(after);
+          console.log("1" + after.toString);
         }
     }
     // description : nickname 변경 응답 처리 함수 //
@@ -151,7 +153,7 @@ const navigator = useNavigate();
     }
     // description : 글쓰기 버튼 클릭 이벤트 //
     const onWriteClickHandler = () => {
-      navigator(BOARD_WRITE_PATH);
+      navigator(BOARD_WRITE_PATH(BOARD_NUMBER_PATH_VARIABLE));
     }
     // description : 상태메세지 변경 이벤트 //
     const onMessageChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -174,15 +176,19 @@ const navigator = useNavigate();
     useEffect(() => {
       if(!userEmail) navigator(MAIN_PATH);
 
-      const myPage = user?.userEmail === userEmail;
-      if(myPage) {
+      const isMyPage = user?.userEmail === userEmail;
+      if(isMyPage) {
         if(user?.userProfileImageUrl) setUserProfileImageUrl(user?.userProfileImageUrl);
         // todo : 디폴트 이미지 //
         setUserNickname(user?.userNickname as string);
+        setUserStateMessage(user?.userStateMessage as string);
       }
       else {
         getUserRequest(userEmail as string).then(getUserResponseHandler);
       }
+      
+      console.log("2" + userEmail?.toString);
+      console.log("3" + user);
     }, [userEmail, user]);
     
     //            render           //
@@ -197,12 +203,11 @@ const navigator = useNavigate();
           <div className='userpage-user-nickname-box'>
             <div className='userpage-user-nickname-input-box'>
               {nicknameChange ? (
-                <input className='userpage-user-nickname-input' type='text' value={userNickname} onChange={onNicknameChangeHandler}/>
+                <input className='userpage-user-nickname-input' type='text' value={userNickname} onChange={onNicknameChangeHandler} size={userNickname.length} />
               ) : (
                 <div className='userpage-user-nickname'>{userNickname}</div>
               )}
               <div className='userpage-user-nickname-button' onClick={onNicknameClickHandler}>
-
               </div>
             </div>
             <div className='userpage-user-email'>{email}</div>
@@ -249,7 +254,7 @@ const navigator = useNavigate();
     }
 
     // description : 사용자 작성 게시물 리스트 불러오기 응답 처리 함수 //
-    const getUserBoardListResponseHandler = (responseBody:GetUserResponseDto | ResponseDto) => {
+    const getUserBoardListResponseHandler = (responseBody:GetUserBoardListResponseDto | ResponseDto) => {
       const {code} = responseBody;
       if(code === 'DE') alert('데이터베이스 에러입니다.');
       if(code !== 'SU') return;
@@ -263,6 +268,18 @@ const navigator = useNavigate();
    
     //            component           //
     //            effect           //
+    // description: 유저 이메일이 바뀔때 마다 board 리스트 불러오기 //
+    useEffect(() => {
+      if (!userEmail) {
+        alert('잘못된 사용자 이메일입니다.');
+        navigator(MAIN_PATH);
+        return;
+      }
+      getUserBoardListRequest(userEmail).then(getUserBoardListResponseHandler);
+    }, [userEmail]);
+    console.log("4" + userEmail?.toString);
+    
+
     // description : 현재 페이지가 바뀔 때마다 board 리스트 변경 //
     useEffect(() => {
       getViewBoardList(currentBoardList);
@@ -332,6 +349,17 @@ const navigator = useNavigate();
       const viewChatList = chatList.slice(startIndex, lastIndex);
       setViewChatList(viewChatList);
     }
+    // description : 사용자 작성 채팅방 리스트 불러오기 응답 처리 함수 //
+    const getUserRoomListResponseHandler = (responseBody:GetUserRoomListResponseDto | ResponseDto) => {
+      const {code} = responseBody;
+      if(code === 'DE') alert('데이터베이스 에러입니다.');
+      if(code !== 'SU') return;
+
+      const { roomList } = responseBody as GetUserRoomListResponseDto;
+      setCurrentChatList(roomList);
+      getViewChatList(roomList);
+      changeSection(roomList.length, COUNT_BY_PAGE);
+    }
     
     //            event handler           //
     // description : 팝업창 //
@@ -341,6 +369,18 @@ const navigator = useNavigate();
     }
     //            component           //
     //            effect           //
+    // description: 유저 이메일이 바뀔때 마다 채팅방 리스트 불러오기 //
+    useEffect(() => {
+      if (!userEmail) {
+        alert('잘못된 사용자 이메일입니다.');
+        navigator(MAIN_PATH);
+        return;
+      }
+      getUserRoomListRequest(userEmail).then(getUserRoomListResponseHandler);
+    }, [userEmail]);
+    
+    console.log("5" + userEmail?.toString);
+
     // description : 현재 페이지가 바뀔 때마다 chat 리스트 변경 //
     useEffect(() => {
       getViewChatList(currentChatList);
@@ -378,9 +418,12 @@ const navigator = useNavigate();
 useEffect(() => {
   if(!userEmail) navigator(MAIN_PATH);
 
-  const myPage = user?.userEmail === userEmail;
-  setUserPage(myPage);
+  const isMyPage = user?.userEmail === userEmail;
+  setUserPage(isMyPage);
 }, [userEmail, user]);
+
+console.log("6" + userEmail?.toString);
+console.log("7" + user);
 
 //            render           //
   return (
