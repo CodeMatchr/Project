@@ -266,6 +266,7 @@ const navigator = useNavigate();
       setCurrentBoardList(boardList);
       getViewBoardList(boardList);
       changeSection(boardList.length, COUNT_BY_PAGE);
+      
     }
     //            event handler           //
    
