@@ -108,9 +108,9 @@ export default function Main() {
         <div className='main-mid-title' onClick={ onBoardListClickHandler }>TOP 3 Board</div>
         <div className='main-mid-top3-board'>
           <div className='main-mid-top3-board-tab'>
-            <div className='main-mid-top3-board-tab-view-count-button' onClick={ onTop3ViewBoardListTabClickHandler } style={{ backgroundColor: top3ViewBoardListTabState ? "gray" : "white" }}>조회수</div>
-            <div className='main-mid-top3-board-tab-favorite-count-button' onClick={ onTop3FavoriteBoardListTabClickHandler } style={{ backgroundColor: top3FavoriteBoardListTabState ? "gray" : "white" }}>좋아요 수</div>
-            <div className='main-mid-top3-board-tab-comment-count-button' onClick={ onTop3CommentBoardListTabClickHandler } style={{ backgroundColor: top3CommentBoardListTabState ? "gray" : "white" }}>댓글 수</div>
+            <div className='main-mid-top3-board-tab-view-count-button' onClick={ onTop3ViewBoardListTabClickHandler } style={{ backgroundColor: top3ViewBoardListTabState ? "#ccc" : "" }}>조회수</div>
+            <div className='main-mid-top3-board-tab-favorite-count-button' onClick={ onTop3FavoriteBoardListTabClickHandler } style={{ backgroundColor: top3FavoriteBoardListTabState ? "#ccc" : "" }}>좋아요 수</div>
+            <div className='main-mid-top3-board-tab-comment-count-button' onClick={ onTop3CommentBoardListTabClickHandler } style={{ backgroundColor: top3CommentBoardListTabState ? "#ccc" : "" }}>댓글 수</div>
           </div>
           <div className='main-mid-top3-board-list'>
             <div className='main-mid-top3-board-list-top'>

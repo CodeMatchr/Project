@@ -13,6 +13,9 @@ export default function CompareCode() {
 
     const [isCompare, setCompare] = useState<boolean>(false);
 
+    // save 버튼 상태
+    const [visibleSaveState, setVisibleSaveState] = useState<boolean>(false);
+
     
 
     // file input 요소에 대한 참조 상태 //
@@ -49,19 +52,22 @@ export default function CompareCode() {
 
     // event handler //
     const compareButtonClickHandler = () => {
-        if(leftText.trim() === "" && rightText.trim() === "") {
-          alert("텍스트를 입력해주세요.");
-        } else if (leftText.trim() === "") {
-          alert("기준이 되는 텍스트를 입력해주세요.");
-        } else if (rightText.trim() === "") {
-          alert("비교하려는 텍스트를 입력해 주세요.");
-        } else if (leftText === rightText) {
-          alert("두 텍스트들이 서로 일치합니다");
-        } else {
-          alert("두 텍스트들이 서로 일치하지 않습니다.");
-        }
-  
-       setCompare(true);
+      if(leftText.trim() === "" && rightText.trim() === "") {
+        alert("텍스트를 입력해주세요.");
+      } else if (leftText.trim() === "") {
+        alert("기준이 되는 텍스트를 입력해주세요.");
+      } else if (rightText.trim() === "") {
+        alert("비교하려는 텍스트를 입력해 주세요.");
+      } else if (leftText === rightText) {
+        alert("두 텍스트들이 서로 일치합니다");
+        setVisibleSaveState(true);
+        setCompare(true);
+      } else {
+        alert("두 텍스트들이 서로 일치하지 않습니다.");
+        setVisibleSaveState(true);
+        setCompare(true);
+      }
+      
     }
 
     const resetButtonClickHandler = () => {
@@ -109,11 +115,18 @@ export default function CompareCode() {
             )}
           </div>
         </div>
-        <div className='main-top-compare-result'>
-          <div className='main-top-compare-result-button' onClick={compareButtonClickHandler}>compare</div>
-          <div className='main-top-compare-result-save-button'>save</div>
+        <div className='main-top-compare-box'>
+          {visibleSaveState ? (
+            <div className='main-top-compare-result-show'>
+              <div className='main-top-compare-result-button' onClick={compareButtonClickHandler}>compare</div>
+              <div className='main-top-compare-result-save-button'>save</div>
+            </div>
+          ) : (
+            <div className='main-top-compare-result'>
+              <div className='main-top-compare-result-button' onClick={compareButtonClickHandler}>compare</div>
+            </div>
+          )}
         </div>
       </div>
-        
     )
 }
