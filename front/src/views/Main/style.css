@@ -6,7 +6,7 @@
 }
 
 /* Main Top */
-.main-top{
+ .main-top{
     display: flex;
     flex-direction: column;
     width: 1400px;
@@ -18,7 +18,7 @@
     font-size: 32px;
     font-weight: 500;
 }
-
+/*
 .main-top-compare{
     margin-top: 30px;
     display: flex;
@@ -132,7 +132,7 @@
     line-height: 30px;
     background-color: white;
     border-radius: 15px;
-}
+} */
 
 /* Main Mid */
 .main-mid{

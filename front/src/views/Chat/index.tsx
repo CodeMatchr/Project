@@ -6,6 +6,7 @@ import ChatManagerNamePopUp from '../../components/PopUp/ChatManagerNamePopUp';
 import ChatManagerPasswordPopUp from '../../components/PopUp/ChatManagerPasswordPopUp';
 import ChatManagerImagePopUp from '../../components/PopUp/ChatManagerImagePopUp';
 import ChatManagerByePopUp from '../../components/PopUp/ChatManagerByePopUp';
+import CompareCode from 'src/components/CompareCode';
 
 // component //
 export default function Chat() {
@@ -105,7 +106,9 @@ export default function Chat() {
                 {popUpExitState && <div className='chat-manager-pop-up'><ChatManagerByePopUp/></div>}
             </div>
         </div>
-        <div className='chat-mid'>코드 비교 영역</div>
+        <div className='chat-mid'>
+            <CompareCode/>
+        </div>
         <div className='chat-bottom'>
             <div className='chat-bottom-top'>채팅방 이름</div>
             <div className='chat-bottom-mid'>

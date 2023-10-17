@@ -1,0 +1,128 @@
+.main-top{
+    display: flex;
+    flex-direction: column;
+    width: 1400px;
+    background-color: lightcyan;
+}
+
+.main-top-title{
+    margin-top: 30px;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.main-top-compare{
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-top-compare-left{
+    width: 650px;
+    height: 300px;
+}
+
+.main-top-compare-left-title{
+    width: 250px;
+    background-color: white;
+    font-size: 23px;
+    font-weight: 500;
+    text-align: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.main-top-compare-left-input{
+    border: none;
+    outline: none;
+
+    width: 650px;
+    height: 300px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.main-top-compare-left-input::placeholder{
+    font-size: 18px;
+    color: #ccc;
+    text-align: center;
+}
+
+.main-top-compare-switch-button{
+    margin-top: 56px;
+
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: all 0.3s;
+    background-image: url(./assets/exchange-button-icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
+    cursor: pointer;
+}
+
+.main-top-compare-switch-button:hover{
+    background-color: white;
+}
+
+.main-top-compare-right{
+    width: 650px;
+    height: 300px;
+}
+
+.main-top-compare-right-title{
+    width: 250px;
+    background-color: white;
+    text-align: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-size: 23px;
+    font-weight: 500;
+}
+
+.main-top-compare-right-input{
+    border: none;
+    outline: none;
+
+    width: 650px;
+    height: 300px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: white;
+}
+
+.main-top-compare-right-input::placeholder{
+    font-size: 18px;
+    color: #ccc;
+    text-align: center;
+}
+
+.main-top-compare-result{
+    margin: 60px auto 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+}
+
+.main-top-compare-result-button{
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.main-top-compare-result-save-button{
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    background-color: white;
+    border-radius: 15px;
+}
