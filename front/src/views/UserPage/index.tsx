@@ -63,6 +63,7 @@ const navigator = useNavigate();
 
       const { userNickname, userProfileImageUrl, userStateMessage } = result as GetUserResponseDto;
       setUserNickname(userNickname);
+      setUserStateMessage(userStateMessage);
       if (userProfileImageUrl) setUserProfileImageUrl(userProfileImageUrl);
       else setUserProfileImageUrl('');
 
@@ -75,7 +76,7 @@ const navigator = useNavigate();
     // description: 닉네임 변경 응답 처리 함수 //
     const patchNicknameResponseHandler = (code: string) => {
       if (!user) return;
-      if (code === 'NU') alert('존재하지 않는 사용자 이메일입니다.');
+      if (code === 'NU') alert('존재하지 않는 유저입니다.');
       if (code === 'EN') alert('중복되는 닉네임입니다.');
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
@@ -108,7 +109,7 @@ const navigator = useNavigate();
       if (code === 'NU') alert('존재하지않는 유저입니다.');
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
-      if (code !== 'SU') {
+      if (code === 'SU') {
         setUserProfileImageUrl(user.userProfileImageUrl);
         return;
       }
@@ -156,11 +157,6 @@ const navigator = useNavigate();
       }
       setNicknameChange(!nicknameChange);
     }
-
-    // description : 글쓰기 버튼 클릭 이벤트 //
-    const onWriteClickHandler = () => {
-      navigator(BOARD_WRITE_PATH(BOARD_NUMBER_PATH_VARIABLE));
-    }
     // description : 상태메세지 변경 이벤트 //
     const onMessageChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
       setUserStateMessage(event.target.value);
@@ -173,6 +169,10 @@ const navigator = useNavigate();
         patchStateMessageRequest(data, token).then(patchStateMessageResponseHandler);
       }
       setMessageChange(!messageChange);
+    }
+    // description : 글쓰기 버튼 클릭 이벤트 //
+    const onWriteClickHandler = () => {
+      navigator(BOARD_WRITE_PATH(BOARD_NUMBER_PATH_VARIABLE));
     }
 
     
@@ -187,12 +187,11 @@ const navigator = useNavigate();
         if (user?.userProfileImageUrl) setUserProfileImageUrl(user?.userProfileImageUrl);
         else setUserProfileImageUrl('');
         setUserNickname(user?.userNickname as string);
-        setUserStateMessage(user?.userStateMessage as string);
       } else {
         getUserRequest(userEmail as string).then(getUserResponseHandler);
       }
 
-    }, [userEmail]);
+    }, [userEmail, user]);
     
     //            render           //
     return (
@@ -266,7 +265,6 @@ const navigator = useNavigate();
       setCurrentBoardList(boardList);
       getViewBoardList(boardList);
       changeSection(boardList.length, COUNT_BY_PAGE);
-      
     }
     //            event handler           //
    
@@ -420,11 +418,10 @@ const navigator = useNavigate();
 //            effect           //
 // description : 유저 이메일 상태가 바뀔때마다 실행 //
 useEffect(() => {
-  if(!userEmail) navigator(MAIN_PATH);
+  if (!userEmail) navigator(MAIN_PATH);
 
   const isMyPage = user?.userEmail === userEmail;
   setUserPage(isMyPage);
-  
 }, [userEmail, user]);
 
 
