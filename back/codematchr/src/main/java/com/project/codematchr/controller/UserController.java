@@ -41,7 +41,7 @@ public class UserController {
     
     // API : 사용자 정보 불러오기 메서드 //
     @GetMapping("/{userEmail}")
-    public ResponseEntity<? super GetUserResponseDto> getUser(@PathVariable(value="userEmail", required=true) String userEmail) {
+    public ResponseEntity<? super GetUserResponseDto> getUser(@AuthenticationPrincipal String userEmail) {
         ResponseEntity<? super GetUserResponseDto> responseEntity = userService.getUser(userEmail);
         return responseEntity;
     }

@@ -38,6 +38,8 @@ const [cookies, setCookie] = useCookies();
 const getSignInUserResponseHandler = (result : GetLoginUserResponseDto | ResponseDto) => {
   const {code} = result;
 
+  console.log(result);
+
   if(code === 'DE') alert('데이터 베이스 오류입니다.');
   if(code !== 'SU') return;
 
@@ -47,7 +49,6 @@ const getSignInUserResponseHandler = (result : GetLoginUserResponseDto | Respons
 // effect //
 useEffect(() => {
   const accessToken = cookies.accessToken;
-  console.log(accessToken);
   if(!user && accessToken) getSignInUserRequest(accessToken).then(getSignInUserResponseHandler);
 }, [pathname]);
 
