@@ -89,7 +89,11 @@
   width: 24px;
   height: 24px;
 
-  background-color: aqua;
+  background-image: url(./assets/folder-button-icon.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  box-sizing: border-box;
 }
 
 .popup-main-image-button:hover{
