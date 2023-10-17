@@ -25,7 +25,7 @@ export default function UserPage() {
 // description : 유저 이메일 상태 //
 const { userEmail } = useParams();
 // description : 유저페이지 여부 상태 //
-const [userPage, setUserPage] = useState<boolean>(false);
+const [userPage, setUserPage] = useState<boolean>(true);
 // description : 로그인 유저 정보 상태 //
 const {user, setUser} = useUserStore();
 // description : Cookies 상태 //
@@ -44,16 +44,14 @@ const navigator = useNavigate();
 
     // description : 프로필 이미지 상태 //
     const [userProfileImageUrl, setUserProfileImageUrl] = useState<string>('');
-    // description : 이메일 상태 //
-    const [email, setEmail] = useState<string>('');
     // description : 닉네임 상태 //
     const [userNickname, setUserNickname] = useState<string>('');
     // description : 닉네임 변경 버튼 상태 //
-    const [nicknameChange, setNicknameChange] = useState<boolean>(false);
+    const [nicknameChange, setNicknameChange] = useState<boolean>(true);
     // description : 상태메세지 상태 //
     const [userStateMessage, setUserStateMessage] = useState<string>('');
     // description : 상태메시지 변경 버튼 상태 //
-    const [messageChange, setMessageChange] = useState<boolean>(false);
+    const [messageChange, setMessageChange] = useState<boolean>(true);
 
     //            function           //
     // description : 유저 정보 응답 처리 함수 //
@@ -63,19 +61,18 @@ const navigator = useNavigate();
         if(code === 'DE') alert('데이터 베이스 오류입니다.');
         if(code !== 'SU') navigator(MAIN_PATH);
         
-        const {userNickname, userProfileImageUrl, userStateMessage} = result as GetUserResponseDto;
+        const {userNickname, userProfileImageUrl , userStateMessage} = result as GetUserResponseDto;
         setUserNickname(userNickname);
         setUserStateMessage(userStateMessage);
-        
-        if(userProfileImageUrl) setUserProfileImageUrl(userProfileImageUrl);
+        setUserProfileImageUrl(userProfileImageUrl);
         // todo : 디폴트 이미지 넣을지 말지 //
 
-        if(userEmail === user?.userEmail){
-          const after = { userEmail : userEmail as string, userNickname, userProfileImageUrl, userStateMessage };
+        if(userEmail === user?.userEmail) {
+          const after = {userEmail : userEmail as string, userNickname, userStateMessage, userProfileImageUrl};
           setUser(after);
-          console.log("1" + after.toString);
         }
-    }
+      }
+    
     // description : nickname 변경 응답 처리 함수 //
     const patchNicknameResponseHandler = (code:string) => {
       if(!user) return;
@@ -187,8 +184,6 @@ const navigator = useNavigate();
         getUserRequest(userEmail as string).then(getUserResponseHandler);
       }
       
-      console.log("2" + userEmail?.toString);
-      console.log("3" + user);
     }, [userEmail, user]);
     
     //            render           //
@@ -196,21 +191,21 @@ const navigator = useNavigate();
       <div className='userpage-top-wrapper'>
         <div className='userpage-profile-box'>
           <div className='userpage-profile-image' onClick={onProfileClickHandler}>
-            <input type='file' style={{display: 'none'}} ref={fileInputRef} accept='image/*'/>
+            <input type='file' style={{display: 'none'}} ref={fileInputRef} accept='image/*' />
           </div>
         </div>
         <div className='userpage-user-info-box'>
           <div className='userpage-user-nickname-box'>
             <div className='userpage-user-nickname-input-box'>
               {nicknameChange ? (
-                <input className='userpage-user-nickname-input' type='text' value={userNickname} onChange={onNicknameChangeHandler} size={userNickname.length} />
+                <input className='userpage-user-nickname-input' type='text' value={userNickname} onChange={onNicknameChangeHandler} />
               ) : (
                 <div className='userpage-user-nickname'>{userNickname}</div>
               )}
               <div className='userpage-user-nickname-button' onClick={onNicknameClickHandler}>
               </div>
             </div>
-            <div className='userpage-user-email'>{email}</div>
+            <div className='userpage-user-email'>{userEmail}</div>
           </div>
           <div className='userpage-user-message-box'>
             {messageChange ? (
@@ -276,8 +271,8 @@ const navigator = useNavigate();
         return;
       }
       getUserBoardListRequest(userEmail).then(getUserBoardListResponseHandler);
+      
     }, [userEmail]);
-    console.log("4" + userEmail?.toString);
     
 
     // description : 현재 페이지가 바뀔 때마다 board 리스트 변경 //
@@ -376,7 +371,9 @@ const navigator = useNavigate();
         navigator(MAIN_PATH);
         return;
       }
+      
       getUserRoomListRequest(userEmail).then(getUserRoomListResponseHandler);
+      
     }, [userEmail]);
     
     console.log("5" + userEmail?.toString);
@@ -420,19 +417,18 @@ useEffect(() => {
 
   const isMyPage = user?.userEmail === userEmail;
   setUserPage(isMyPage);
+  
 }, [userEmail, user]);
 
-console.log("6" + userEmail?.toString);
-console.log("7" + user);
 
 //            render           //
   return (
     <div id='userpage-wrapper'>
       <div className='userpage-wrapper-box'>
-        <UserPageTop/>
-        <UserPageBoard/>
-        <UserPageCodeLog/>
-        <UserPageChat/>
+        {userPage && <UserPageTop/> }
+        {userPage && <UserPageBoard/> }
+        {userPage && <UserPageCodeLog/> }
+        {userPage && <UserPageChat/> }
       </div>
     </div>
   )
