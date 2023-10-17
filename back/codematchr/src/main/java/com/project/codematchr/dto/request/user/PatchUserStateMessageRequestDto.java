@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PatchStateMessageRequestDto {
+public class PatchUserStateMessageRequestDto {
   
   private String userStateMessage;
 

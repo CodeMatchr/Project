@@ -3,7 +3,7 @@ import { SignInRequestDto, SignUpRequestDto } from '../interfaces/request/authen
 import { SignInResponseDto, SignUpResponseDto } from '../interfaces/response/authentication';
 import ResponseDto from '../interfaces/response/response.dto';
 import GetLoginUserResponseDto from 'src/interfaces/response/User/get-login-user.response.dto';
-import { GetUserResponseDto, PatchNicknameResponseDto, PatchProfileImageUrlResponseDto } from 'src/interfaces/response/User';
+import { GetUserBoardListResponseDto, GetUserResponseDto, GetUserRoomListResponseDto, PatchNicknameResponseDto, PatchProfileImageUrlResponseDto } from 'src/interfaces/response/User';
 import { PatchNicknameRequestDto, PatchProfileImageUrlRequestDto, PatchStateMessageRequestDto } from 'src/interfaces/request/user';
 import PatchStateMessageResponseDto from 'src/interfaces/response/User/patch-state-message-response.dto';
 
@@ -13,11 +13,15 @@ const API_DOMAIN = 'http://localhost:4040/api/v1';
 const SIGN_UP_URL = () => `${API_DOMAIN}/authentication/sign-up`;
 const SIGN_IN_URL = () => `${API_DOMAIN}/authentication/sign-in`;
 
-// 로그인 유저 //
+// 로그인 사용자 정보 불러오기 //
 const GET_SIGN_IN_USER_URL = () => `${API_DOMAIN}/user`;
-
 // 사용자 //
 const GET_USER_URL = (userEmail: string) => `${API_DOMAIN}/user/${userEmail}`;
+
+// 유저페이지 게시물 리스트 불러오기 //
+const GET_USER_BOARD_LIST_URL = (userEmail: string) => `${API_DOMAIN}/board/user-list/${userEmail}`;
+// 유저페이지 채팅방 리스트 불러오기 //
+const GET_USER_ROOM_LIST_URL = (userEmail: string) => `${API_DOMAIN}/board/user-list/${userEmail}`;
 
 // 닉네임 변경 //
 const PATCH_USER_NICKNAME_URL = () => `${API_DOMAIN}/user/nickname`;
@@ -131,5 +135,32 @@ export const patchStateMessageRequest = async (data: PatchStateMessageRequestDto
             return code;
         });
     return result;
-
 }
+
+// 유저 페이지 게시물 리스트 불러오기 //
+export const getUserBoardListRequest = async (userEmail: string) => {
+const result = await axios.get(GET_USER_BOARD_LIST_URL(userEmail))
+.then((response) => {
+    const responseBody: GetUserBoardListResponseDto = response.data;
+    return responseBody;
+})
+.catch((error) => {
+    const responseBody: ResponseDto = error.response.data;
+    return responseBody;
+});
+return result;
+}
+
+// 유저 페이지 채팅방 리스트 불러오기 //
+export const getUserRoomListRequest = async (userEmail: string) => {
+    const result = await axios.get(GET_USER_ROOM_LIST_URL(userEmail))
+    .then((response) => {
+        const responseBody: GetUserRoomListResponseDto = response.data;
+        return responseBody;
+    })
+    .catch((error) => {
+        const responseBody: ResponseDto = error.response.data;
+        return responseBody;
+    });
+    return result;
+    }

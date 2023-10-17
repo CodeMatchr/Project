@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { INPUT_ICON, MAIN_PATH, emailBlanck, emailPattern, telNumberPattern } from '../../constants';
 import { useDaumPostcodePopup, Address } from 'react-daum-postcode';
 import { useCookies } from 'react-cookie';
-import { useStore } from 'zustand';
 import { useUserStore } from '../../store';
 import { SignInResponseDto, SignUpResponseDto } from '../../interfaces/response/authentication';
 import ResponseDto from '../../interfaces/response/response.dto';

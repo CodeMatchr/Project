@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.codematchr.dto.request.user.PatchUserProfileImageUrlRequestDto;
-import com.project.codematchr.dto.request.user.PatchStateMessageRequestDto;
+import com.project.codematchr.dto.request.user.PatchUserStateMessageRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserNicknameRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserPasswordRequestDto;
 import com.project.codematchr.dto.response.user.GetSignInUserResponseDto;
@@ -55,7 +55,7 @@ public class UserController {
 
     // API : 사용자 상태메세지 수정 메서드 //
     @PatchMapping("/state-message")
-    public ResponseEntity<? super PatchUserStateMessageResponseDto> patchUserStateMessage(@AuthenticationPrincipal String userEmail, @RequestBody @Valid PatchStateMessageRequestDto patchStateMessageRequestDto) {
+    public ResponseEntity<? super PatchUserStateMessageResponseDto> patchUserStateMessage(@AuthenticationPrincipal String userEmail, @RequestBody @Valid PatchUserStateMessageRequestDto patchStateMessageRequestDto) {
         ResponseEntity<? super PatchUserStateMessageResponseDto> responseEntity = userService.patchUserStateMessage(userEmail, patchStateMessageRequestDto);
         return responseEntity;
     }
