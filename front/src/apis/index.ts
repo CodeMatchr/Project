@@ -9,21 +9,16 @@ import PatchStateMessageResponseDto from 'src/interfaces/response/User/patch-sta
 import PostBoardRequestDto from 'src/interfaces/request/board/post-board.request.dto';
 import PostBoardResponseDto from 'src/interfaces/response/board/post-board.response.dto';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
-import { error } from 'console';
 import PostRoomRequestDto from 'src/interfaces/request/room/post-room.request.dto';
 import PostRoomResponseDto from 'src/interfaces/response/room/post-room.response.dto';
 import PatchBoardResponseDto from 'src/interfaces/response/board/patch-board.response.dto';
 import PatchBoardRequestDto from 'src/interfaces/request/board/patch-board.request.dto';
-<<<<<<< HEAD
-import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
-=======
 import PatchRoomTitleRequestDto from 'src/interfaces/request/room/patch-room-request.dto';
 import PatchRoomTitleResponseDto from 'src/interfaces/response/room/patch-room-title.response.dto';
-import { error } from 'console';
 import PatchRoomPasswordRequestDto from 'src/interfaces/request/room/patch-room-password-request.dto';
 import PatchRoomPasswordResponseDto from 'src/interfaces/response/room/patch-room-password.response.dto';
 import PatchRoomImageUrlResponseDto from 'src/interfaces/response/room/patch-room-image-url-response.dto';
->>>>>>> 1d1a6e19dcfdce45bd81f7d0928334f2c1ec8716
+import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -39,7 +34,7 @@ const GET_USER_URL = (userEmail: string) => `${API_DOMAIN}/user/${userEmail}`;
 // 유저페이지 게시물 리스트 불러오기 //
 const GET_USER_BOARD_LIST_URL = (userEmail: string) => `${API_DOMAIN}/board/user-board-list/${userEmail}`;
 // 유저페이지 채팅방 리스트 불러오기 //
-const GET_USER_ROOM_LIST_URL = (userEmail: string) => `${API_DOMAIN}/room/${userEmail}/roomList`;
+const GET_USER_ROOM_LIST_URL = (userEmail: string) => `${API_DOMAIN}/room/list/${userEmail}`;
 
 // 닉네임 변경 //
 const PATCH_USER_NICKNAME_URL = () => `${API_DOMAIN}/user/nickname`;

@@ -71,7 +71,6 @@ const navigator = useNavigate();
         const after = { userEmail: userEmail as string, userNickname, userProfileImageUrl, userStateMessage };
         setUser(after);
       }
-      console.log(result);
       console.log("1:" +user?.userEmail);
       console.log("2:" +user);
     }
@@ -253,8 +252,8 @@ const navigator = useNavigate();
       setViewBoardList(viewBoardList);
     }
 
-    // description: 유저 작성 게시물 리스트 불러오기 응답 처리 함수 //
-    const getUserBoardListResponseHandler = (responseBody: GetUserBoardListResponseDto | ResponseDto) => {
+     // description: 유저 작성 게시물 리스트 불러오기 응답 처리 함수 //
+     const getUserBoardListResponseHandler = (responseBody: GetUserBoardListResponseDto | ResponseDto) => {
       const { code } = responseBody;
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
@@ -271,7 +270,6 @@ const navigator = useNavigate();
     //            event handler           //
    
     //            component           //
-    //            effect           //
     // description: 유저 이메일이 바뀔때 마다 게시물 리스트 불러오기 //
     useEffect(() => {
       if (!userEmail) {
