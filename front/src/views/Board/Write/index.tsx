@@ -126,6 +126,7 @@ const onBoardWriteButtonClickHandler = async () => {
     else {
       if (!boardNumber) return;
 
+      // 수정 버튼 클릭 //
       const imageUrl = boardImage ? await fileUpload() : boardImageUrl;
 
       const data: PatchBoardRequestDto = {
