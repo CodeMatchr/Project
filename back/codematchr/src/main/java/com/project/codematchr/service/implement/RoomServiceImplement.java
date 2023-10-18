@@ -1,5 +1,7 @@
 package com.project.codematchr.service.implement;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +11,6 @@ import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.ResponseDto;
 import com.project.codematchr.dto.response.room.DeleteMultiChatResponseDto;
-import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomImageUrlResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomPasswordResponseDto;
@@ -28,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class RoomServiceImplement implements RoomService {
 
     private final UserRepository userRepository;
+    // todo :  다시 확인 해보기 //
     private final RoomRepository roomRepository;
 
     // 다인원 채팅방 생성
@@ -189,11 +191,6 @@ public class RoomServiceImplement implements RoomService {
 
     }
 
-    @Override
-    public ResponseEntity<? super GetRoomListResponseDto> getRoomList(Integer roomNumber) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRoomList'");
-    }
 
     
 

@@ -9,10 +9,12 @@ import PatchStateMessageResponseDto from 'src/interfaces/response/User/patch-sta
 import PostBoardRequestDto from 'src/interfaces/request/board/post-board.request.dto';
 import PostBoardResponseDto from 'src/interfaces/response/board/post-board.response.dto';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
+import { error } from 'console';
 import PostRoomRequestDto from 'src/interfaces/request/room/post-room.request.dto';
 import PostRoomResponseDto from 'src/interfaces/response/room/post-room.response.dto';
 import PatchBoardResponseDto from 'src/interfaces/response/board/patch-board.response.dto';
 import PatchBoardRequestDto from 'src/interfaces/request/board/patch-board.request.dto';
+import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -26,9 +28,9 @@ const GET_SIGN_IN_USER_URL = () => `http://localhost:4040/api/v1/user`;
 const GET_USER_URL = (userEmail: string) => `${API_DOMAIN}/user/${userEmail}`;
 
 // 유저페이지 게시물 리스트 불러오기 //
-const GET_USER_BOARD_LIST_URL = (userEmail: string) => `${API_DOMAIN}/user/board-list/${userEmail}`;
+const GET_USER_BOARD_LIST_URL = (userEmail: string) => `${API_DOMAIN}/board/user-board-list/${userEmail}`;
 // 유저페이지 채팅방 리스트 불러오기 //
-const GET_USER_ROOM_LIST_URL = (userEmail: string) => `${API_DOMAIN}/user/room-list/${userEmail}`;
+const GET_USER_ROOM_LIST_URL = (userEmail: string) => `${API_DOMAIN}/room/${userEmail}/roomList`;
 
 // 닉네임 변경 //
 const PATCH_USER_NICKNAME_URL = () => `${API_DOMAIN}/user/nickname`;
@@ -46,7 +48,8 @@ const UPLOAD_FILE = () => `http://localhost:4040/file/upload`;
 // 게시물 수정 //
 const PATCH_BOARD_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}`;
 
-
+// 게시물 수정시 게시물 불러오기 //
+const GET_BOARD_URL = (boardNumber:number | string) => `${API_DOMAIN}/board/${boardNumber}`;
 
 
 // 로그인 //
@@ -257,6 +260,20 @@ export const uploadFileRequest = async (data: FormData) => {
       const responseBody: ResponseDto = error.response.data;
       const { code } = responseBody;
       return code;
+    });
+    return result;
+  }
+
+  // 게시물 불러오기 //
+  export const getBoardRequest = async (boardNumber: number | string) => {
+    const result = await axios.get(GET_BOARD_URL(boardNumber))
+    .then((response) => {
+      const responseBody: GetBoardResponseDto = response.data;
+      return responseBody;
+    })
+    .catch((error) => {
+      const responseBody: ResponseDto = error.response.data;
+      return responseBody;
     });
     return result;
   }

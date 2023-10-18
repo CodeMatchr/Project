@@ -19,7 +19,6 @@ import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.room.DeleteMultiChatResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomResponseDto;
-import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomImageUrlResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomPasswordResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomTitleResponseDto;
@@ -36,25 +35,27 @@ public class RoomController {
     private final RoomService roomService;
 
     // API : 다인원 채팅방 생성 메서드 //
-    @PostMapping("/create")
+    @PostMapping("/create/{r}")
     public ResponseEntity<? super PostRoomResponseDto> postRoom(@PathVariable("roomUserEmail") String roomUserEmail,  @RequestBody @Valid PostRoomRequestDto postRoomRequestDto) {
         ResponseEntity<? super PostRoomResponseDto> responseEntity = roomService.postRoom(roomUserEmail, postRoomRequestDto);
         return responseEntity;
     }
 
-    // API : 특정 다인원 채팅방 조회 메서드 //
+    //! API : 특정 다인원 채팅방 조회 메서드 //
+    // todo : email로 받아야 함 //
     @GetMapping("/{roomNumber}")
     public ResponseEntity<? super GetRoomResponseDto> getRoom(@PathVariable("roomNumber") Integer roomNumber) {
         ResponseEntity<? super GetRoomResponseDto> responseEntity = roomService.getRoom(roomNumber);
         return responseEntity;
     }
 
-    // API : 다인원 채팅방 목록 조회 메서드 //
-    @GetMapping("/{roomNumber}/roomList")
-    public ResponseEntity<? super GetRoomListResponseDto> getRoomList(@PathVariable("roomNumber") Integer roomNumber) {
-        ResponseEntity<? super GetRoomListResponseDto> responseEntity = roomService.getRoomList(roomNumber);
-        return responseEntity;
-    }
+    // API : 다인원 채팅방 목록 조회 메서드 // 원래꺼 !!!
+    // @GetMapping("/{roomNumber}/roomList")
+    // public ResponseEntity<? super GetRoomListResponseDto> getRoomList(@PathVariable("roomNumber") Integer roomNumber) {
+    //     ResponseEntity<? super GetRoomListResponseDto> responseEntity = roomService.getRoomList(roomNumber);
+    //     return responseEntity;
+    // }
+    
 
     // API : 특정 다인원 채팅방 제목 수정 메서드 //
     @PatchMapping("/{roomNumber}/roomTitle")

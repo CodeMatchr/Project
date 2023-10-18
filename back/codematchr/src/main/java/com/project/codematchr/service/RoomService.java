@@ -22,7 +22,9 @@ public interface RoomService {
     ResponseEntity<? super GetRoomResponseDto> getRoom(Integer roomNumber);
 
     // Method : 다인원 채팅방 목록 조회 메서드 //
-    ResponseEntity<? super GetRoomListResponseDto> getRoomList(Integer roomNumber);
+    // ResponseEntity<? super GetRoomListResponseDto> getRoomList(Integer roomNumber);
+
+   
     
     // Method : 특정 다인원 채팅방 제목 수정 메서드 //
     ResponseEntity<? super PatchRoomTitleResponseDto> patchRoomTitle(Integer roomNumber, String roomUserEmail, PatchRoomTitleRequestDto patchRoomTitleRequestDto);

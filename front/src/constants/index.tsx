@@ -18,8 +18,7 @@ export const MAIN_PATH = '/';
 export const AUTHENTICATION_PATH = '/authentication';
 // Board
 export const BOARD_PATH = '/board';
-export const UPDATE_PATH = (boardNumber : number | string) => `/update/${boardNumber}`;
-export const BOARD_UPDATE_PATH = (boardNumber : number | string) => `${BOARD_PATH}/${UPDATE_PATH(boardNumber)}`;
+export const BOARD_UPDATE_PATH = (boardNumber : number | string) => `${BOARD_PATH}/${boardNumber}`;
 
 export const DETAIL_PATH = (boardNumber : number | string) => `detail/${boardNumber}`;
 export const BOARD_DETAIL_PATH = (boardNumber : number | string) => `${BOARD_PATH}/${DETAIL_PATH(boardNumber)}`;

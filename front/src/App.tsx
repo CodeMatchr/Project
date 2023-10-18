@@ -68,7 +68,7 @@ useEffect(() => {
         <Route path={USER_PATH(USER_PAGE_PATH_VARIABLE)} element={<UserPage/>} />
 
         {/* 게시글 관련 화면 BOARD */}
-        <Route path={BOARD_PATH} element={<BoardDetail/>} />
+        <Route path={BOARD_UPDATE_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardDetail/>} />
         <Route path={BOARD_DETAIL_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardDetail/>} />
         <Route path={WRITE_PATH} element={<BoardWrite/>} />
 

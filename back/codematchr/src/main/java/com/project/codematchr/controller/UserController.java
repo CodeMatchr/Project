@@ -15,9 +15,7 @@ import com.project.codematchr.dto.request.user.PatchUserStateMessageRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserNicknameRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserPasswordRequestDto;
 import com.project.codematchr.dto.response.user.GetSignInUserResponseDto;
-import com.project.codematchr.dto.response.user.GetUserBoardListResponseDto;
 import com.project.codematchr.dto.response.user.GetUserResponseDto;
-import com.project.codematchr.dto.response.user.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserNicknameResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserPasswordResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserProfileImageUrlResponseDto;
@@ -47,19 +45,6 @@ public class UserController {
         return responseEntity;
     }
 
-    // API : 유저 게시물 리스트 불러오기 메서드 //
-    @GetMapping("/board-list/{userEmail}")
-    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(@AuthenticationPrincipal String userEmail) {
-        ResponseEntity<? super GetUserBoardListResponseDto> responseEntity = userService.getUserBoardList(userEmail);
-        return responseEntity;
-    }
-    
-    // API : 유저 채팅방 리스트 불러오기 메서드 //
-    @GetMapping("/room-list/{writerEmail}")
-    public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(@AuthenticationPrincipal String writerEmail) {
-        ResponseEntity<? super GetUserRoomListResponseDto> responseEntity = userService.getUserRoomList(writerEmail);
-        return responseEntity;
-    }
 
     // API : 사용자 닉네임 수정 메서드 //
     @PatchMapping("/nickname")
