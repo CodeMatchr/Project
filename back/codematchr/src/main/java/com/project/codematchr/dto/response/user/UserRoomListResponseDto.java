@@ -18,7 +18,6 @@ public class UserRoomListResponseDto extends ResponseDto {
     private int roomMemberCount;
     private String roomManagerNickname;
     private String roomManagerProfileImageUrl;
-    private String userEmail;
 
     public UserRoomListResponseDto(RoomViewEntity roomViewEntity) {
         this.roomNumber = roomViewEntity.getRoomNumber();

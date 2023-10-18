@@ -191,12 +191,12 @@ public class UserServiceImplement implements UserService {
 
     // 유저페이지 게시물 리스트 불러오기
     @Override
-    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String writerEmail) {
+    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String userEmail) {
 
         List<UserBoardListResponseDto> boardList;
 
         try {
-            List<BoardViewEntity> boardViewEntities = boardViewRepository.findByWriterEmailOrderByWriteDatetimeDesc(writerEmail);
+            List<BoardViewEntity> boardViewEntities = boardViewRepository.findByWriterEmailOrderByWriteDatetimeDesc(userEmail);
             
             boardList = UserBoardListResponseDto.copyUserBoardList(boardViewEntities);
 

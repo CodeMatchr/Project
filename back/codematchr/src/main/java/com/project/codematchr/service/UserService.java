@@ -23,10 +23,10 @@ public interface UserService {
     ResponseEntity<? super GetUserResponseDto> getUser(String userEmail);
 
     // Method : 유저페이지 게시물 리스트 불러오기 메서드 //
-    ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String writerEmail);
+    ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String userEmail);
 
     // Method : 유저페이지 채팅방 리스트 불러오기 메서드 //
-    ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(String writerEmail);
+    ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(String userEmail);
 
     // Method : 사용자 닉네임 변경 메서드 //
     ResponseEntity<? super PatchUserNicknameResponseDto> patchUserNickname(String userEmail, PatchUserNicknameRequestDto patchUserNicknameRequestDto);

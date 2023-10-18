@@ -5,9 +5,10 @@ import { useBoardWriteStore, useUserStore } from "../../../store";
 import './style.css';
 import { useCookies } from "react-cookie";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { BOARD_DETAIL_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_WRITE_PATH, MAIN_PATH } from "src/constants";
+import { BOARD_DETAIL_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_WRITE_PATH, MAIN_PATH, USER_PAGE_PATH_VARIABLE, USER_PATH, WRITE_PATH } from "src/constants";
 import PostBoardRequestDto from "src/interfaces/request/board/post-board.request.dto";
-import { postBoardRequest } from "src/apis";
+import { patchBoardRequest, postBoardRequest, uploadFileRequest } from "src/apis";
+import PatchBoardRequestDto from "src/interfaces/request/board/patch-board.request.dto";
 
 //     component      //
 // description : 게시물 쓰기 화면 //
@@ -32,13 +33,24 @@ const { user, setUser } = useUserStore();
 const { pathname } = useLocation();
 
 //          function          //
+// 파일 업로드 //
+const fileUpload = async () => {
+    if (boardImage === null) return null;
+
+    const data = new FormData();
+    data.append('file', boardImage);
+
+    const imageUrl = await uploadFileRequest(data);
+    return imageUrl;
+  }
+
 // 취소 버튼 //
 const onCancelClickHandler = () => {
     navigator(MAIN_PATH);
 }
-// description: 게시물 작성 요청 함수 //
+// description: 게시물 작성 함수 //
 const postBoardResponseHandler = (code: string) => {
-    if (code === 'NE') alert('존재하지 않는 회원입니다.');
+    if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
     if (code === 'VF') alert('필수 데이터를 입력하지 않았습니다.');
     if (code === 'DE') alert('데이터베이스 에러입니다.');
     if (code !== 'SU') return;
@@ -46,8 +58,23 @@ const postBoardResponseHandler = (code: string) => {
     resetBoard();
 
     if (!user) return;
-    navigator(BOARD_WRITE_PATH());
+    navigator(USER_PATH(user.userEmail));
   }
+
+// description: 게시물 수정 함수 //
+const patchBoardResponseHandler = (code: string) => {
+if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+if (code === 'NB') alert('존재하지 않는 게시물 번호입니다.');
+if (code === 'NP') alert('권한이 없습니다.');
+if (code === 'VF') alert('필수 데이터를 입력하지 않았습니다.');
+if (code === 'DE') alert('데이터베이스 에러입니다.');
+if (code !== 'SU') return;
+
+resetBoard();
+
+if (!boardNumber) return;
+navigator(BOARD_DETAIL_PATH(boardNumber));
+}
 
 
 //          event handler          //
@@ -86,27 +113,27 @@ const onBoardWriteButtonClickHandler = async () => {
 
     const token = cookies.accessToken;
 
-    if (pathname === BOARD_WRITE_PATH()) {
-    //   const imageUrl = await fileUpload();
+    if (pathname === WRITE_PATH) {
+      const imageUrl = await fileUpload();
 
       const data: PostBoardRequestDto = {
         boardTitle: boardTitle,
         boardContents: boardContent,
-        boardImageUrl : boardImageUrl
+        boardImageUrl :imageUrl
       }
       postBoardRequest(data, token).then(postBoardResponseHandler);
     } 
     else {
       if (!boardNumber) return;
 
-    //   const imageUrl = boardImage ? await fileUpload() : boardImageUrl;
+      const imageUrl = boardImage ? await fileUpload() : boardImageUrl;
 
-    //   const data: PatchBoardRequestDto = {
-    //     title: boardTitle,
-    //     contents: boardContent,
-    //     imageUrl
-    //   }
-    //   patchBoardRequest(boardNumber, data, token).then(patchBoardResponseHandler);
+      const data: PatchBoardRequestDto = {
+        boardTitle: boardTitle,
+        boardContents: boardContent,
+        boardImageUrl :imageUrl
+      }
+      patchBoardRequest(boardNumber, data, token).then(patchBoardResponseHandler);
     }
     
   }

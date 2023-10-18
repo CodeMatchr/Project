@@ -8,6 +8,8 @@ import { PatchNicknameRequestDto, PatchProfileImageUrlRequestDto, PatchStateMess
 import PatchStateMessageResponseDto from 'src/interfaces/response/User/patch-state-message-response.dto';
 import PostBoardRequestDto from 'src/interfaces/request/board/post-board.request.dto';
 import PostBoardResponseDto from 'src/interfaces/response/board/post-board.response.dto';
+import PatchBoardRequestDto from 'src/interfaces/request/board/patch-board.request.dto';
+import PatchBoardResponseDto from 'src/interfaces/response/board/patch-board.response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -16,7 +18,7 @@ const SIGN_UP_URL = () => `${API_DOMAIN}/authentication/sign-up`;
 const SIGN_IN_URL = () => `${API_DOMAIN}/authentication/sign-in`;
 
 // 로그인 사용자 정보 불러오기 //
-const GET_SIGN_IN_USER_URL = () => `${API_DOMAIN}/user`;
+const GET_SIGN_IN_USER_URL = () => `http://localhost:4040/api/v1/user`;
 // 사용자 //
 const GET_USER_URL = (userEmail: string) => `${API_DOMAIN}/user/${userEmail}`;
 
@@ -32,8 +34,14 @@ const PATCH_USER_PROFILE_URL = () => `${API_DOMAIN}/user/profile`;
 // 상태메세지 변경 //
 const PATCH_USER_STATE_MESSAGE_URL = () => `${API_DOMAIN}/user/state-message`;
 
-// 게시글 작성 //
+// 게시글 //
 const POST_BOARD_URL = () => `${API_DOMAIN}/board`;
+
+// 파일 업로드 //
+const UPLOAD_FILE = () => `http://localhost:4040/file/upload`;
+
+// 게시물 수정 //
+const PATCH_BOARD_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}`;
 
 
 
@@ -188,3 +196,30 @@ export const postBoardRequest = async (data : PostBoardRequestDto, token:string)
     });
     return result;
 }
+
+// 파일 업로드 //
+export const uploadFileRequest = async (data: FormData) => {
+    const result = await axios.post(UPLOAD_FILE(), data, { headers: { 'Content-Type': 'multipart/form-data' } })
+    .then((response) => {
+      const imageUrl: string = response.data;
+      return imageUrl;
+    })
+    .catch((error) => null);
+    return result;
+  }
+
+// 게시물 수정 //
+  export const patchBoardRequest = async (boardNumber: number | string, data: PatchBoardRequestDto, token: string) => {
+    const result = await axios.patch(PATCH_BOARD_URL(boardNumber), data, { headers: { Authorization: `Bearer ${token}` } })
+    .then((response) => {
+      const responseBody: PatchBoardResponseDto = response.data;
+      const { code } = responseBody;
+      return code;
+    })
+    .catch((error) => {
+      const responseBody: ResponseDto = error.response.data;
+      const { code } = responseBody;
+      return code;
+    });
+    return result;
+  }

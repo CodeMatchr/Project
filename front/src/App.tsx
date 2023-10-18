@@ -33,6 +33,7 @@ const [cookies, setCookie] = useCookies();
 const getSignInUserResponseHandler = (result : GetLoginUserResponseDto | ResponseDto) => {
   const {code} = result;
 
+  if(code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
   if(code === 'DE') alert('데이터 베이스 오류입니다.');
   if(code !== 'SU') return;
 
@@ -69,7 +70,7 @@ useEffect(() => {
         {/* 게시글 관련 화면 BOARD */}
         <Route path={BOARD_PATH} element={<BoardDetail/>} />
         <Route path={BOARD_DETAIL_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardDetail/>} />
-        <Route path={WRITE_PATH} element={<BoardWrite />} />
+        <Route path={WRITE_PATH} element={<BoardWrite/>} />
 
         {/* 다인원 채팅방 화면 ROOM */}
         <Route path={ROOM_PATH} element={<Room/>} />

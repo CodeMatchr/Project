@@ -22,6 +22,5 @@ public class RoomViewEntity {
     private String roomManagerNickname;
     private String roomManagerProfileImageUrl;
    
-    private String userEmail;
 
 }

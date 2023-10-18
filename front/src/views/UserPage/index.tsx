@@ -168,9 +168,8 @@ const navigator = useNavigate();
       setMessageChange(!messageChange);
     }
     // description : 글쓰기 버튼 클릭 이벤트 //
-    // todo : 위치 다시 확인해서 연결 //
     const onWriteClickHandler = () => {
-      navigator(BOARD_WRITE_PATH());
+      navigator(WRITE_PATH);
     }
 
     
@@ -263,7 +262,11 @@ const navigator = useNavigate();
       setCurrentBoardList(boardList);
       getViewBoardList(boardList);
       changeSection(boardList.length, COUNT_BY_PAGE);
+      
+      console.log("board :" +boardList);
+      console.log("board :" + userEmail);
     }
+
     //            event handler           //
    
     //            component           //

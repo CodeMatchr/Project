@@ -48,9 +48,9 @@ public class UserController {
     }
 
     // API : 유저 게시물 리스트 불러오기 메서드 //
-    @GetMapping("/board-list/{writerEmail}")
-    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(@AuthenticationPrincipal String writerEmail) {
-        ResponseEntity<? super GetUserBoardListResponseDto> responseEntity = userService.getUserBoardList(writerEmail);
+    @GetMapping("/board-list/{userEmail}")
+    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(@AuthenticationPrincipal String userEmail) {
+        ResponseEntity<? super GetUserBoardListResponseDto> responseEntity = userService.getUserBoardList(userEmail);
         return responseEntity;
     }
     

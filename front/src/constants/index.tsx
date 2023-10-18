@@ -24,8 +24,8 @@ export const BOARD_UPDATE_PATH = (boardNumber : number | string) => `${BOARD_PAT
 export const DETAIL_PATH = (boardNumber : number | string) => `detail/${boardNumber}`;
 export const BOARD_DETAIL_PATH = (boardNumber : number | string) => `${BOARD_PATH}/${DETAIL_PATH(boardNumber)}`;
 
-export const WRITE_PATH = 'write';
-export const BOARD_WRITE_PATH = () => `${BOARD_PATH}/${WRITE_PATH}`;
+export const WRITE_PATH = '/write';
+export const BOARD_WRITE_PATH = () => `${BOARD_PATH}/${WRITE_PATH}}`;
 
 
 export const BOARD_NUMBER_PATH_VARIABLE = ':boardNumber';
