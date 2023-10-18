@@ -16,6 +16,7 @@ import { GetUserBoardListResponseDto, GetUserResponseDto, GetUserRoomListRespons
 import ResponseDto from 'src/interfaces/response/response.dto';
 import { getSignInUserRequest, getUserBoardListRequest, getUserRequest, getUserRoomListRequest, patchNicknameRequest, patchProfileImageUrlRequest, patchStateMessageRequest } from 'src/apis';
 import { PatchNicknameRequestDto, PatchProfileImageUrlRequestDto, PatchStateMessageRequestDto } from 'src/interfaces/request/user';
+import MyCompareCodeList from 'src/components/MyCompareCodeList';
 
 
 //            component           //
@@ -323,7 +324,9 @@ const navigator = useNavigate();
     
     //            render           //
     return (
-      <div className='userpage-code-wrapper'></div>
+      <div className='userpage-code-wrapper'>
+        <MyCompareCodeList/>
+      </div>
     );
   } 
 

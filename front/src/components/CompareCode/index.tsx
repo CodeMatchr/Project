@@ -73,11 +73,17 @@ export default function CompareCode() {
     const resetButtonClickHandler = () => {
         setLeftText('');
         setRightText('');
+        setVisibleSaveState(false);
+        setCompare(false);
       }
   
       const switchButtonClickHandler = () => {
         setLeftText(rightText);
         setRightText(leftText);
+      }
+
+      const saveButtonCLickHandler = () => {
+        alert("비교한 결과를 저장했습니다.");
       }
 
     // effect //
@@ -86,6 +92,9 @@ export default function CompareCode() {
     return (
       <div className='main-top'>
         <div className='main-top-title'>Compare Code</div>
+        <div className='main-top-button-box'>
+          <div className='main-top-reset-button' onClick={resetButtonClickHandler}>reset</div>
+        </div> 
         <div className='main-top-compare'>
           <div className='main-top-compare-left'>
             <div className='main-top-compare-left-title'>Controll Code</div>
@@ -119,7 +128,7 @@ export default function CompareCode() {
           {visibleSaveState ? (
             <div className='main-top-compare-result-show'>
               <div className='main-top-compare-result-button' onClick={compareButtonClickHandler}>compare</div>
-              <div className='main-top-compare-result-save-button'>save</div>
+              <div className='main-top-compare-result-save-button' onClick={saveButtonCLickHandler}>save</div>
             </div>
           ) : (
             <div className='main-top-compare-result'>

@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nestjs/platform-socket.io": "^10.2.7",
+    "@nestjs/websockets": "^10.2.7",
+    "@stomp/stompjs": "^7.0.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -17,6 +20,9 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2",
+    "sockjs-client": "^1.6.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
     "zustand": "^4.4.3"
@@ -45,5 +51,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy" : "http://localhost:4040"
+  "proxy": "http://localhost:4040"
 }

@@ -1,7 +1,10 @@
 .main-top{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    /* margin-bottom: 30px; */
     width: 1400px;
+    
 }
 
 .main-top-title{
@@ -10,37 +13,17 @@
     font-weight: 600;
 }
 
-.main-top-button-box{
-    width: 1400px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.main-top-reset-button{
-    width: 100px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    line-height: 30px;
-    background-color: whitesmoke;
-    border-radius: 15px;
-    transition: all 0.3s;
-    font-weight: 600;
-    box-sizing: border-box;
-    cursor: pointer;
-}
-
-.main-top-reset-button:hover{
-    background-color: #ccc;
-}
-
 .main-top-compare{
     margin-top: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.main-top-compare-box{
+    width: 1400px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .main-top-compare-left{
@@ -131,71 +114,4 @@
     border-bottom-right-radius: 15px;
     border: 1px solid rgba(0, 0, 0, 0.5);
     background-color: whitesmoke;
-}
-
-.main-top-compare-right-input::placeholder{
-    font-size: 18px;
-    color: #ccc;
-    text-align: center;
-    font-weight: 600;
-}
-
-.main-top-compare-box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.main-top-compare-result{
-    margin: 60px auto 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 250px;
-}
-
-.main-top-compare-result-show{
-    margin: 60px auto 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 250px;
-}
-
-.main-top-compare-result-button{
-    width: 100px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    line-height: 30px;
-    /* border: 3px solid black; */
-    background-color: whitesmoke;
-    border-radius: 15px;
-    transition: all 0.3s;
-    font-weight: 600;
-    box-sizing: border-box;
-    cursor: pointer;
-}
-
-.main-top-compare-result-button:hover, .main-top-compare-result-save-button:hover{
-    background-color: #ccc;
-}
-
-.main-top-compare-result-save-button{
-    width: 100px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    line-height: 30px;
-    /* border: 3px solid black; */
-    background-color: whitesmoke;
-    border-radius: 15px;
-    transition: all 0.3s;
-    font-weight: 600;
-    box-sizing: border-box;
-    cursor: pointer;
 }
