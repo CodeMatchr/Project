@@ -11,6 +11,7 @@
 }
 
 .main-top-button-box{
+    width: 1400px;
     display: flex;
     justify-content: flex-end;
 }
