@@ -11,6 +11,8 @@ import PostBoardResponseDto from 'src/interfaces/response/board/post-board.respo
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import PostRoomRequestDto from 'src/interfaces/request/room/post-room.request.dto';
 import PostRoomResponseDto from 'src/interfaces/response/room/post-room.response.dto';
+import PatchBoardResponseDto from 'src/interfaces/response/board/patch-board.response.dto';
+import PatchBoardRequestDto from 'src/interfaces/request/board/patch-board.request.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -231,3 +233,30 @@ export const postRoomRequest = async (data: PostRoomRequestDto, token: string) =
     })
     return result;
 }
+
+// 파일 업로드 //
+export const uploadFileRequest = async (data: FormData) => {
+    const result = await axios.post(UPLOAD_FILE(), data, { headers: { 'Content-Type': 'multipart/form-data' } })
+    .then((response) => {
+      const imageUrl: string = response.data;
+      return imageUrl;
+    })
+    .catch((error) => null);
+    return result;
+  }
+
+// 게시물 수정 //
+  export const patchBoardRequest = async (boardNumber: number | string, data: PatchBoardRequestDto, token: string) => {
+    const result = await axios.patch(PATCH_BOARD_URL(boardNumber), data, { headers: { Authorization: `Bearer ${token}` } })
+    .then((response) => {
+      const responseBody: PatchBoardResponseDto = response.data;
+      const { code } = responseBody;
+      return code;
+    })
+    .catch((error) => {
+      const responseBody: ResponseDto = error.response.data;
+      const { code } = responseBody;
+      return code;
+    });
+    return result;
+  }
