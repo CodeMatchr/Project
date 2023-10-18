@@ -6,6 +6,7 @@ export default interface GetRoomResponseDto extends ResponseDto {
     roomImage : File | null;
     roomImageUrl : string | null;
     roomCreatePassword : string;
+    roomPassword : string;
     roomDateTime : string;
     roomMemberCount : number;
     roomUserEmail : String;

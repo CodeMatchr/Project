@@ -8,7 +8,7 @@ import ChatManagerImagePopUp from '../../components/PopUp/ChatManagerImagePopUp'
 import ChatManagerByePopUp from '../../components/PopUp/ChatManagerByePopUp';
 import CompareCode from 'src/components/CompareCode';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useUserStore } from 'src/store';
+import { useRoomStore, useUserStore } from 'src/store';
 import { useCookies } from 'react-cookie';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
@@ -24,6 +24,8 @@ export default function Chat() {
     const { user } = useUserStore();
     // 쿠키 상태 //
     const [cookies] = useCookies();
+
+    const { roomTitle, roomPassword, roomImage, roomImageUrl, resetRoom, setRoomNumber, setRoomImageUrl, setRoomImage, setRoomPassword, setRoomTitle } = useRoomStore();
 
     // 채팅방 상태 //
     const [chat, setChat] = useState<GetRoomResponseDto | null>(null);
@@ -46,16 +48,18 @@ export default function Chat() {
     const navigator = useNavigate();
 
     // 채팅방 불러오기 응답 처리 //
-    const getChatResponseHandler = (responseBody : GetRoomResponseDto | ResponseDto) => {
-        const { code } = responseBody;
-        if(code === 'NR') alert('존재하지 않는 다인원 채팅방입니다.');
+    const getRoomResponseHnadler = (responseBody : GetRoomResponseDto | ResponseDto) => {
+        const {code} = responseBody;
+        if(code === 'NR') alert('존재하지 않는 채팅방입니다.');
         if(code !== 'SU') {
             navigator(MAIN_PATH);
             return;
         }
 
-        const room = responseBody as GetRoomResponseDto;
-        setChat(room);
+        const { roomTitle, roomPassword, roomImageUrl } = responseBody as GetRoomResponseDto
+        setRoomTitle(roomTitle);
+        setRoomPassword(roomPassword);
+        setRoomImageUrl(roomImageUrl);
     }
 
 
