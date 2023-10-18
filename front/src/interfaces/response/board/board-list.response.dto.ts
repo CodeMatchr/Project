@@ -10,4 +10,5 @@ export default interface BoardListResponseDto {
     boardWriteDatetime : string;
     boardWriterNickname: string;
     boardWriterProfileImageUrl : string | null;
+    writerEmail : string;
 }

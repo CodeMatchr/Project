@@ -31,5 +31,6 @@ public interface BoardViewRepository extends JpaRepository<BoardViewEntity, Inte
   // description : 검색어 리스트 조회 //
   List<BoardViewEntity> findByTitleContainsOrContentsContainsOrderByWriteDatetimeDesc(String title, String contents);
 
+  
 
 }

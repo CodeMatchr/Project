@@ -5,9 +5,9 @@ export default interface RoomListResponseDto {
     // roomPassword : string;
     // roomDateTime : string;
     roomMemberCount : number;
-    // roomUserEmail : String;
     roomManagerNickname : string;
     // roomAccessorEmail : string;
     roomManagerProfileImageUrl : string | null;
     // roomIsMulti : boolean;
-}
+    userEmail : string;
+} 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import './style.css';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
-import { roomListMock } from '../../mocks';
 import Pagination from '../../components/Pagination';
 import { MAIN_ROOM_COUNT_BY_PAGE_FUll } from '../../constants';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +15,7 @@ export default function Room() {
   // 페이지네이션과 관련된 상태 및 함수
   const{totalPage, currentPage, currentSection, onPageClickHandler, onPreviousClickHandler, onNextClickHandler, changeSection} = usePagination();  
   // Room 에 해당하는 전체 리스트 상태
-  const[currentRoomList, setCurrentRoomList] = useState<RoomListResponseDto[]>(roomListMock);
+  const[currentRoomList, setCurrentRoomList] = useState<RoomListResponseDto[]>([]);
   // Room 에 해당하는 전체 갯수 상태
   const[roomCount, setRoomCount] = useState<number>(1);
   // Room 현재 페이지에서 보여줄 Room 게시물 리스트 상태

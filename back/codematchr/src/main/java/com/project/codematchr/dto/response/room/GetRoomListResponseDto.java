@@ -1,6 +1,5 @@
 package com.project.codematchr.dto.response.room;
 
-import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
