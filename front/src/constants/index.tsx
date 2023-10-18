@@ -37,10 +37,13 @@ export const USER_PAGE_PATH_VARIABLE = ':userEmail';
 
 // Room | Chat
 export const ROOM_PATH = '/room';
-export const ROOM_DETAIL_PATH = (roomNumber : number | string) => `detail/${roomNumber}`;
+export const ROOM_DETAIL_PATH = (roomNumber : number | string) => `/detail/${roomNumber}`;
 export const ROOM_LIST_PATH = (roomNumber : number | string) => `${ROOM_PATH}/${ROOM_DETAIL_PATH(roomNumber)}`;
 
 export const ROOM_NUMBER_PATH_VARIABLE = ':roomNumber';
+
+// Chat
+export const CHAT_PATH = `${ROOM_PATH}/${ROOM_DETAIL_PATH}/chat`;
 
 // Compare
 export const COMPARE_PATH = '/compare';
@@ -70,8 +73,7 @@ export const MY_COMPARE_RESULT_BY_PAGE = 1;
 export const MAIN_ROOM_COUNT_BY_PAGE_BY_SECTION = 5;
 export const COUNT_BY_MAIN_ROOM_SECTION = MAIN_ROOM_COUNT_BY_PAGE * MAIN_ROOM_COUNT_BY_PAGE_BY_SECTION;
 
-// Chat
-export const CHAT_PATH = '/chat';
+
 
 
 // Board -detail pagination //
