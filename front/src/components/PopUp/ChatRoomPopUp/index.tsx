@@ -1,7 +1,12 @@
-import React, { Dispatch, SetStateAction, useState, ChangeEvent, useRef } from 'react'
+import React, { Dispatch, SetStateAction, useState, ChangeEvent, useRef, useEffect } from 'react'
 import './style.css'; 
-import { useNavigate } from 'react-router-dom';
-import { MAIN_PATH, ROOM_PATH } from '../../../constants';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { CHAT_PATH, MAIN_PATH, ROOM_PATH } from '../../../constants';
+import useCreateRoomStore from 'src/store/room.store';
+import { Cookies, useCookies } from 'react-cookie';
+import path from 'path';
+import PostRoomRequestDto from 'src/interfaces/request/room/post-room.request.dto';
+import { postRoomRequest } from 'src/apis';
 
 //            component           //
 // description : 채팅방 만들기 팝업창 // 
@@ -9,6 +14,8 @@ export default function ChatRoomPopUp() {
 //            state           //
 // description : 네비게이터 //
 const navigator = useNavigate();
+
+const {userEmail} = useParams();
 
 // todo : 상태 string / boolean 확인 잘하기, 받아오는 값 //
 // description : 방 이름 상태 //
@@ -23,22 +30,55 @@ const [roomPasswordError, setRoomPasswordError] = useState<boolean>(false);
 // description : 파일 업로드 버튼 요소에 대한 참조 상태 //
 const fileInputRef = useRef<HTMLInputElement>(null);
 
+const [cookies] = useCookies();
+
+const { pathname } = useLocation();
+
+// 채팅방 정보를 저장할 상태 //
+const {roomTitle, roomCreatePassword, roomImage, setRoomTitle, setRoomCreatePassword, setRoomImage, resetRoom} = useCreateRoomStore();
+// 이미지를 저장할 상태 //
+const [roomImageUrl, setRoomImageUrl] = useState<string>('')
+
 //            function           //
+const postRoomResponseHandler = (code : string) => {
+  if(code === "NE") alert('존재하지 않는 사용자 이메일입니다.');
+  if(code === "VF") alert('필수 데이터를 입력하지 않았습니다.');
+  if(code === 'DE') alert('데이터베이스 에러입니다.');
+
+  resetRoom();
+  
+}
+
 //            event handler           //
 // description : 방 이름 변경 이벤트 처리 함수 //
 const onRoomNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
   const roomName = event.target.value;
   setRoomName(roomName);
 }
+
 // description : 방 비밀번호 변경 이벤트 처리 함수 //
 const onRoomPasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
   const roomPassword = event.target.value;
   setPassword(roomPassword);
 }
+
 // description : 채팅방 만들기 생성 클릭 이벤트 //
 // todo : 이동 위치 확인해서 수정하기 //
-const onCreateClickHandler = () => {
-  navigator(ROOM_PATH);
+const onCreateClickHandler = async () => {
+  const token = cookies.accessToken;
+
+  if(pathname === MAIN_PATH) {
+    const data : PostRoomRequestDto = {
+        roomTitle: roomTitle,
+        roomImage: null,
+        roomImageUrl: null,
+        roomPassword: roomPassword
+    }
+    postRoomRequest(data, token).then(postRoomResponseHandler);
+  }
+
+  navigator(CHAT_PATH);
+
 }
 // description : 채팅방 만들기 취소 클릭 이벤트 //
 const onCancelClickHandler = () => {
@@ -52,6 +92,11 @@ const onFileUploadClickHandler = () => {
 
 //            component           //
 //            effect           //
+useEffect(() => {
+  if (!userEmail) navigator(MAIN_PATH);
+
+  return;
+}, [userEmail]);
 //            render           //
   return (
     <div id='popup-wrapper'>

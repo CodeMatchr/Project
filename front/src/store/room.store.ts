@@ -17,7 +17,7 @@ interface RoomCreateStore {
 
     setRoomNumber : (roomNumber: string) => void;
     setRoomTitle : (roomTitle: string) => void;
-    setRoomFileImage : (roomImage : File | null) => void;
+    setRoomImage : (roomImage : File | null) => void;
     setRoomImageUrl : (roomImageUrl : string | null) => void;
     setRoomCreatePassword : (roomPassword : string) => void;
 
@@ -32,7 +32,7 @@ const useCreateRoomStore = create<RoomCreateStore>((set) => ({
     roomCreatePassword: '',
     setRoomNumber: (roomNumber) => set((state) => ({...state, roomNumber})),
     setRoomTitle: (roomTitle) => set((state) => ({...state, roomTitle})),
-    setRoomFileImage: (roomImage) => set((state) => ({...state, roomImage})),
+    setRoomImage: (roomImage) => set((state) => ({...state, roomImage})),
     setRoomImageUrl: (roomImageUrl) => set((state) => ({...state, roomImageUrl})),
     setRoomCreatePassword: (roomCreatePassword) => set((state) => ({...state, roomCreatePassword})),
     resetRoom: () => set((state) => ({...state, roomNumber: '', roomTitle: '', roomImage: null, roomPassword: ''}))

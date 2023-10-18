@@ -36,7 +36,7 @@ public class RoomController {
     private final RoomService roomService;
 
     // API : 다인원 채팅방 생성 메서드 //
-    @PostMapping("/{roomUserEmail}")
+    @PostMapping("/create")
     public ResponseEntity<? super PostRoomResponseDto> postRoom(@PathVariable("roomUserEmail") String roomUserEmail,  @RequestBody @Valid PostRoomRequestDto postRoomRequestDto) {
         ResponseEntity<? super PostRoomResponseDto> responseEntity = roomService.postRoom(roomUserEmail, postRoomRequestDto);
         return responseEntity;

@@ -8,6 +8,10 @@ import { PatchNicknameRequestDto, PatchProfileImageUrlRequestDto, PatchStateMess
 import PatchStateMessageResponseDto from 'src/interfaces/response/User/patch-state-message-response.dto';
 import PostBoardRequestDto from 'src/interfaces/request/board/post-board.request.dto';
 import PostBoardResponseDto from 'src/interfaces/response/board/post-board.response.dto';
+import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
+import { error } from 'console';
+import PostRoomRequestDto from 'src/interfaces/request/room/post-room.request.dto';
+import PostRoomResponseDto from 'src/interfaces/response/room/post-room.response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -186,5 +190,53 @@ export const postBoardRequest = async (data : PostBoardRequestDto, token:string)
         const {code} = responseBody;
         return code;
     });
+    return result;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const GET_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/chat`;
+const POST_ROOM_URL = () => `${API_DOMAIN}/room/create`;
+
+
+// 채팅방 불러오기 //
+export const getRoomRequest = async (roomNuber : number | string) => {
+    const result = await axios.get(GET_ROOM_URL(roomNuber))
+    .then((response) => {
+        const responseBody: GetRoomResponseDto = response.data;
+        return responseBody;
+    }).catch((error) => {
+        const responseBody: ResponseDto = error.response.data;
+        return responseBody;
+    })
+
+    return result;
+}
+
+// 채팅방 만들기 //
+export const postRoomRequest = async (data: PostRoomRequestDto, token: string) => {
+    const result = await axios.post(POST_ROOM_URL(), data, { headers: { Authorization: `Bearer ${token}` } })
+    .then((response) => {
+        const responseBody: PostRoomResponseDto = response.data;
+        const { code } = responseBody;
+        return code;
+    }).catch((error) => {
+        const responseBody: ResponseDto = error.response.data;
+        const { code } = responseBody;
+        return code;
+    })
     return result;
 }
