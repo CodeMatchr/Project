@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { BOARD_DETAIL_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_WRITE_PATH, COUNT_BY_PAGE, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll, WRITE_PATH } from '../../constants';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import UserBoardItem from '../../components/UserBoardItem';
-import { roomListMock, top3ViewBoardListMock, userpageBoardListMock } from '../../mocks';
 import Pagination from '../../components/Pagination';
 import { usePagination } from '../../hooks';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
@@ -58,7 +57,7 @@ const navigator = useNavigate();
     // description : 유저 정보 응답 처리 함수 //
     const getUserResponseHandler = (result: GetUserResponseDto | ResponseDto) => {
       const { code } = result;
-      if (code === 'NE') alert('존재하지 않는 사용자 이메일 입니다.');
+      if (code === 'NE') alert('존재하지 않는 사용자 이메일 입니다.!!!');
       if (code === 'DE') alert('데이터베이스 오류입니다.');
       if (code !== 'SU') return;
 
@@ -68,6 +67,8 @@ const navigator = useNavigate();
       if (userProfileImageUrl) setUserProfileImageUrl(userProfileImageUrl);
       else setUserProfileImageUrl('');
 
+      console.log( "1 :" + `userEmail: ${userEmail}`);
+      console.log("2 : " + `user?.userEmail: ${user?.userEmail}`);
       if (userEmail === user?.userEmail) {
         const after = { userEmail: userEmail as string, userNickname, userProfileImageUrl, userStateMessage };
         setUser(after);
@@ -81,10 +82,8 @@ const navigator = useNavigate();
       if (code === 'EN') alert('중복되는 닉네임입니다.');
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
-      if (code === 'SU') {
-        setUserNickname(user.userNickname);
-        return;
-      }
+      if (code !== 'SU')  return;
+      
 
       getUserRequest(user.userEmail).then(getUserResponseHandler);
     }
@@ -95,10 +94,7 @@ const navigator = useNavigate();
       if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
-      if (code === 'SU') {
-        setUserStateMessage(user.userStateMessage);
-        return;
-      }
+      if (code !== 'SU') return;
 
       getUserRequest(user.userEmail).then(getUserResponseHandler);
     }
@@ -193,8 +189,7 @@ const navigator = useNavigate();
         getUserRequest(userEmail as string).then(getUserResponseHandler);
       }
 
-    }, [userEmail, user]);
-    // user 제거하고 다시 해보기//
+    }, [userEmail , user]);
     
     //            render           //
     return (
@@ -243,7 +238,7 @@ const navigator = useNavigate();
     const {totalPage, currentPage, currentSection, onPageClickHandler, onNextClickHandler, onPreviousClickHandler, changeSection} = usePagination();
     
     // description : board 에 해당하는 전체 리스트 상태 //
-    const[currentBoardList, setCurrentBoardList] = useState<BoardListResponseDto[]>(userpageBoardListMock);
+    const[currentBoardList, setCurrentBoardList] = useState<BoardListResponseDto[]>([]);
     // description: 현재 페이지에서 보여줄 board 리스트 상태 //
     const [viewBoardList, setViewBoardList] = useState<BoardListResponseDto[]>([]);
     
@@ -280,6 +275,7 @@ const navigator = useNavigate();
         navigator(MAIN_PATH);
         return;
       }
+      console.log("board :" + userEmail);
       getUserBoardListRequest(userEmail).then(getUserBoardListResponseHandler);
     }, [userEmail]);
     
@@ -339,7 +335,7 @@ const navigator = useNavigate();
     // description: 현재 페이지에서 보여줄 채팅방 리스트 상태 //
     const [viewChatList, setViewChatList] = useState<RoomListResponseDto[]>([]);
     // description : Chat 에 해당하는 전체 리스트 상태 //
-    const[currentChatList, setCurrentChatList] = useState<RoomListResponseDto[]>(roomListMock);
+    const[currentChatList, setCurrentChatList] = useState<RoomListResponseDto[]>([]);
     // description : 채팅방 팝업창 상태 //
     const [popUpRoomVisible, setPopUpRoomVisible] = useState<boolean>(false);
     // description : 채팅방 팝업창 상태 //
@@ -383,6 +379,7 @@ const navigator = useNavigate();
         return;
       }
       
+      console.log("room :" + userEmail);
       getUserRoomListRequest(userEmail).then(getUserRoomListResponseHandler);
       
     }, [userEmail]);

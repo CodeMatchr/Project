@@ -8,15 +8,9 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Authentication from './views/Authentication';
 import BoardWrite from './views/Board/Write';
 import BoardDetail from './views/Board/Detail';
-import ChatRoomPopUp from './components/PopUp/ChatRoomPopUp';
 import UserPage from './views/UserPage';
-import ChatComePopUP from './components/PopUp/ChatComePopUp';
 import Room from './views/Room';
 import Chat from './views/Chat';
-import ChatManagerNamePopUp from './components/PopUp/ChatManagerNamePopUp';
-import ChatManagerPasswordPopUp from './components/PopUp/ChatManagerPasswordPopUp';
-import ChatManagerImagePopUp from './components/PopUp/ChatManagerImagePopUp';
-import ChatManagerByePopUp from './components/PopUp/ChatManagerByePopUp';
 import { useCookies } from 'react-cookie';
 import GetLoginUserResponseDto from './interfaces/response/User/get-login-user.response.dto';
 import ResponseDto from './interfaces/response/response.dto';
@@ -38,20 +32,23 @@ const [cookies, setCookie] = useCookies();
 // 로그인 사용자 //
 const getSignInUserResponseHandler = (result : GetLoginUserResponseDto | ResponseDto) => {
   const {code} = result;
-  console.log("로그인" + result);
 
   if(code === 'DE') alert('데이터 베이스 오류입니다.');
   if(code !== 'SU') return;
 
-  setUser({...result as GetLoginUserResponseDto});
-  console.log("1" + user);
+  setUser(result as GetLoginUserResponseDto);
+  
+  console.log("app 로그인부분" + result);
+  console.log("app 로그인부분" + user);
+  console.log("app 로그인부분" + user?.userEmail);  
 }
 
 // effect //
 // 로그인 사용자 //
 useEffect(() => {
   const accessToken = cookies.accessToken;
-  if(!user && accessToken) getSignInUserRequest(accessToken).then(getSignInUserResponseHandler);
+  if(!user && accessToken) 
+  getSignInUserRequest(accessToken).then(getSignInUserResponseHandler);
 }, [pathname]);
 
   return (

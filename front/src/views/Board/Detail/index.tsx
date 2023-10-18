@@ -8,7 +8,6 @@ import Pagination from '../../../components/Pagination';
 import { CommentListResponseDto } from '../../../interfaces/response/board/board-comment-list.response.dto';
 import { COUNT_BY_PAGE_COMMENT } from '../../../constants';
 import CommentListItem from '../../../components/CommentListItem';
-import { BoardDetailMock, CommentListMock, LikeListMock } from '../../../mocks';
 //     component     //
 // 게시물 상세 화면 //
 export default function BoardDetail() {
@@ -200,9 +199,9 @@ export default function BoardDetail() {
   
   // description : 게시물 번호가 바뀔 때 마다 새로운 정보 받아오기 //
   useEffect(() => {
-    setBoard(BoardDetailMock);
-    setLikeList(LikeListMock);
-    setCommentList(CommentListMock);
+    // setBoard([BoardDetailMock]);
+    // setLikeList(LikeListMock);
+    // setCommentList(CommentListMock);
   });
 
 //     getPageCommentList();

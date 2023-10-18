@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.project.codematchr.entity.FriendViewEntity;
-import com.project.codematchr.entity.UserEntity;
 import com.project.codematchr.entity.UserViewEntity;
 import com.project.codematchr.entity.resultSet.FriendListResultSet;
 

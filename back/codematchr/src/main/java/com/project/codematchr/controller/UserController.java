@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +15,9 @@ import com.project.codematchr.dto.request.user.PatchUserStateMessageRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserNicknameRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserPasswordRequestDto;
 import com.project.codematchr.dto.response.user.GetSignInUserResponseDto;
+import com.project.codematchr.dto.response.user.GetUserBoardListResponseDto;
 import com.project.codematchr.dto.response.user.GetUserResponseDto;
+import com.project.codematchr.dto.response.user.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserNicknameResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserPasswordResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserProfileImageUrlResponseDto;
@@ -32,17 +33,31 @@ public class UserController {
 
     private final UserService userService;
 
-    // API : 로그인 사용자 정보 불러오기 메서드 //
-    @GetMapping("")
+    // API : 로그인 사용자 정보 불러오기 메서드 // GET_SIGN_IN_USER_URL
+    @GetMapping("") 
     public ResponseEntity<? super GetSignInUserResponseDto> getSignInUser(@AuthenticationPrincipal String userEmail) {
         ResponseEntity<? super GetSignInUserResponseDto> responseEntity = userService.getSignInUser(userEmail);
         return responseEntity;
     }
     
-    // API : 사용자 정보 불러오기 메서드 //
+    // API : 사용자 정보 불러오기 메서드 // GET_USER_URL
     @GetMapping("/{userEmail}")
     public ResponseEntity<? super GetUserResponseDto> getUser(@AuthenticationPrincipal String userEmail) {
         ResponseEntity<? super GetUserResponseDto> responseEntity = userService.getUser(userEmail);
+        return responseEntity;
+    }
+
+    // API : 유저 게시물 리스트 불러오기 메서드 //
+    @GetMapping("/board-list/{writerEmail}")
+    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(@AuthenticationPrincipal String writerEmail) {
+        ResponseEntity<? super GetUserBoardListResponseDto> responseEntity = userService.getUserBoardList(writerEmail);
+        return responseEntity;
+    }
+    
+    // API : 유저 채팅방 리스트 불러오기 메서드 //
+    @GetMapping("/room-list/{writerEmail}")
+    public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(@AuthenticationPrincipal String userEmail) {
+        ResponseEntity<? super GetUserRoomListResponseDto> responseEntity = userService.getUserRoomList(userEmail);
         return responseEntity;
     }
 

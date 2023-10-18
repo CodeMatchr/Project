@@ -3,7 +3,6 @@ import './style.css';
 import Pagination from '../../components/Pagination';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import Top3ListItem from '../../components/Top3ListItem';
-import { top3CommentBoardListMock, top3FavoriteBoardListMock, top3ViewBoardListMock, roomListMock } from '../../mocks';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
@@ -50,7 +49,7 @@ export default function Main() {
 
     // state //
     // Top3 에 해당하는 Board 리스트 상태 (View(default), Favorite, Comment) //
-    const[currentTop3BoardList, setCurrentTop3BoardList] = useState<BoardListResponseDto[]>(top3ViewBoardListMock);
+    const[currentTop3BoardList, setCurrentTop3BoardList] = useState<BoardListResponseDto[]>([]);
     // Top3 조회수 Board 리스트 Tab 버튼 클릭 상태 //
     const[top3ViewBoardListTabState, setTop3ViewBoardListTabState] = useState<boolean>(true);
     // Top3 좋아요 수 Board 리스트 Tab 버튼 클릭 상태 //
@@ -75,7 +74,7 @@ export default function Main() {
         setTop3ViewBoardListTabState(true);
         setTop3FavoriteBoardListTabState(false);
         setTop3CommentBoardListTabState(false);
-        setCurrentTop3BoardList(top3ViewBoardListMock);
+        // setCurrentTop3BoardList('top3ViewBoardListMock');
       }
       
     }
@@ -86,7 +85,7 @@ export default function Main() {
         setTop3FavoriteBoardListTabState(true);
         setTop3ViewBoardListTabState(false);
         setTop3CommentBoardListTabState(false);
-        setCurrentTop3BoardList(top3FavoriteBoardListMock);
+        // setCurrentTop3BoardList(top3FavoriteBoardListMock);
       }
     }
 
@@ -96,7 +95,7 @@ export default function Main() {
         setTop3CommentBoardListTabState(true);
         setTop3ViewBoardListTabState(false);
         setTop3FavoriteBoardListTabState(false);
-        setCurrentTop3BoardList(top3CommentBoardListMock);
+        // setCurrentTop3BoardList(top3CommentBoardListMock);
       }
       
     }
@@ -135,7 +134,7 @@ export default function Main() {
     // 페이지네이션과 관련된 상태 및 함수
     const{totalPage, currentPage, currentSection, onPageClickHandler, onPreviousClickHandler, onNextClickHandler, changeSection} = usePagination();
     // Room 에 해당하는 전체 리스트 상태
-    const[currentRoomList, setCurrentRoomList] = useState<RoomListResponseDto[]>(roomListMock);
+    const[currentRoomList, setCurrentRoomList] = useState<RoomListResponseDto[]>([]);
     // Room 에 해당하는 전체 갯수 상태
     const[roomCount, setRoomCount] = useState<number>(1);
     // Room 현재 페이지에서 보여줄 Room 게시물 리스트 상태
