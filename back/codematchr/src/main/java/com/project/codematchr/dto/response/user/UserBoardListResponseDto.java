@@ -23,6 +23,7 @@ public class UserBoardListResponseDto extends ResponseDto {
     private String boardWriteDatetime;
     private String boardWriterNickname;
     private String boardWriterProfileImageUrl;
+    private String writerEmail;
 
 
     public UserBoardListResponseDto(BoardViewEntity boardViewEntity) {
@@ -36,6 +37,7 @@ public class UserBoardListResponseDto extends ResponseDto {
         this.boardWriteDatetime = boardViewEntity.getWriteDatetime();
         this.boardWriterNickname = boardViewEntity.getWriterNickname();
         this.boardWriterProfileImageUrl = boardViewEntity.getWriterProfileImageUrl();
+        this.writerEmail = boardViewEntity.getWriterEmail();
     }
     public static List<UserBoardListResponseDto> copyUserBoardList(List<BoardViewEntity> boardViewEntities){
         List<UserBoardListResponseDto> boardList = new ArrayList<>();

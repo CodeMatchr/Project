@@ -18,6 +18,7 @@ public class UserRoomListResponseDto extends ResponseDto {
     private int roomMemberCount;
     private String roomManagerNickname;
     private String roomManagerProfileImageUrl;
+    private String userEmail;
 
     public UserRoomListResponseDto(RoomViewEntity roomViewEntity) {
         this.roomNumber = roomViewEntity.getRoomNumber();
@@ -26,6 +27,7 @@ public class UserRoomListResponseDto extends ResponseDto {
         this.roomMemberCount = roomViewEntity.getRoomMemberCount();
         this.roomManagerNickname = roomViewEntity.getRoomManagerNickname();
         this.roomManagerProfileImageUrl = roomViewEntity.getRoomManagerProfileImageUrl();
+        this.userEmail = roomViewEntity.getUserEmail();
     }
     public static List<UserRoomListResponseDto> copyUserRoomList(List<RoomViewEntity> roomViewEntities) {
         List<UserRoomListResponseDto> roomList = new ArrayList<>();

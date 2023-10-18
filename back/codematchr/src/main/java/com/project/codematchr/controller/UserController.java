@@ -56,8 +56,8 @@ public class UserController {
     
     // API : 유저 채팅방 리스트 불러오기 메서드 //
     @GetMapping("/room-list/{writerEmail}")
-    public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(@AuthenticationPrincipal String userEmail) {
-        ResponseEntity<? super GetUserRoomListResponseDto> responseEntity = userService.getUserRoomList(userEmail);
+    public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(@AuthenticationPrincipal String writerEmail) {
+        ResponseEntity<? super GetUserRoomListResponseDto> responseEntity = userService.getUserRoomList(writerEmail);
         return responseEntity;
     }
 
