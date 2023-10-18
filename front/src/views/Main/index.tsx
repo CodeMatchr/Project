@@ -64,8 +64,9 @@ export default function Main() {
 
     // event handler //
     // Board 리스트 페이지 이동 버튼 클릭 이벤트 //
+    // todo : 플러스 버튼 클릭시 어디로?? //
     const onBoardListClickHandler = () => {
-      navigator(BOARD_PATH);
+      navigator(BOARD_PATH);  
     }
 
     // Top3 조회수 Board 리스트 Tab 버튼 클릭 이벤트 //

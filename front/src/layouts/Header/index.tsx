@@ -29,7 +29,7 @@ export default function Header() {
     const navigator = useNavigate();
 
     // search 버튼 보이기 여부 //
-    const showSearch = !pathname.includes(USER_PATH('')) && pathname !== BOARD_WRITE_PATH('') && !pathname.includes(BOARD_UPDATE_PATH(''));
+    const showSearch = !pathname.includes(USER_PATH('')) && pathname !== BOARD_WRITE_PATH() && !pathname.includes(BOARD_UPDATE_PATH(''));
     // 인증 화면인지 여부 //
     const isAuthentication = pathname === AUTHENTICATION_PATH;
     // 유저페이지 여부 //

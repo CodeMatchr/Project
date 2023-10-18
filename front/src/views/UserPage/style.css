@@ -131,6 +131,27 @@
   
 }
 
+.userpage-user-nickname-x-button {
+  margin-top: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 30px;
+  height: 30px;
+
+  border-radius: 50%;
+  box-sizing: border-box;
+  background-image: url(./assets/x-icon.png);
+  background-position:50% 50%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  transition: all 0.3s;
+  cursor: pointer;
+  
+}
+
 
 .userpage-user-nickname-button:hover {
   border: 1px solid rgba(0, 0, 0, 0.5);
