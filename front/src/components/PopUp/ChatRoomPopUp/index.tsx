@@ -35,11 +35,12 @@ const [cookies] = useCookies();
 const { pathname } = useLocation();
 
 // 채팅방 정보를 저장할 상태 //
-const {roomTitle, roomCreatePassword, roomImage, setRoomTitle, setRoomCreatePassword, setRoomImage, resetRoom} = useCreateRoomStore();
+const {roomTitle, /*roomPassword,*/ roomImage, setRoomTitle, setRoomPassword, setRoomImage, resetRoom} = useCreateRoomStore();
 // 이미지를 저장할 상태 //
 const [roomImageUrl, setRoomImageUrl] = useState<string>('')
 
 //            function           //
+// 채팅방 생성 //
 const postRoomResponseHandler = (code : string) => {
   if(code === "NE") alert('존재하지 않는 사용자 이메일입니다.');
   if(code === "VF") alert('필수 데이터를 입력하지 않았습니다.');
@@ -48,6 +49,7 @@ const postRoomResponseHandler = (code : string) => {
   resetRoom();
   
 }
+
 
 //            event handler           //
 // description : 방 이름 변경 이벤트 처리 함수 //
@@ -92,11 +94,11 @@ const onFileUploadClickHandler = () => {
 
 //            component           //
 //            effect           //
-useEffect(() => {
-  if (!userEmail) navigator(MAIN_PATH);
+// useEffect(() => {
+//   if (!userEmail) navigator(MAIN_PATH);
 
-  return;
-}, [userEmail]);
+//   return;
+// }, [userEmail]);
 //            render           //
   return (
     <div id='popup-wrapper'>

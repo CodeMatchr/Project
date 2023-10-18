@@ -1,12 +1,11 @@
-import { defaultMaxListeners } from "events";
 import { create } from "zustand";
 
-interface RoomCreateStore {
+interface RoomStore {
     roomNumber : string;
     roomTitle : string;
     roomImage : File | null;
     roomImageUrl : string | null;
-    roomCreatePassword : string;
+    roomPassword : string;
     // roomDateTime : string;
     // roomMemberCount : number;
     // roomUserEmail : String;
@@ -19,23 +18,23 @@ interface RoomCreateStore {
     setRoomTitle : (roomTitle: string) => void;
     setRoomImage : (roomImage : File | null) => void;
     setRoomImageUrl : (roomImageUrl : string | null) => void;
-    setRoomCreatePassword : (roomPassword : string) => void;
+    setRoomPassword : (roomPassword : string) => void;
 
     resetRoom : () => void;
 }
 
-const useCreateRoomStore = create<RoomCreateStore>((set) => ({
+const useRoomStore = create<RoomStore>((set) => ({
     roomNumber: '',
     roomTitle: '',
     roomImage: null,
     roomImageUrl: null,
-    roomCreatePassword: '',
+    roomPassword: '',
     setRoomNumber: (roomNumber) => set((state) => ({...state, roomNumber})),
     setRoomTitle: (roomTitle) => set((state) => ({...state, roomTitle})),
     setRoomImage: (roomImage) => set((state) => ({...state, roomImage})),
     setRoomImageUrl: (roomImageUrl) => set((state) => ({...state, roomImageUrl})),
-    setRoomCreatePassword: (roomCreatePassword) => set((state) => ({...state, roomCreatePassword})),
+    setRoomPassword: (roomCreatePassword) => set((state) => ({...state, roomCreatePassword})),
     resetRoom: () => set((state) => ({...state, roomNumber: '', roomTitle: '', roomImage: null, roomPassword: ''}))
 }));
 
-export default useCreateRoomStore;
+export default useRoomStore;

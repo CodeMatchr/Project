@@ -13,6 +13,12 @@ import PostRoomRequestDto from 'src/interfaces/request/room/post-room.request.dt
 import PostRoomResponseDto from 'src/interfaces/response/room/post-room.response.dto';
 import PatchBoardResponseDto from 'src/interfaces/response/board/patch-board.response.dto';
 import PatchBoardRequestDto from 'src/interfaces/request/board/patch-board.request.dto';
+import PatchRoomTitleRequestDto from 'src/interfaces/request/room/patch-room-request.dto';
+import PatchRoomTitleResponseDto from 'src/interfaces/response/room/patch-room-title.response.dto';
+import { error } from 'console';
+import PatchRoomPasswordRequestDto from 'src/interfaces/request/room/patch-room-password-request.dto';
+import PatchRoomPasswordResponseDto from 'src/interfaces/response/room/patch-room-password.response.dto';
+import PatchRoomImageUrlResponseDto from 'src/interfaces/response/room/patch-room-image-url-response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -203,6 +209,10 @@ export const postBoardRequest = async (data : PostBoardRequestDto, token:string)
 
 const GET_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/chat`;
 const POST_ROOM_URL = () => `${API_DOMAIN}/room/create`;
+const PATCH_ROOM_TITLE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomTitle`;
+const PATCH_ROOM_PASSWORD_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomPassword`;
+const PATCH_ROOM_IMAGE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomImageUrl`;
+
 
 
 // 채팅방 불러오기 //
@@ -231,6 +241,54 @@ export const postRoomRequest = async (data: PostRoomRequestDto, token: string) =
         const { code } = responseBody;
         return code;
     })
+    return result;
+}
+
+// 채팅방 이름 변경 //
+export const PatchRoomTitleRequest = async (roomNumber : number | string, data : PatchRoomTitleRequestDto, token : string) => {
+    const result = await axios.patch(PATCH_ROOM_TITLE_URL(roomNumber), data, { headers: { Authorization : `Bearer ${token}` } })
+    .then((response) => {
+        const responseBody : PatchRoomTitleResponseDto = response.data;
+        const { code } = responseBody;
+        return code;
+    }).catch((error) => {
+        const responseBody: ResponseDto = error.response.data;
+        const { code } = responseBody;
+        return code;
+    });
+
+    return result;
+}
+
+// 채팅방 비밀번호 변경 //
+export const PatchRoomPasswordRequest = async (roomNumber : number | string, data : PatchRoomPasswordRequestDto, token : string) => {
+    const result = await axios.patch(PATCH_ROOM_PASSWORD_URL(roomNumber), data, { headers : {Authorization : `Bearer ${token}`}})
+    .then((response) => {
+        const responseBody : PatchRoomPasswordResponseDto = response.data;
+        const { code } = responseBody;
+        return code;
+    }).catch((error) => {
+        const responseBody: ResponseDto = error.response.data;
+        const { code } = responseBody;
+        return code;
+    });
+
+    return result;
+}
+
+// 채팅방 이미지 수정 //
+export const PatchRoomImageUrlRequest = async (roomNumber : number |string, data : PatchRoomPasswordRequestDto, token : string) => {
+    const result = await axios.patch(PATCH_ROOM_IMAGE_URL(roomNumber), data, { headers : {Authorization : `Bearer ${token}`} })
+    .then((response) => {
+        const responseBody : PatchRoomImageUrlResponseDto = response.data;
+        const { code } = responseBody;
+        return code;
+    }).catch((error) => {
+        const responseBody: ResponseDto = error.response.data;
+        const { code } = responseBody;
+        return code;
+    });
+
     return result;
 }
 

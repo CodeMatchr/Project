@@ -1,7 +1,10 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, ChangeEvent } from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_PATH, ROOM_PATH } from '../../../constants';
+import { useRoomStore } from 'src/store';
+import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
+import ResponseDto from 'src/interfaces/response/response.dto';
 
 // interface Props {
 //     popUpType: string
@@ -14,6 +17,8 @@ export default function ChatManagerNamePopUp() {
     //            state           //
     // description : 네비게이터 //
     const navigator = useNavigate();
+
+    const { roomTitle, roomPassword, roomImage, roomImageUrl, resetRoom, setRoomNumber, setRoomImageUrl, setRoomImage, setRoomPassword, setRoomTitle } = useRoomStore();
 
     // description : 채팅방 변경 상태 //
     // todo : 채팅방에서 변경 버튼 클릭시 string으로? boolean? //
@@ -44,8 +49,28 @@ export default function ChatManagerNamePopUp() {
 
 
     //            function           //
+    // 채팅방 불러오기 응답 처리 //
+    const getRoomResponseHnadler = (responseBody : GetRoomResponseDto | ResponseDto) => {
+        const {code} = responseBody;
+        if(code === 'NR') alert('존재하지 않는 채팅방입니다.');
+        if(code !== 'SU') {
+            navigator(MAIN_PATH);
+            return;
+        }
+
+        const { roomTitle, roomPassword, roomImageUrl } = responseBody as GetRoomResponseDto
+        setRoomTitle(roomTitle);
+        setRoomPassword(roomPassword);
+        setRoomImageUrl(roomImageUrl);
+    }
+
     //            event handler           //
     // description : 변경 버튼 클릭 이벤트 //
+    const onTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setRoomTitle(event.target.value);
+    }
+
+
     // todo : 변경 위치 다시 확인해서 수정해야함 //
     const onChangeClickHandler = () => {
         navigator(ROOM_PATH);
@@ -80,7 +105,7 @@ export default function ChatManagerNamePopUp() {
                 </div>
                 <div className='popup-manager-middle-text-box'>
                     <div className='popup-manager-middle-text'>
-                        <input className='popup-manager-middle-text-input' placeholder='변경할 이름을 입력해주세요.'></input>
+                        <input className='popup-manager-middle-text-input' placeholder='변경할 이름을 입력해주세요.' onChange={onTitleChangeHandler}></input>
                     </div>
                 </div>
             </div>
