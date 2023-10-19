@@ -17,7 +17,7 @@ import com.project.codematchr.dto.request.room.PatchRoomImageUrlRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomPasswordRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
-import com.project.codematchr.dto.response.room.DeleteMultiChatResponseDto;
+import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomImageUrlResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomPasswordResponseDto;
@@ -35,15 +35,17 @@ public class RoomController {
     private final RoomService roomService;
 
     // API : 다인원 채팅방 생성 메서드 //
-    @PostMapping("/create/{roomUserEmail}")
-    public ResponseEntity<? super PostRoomResponseDto> postRoom(@PathVariable("roomUserEmail") String roomUserEmail,  @RequestBody @Valid PostRoomRequestDto postRoomRequestDto) {
-        ResponseEntity<? super PostRoomResponseDto> responseEntity = roomService.postRoom(roomUserEmail, postRoomRequestDto);
+    @PostMapping("/create")
+    public ResponseEntity<? super PostRoomResponseDto> postRoom(
+        @AuthenticationPrincipal String userEmail,
+        @RequestBody @Valid PostRoomRequestDto postRoomRequestDto
+        ) {
+        ResponseEntity<? super PostRoomResponseDto> responseEntity = roomService.postRoom(userEmail, postRoomRequestDto);
         return responseEntity;
     }
 
-    //! API : 특정 다인원 채팅방 조회 메서드 //
-    // todo : email로 받아야 함 //
-    @GetMapping("room-list/{userEmail}")
+    // API : 다인원 채팅방 불러오기 메서드 //
+    @GetMapping("/{roomNumber}")
     public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(
         @PathVariable("userEmail") String userEmail
     ) {
@@ -62,33 +64,56 @@ public class RoomController {
 
     // API : 특정 다인원 채팅방 제목 수정 메서드 //
     @PatchMapping("/{roomNumber}/roomTitle")
-    public ResponseEntity<? super PatchRoomTitleResponseDto> patchRoomTitle(@AuthenticationPrincipal String roomUserEmail, @PathVariable("roomNumber") Integer roomNumber, @RequestBody @Valid PatchRoomTitleRequestDto patchRoomTitleRequestDto) {
-        ResponseEntity<? super PatchRoomTitleResponseDto> responseEntity = roomService.patchRoomTitle(roomNumber, roomUserEmail, patchRoomTitleRequestDto);
+    public ResponseEntity<? super PatchRoomTitleResponseDto> patchRoomTitle(
+        @AuthenticationPrincipal String userEmail,
+        @PathVariable("roomNumber") Integer roomNumber,
+        @RequestBody @Valid PatchRoomTitleRequestDto patchRoomTitleRequestDto
+        ) {
+        ResponseEntity<? super PatchRoomTitleResponseDto> responseEntity = roomService.patchRoomTitle(roomNumber, userEmail, patchRoomTitleRequestDto);
         return responseEntity;
     }
 
     // API : 특정 다인원 채팅방 이미지 수정 메서드  //
     @PatchMapping("/{roomNumber}/roomImageUrl")
-    public ResponseEntity<? super PatchRoomImageUrlResponseDto> patchRoomImageUrl(@AuthenticationPrincipal String roomUserEmail, @PathVariable("roomNumber") Integer roomNumber, @RequestBody @Valid PatchRoomImageUrlRequestDto patchRoomImageUrlRequestDto) {
-        ResponseEntity<? super PatchRoomImageUrlResponseDto> responseEntity = roomService.patchRoomImageUrl(roomNumber, roomUserEmail, patchRoomImageUrlRequestDto);
+    public ResponseEntity<? super PatchRoomImageUrlResponseDto> patchRoomImageUrl(
+        @AuthenticationPrincipal String userEmail, 
+        @PathVariable("roomNumber") Integer roomNumber, 
+        @RequestBody @Valid PatchRoomImageUrlRequestDto patchRoomImageUrlRequestDto) {
+        ResponseEntity<? super PatchRoomImageUrlResponseDto> responseEntity = roomService.patchRoomImageUrl(roomNumber, userEmail, patchRoomImageUrlRequestDto);
         return responseEntity;
     }
 
     // API : 특정 다인원 채팅방 비밀번호 수정 메서드 //
     @PatchMapping("/{roomNumber}/roomPassword")
-    public ResponseEntity<? super PatchRoomPasswordResponseDto> patchRoomPassword(@AuthenticationPrincipal String roomUserEmail, @PathVariable("roomNumber") Integer roomNumber, @RequestBody @Valid PatchRoomPasswordRequestDto patchRoomPasswordRequestDto) {
-        ResponseEntity<? super PatchRoomPasswordResponseDto> responseEntity = roomService.patchRoomPassword(roomNumber, roomUserEmail, patchRoomPasswordRequestDto);
+    public ResponseEntity<? super PatchRoomPasswordResponseDto> patchRoomPassword(
+        @AuthenticationPrincipal String userEmail,
+        @PathVariable("roomNumber") Integer roomNumber,
+        @RequestBody @Valid PatchRoomPasswordRequestDto patchRoomPasswordRequestDto) {
+        ResponseEntity<? super PatchRoomPasswordResponseDto> responseEntity = roomService.patchRoomPassword(roomNumber, userEmail, patchRoomPasswordRequestDto);
         return responseEntity;
     }
 
     // API : 특정 다인원 채팅방 삭제 메서드 //
     @DeleteMapping("/{roomNumber}")
-    public ResponseEntity<? super DeleteMultiChatResponseDto> deleteMultiChat(
-        @AuthenticationPrincipal String room_manager_email,
-        @PathVariable(value="roomNumber" , required = true) Integer roomNumber
+    public ResponseEntity<? super DeleteRoomResponseDto> deleteRoom(
+        @AuthenticationPrincipal String userEmail,
+        @PathVariable("roomNumber") Integer roomNumber
         ) {
-        ResponseEntity<? super DeleteMultiChatResponseDto> response = roomService.deleteMultiChat(roomNumber, room_manager_email);
+        ResponseEntity<? super DeleteRoomResponseDto> response = roomService.deleteRoom(roomNumber, userEmail);
             return response;
         }
+
+    // API : 다인원 채팅방 목록 리스트 조회(최신순)
+    
+    
+    // API : 특정 이메일에 해당하는 다인원 채팅방 목록 리스트 조회
+
+
+    // API : 특정 사용자가  특정 채팅방 입장
+
+
+    // API : 특정 사용자가 특정 채팅방을 나가기
+
+    
     
 }

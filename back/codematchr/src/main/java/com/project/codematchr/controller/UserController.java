@@ -45,7 +45,6 @@ public class UserController {
         return responseEntity;
     }
 
-
     // API : 사용자 닉네임 수정 메서드 //
     @PatchMapping("/nickname")
     public ResponseEntity<? super PatchUserNicknameResponseDto> patchUserNickname(@AuthenticationPrincipal String userEmail, @RequestBody @Valid PatchUserNicknameRequestDto patchUserNicknameRequestDto) {

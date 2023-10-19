@@ -1,7 +1,5 @@
 package com.project.codematchr.dto.response.room;
 
-import com.project.codematchr.entity.RoomViewEntity;
-
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;

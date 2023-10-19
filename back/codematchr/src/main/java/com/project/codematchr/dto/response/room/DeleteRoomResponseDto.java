@@ -12,14 +12,14 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class DeleteMultiChatResponseDto extends ResponseDto {
+public class DeleteRoomResponseDto extends ResponseDto {
 
-    private DeleteMultiChatResponseDto(String code , String message){
+    private DeleteRoomResponseDto(String code , String message){
         super(code , message);
     }
     // 성공
-    public static ResponseEntity<DeleteMultiChatResponseDto> success() {
-        DeleteMultiChatResponseDto result = new DeleteMultiChatResponseDto(ResponseCode.SUCCESS , ResponseMessage.SUCCESS);
+    public static ResponseEntity<DeleteRoomResponseDto> success() {
+        DeleteRoomResponseDto result = new DeleteRoomResponseDto(ResponseCode.SUCCESS , ResponseMessage.SUCCESS);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
     // 존재하지 않는 다인원 채팅방 번호

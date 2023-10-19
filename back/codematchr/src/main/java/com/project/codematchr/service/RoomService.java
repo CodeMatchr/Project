@@ -7,7 +7,7 @@ import com.project.codematchr.dto.request.room.PatchRoomPasswordRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.board.GetUserListResponseDto;
-import com.project.codematchr.dto.response.room.DeleteMultiChatResponseDto;
+import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
@@ -18,7 +18,7 @@ import com.project.codematchr.dto.response.room.PostRoomResponseDto;
 
 public interface RoomService {
     // Method : 다인원 채팅방 생성 메서드 //
-    ResponseEntity<? super PostRoomResponseDto> postRoom(String roomUserEmail, PostRoomRequestDto postRoomRequestDto);
+    ResponseEntity<? super PostRoomResponseDto> postRoom(String userEmail, PostRoomRequestDto postRoomRequestDto);
 
     // Method : 특정 다인원 채팅방 조회 메서드 //
     ResponseEntity<? super GetRoomResponseDto> getRoom(Integer roomNumber);
@@ -30,14 +30,14 @@ public interface RoomService {
     ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(String userEmail);
     
     // Method : 특정 다인원 채팅방 제목 수정 메서드 //
-    ResponseEntity<? super PatchRoomTitleResponseDto> patchRoomTitle(Integer roomNumber, String roomUserEmail, PatchRoomTitleRequestDto patchRoomTitleRequestDto);
+    ResponseEntity<? super PatchRoomTitleResponseDto> patchRoomTitle(Integer roomNumber, String userEmail, PatchRoomTitleRequestDto patchRoomTitleRequestDto);
 
     // Method : 특정 다인원 채팅방 이미지 수정 메서드  //
-    ResponseEntity<? super PatchRoomImageUrlResponseDto> patchRoomImageUrl(Integer roomNumber, String roomUserEmail, PatchRoomImageUrlRequestDto patchRoomImageUrlRequestDto);
+    ResponseEntity<? super PatchRoomImageUrlResponseDto> patchRoomImageUrl(Integer roomNumber, String userEmail, PatchRoomImageUrlRequestDto patchRoomImageUrlRequestDto);
 
     // Method : 특정 다인원 채팅방 비밀번호 수정 메서드 //
-    ResponseEntity<? super PatchRoomPasswordResponseDto> patchRoomPassword(Integer roomNumber, String roomUserEmail, PatchRoomPasswordRequestDto patchRoomPasswordRequestDto);
+    ResponseEntity<? super PatchRoomPasswordResponseDto> patchRoomPassword(Integer roomNumber, String userEmail, PatchRoomPasswordRequestDto patchRoomPasswordRequestDto);
 
     // Method : 특정 다인원 채팅방 삭제 메서드 //
-    ResponseEntity<? super DeleteMultiChatResponseDto> deleteMultiChat(Integer roomNumber , String room_manager_email);
+    ResponseEntity<? super DeleteRoomResponseDto> deleteRoom(Integer roomNumber , String userEmail);
 }

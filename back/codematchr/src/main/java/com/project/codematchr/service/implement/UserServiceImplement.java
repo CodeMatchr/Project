@@ -20,7 +20,6 @@ import com.project.codematchr.dto.response.user.PatchUserProfileImageUrlResponse
 import com.project.codematchr.dto.response.user.PatchUserStateMessageResponseDto;
 import com.project.codematchr.entity.UserEntity;
 import com.project.codematchr.repository.BoardViewRepository;
-import com.project.codematchr.repository.RoomViewRepository;
 import com.project.codematchr.repository.UserRepository;
 import com.project.codematchr.service.UserService;
 
