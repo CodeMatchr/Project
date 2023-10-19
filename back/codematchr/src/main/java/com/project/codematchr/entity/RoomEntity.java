@@ -42,8 +42,17 @@ public class RoomEntity {
         this.roomTitle = postRoomRequestDto.getRoomTitle();
         this.roomImageUrl = postRoomRequestDto.getRoomImageUrl();
         this.roomPassword = postRoomRequestDto.getRoomPassword();
+<<<<<<< HEAD
         this.roomDatetime = roomDatetime;
         this.roomManagerEmail = roomManagerEmail;
+=======
+        // this.roomDatetime = roomDatetime;
+        this.roomUserEmail = roomUserEmail;
+        this.roomManagerEmail = roomUserEmail;
+        this.roomAccessorEmail = roomUserEmail;
+        this.roomMemberCount++;
+        this.roomIsMulti = true;
+>>>>>>> 27eebc31769f2a3c64fe88462f2f35e8e03b2587
     }
         
     // 다인원 채팅방 제목 수정
