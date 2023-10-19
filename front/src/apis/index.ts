@@ -22,6 +22,7 @@ import GetBoardResponseDto from 'src/interfaces/response/board/get-board.respons
 import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Favorite.response.dto';
 import GetTop3CommentResponseDto from 'src/interfaces/response/board/getTop3Comment.response.dto';
 import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
+import DeleteBoardResponseDto from 'src/interfaces/response/board/delete-board.response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -54,6 +55,8 @@ const UPLOAD_FILE = () => `http://localhost:4040/file/upload`;
 
 // 게시물 수정 //
 const PATCH_BOARD_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}`;
+// 게시물 삭제 //
+const DELETE_BOARD_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}`;
 
 // 게시물 수정시 게시물 불러오기 //
 const GET_BOARD_URL = (boardNumber:number | string) => `${API_DOMAIN}/board/${boardNumber}`;
@@ -330,6 +333,22 @@ export const uploadFileRequest = async (data: FormData) => {
     });
     return result;
   }
+
+  // 게시물 삭제 //
+  export const deleteBoardRequest = async (boardNumber: number | string, token: string) => {
+    const result = await axios.delete(DELETE_BOARD_URL(boardNumber), { headers: { Authorization: `Bearer ${token}` } })
+    .then((response) => {
+         const responseBody: DeleteBoardResponseDto = response.data;
+         const { code } = responseBody;
+         return code;
+    }).catch((error) => {
+         const responseBody: ResponseDto = error.response.data;
+         const { code } = responseBody;
+         return code;
+    });
+
+    return result;
+}
 
   // 게시물 불러오기 //
   export const getBoardRequest = async (boardNumber: number | string) => {
