@@ -13,17 +13,11 @@ import com.project.codematchr.dto.request.user.PatchUserNicknameRequestDto;
 import com.project.codematchr.dto.request.user.PatchUserPasswordRequestDto;
 import com.project.codematchr.dto.response.ResponseDto;
 import com.project.codematchr.dto.response.user.GetSignInUserResponseDto;
-import com.project.codematchr.dto.response.user.GetUserBoardListResponseDto;
 import com.project.codematchr.dto.response.user.GetUserResponseDto;
-import com.project.codematchr.dto.response.user.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserNicknameResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserPasswordResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserProfileImageUrlResponseDto;
 import com.project.codematchr.dto.response.user.PatchUserStateMessageResponseDto;
-import com.project.codematchr.dto.response.user.UserBoardListResponseDto;
-import com.project.codematchr.dto.response.user.UserRoomListResponseDto;
-import com.project.codematchr.entity.BoardViewEntity;
-import com.project.codematchr.entity.RoomViewEntity;
 import com.project.codematchr.entity.UserEntity;
 import com.project.codematchr.repository.BoardViewRepository;
 import com.project.codematchr.repository.RoomViewRepository;
@@ -39,9 +33,6 @@ public class UserServiceImplement implements UserService {
     // 사용자 데이터베이스(final)
     private final UserRepository userRepository;
 
-    private final BoardViewRepository boardViewRepository;
-    private final RoomViewRepository roomViewRepository;
-    
     // 사용자 패스워드 암호화(final)
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -189,42 +180,6 @@ public class UserServiceImplement implements UserService {
         return PatchUserPasswordResponseDto.success();
     }
 
-    // 유저페이지 게시물 리스트 불러오기
-    @Override
-    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String writerEmail) {
-
-        List<UserBoardListResponseDto> boardList;
-
-        try {
-            List<BoardViewEntity> boardViewEntities = boardViewRepository.findByWriterEmailOrderByWriteDatetimeDesc(writerEmail);
-            
-            boardList = UserBoardListResponseDto.copyUserBoardList(boardViewEntities);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-        return GetUserBoardListResponseDto.success(boardList);
-    }
-    
-    // 유저페이지 채팅방 리스트 불러오기
-    @Override
-    public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(String userEmail) {
-
-        List<UserRoomListResponseDto> roomList;
-
-        try {
-            List<RoomViewEntity> roomViewEntities = roomViewRepository.findByUserEmail(userEmail);
-            
-            roomList = UserRoomListResponseDto.copyUserRoomList(roomViewEntities);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-        return GetUserRoomListResponseDto.success(roomList);
-
-    }
 
     
    

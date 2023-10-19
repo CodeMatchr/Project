@@ -17,4 +17,5 @@ public class PostRoomRequestDto {
 
     @NotBlank
     private String roomPassword;
+    private String roomUserEmail;
 }

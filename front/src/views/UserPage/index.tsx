@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './style.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BOARD_DETAIL_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_WRITE_PATH, COUNT_BY_PAGE, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll, WRITE_PATH } from '../../constants';
+import { COUNT_BY_PAGE, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, WRITE_PATH } from '../../constants';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import UserBoardItem from '../../components/UserBoardItem';
 import Pagination from '../../components/Pagination';
@@ -13,7 +13,7 @@ import { useUserStore } from 'src/store';
 import { useCookies } from 'react-cookie';
 import { GetUserBoardListResponseDto, GetUserResponseDto, GetUserRoomListResponseDto } from 'src/interfaces/response/User';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { getSignInUserRequest, getUserBoardListRequest, getUserRequest, getUserRoomListRequest, patchNicknameRequest, patchProfileImageUrlRequest, patchStateMessageRequest } from 'src/apis';
+import { getUserBoardListRequest, getUserRequest, getUserRoomListRequest, patchNicknameRequest, patchProfileImageUrlRequest, patchStateMessageRequest, uploadFileRequest } from 'src/apis';
 import { PatchNicknameRequestDto, PatchProfileImageUrlRequestDto, PatchStateMessageRequestDto } from 'src/interfaces/request/user';
 import MyCompareCodeList from 'src/components/MyCompareCodeList';
 
@@ -67,12 +67,12 @@ const navigator = useNavigate();
       if (userProfileImageUrl) setUserProfileImageUrl(userProfileImageUrl);
       else setUserProfileImageUrl('');
 
-      console.log( "1 :" + `userEmail: ${userEmail}`);
-      console.log("2 : " + `user?.userEmail: ${user?.userEmail}`);
       if (userEmail === user?.userEmail) {
         const after = { userEmail: userEmail as string, userNickname, userProfileImageUrl, userStateMessage };
         setUser(after);
       }
+      console.log("1:" +user?.userEmail);
+      console.log("2:" +user);
     }
     
     // description: 닉네임 변경 응답 처리 함수 //
@@ -83,9 +83,9 @@ const navigator = useNavigate();
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
       if (code !== 'SU')  return;
-      
 
       getUserRequest(user.userEmail).then(getUserResponseHandler);
+
     }
     
     // description : stateMessage 변경 응답 처리 함수 //
@@ -134,7 +134,7 @@ const navigator = useNavigate();
 
       const data = new FormData();
       data.append('file', event.target.files[0]);
-      // uploadFileRequest(data).then(profileUploadResponseHandler);
+      uploadFileRequest(data).then(profileUploadResponseHandler);
     }
     // description: 프로필 이미지 클릭시 파일 인풋창 열림 이벤트 //
     const onProfileClickHandler = () => {
@@ -187,6 +187,7 @@ const navigator = useNavigate();
       } else {
         getUserRequest(userEmail as string).then(getUserResponseHandler);
       }
+      console.log("5"+ user?.userEmail);
 
     }, [userEmail , user]);
     
@@ -251,8 +252,8 @@ const navigator = useNavigate();
       setViewBoardList(viewBoardList);
     }
 
-    // description: 유저 작성 게시물 리스트 불러오기 응답 처리 함수 //
-    const getUserBoardListResponseHandler = (responseBody: GetUserBoardListResponseDto | ResponseDto) => {
+     // description: 유저 작성 게시물 리스트 불러오기 응답 처리 함수 //
+     const getUserBoardListResponseHandler = (responseBody: GetUserBoardListResponseDto | ResponseDto) => {
       const { code } = responseBody;
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
@@ -263,14 +264,12 @@ const navigator = useNavigate();
       getViewBoardList(boardList);
       changeSection(boardList.length, COUNT_BY_PAGE);
       
-      console.log("board :" +boardList);
       console.log("board :" + userEmail);
     }
 
     //            event handler           //
    
     //            component           //
-    //            effect           //
     // description: 유저 이메일이 바뀔때 마다 게시물 리스트 불러오기 //
     useEffect(() => {
       if (!userEmail) {
@@ -278,8 +277,9 @@ const navigator = useNavigate();
         navigator(MAIN_PATH);
         return;
       }
-      console.log("board :" + userEmail);
+
       getUserBoardListRequest(userEmail).then(getUserBoardListResponseHandler);
+      console.log("33" + user?.userEmail);
     }, [userEmail]);
     
 
@@ -382,9 +382,9 @@ const navigator = useNavigate();
         return;
       }
       
-      console.log("room :" + userEmail);
       getUserRoomListRequest(userEmail).then(getUserRoomListResponseHandler);
       
+      console.log("room :" + userEmail);
     }, [userEmail]);
     
 
@@ -427,6 +427,8 @@ useEffect(() => {
 
   const isMyPage = user?.userEmail === userEmail;
   setUserPage(isMyPage);
+
+  console.log("final : " +user?.userEmail);
 }, [userEmail, user]);
 
 

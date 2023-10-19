@@ -31,7 +31,7 @@ public class RoomEntity {
     private String roomTitle;
     private String roomImageUrl;
     private String roomPassword;
-    private String roomDatetime;
+    // private String roomDatetime;
     private String roomUserEmail;
     private String roomManagerEmail;
     private String roomAccessorEmail;
@@ -39,17 +39,17 @@ public class RoomEntity {
     private boolean roomIsMulti;
 
     public RoomEntity(String roomUserEmail, PostRoomRequestDto postRoomRequestDto) {
-        Date now = Date.from(Instant.now());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String roomDatetime = simpleDateFormat.format(now);
+        // Date now = Date.from(Instant.now());
+        // SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // String roomDatetime = simpleDateFormat.format(now);
 
         this.roomTitle = postRoomRequestDto.getRoomTitle();
         this.roomImageUrl = postRoomRequestDto.getRoomImageUrl();
         this.roomPassword = postRoomRequestDto.getRoomPassword();
-        this.roomDatetime = roomDatetime;
+        // this.roomDatetime = roomDatetime;
         this.roomUserEmail = roomUserEmail;
         this.roomManagerEmail = roomUserEmail;
-        this.roomAccessorEmail = roomUserEmail;
+        this.roomAccessorEmail = postRoomRequestDto.getRoomUserEmail();
         this.roomMemberCount++;
         this.roomIsMulti = true;
     }

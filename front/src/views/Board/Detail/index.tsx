@@ -6,8 +6,12 @@ import LikeListResponseDto from '../../../interfaces/response/board/board-like.r
 import { usePagination } from '../../../hooks';
 import Pagination from '../../../components/Pagination';
 import { CommentListResponseDto } from '../../../interfaces/response/board/board-comment-list.response.dto';
-import { COUNT_BY_PAGE_COMMENT } from '../../../constants';
+import { COUNT_BY_PAGE_COMMENT, MAIN_PATH } from '../../../constants';
 import CommentListItem from '../../../components/CommentListItem';
+import { getBoardRequest } from 'src/apis';
+import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
+import ResponseDto from 'src/interfaces/response/response.dto';
+import { useUserStore } from 'src/store';
 //     component     //
 // 게시물 상세 화면 //
 export default function BoardDetail() {
@@ -15,10 +19,18 @@ export default function BoardDetail() {
   //        state        //
   // description: 게시물 번호 상태 //
   const {boardNumber} = useParams();
+  // description : 유저 이메일 상태 //
+  const { userEmail } = useParams();
+  // description : 로그인 유저 정보 상태 //
+  const {user, setUser} = useUserStore();
+
   // description:  //
   const { totalPage ,  currentPage , currentSection , onNextClickHandler , onPageClickHandler , onPreviousClickHandler ,changeSection } = usePagination();
   // description : 게시물 정보 상태 //
   const [board , setBoard] = useState<BoardDetailResponseDto | null>(null);
+  // 내 게시물 여부 //
+  const [writer , setWriter] = useState<boolean>(false);
+
   // description  : 게시물 좋아요 회원 리스트 상태 //
   const [likeList , setLikeList] = useState<LikeListResponseDto[]>([]);
   // description : 댓글 리스트 상태 //
@@ -33,21 +45,38 @@ export default function BoardDetail() {
   //          function          //
   // description: 페이지 이동을 위한 네비게이트 함수 //
   const navigator = useNavigate();
+
   // description: 현재 페이지의 댓글 리스트 분류 함수 //
-  // const getPageCommentList = () => {
-  //   const lastIndex = CommentListMock.length > COUNT_BY_PAGE_COMMENT * currentPage ?
-  //     COUNT_BY_PAGE_COMMENT * currentPage : CommentListMock.length;
-  //   const startIndex = COUNT_BY_PAGE_COMMENT * (currentPage - 1);
-  //   const pageCommentList = CommentListMock.slice(startIndex, lastIndex);
-  //   setPageCommentList(pageCommentList);
-  // }
+  const getPageCommentList = (commentList : CommentListResponseDto[]) => {
+    const lastIndex = commentList.length > COUNT_BY_PAGE_COMMENT * currentPage ?
+      COUNT_BY_PAGE_COMMENT * currentPage : commentList.length;
+    const startIndex = COUNT_BY_PAGE_COMMENT * (currentPage - 1);
+    const pageCommentList = commentList.slice(startIndex, lastIndex);
+    setPageCommentList(pageCommentList);
+  }
+
+  // description : 게시물 불러오기 응답 처리 //
+  const getBoardResponseHandler = (responseBody: GetBoardResponseDto | ResponseDto) => {
+    const { code } = responseBody;
+    if(code === 'NB') alert('존재하지 않는 게시물입니다.');
+    if(code === 'VF') alert('잘못된 게시물 번호입니다.');
+    if(code === 'DE') alert('데이터 베이스 에러입니다.');
+    if(code !== 'SU') {
+        navigator(MAIN_PATH);
+        return;
+    }   
+
+    const board = responseBody as GetBoardResponseDto;
+    setBoard(board);
+}
 
   //    component     //
   //  description : 실제 게시물 컴포넌트 //
   const Board = () => {
-//  state    //
-    // description: favorite 상태 //
-    const [favorite, setFavorite] = useState<boolean>(false); 
+  //  state    //
+  // description: favorite 상태 //
+  const [favorite, setFavorite] = useState<boolean>(false); 
+
   // event handler //
 
   // description : 좋아요 버튼 클릭 이벤트 //
@@ -62,11 +91,33 @@ export default function BoardDetail() {
     const onShowCommentListButtonClickHandler = () => {
     setShowCommentList(!showCommentList);
    }
+
+  // effect //
+  // description : 게시물 번호가 바뀔 때 마다 새로운 정보 받아오기 //
+  let boardNumberFlag = true; 
+    
+  useEffect(() => {
+    if(boardNumberFlag) {
+        boardNumberFlag = false;
+        return;
+    }
+    if(!boardNumber) {
+        alert('게시물 번호가 잘못되었습니다.');
+        navigator(MAIN_PATH);
+        return;
+    }
+    getBoardRequest(boardNumber).then(getBoardResponseHandler);
+  }, [boardNumber]);
   
- 
+  // description : 게시물과 유저 정보가 바뀔 때마다 실행 //
+  useEffect (() => {
+    const isWriter = user?.userEmail === board?.boardWriterEmail;
+    setWriter(isWriter);
+  }, [board, user]);
+
+  
   
   //      render       //
-  
   return (
     
     <div className='board-detail-wrapper'>
@@ -117,15 +168,12 @@ export default function BoardDetail() {
     </div>
     
   );
-  
-  }
-
-
+}
 
   // description: 좋아요 리스트 컴포넌트 //
   const LikeList = () => {
 
-        //          state        //
+    //          state        //
 
     //          function        //
 
@@ -155,22 +203,37 @@ export default function BoardDetail() {
   //description : 댓글 컴포넌트 //
   const Comments = () => {
 
-        //          state        //
+    //          state        //
     // description: 사용자 댓글 입력 상태 //
     const [comment, setComment] = useState<string>('');
+    // 댓글 갯수 상태 //
+    const [commentCount, setCommentCount] = useState<number>(0);
 
     //          event handler        //
     // description: 사용자 댓글 입력 변경 이벤트 //
     const onCommentChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
       setComment(event.target.value);
     }
+
+    // effect //
+    // description: 현재 페이지가 바뀔때 마다 //
+    useEffect(() => {
+      getPageCommentList(commentList);
+    }, [currentPage]);
     
+    // description: 현재 섹션이 바뀔때 마다 페이지 리스트 변경 //
+    useEffect(() => {
+      changeSection(commentCount, COUNT_BY_PAGE_COMMENT);
+  }, [currentSection]);
+
+
+    // render //
     return (
       <div className='comment-list-box'>
         <div className='comment-list-top'>
           <div className='comment-list-title'>댓글 <span className='comment-list-title-emphasis'>{commentList.length}</span></div>
           <div className='comment-list-container'>
-            {/* {pageCommentList.map((item) => (<CommentListItem item={item} />)) } */}
+            {pageCommentList.map((item) => (<CommentListItem item={item} />)) }
           </div>
         </div>
         <div className='divider'></div>
@@ -196,27 +259,8 @@ export default function BoardDetail() {
   }
 
 
+  // effect //
   
-  // description : 게시물 번호가 바뀔 때 마다 새로운 정보 받아오기 //
-  useEffect(() => {
-    // setBoard([BoardDetailMock]);
-    // setLikeList(LikeListMock);
-    // setCommentList(CommentListMock);
-  });
-
-//     getPageCommentList();
-
-//     changeSection(CommentListMock.length, COUNT_BY_PAGE_COMMENT);
-//   }, [boardNumber]);
-//   // description: 현재 페이지가 바뀔때 마다 검색 게시물 분류하기 //
-//   useEffect(() => {
-//     getPageCommentList();
-//   }, [currentPage]);
-  
-//   // description: 현재 페이지가 바뀔때 마다 페이지 리스트 변경 //
-//   useEffect(() => {
-//     changeSection(CommentListMock.length, COUNT_BY_PAGE_COMMENT);
-//  }, [currentSection]);
   
 
   //          render          //

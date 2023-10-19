@@ -6,7 +6,7 @@ import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-import { BOARD_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH } from '../../constants';
+import { BOARD_PATH, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
@@ -20,6 +20,8 @@ export default function Main() {
   // function //
   // 페이지 이동을 위한 네비게이트 함수 //
   const navigator = useNavigate();
+
+ 
 
   // event handler //
 
@@ -60,6 +62,7 @@ export default function Main() {
 
 
     // function //
+    
 
     // event handler //
     // Board 리스트 페이지 이동 버튼 클릭 이벤트 //
@@ -74,7 +77,7 @@ export default function Main() {
         setTop3ViewBoardListTabState(true);
         setTop3FavoriteBoardListTabState(false);
         setTop3CommentBoardListTabState(false);
-        // setCurrentTop3BoardList('top3ViewBoardListMock');
+        // setCurrentTop3BoardList();
       }
       
     }
@@ -101,6 +104,7 @@ export default function Main() {
     }
 
     // effect //
+    
 
     // render //
     return(

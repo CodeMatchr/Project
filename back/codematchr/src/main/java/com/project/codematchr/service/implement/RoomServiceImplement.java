@@ -1,5 +1,7 @@
 package com.project.codematchr.service.implement;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -9,15 +11,19 @@ import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.ResponseDto;
 import com.project.codematchr.dto.response.room.DeleteMultiChatResponseDto;
-import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomResponseDto;
+import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomImageUrlResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomPasswordResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomTitleResponseDto;
 import com.project.codematchr.dto.response.room.PostRoomResponseDto;
+import com.project.codematchr.dto.response.room.UserRoomListResponseDto;
 import com.project.codematchr.entity.RoomEntity;
+import com.project.codematchr.entity.RoomViewEntity;
 import com.project.codematchr.entity.UserEntity;
+import com.project.codematchr.entity.UserViewEntity;
 import com.project.codematchr.repository.RoomRepository;
+import com.project.codematchr.repository.RoomViewRepository;
 import com.project.codematchr.repository.UserRepository;
 import com.project.codematchr.service.RoomService;
 
@@ -28,6 +34,8 @@ import lombok.RequiredArgsConstructor;
 public class RoomServiceImplement implements RoomService {
 
     private final UserRepository userRepository;
+    // todo :  다시 확인 해보기 //
+    private final RoomViewRepository roomViewRepository;
     private final RoomRepository roomRepository;
 
     // 다인원 채팅방 생성
@@ -190,10 +198,22 @@ public class RoomServiceImplement implements RoomService {
     }
 
     @Override
-    public ResponseEntity<? super GetRoomListResponseDto> getRoomList(Integer roomNumber) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRoomList'");
+    public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(String userEmail) {
+
+        List<UserRoomListResponseDto> roomList = null;
+
+        try {
+            List<RoomViewEntity> userViewEntities = roomViewRepository.findByUserEmail(userEmail);
+
+            roomList = UserRoomListResponseDto.copyEntityList(userViewEntities);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetUserRoomListResponseDto.success(roomList);
     }
+
 
     
 

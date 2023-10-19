@@ -7,8 +7,8 @@ import { useCookies } from "react-cookie";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BOARD_DETAIL_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_WRITE_PATH, MAIN_PATH, USER_PAGE_PATH_VARIABLE, USER_PATH, WRITE_PATH } from "src/constants";
 import PostBoardRequestDto from "src/interfaces/request/board/post-board.request.dto";
-import { patchBoardRequest, postBoardRequest, uploadFileRequest } from "src/apis";
 import PatchBoardRequestDto from "src/interfaces/request/board/patch-board.request.dto";
+import { patchBoardRequest, postBoardRequest, uploadFileRequest } from "src/apis";
 
 //     component      //
 // description : 게시물 쓰기 화면 //

@@ -5,6 +5,7 @@ import { useNavigate, useParams  } from 'react-router-dom';
 import ResponseDto from '../../../interfaces/response/response.dto';
 import GetBoardResponseDto from '../../../interfaces/response/board/get-board.response.dto';
 import { MAIN_PATH } from '../../../constants';
+import { getBoardRequest } from 'src/apis';
 
 //         component         //
 //description : 게시물 수정 화면//
@@ -78,12 +79,16 @@ const onImageCloseButtonClickHandler = () => {
 //          component          //
 
 //          effect          //
+// 게시물 불러오기 //
 useEffect(() => {
     if(!boardNumber) {
         alert('게시물번호가 잘못되었습니다.');
         navigator(MAIN_PATH);
         return;
     }
+    setBoardNumber(boardNumber);
+    getBoardRequest(boardNumber).then(getBoardResponseHandler);
+
 });
 //           render           //
 return (
