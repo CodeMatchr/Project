@@ -76,7 +76,7 @@ const onCreateClickHandler = async () => {
         roomImageUrl: null,
         roomPassword: roomPassword
     }
-    postRoomRequest(data, token).then(postRoomResponseHandler);
+    postRoomRequest(userEmail as string, data, token).then(postRoomResponseHandler);
   }
 
   navigator(CHAT_PATH);

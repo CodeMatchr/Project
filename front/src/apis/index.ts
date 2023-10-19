@@ -19,6 +19,9 @@ import PatchRoomPasswordRequestDto from 'src/interfaces/request/room/patch-room-
 import PatchRoomPasswordResponseDto from 'src/interfaces/response/room/patch-room-password.response.dto';
 import PatchRoomImageUrlResponseDto from 'src/interfaces/response/room/patch-room-image-url-response.dto';
 import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
+import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Favorite.response.dto';
+import GetTop3CommentResponseDto from 'src/interfaces/response/board/getTop3Comment.response.dto';
+import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -54,6 +57,13 @@ const PATCH_BOARD_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/$
 
 // 게시물 수정시 게시물 불러오기 //
 const GET_BOARD_URL = (boardNumber:number | string) => `${API_DOMAIN}/board/${boardNumber}`;
+
+// 메인페이지 top3 좋아요
+const GET_TOP3_FAVORITE_BOARD_LIST_URL = () => `${API_DOMAIN}/board/top-3/favorite`;
+// 메인페이지 top3 댓글
+const GET_TOP3_COMMENT_BOARD_LIST_URL = () => `${API_DOMAIN}/board/top-3/comment`;
+// 메인페이지 top3 조회수
+const GET_TOP3_VIEW_BOARD_LIST_URL = () => `${API_DOMAIN}/board/top-3/view`;
 
 
 // 로그인 //
@@ -209,7 +219,7 @@ export const postBoardRequest = async (data : PostBoardRequestDto, token:string)
 
 
 const GET_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/chat`;
-const POST_ROOM_URL = () => `${API_DOMAIN}/room/create`;
+const POST_ROOM_URL = (userEmail : string) => `${API_DOMAIN}/room/create/${userEmail}`;
 const PATCH_ROOM_TITLE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomTitle`;
 const PATCH_ROOM_PASSWORD_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomPassword`;
 const PATCH_ROOM_IMAGE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomImageUrl`;
@@ -231,8 +241,8 @@ export const getRoomRequest = async (roomNuber : number | string) => {
 }
 
 // 채팅방 만들기 //
-export const postRoomRequest = async (data: PostRoomRequestDto, token: string) => {
-    const result = await axios.post(POST_ROOM_URL(), data, { headers: { Authorization: `Bearer ${token}` } })
+export const postRoomRequest = async (userEmail: string, data: PostRoomRequestDto, token: string) => {
+    const result = await axios.post(POST_ROOM_URL(userEmail), data, { headers: { Authorization: `Bearer ${token}` } })
     .then((response) => {
         const responseBody: PostRoomResponseDto = response.data;
         const { code } = responseBody;
@@ -332,4 +342,49 @@ export const uploadFileRequest = async (data: FormData) => {
       return responseBody;
     });
     return result;
+  }
+
+  // top3 좋아요 게시물 불러오기 //
+  export const getFavoriteListRequest = async () => {
+    const result = await axios.get(GET_TOP3_FAVORITE_BOARD_LIST_URL())
+    .then((response) => {
+        const responseBody : GetTop3FavoriteResponseDto = response.data;
+        return responseBody;
+    })
+    .catch((error) => {
+        const responseBody : ResponseDto = error.response.data;
+        return responseBody;
+    });
+    return result;
+
+  }
+
+  // top3 댓글 게시물 불러오기 //
+  export const getCommentListRequest = async () => {
+    const result = await axios.get(GET_TOP3_COMMENT_BOARD_LIST_URL())
+    .then((response) => {
+        const responseBody : GetTop3CommentResponseDto = response.data;
+        return responseBody;
+    })
+    .catch((error) => {
+        const responseBody : ResponseDto = error.response.data;
+        return responseBody;
+    });
+    return result;
+
+  }
+
+  // top3 조회수 게시물 불러오기 //
+  export const getViewListRequest = async () => {
+    const result = await axios.get(GET_TOP3_VIEW_BOARD_LIST_URL())
+    .then((response) => {
+        const responseBody : GetTop3ViewResponseDto = response.data;
+        return responseBody;
+    })
+    .catch((error) => {
+        const responseBody : ResponseDto = error.response.data;
+        return responseBody;
+    });
+    return result;
+
   }

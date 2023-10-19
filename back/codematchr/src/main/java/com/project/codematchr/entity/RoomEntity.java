@@ -49,7 +49,7 @@ public class RoomEntity {
         // this.roomDatetime = roomDatetime;
         this.roomUserEmail = roomUserEmail;
         this.roomManagerEmail = roomUserEmail;
-        this.roomAccessorEmail = postRoomRequestDto.getRoomUserEmail();
+        this.roomAccessorEmail = roomUserEmail;
         this.roomMemberCount++;
         this.roomIsMulti = true;
     }

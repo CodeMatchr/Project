@@ -264,7 +264,6 @@ const navigator = useNavigate();
       getViewBoardList(boardList);
       changeSection(boardList.length, COUNT_BY_PAGE);
       
-      console.log("board :" + userEmail);
     }
 
     //            event handler           //
@@ -279,9 +278,7 @@ const navigator = useNavigate();
       }
 
       getUserBoardListRequest(userEmail).then(getUserBoardListResponseHandler);
-      console.log("33" + user?.userEmail);
     }, [userEmail]);
-    
 
     // description : 현재 페이지가 바뀔 때마다 board 리스트 변경 //
     useEffect(() => {
@@ -324,7 +321,7 @@ const navigator = useNavigate();
     //            render           //
     return (
       <div className='userpage-code-wrapper'>
-        <MyCompareCodeList/>
+        {/* <MyCompareCodeList/> */}
       </div>
     );
   } 
