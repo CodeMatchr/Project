@@ -434,11 +434,24 @@ public ResponseEntity<? super PatchBoardResponseDto> patchBoard(String boardWrit
         return GetBoardListResponseDto.success(boardList);
 
     }
-
+    // 게시물 리스트 불러오기 조회수 //
     @Override
-    public ResponseEntity<? super GetBoardListResponseDto> getBoardViewList(Integer section) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBoardViewList'");
+    public ResponseEntity<? super GetBoardListResponseDto> getBoardViewList(Integer section){
+
+         List<BoardListResponseDto> boardList= null;
+
+        try {
+            // description: 조회수 게시물 리스트 불러오기 //
+            Integer limit = (section - 1) * 50;
+            List<BoardListResultSet> resultSets = boardRepository.getBoardViewList(limit);
+
+            // description: 검색 결과를 ResponseDto 형태로 변환 //
+            boardList = BoardListResponseDto.copyList(resultSets);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetBoardListResponseDto.success(boardList);
     }
 
     @Override
@@ -460,11 +473,26 @@ public ResponseEntity<? super PatchBoardResponseDto> patchBoard(String boardWrit
         return GetBoardListResponseDto.success(boardList);
 
     }
-
+    // 게시물 리스트 불러오기 댓글 순 //
     @Override
     public ResponseEntity<? super GetBoardListResponseDto> getBoardCommentList(Integer section) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBoardCommentList'");
+
+        List<BoardListResponseDto> boardList= null;
+
+        try {
+            // description: 댓글순 게시물 리스트 불러오기 //
+            Integer limit = (section - 1) * 50;
+            List<BoardListResultSet> resultSets = boardRepository.getBoardCommentList(limit);
+
+            // description: 검색 결과를 ResponseDto 형태로 변환 //
+            boardList = BoardListResponseDto.copyList(resultSets);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetBoardListResponseDto.success(boardList);
+
     }
 
    

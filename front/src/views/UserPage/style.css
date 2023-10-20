@@ -287,6 +287,11 @@
   font-weight: 600;
 } 
 
+.userpage-board-title:hover {
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.1);
+}
+
 .userpage-board-contents-list {
   display: flex;
   flex-direction: column;
@@ -333,6 +338,4 @@
   gap: 25px;
 }
 
-.userpage-chat-room-box {
-  
-}
+

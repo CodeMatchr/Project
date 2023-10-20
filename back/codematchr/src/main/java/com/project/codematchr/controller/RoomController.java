@@ -2,7 +2,6 @@ package com.project.codematchr.controller;
 
 import javax.validation.Valid;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,8 +19,6 @@ import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetCurrentRoomListResponseDto;
-import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
-import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomImageUrlResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomPasswordResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomTitleResponseDto;

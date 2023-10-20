@@ -23,7 +23,8 @@ import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Fav
 import GetTop3CommentResponseDto from 'src/interfaces/response/board/getTop3Comment.response.dto';
 import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
 import DeleteBoardResponseDto from 'src/interfaces/response/board/delete-board.response.dto';
-import { GetBoardListResponeDto } from 'src/interfaces/response/board';
+import { GetBoardListResponeDto, GetCommentListResponseDto, GetFavoriteListResponseDto } from 'src/interfaces/response/board';
+import PutFavoriteResponseDto from 'src/interfaces/response/board/put-favorite.response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -63,6 +64,8 @@ const DELETE_BOARD_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/
 const GET_BOARD_URL = (boardNumber:number | string) => `${API_DOMAIN}/board/${boardNumber}`;
 
 
+// 메인페이지 top3 최신순
+const GET_TOP3_CURRENT_BOARD_LIST_URL = () => `${API_DOMAIN}/board/top-3/current`;
 // 메인페이지 top3 좋아요
 const GET_TOP3_FAVORITE_BOARD_LIST_URL = () => `${API_DOMAIN}/board/top-3/favorite`;
 // 메인페이지 top3 댓글
@@ -72,6 +75,19 @@ const GET_TOP3_VIEW_BOARD_LIST_URL = () => `${API_DOMAIN}/board/top-3/view`;
 
 // 게시물 불러오기 최신순 //
 const  GET_BOARD_LIST_CURRENT = (section: number) => `${API_DOMAIN}/board/board-list/${section}`;
+// 게시물 불러오기 좋아요 //
+const  GET_BOARD_LIST_FAVORITE = (section: number) => `${API_DOMAIN}/board/board-list/favorite/${section}`;
+// 게시물 불러오기 댓글 //
+const  GET_BOARD_LIST_COMMENT = (section: number) => `${API_DOMAIN}/board/board-list/comment/${section}`;
+// 게시물 불러오기 조회수 //
+const  GET_BOARD_LIST_VIEW = (section: number) => `${API_DOMAIN}/board/board-list/view/${section}`;
+
+// 좋아요 리스트 불러오기 //
+const GET_FAVORITE_LIST_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}/favorite-list`;
+// 댓글 리스트 불러오기 //
+const GET_COMMENT_LIST_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}/comment-list`;
+// 좋아요 수정 //
+const PUT_FAVORITE_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}/favorite`;
 
 
 // 로그인 //
@@ -368,6 +384,20 @@ export const uploadFileRequest = async (data: FormData) => {
     return result;
   }
 
+  // top3 current 게시물 불러오기 //
+  export const getCurrentListRequest = async () => {
+    const result = await axios.get(GET_TOP3_CURRENT_BOARD_LIST_URL())
+    .then((response) => {
+        const responseBody : GetTop3FavoriteResponseDto = response.data;
+        return responseBody;
+    })
+    .catch((error) => {
+        const responseBody : ResponseDto = error.response.data;
+        return responseBody;
+    });
+    return result;
+
+  }
   // top3 좋아요 게시물 불러오기 //
   export const getFavoriteListRequest = async () => {
     const result = await axios.get(GET_TOP3_FAVORITE_BOARD_LIST_URL())
@@ -423,6 +453,93 @@ export const uploadFileRequest = async (data: FormData) => {
     .catch((error) => {
         const responseBody : ResponseDto = error.response.data;
         return responseBody;
+    });
+    return result;
+  }
+
+  // 게시물 불러오기 좋아요 //
+  export const getBoardListFavoriteRequest = async (section : number) => {
+    const result = await axios.get(GET_BOARD_LIST_FAVORITE(section))
+    .then((response) => {
+        const responseBody : GetBoardListResponeDto = response.data;
+        return responseBody;
+    })
+    .catch((error) => {
+        const responseBody : ResponseDto = error.response.data;
+        return responseBody;
+    });
+    return result;
+  }
+
+
+  // 게시물 불러오기 댓글 //
+  export const getBoardListCommentRequest = async (section : number) => {
+    const result = await axios.get(GET_BOARD_LIST_COMMENT(section))
+    .then((response) => {
+        const responseBody : GetBoardListResponeDto = response.data;
+        return responseBody;
+    })
+    .catch((error) => {
+        const responseBody : ResponseDto = error.response.data;
+        return responseBody;
+    });
+    return result;
+  }
+
+  // 게시물 불러오기 조회수 //
+  export const getBoardListViewRequest = async (section : number) => {
+    const result = await axios.get(GET_BOARD_LIST_VIEW(section))
+    .then((response) => {
+        const responseBody : GetBoardListResponeDto = response.data;
+        return responseBody;
+    })
+    .catch((error) => {
+        const responseBody : ResponseDto = error.response.data;
+        return responseBody;
+    });
+    return result;
+  }
+
+  // 좋아요 버튼 //
+  export const putFavoriteRequest = async (boardNumber: number | string, token: string) => {
+    const result = await axios.put(PUT_FAVORITE_URL(boardNumber), {}, { headers: { Authorization: `Bearer ${token}` } })
+    .then((response) => {
+      const responseBody: PutFavoriteResponseDto = response.data;
+      const { code } = responseBody;
+      return code;
+    })
+    .catch((error) => {
+      const responseBody: ResponseDto = error.response.data;
+      const { code } = responseBody;
+      return code;
+    });
+    return result;
+  }
+
+  // 게시물 좋아요 리스트 //
+  export const getBoardFavoriteListRequest = async (boardNumber: number | string) => {
+    const result = await axios.get(GET_FAVORITE_LIST_URL(boardNumber))
+    .then((response) => {
+      const responseBody: GetFavoriteListResponseDto = response.data;
+      return responseBody;
+    })
+    .catch((error) => {
+      const responseBody: ResponseDto = error.response.data;
+      return responseBody;
+    });
+    return result;
+  }
+  
+  // 게시물 댓글 리스트 //
+  export const getBoardCommentListRequest = async (boardNumber: number | string) => {
+    const result = await axios.get(GET_COMMENT_LIST_URL(boardNumber))
+    .then((response) => {
+      const responseBody: GetCommentListResponseDto = response.data;
+      return responseBody;
+    })
+    .catch((error) => {
+      const responseBody: ResponseDto = error.response.data;
+      return responseBody;
     });
     return result;
   }

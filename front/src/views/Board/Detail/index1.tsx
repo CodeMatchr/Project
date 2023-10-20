@@ -5,7 +5,7 @@ import BoardDetailResponseDto from '../../../interfaces/response/board/board-det
 import LikeListResponseDto from '../../../interfaces/response/board/board-like.response.dto';
 import { usePagination } from '../../../hooks';
 import Pagination from '../../../components/Pagination';
-import { CommentListResponseDto } from '../../../interfaces/response/board/board-comment-list.response.dto';
+import { CommentListResponseDto } from '../../../interfaces/response/board/get-comment-list.response.dto';
 import { COUNT_BY_PAGE_COMMENT, MAIN_PATH } from '../../../constants';
 import CommentListItem from '../../../components/CommentListItem';
 import { deleteBoardRequest, getBoardRequest } from 'src/apis';

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css';
 import Pagination from '../../components/Pagination';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
@@ -6,17 +6,16 @@ import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-import {BOARD_LIST_PATH, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH, WRITE_PATH } from '../../constants';
-import { useNavigate, useParams } from 'react-router-dom';
+import {BOARD_LIST_PATH,  MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH} from '../../constants';
+import { useNavigate} from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
 import CompareCode from 'src/components/CompareCode';
 import GetTop3CommentResponseDto from 'src/interfaces/response/board/getTop3Comment.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { getBoardRequest, getCommentListRequest, getFavoriteListRequest, getViewListRequest } from 'src/apis';
+import {  getCommentListRequest, getFavoriteListRequest, getViewListRequest } from 'src/apis';
 import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Favorite.response.dto';
 import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
-import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
 
 // component //
 export default function Main() {
@@ -65,6 +64,8 @@ export default function Main() {
     // Top3 댓글수 Board 리스트 Tab 버튼 클릭 상태 //
     const[top3CommentBoardListTabState, setTop3CommentBoardListTabState] = useState<boolean>(false);
 
+    // 타이틀 상태 //
+    const [title, setTitle] = useState<string>('');
  
     // function //
 
@@ -108,6 +109,19 @@ export default function Main() {
         setTop3FavoriteBoardListTabState(false);
         setTop3CommentBoardListTabState(false);
     }
+    // top3 최신순 //
+    const getTop3CurrentListResponseHandler = (responseBody : GetTop3ViewResponseDto | ResponseDto) => {
+      const {code} = responseBody;
+      if (code === 'DE') alert('데이터베이스 에러입니다.');
+      if (code !== 'SU') return;
+
+      const {top3View} = responseBody as GetTop3ViewResponseDto;
+      setCurrentTop3BoardList(top3View);
+      
+        setTop3ViewBoardListTabState(false);
+        setTop3FavoriteBoardListTabState(false);
+        setTop3CommentBoardListTabState(false);
+    }
   
     
 
@@ -122,26 +136,28 @@ export default function Main() {
     const onTop3ViewBoardListTabClickHandler = () => {
       if (top3ViewBoardListTabState) return;
       getViewListRequest().then(getTop3ViewListResponseHandler);
+      setTitle('조회수 TOP 3');
     }
 
     // Top3 좋아요 수 Board 리스트 Tab 버튼 클릭 이벤트 //
     const onTop3FavoriteBoardListTabClickHandler = () => {
       if (top3FavoriteBoardListTabState) return;
       getFavoriteListRequest().then(getTop3FavoriteListResponseHandler);
-      
+      setTitle('좋아요 TOP 3');
     }
 
     // Top3 댓글수 Board 리스트 Tab 버튼 클릭 이벤트 //
     const onTop3CommentBoardListTabClickHandler = () => {
       if (top3CommentBoardListTabState) return;
       getCommentListRequest().then(getTop3CommentListResponseHandler);
-      
+      setTitle('댓글 TOP 3');
     }
 
     // effect //
     // 맨처음 //
     useEffect(() => {
-      getViewListRequest().then(getTop3ViewListResponseHandler);
+      getViewListRequest().then(getTop3CurrentListResponseHandler);
+      setTitle('최신 TOP 3');
     }, []);
     
     // render //
@@ -156,7 +172,7 @@ export default function Main() {
           </div>
           <div className='main-mid-top3-board-list'>
             <div className='main-mid-top3-board-list-top'>
-              <div className='main-mid-top3-board-list-top-title'>조회수 TOP 3</div>
+              <div className='main-mid-top3-board-list-top-title'>{title}</div>
               <div className='main-mid-top3-board-list-top-plus-button' onClick={ onBoardListClickHandler }></div>
             </div>
             <div className='main-mid-top3-board-list-bottom'>

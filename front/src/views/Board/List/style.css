@@ -92,6 +92,8 @@
     flex-direction: column;
     justify-content: center;
 
+    gap: 25px;
+
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;

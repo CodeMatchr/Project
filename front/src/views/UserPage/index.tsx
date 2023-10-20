@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './style.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { COUNT_BY_PAGE, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, WRITE_PATH } from '../../constants';
+import { BOARD_LIST_PATH, COUNT_BY_PAGE, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, WRITE_PATH } from '../../constants';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import UserBoardItem from '../../components/UserBoardItem';
 import Pagination from '../../components/Pagination';
@@ -269,6 +269,11 @@ const navigator = useNavigate();
     //            component           //
     //            event handler           //
    
+    // 타이틀 클릭시 게시물 리스트로 이동 //
+    const onBoardTitleClickHandler = () => {
+      navigator(BOARD_LIST_PATH);
+    }
+
     // description: 유저 이메일이 바뀔때 마다 게시물 리스트 불러오기 //
     useEffect(() => {
       if (!userEmail) {
@@ -293,7 +298,7 @@ const navigator = useNavigate();
     //            render           //
     return (
       <div className='userpage-board-wrapper'>
-        <div className='userpage-board-title'>내 게시물</div>
+        <div className='userpage-board-title' onClick={onBoardTitleClickHandler} >내 게시물</div>
         <div className='userpage-board-contents-list'>
           {viewBoardList.map((item) => (<UserBoardItem item={item} />))}
         </div>

@@ -56,7 +56,7 @@ public class BoardListResponseDto {
     this.boardViewCount = boardListResultSet.getBoardViewCount();
     this.boardCommentCount = boardListResultSet.getBoardCommentCount();
     this.boardFavoriteCount = boardListResultSet.getBoardFavoriteCount();
-    this.boardWriteDatetime = boardListResultSet.getBoardDatetime();
+    this.boardWriteDatetime = boardListResultSet.getBoardWriteDatetime();
     this.userProfileImageUrl = boardListResultSet.getUserProfileImageUrl();
     this.userNickname = boardListResultSet.getUserNickname();
   }

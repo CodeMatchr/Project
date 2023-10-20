@@ -98,7 +98,7 @@ const onImageInputChangeHandler = (event: ChangeEvent<HTMLInputElement>) =>{
 }
 //description : 이미지 업로드 버튼 클릭 이벤트 //
 const onImageUploadButtonClickHandler = () => {
-    if (!fileInputRef.current)return;
+    if (!fileInputRef.current) return;
     fileInputRef.current.click();
 }
 // description : 이미지 닫기 버튼 클릭 이벤트 //
@@ -143,10 +143,7 @@ const onBoardWriteButtonClickHandler = async () => {
 //          component          //
 
 //          effect          //
-// 리셋 게시물 //
-useEffect(() => {
-    resetBoard();
-  }, []);
+
 
 //           render           //
 return (

@@ -71,7 +71,7 @@ useEffect(() => {
 
         {/* 게시글 관련 화면 BOARD */}
         <Route path={BOARD_LIST_PATH} element={<BoardList/>} />
-        <Route path={BOARD_UPDATE_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardDetail/>} />
+        <Route path={BOARD_UPDATE_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardUpdate/>} />
         <Route path={BOARD_DETAIL_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardDetail/>} />
         <Route path={WRITE_PATH} element={<BoardWrite/>} />
         

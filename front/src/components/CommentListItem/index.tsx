@@ -1,6 +1,6 @@
 import React from 'react'
 import './style.css';
-import { CommentListResponseDto } from '../../interfaces/response/board/board-comment-list.response.dto';
+import { CommentListResponseDto } from '../../interfaces/response/board/get-comment-list.response.dto';
 
 interface Props {
   item: CommentListResponseDto;
@@ -10,12 +10,12 @@ interface Props {
 export default function CommentListItem({ item }: Props) {
 
   // state //
-  const { writerProfileImage, writerNickName, writeDateTime, comment } = item;
+  const { nickname, contents, writeDatetime, profileImageUrl } = item;
 
   // function //
   // 현재시간과 작성시간의 차이 함수//
   const getTimeGap = () => {
-    const writeDate = new Date(writeDateTime);
+    const writeDate = new Date(writeDatetime);
     writeDate.setHours(writeDate.getHours() - 9);
 
     const writeDateNumber = writeDate.getTime();
@@ -37,13 +37,13 @@ export default function CommentListItem({ item }: Props) {
       <div className='comment-list-item-writer'>
         <div className='comment-list-item-profile'>
           <div className='comment-list-item-profile-image'
-               style={{ backgroundImage: `url(${writerProfileImage})` }}></div>
+               style={{ backgroundImage: `url(${profileImageUrl})` }}></div>
         </div>
-        <div className='comment-list-item-writer-nickname'>{ writerNickName }</div>
+        <div className='comment-list-item-writer-nickname'>{ nickname }</div>
         <div className='comment-list-item-writer-divider'>|</div>
-        <div className='comment-list-item-write-time'>{ writeDateTime }</div>
+        <div className='comment-list-item-write-time'>{ getTimeGap() }</div>
       </div>
-      <div className='comment-list-item-comment'>{ comment }</div>
+      <div className='comment-list-item-comment'>{ contents }</div>
     </div>
   )
 }
