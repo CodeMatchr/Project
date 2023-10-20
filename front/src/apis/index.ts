@@ -61,6 +61,7 @@ const DELETE_BOARD_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/
 // 게시물 수정시 게시물 불러오기 //
 const GET_BOARD_URL = (boardNumber:number | string) => `${API_DOMAIN}/board/${boardNumber}`;
 
+
 // 메인페이지 top3 좋아요
 const GET_TOP3_FAVORITE_BOARD_LIST_URL = () => `${API_DOMAIN}/board/top-3/favorite`;
 // 메인페이지 top3 댓글

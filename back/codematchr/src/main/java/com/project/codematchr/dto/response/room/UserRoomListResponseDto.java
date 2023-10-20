@@ -2,6 +2,9 @@ package com.project.codematchr.dto.response.room;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.project.codematchr.entity.RoomViewEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

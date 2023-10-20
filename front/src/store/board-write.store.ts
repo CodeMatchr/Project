@@ -16,7 +16,7 @@ interface BoardWriteStore {
     resetBoard: () => void;
 }
 
-const useStore = create<BoardWriteStore>((set) =>({
+const boardStore = create<BoardWriteStore>((set) =>({
     boardNumber: '' ,
     boardTitle : '' ,
     boardContent : '' ,
@@ -32,4 +32,4 @@ const useStore = create<BoardWriteStore>((set) =>({
     resetBoard: () => set((state) => ({ ...state, boardNumber: '', boardTitle: '', boardContent: '', boardImage: null })),
 }));
 
-export default useStore;
+export default boardStore;

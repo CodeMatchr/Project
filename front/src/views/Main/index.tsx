@@ -6,16 +6,17 @@ import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-import { BOARD_PATH, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH, WRITE_PATH } from '../../constants';
-import { useNavigate } from 'react-router-dom';
+import {MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH, WRITE_PATH } from '../../constants';
+import { useNavigate, useParams } from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
 import CompareCode from 'src/components/CompareCode';
 import GetTop3CommentResponseDto from 'src/interfaces/response/board/getTop3Comment.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { getCommentListRequest, getFavoriteListRequest, getViewListRequest } from 'src/apis';
+import { getBoardRequest, getCommentListRequest, getFavoriteListRequest, getViewListRequest } from 'src/apis';
 import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Favorite.response.dto';
 import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
+import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
 
 // component //
 export default function Main() {
@@ -26,11 +27,12 @@ export default function Main() {
   // 페이지 이동을 위한 네비게이트 함수 //
   const navigator = useNavigate();
 
-
+  
   // event handler //
 
   // effect //
 
+  
   // component //
   // Main Top - Compare Code 컴포넌트 //
   const MainTop = () => {
@@ -63,12 +65,9 @@ export default function Main() {
     // Top3 댓글수 Board 리스트 Tab 버튼 클릭 상태 //
     const[top3CommentBoardListTabState, setTop3CommentBoardListTabState] = useState<boolean>(false);
 
-    // 버튼 클릭 상태 //
-    const [click, setClick] = useState();
-
-
-
+ 
     // function //
+
     // top3 좋아요 //
     const getTop3FavoriteListResponseHandler = (responseBody: GetTop3FavoriteResponseDto | ResponseDto) => {
       const { code } = responseBody;
@@ -109,9 +108,12 @@ export default function Main() {
         setTop3FavoriteBoardListTabState(false);
         setTop3CommentBoardListTabState(false);
     }
+  
+    
 
     // event handler //
     // Board 리스트 페이지 이동 버튼 클릭 이벤트 //
+    // todo : 나중에 게시물 리스트 페이지로 이동하도록 수정 //
     const onBoardListClickHandler = () => {
       navigator(WRITE_PATH);  
     }
@@ -137,12 +139,10 @@ export default function Main() {
     }
 
     // effect //
+    useEffect(() => {
+      getViewListRequest().then(getTop3ViewListResponseHandler);
+    }, []);
     
-   
-
-
-    
-
     // render //
     return(
       <div className='main-mid'>
@@ -267,9 +267,7 @@ export default function Main() {
               <div className='main-bottom-top-search-icon-button' onClick={ onSearchIconButtonClickHandler }></div>
             </div>
           )
-
           }
-          
           <div className='main-bottom-top-create-button' onClick={onRoomCreateIconButtonmClickHandler}>생성</div>
           {popUpVisible && <div className='chat-room-pop-up'><ChatRoomPopUp /></div>}
         </div>
@@ -292,6 +290,8 @@ export default function Main() {
       </div>
     );
   }
+
+  
 
   // render //
   return (
