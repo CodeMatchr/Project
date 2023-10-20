@@ -46,15 +46,6 @@ public class RoomController {
         ResponseEntity<? super PostRoomResponseDto> responseEntity = roomService.postRoom(userEmail, postRoomRequestDto);
         return responseEntity;
     }
-
-    // API : 다인원 채팅방 불러오기 메서드 //
-    // @GetMapping("/{roomNumber}")
-    // public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(
-    //     @PathVariable("userEmail") String userEmail
-    // ) {
-    //     ResponseEntity<? super GetUserRoomListResponseDto> responseEntity = roomService.getUserRoomList(userEmail);
-    //     return responseEntity;
-    // }
     
     // API : 특정 다인원 채팅방 제목 수정 메서드 //
     @PatchMapping("/{roomNumber}/roomTitle")
@@ -96,16 +87,21 @@ public class RoomController {
             return response;
     }
 
-    // API : 다인원 채팅방 목록 리스트 조회(최신순)
+    // API : 다인원 채팅방 목록 리스트 조회(최신순) - 모든 리스트 조회(비회원도 가능) //
     @GetMapping("/current-room/{section}")
-    public ResponseEntity<? super GetCurrentRoomListResponseDto> getCurrentRoomList(
+    public ResponseEntity<? super GetRoomListResponseDto> getCurrentRoomList(
         @PathVariable Integer section) {
-            ResponseEntity<? super GetCurrentRoomListResponseDto> response = roomService.getCurrentRoomList(section);
+            ResponseEntity<? super GetRoomListResponseDto> response = roomService.getCurrentRoomList(section);
             return response;
-        }
+    }
     
-    
-    // API : 특정 이메일에 해당하는 다인원 채팅방 목록 리스트 조회
+    // API : 특정 이메일에 해당하는 다인원 채팅방 목록 리스트 조회(최신순) //
+    @GetMapping("/{userEmail}/my")
+    public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(
+        @AuthenticationPrincipal String userEmail) {
+            ResponseEntity<? super GetUserRoomListResponseDto> response = roomService.getUserRoomList(userEmail);
+            return response;
+    }
 
 
     // API : 특정 사용자가 특정 채팅방 입장

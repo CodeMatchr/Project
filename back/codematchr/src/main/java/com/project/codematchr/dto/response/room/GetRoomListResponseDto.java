@@ -9,27 +9,24 @@ import com.project.codematchr.common.response.ResponseMessage;
 import com.project.codematchr.dto.response.ResponseDto;
 import com.project.codematchr.entity.RoomEntity;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
 public class GetRoomListResponseDto extends ResponseDto {
-    
-    private int roomNumber;
-    private String roomTitle;
-    private String roomImageUrl;
 
-     private GetRoomListResponseDto(String code, String message, RoomEntity roomEntity) {
+    public List<RoomListResponseDto> roomList;
+
+    public GetRoomListResponseDto(String code, String message, List<RoomListResponseDto> roomList) {
         super(code, message);
-        this.roomNumber = roomEntity.getRoomNumber();
-        this.roomTitle = roomEntity.getRoomTitle();
-        this.roomImageUrl = roomEntity.getRoomImageUrl();
+        this.roomList = roomList;
     }
 
-     // 성공
-    public static ResponseEntity<GetRoomListResponseDto> success(RoomEntity roomEntity) {
-        GetRoomListResponseDto result = new GetRoomListResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS, roomEntity);
+    public static ResponseEntity<GetRoomListResponseDto> success(List<RoomListResponseDto> roomList) {
+        GetRoomListResponseDto result = new GetRoomListResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS, roomList);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

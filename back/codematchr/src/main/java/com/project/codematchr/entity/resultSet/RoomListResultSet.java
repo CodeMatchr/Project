@@ -8,4 +8,6 @@ public interface RoomListResultSet {
     String getRoomDatetime();
     String getRoomManagerEmail();
     int getRoomUserCount();
+    String getRoomManagerNickname();
+    String getRoomManagerProfileImageUrl();
 }
