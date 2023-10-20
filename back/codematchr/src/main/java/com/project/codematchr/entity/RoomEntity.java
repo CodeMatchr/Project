@@ -33,6 +33,7 @@ public class RoomEntity {
     private String roomPassword;
     private String roomDatetime;
     private String roomManagerEmail;
+    private int roomUserCount;
 
     public RoomEntity(String roomManagerEmail, PostRoomRequestDto postRoomRequestDto) {
         Date now = Date.from(Instant.now());
@@ -43,11 +44,8 @@ public class RoomEntity {
         this.roomImageUrl = postRoomRequestDto.getRoomImageUrl();
         this.roomPassword = postRoomRequestDto.getRoomPassword();
         this.roomDatetime = roomDatetime;
-        // this.roomUserEmail = roomUserEmail;
-        // this.roomManagerEmail = roomUserEmail;
-        // this.roomAccessorEmail = roomUserEmail;
-        // this.roomMemberCount++;
-        // this.roomIsMulti = true;
+        this.roomManagerEmail = roomManagerEmail;
+        this.roomUserCount = ++roomUserCount;
     }
         
     // 다인원 채팅방 제목 수정

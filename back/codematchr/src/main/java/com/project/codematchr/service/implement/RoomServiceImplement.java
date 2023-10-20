@@ -11,17 +11,21 @@ import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.ResponseDto;
 import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
+import com.project.codematchr.dto.response.room.GetCurrentRoomListResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomImageUrlResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomPasswordResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomTitleResponseDto;
 import com.project.codematchr.dto.response.room.PostRoomResponseDto;
+import com.project.codematchr.dto.response.room.RoomListResponseDto;
 import com.project.codematchr.dto.response.room.UserRoomListResponseDto;
 import com.project.codematchr.entity.RoomEntity;
 import com.project.codematchr.entity.UserEntity;
 import com.project.codematchr.entity.UserViewEntity;
+import com.project.codematchr.entity.resultSet.RoomListResultSet;
 import com.project.codematchr.repository.RoomRepository;
+import com.project.codematchr.repository.RoomViewRepository;
 import com.project.codematchr.repository.UserRepository;
 import com.project.codematchr.service.RoomService;
 
@@ -34,6 +38,7 @@ public class RoomServiceImplement implements RoomService {
     private final UserRepository userRepository;
     // todo :  다시 확인 해보기 //
     private final RoomRepository roomRepository;
+    private final RoomViewRepository roomViewRepository;
 
     // 다인원 채팅방 생성
     @Override
@@ -194,10 +199,30 @@ public class RoomServiceImplement implements RoomService {
 
     }
 
+    // @Override
+    // public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(String userEmail) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'getUserRoomList'");
+    // }
+
     @Override
-    public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(String userEmail) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserRoomList'");
+    public ResponseEntity<? super GetCurrentRoomListResponseDto> getCurrentRoomList(Integer section) {
+        List<RoomListResponseDto> roomList = null;
+
+        try {
+            // 최신 room 리스트 불러오기 //
+            Integer limit = (section - 1) * 50;
+            List<RoomListResultSet> resultSets = roomRepository.getCurrentRoomList(limit);
+
+            // ResponseDto 형태로 반환 //
+            roomList = RoomListResponseDto.copyCurrentList(resultSets);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetCurrentRoomListResponseDto.success(roomList);
     }
 
     // @Override

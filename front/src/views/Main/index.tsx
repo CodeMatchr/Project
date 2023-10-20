@@ -6,7 +6,7 @@ import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-import {MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH, WRITE_PATH } from '../../constants';
+import {BOARD_LIST_PATH, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH, WRITE_PATH } from '../../constants';
 import { useNavigate, useParams } from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
@@ -115,7 +115,7 @@ export default function Main() {
     // Board 리스트 페이지 이동 버튼 클릭 이벤트 //
     // todo : 나중에 게시물 리스트 페이지로 이동하도록 수정 //
     const onBoardListClickHandler = () => {
-      navigator(WRITE_PATH);  
+      navigator(BOARD_LIST_PATH);  
     }
 
     // Top3 조회수 Board 리스트 Tab 버튼 클릭 이벤트 //

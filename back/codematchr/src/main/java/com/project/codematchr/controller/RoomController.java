@@ -2,6 +2,7 @@ package com.project.codematchr.controller;
 
 import javax.validation.Valid;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,8 @@ import com.project.codematchr.dto.request.room.PatchRoomPasswordRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
+import com.project.codematchr.dto.response.room.GetCurrentRoomListResponseDto;
+import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
 import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomImageUrlResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomPasswordResponseDto;
@@ -45,23 +48,14 @@ public class RoomController {
     }
 
     // API : 다인원 채팅방 불러오기 메서드 //
-    @GetMapping("/{roomNumber}")
-    public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(
-        @PathVariable("userEmail") String userEmail
-    ) {
-        ResponseEntity<? super GetUserRoomListResponseDto> responseEntity = roomService.getUserRoomList(userEmail);
-        return responseEntity;
-    }
-    
-
-    // API : 다인원 채팅방 목록 조회 메서드 // 원래꺼 !!!
-    // @GetMapping("/{roomNumber}/roomList")
-    // public ResponseEntity<? super GetRoomListResponseDto> getRoomList(@PathVariable("roomNumber") Integer roomNumber) {
-    //     ResponseEntity<? super GetRoomListResponseDto> responseEntity = roomService.getRoomList(roomNumber);
+    // @GetMapping("/{roomNumber}")
+    // public ResponseEntity<? super GetUserRoomListResponseDto> getUserRoomList(
+    //     @PathVariable("userEmail") String userEmail
+    // ) {
+    //     ResponseEntity<? super GetUserRoomListResponseDto> responseEntity = roomService.getUserRoomList(userEmail);
     //     return responseEntity;
     // }
     
-
     // API : 특정 다인원 채팅방 제목 수정 메서드 //
     @PatchMapping("/{roomNumber}/roomTitle")
     public ResponseEntity<? super PatchRoomTitleResponseDto> patchRoomTitle(
@@ -97,19 +91,24 @@ public class RoomController {
     @DeleteMapping("/{roomNumber}")
     public ResponseEntity<? super DeleteRoomResponseDto> deleteRoom(
         @AuthenticationPrincipal String userEmail,
-        @PathVariable("roomNumber") Integer roomNumber
-        ) {
+        @PathVariable("roomNumber") Integer roomNumber) {
         ResponseEntity<? super DeleteRoomResponseDto> response = roomService.deleteRoom(roomNumber, userEmail);
             return response;
-        }
+    }
 
     // API : 다인원 채팅방 목록 리스트 조회(최신순)
+    @GetMapping("/current-room/{section}")
+    public ResponseEntity<? super GetCurrentRoomListResponseDto> getCurrentRoomList(
+        @PathVariable Integer section) {
+            ResponseEntity<? super GetCurrentRoomListResponseDto> response = roomService.getCurrentRoomList(section);
+            return response;
+        }
     
     
     // API : 특정 이메일에 해당하는 다인원 채팅방 목록 리스트 조회
 
 
-    // API : 특정 사용자가  특정 채팅방 입장
+    // API : 특정 사용자가 특정 채팅방 입장
 
 
     // API : 특정 사용자가 특정 채팅방을 나가기
