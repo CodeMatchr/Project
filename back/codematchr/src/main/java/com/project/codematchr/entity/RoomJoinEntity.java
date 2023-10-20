@@ -1,6 +1,7 @@
 package com.project.codematchr.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.project.codematchr.dto.request.authentication.SignInRequestDto;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity(name="roomJoin")
 @Table(name="roomJoin")
 public class RoomJoinEntity {
-    
+    @Id
     private String userEmail;
     private int roomNumber;
 

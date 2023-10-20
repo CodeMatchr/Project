@@ -17,10 +17,7 @@ import ResponseDto from './interfaces/response/response.dto';
 import { useUserStore } from './store';
 import { getSignInUserRequest } from './apis';
 import BoardList from './views/Board/List';
-<<<<<<< HEAD
-=======
 import BoardUpdate from './views/Board/Update';
->>>>>>> 5ffb1ce3f997823ac586a58b1dfa603c29b1adbc
 
 
 function App() {
@@ -73,15 +70,11 @@ useEffect(() => {
         <Route path={USER_PATH(USER_PAGE_PATH_VARIABLE)} element={<UserPage/>} />
 
         {/* 게시글 관련 화면 BOARD */}
-        <Route path={BOARD_PATH} element={<BoardList/>} />
-<<<<<<< HEAD
-        <Route path={BOARD_UPDATE_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardDetail/>} />
-        <Route path={BOARD_DETAIL_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardDetail/>} />
-=======
+        <Route path={BOARD_PATH} element={<BoardList/>}/>
         <Route path={BOARD_UPDATE_PATH(BOARD_NUMBER_PATH_VARIABLE)} element={<BoardUpdate/>} />
         <Route path={BOARD_DETAIL_TEST_PATH} element={<BoardDetail/>} />
->>>>>>> 5ffb1ce3f997823ac586a58b1dfa603c29b1adbc
         <Route path={WRITE_PATH} element={<BoardWrite/>} />
+        
 
         {/* 다인원 채팅방 화면 ROOM */}
         <Route path={ROOM_PATH} element={<Room/>} />

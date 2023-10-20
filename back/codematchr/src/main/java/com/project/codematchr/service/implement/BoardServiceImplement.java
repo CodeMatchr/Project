@@ -13,6 +13,7 @@ import com.project.codematchr.dto.response.board.BoardListResponseDto;
 import com.project.codematchr.dto.response.board.CommentListResponseDto;
 import com.project.codematchr.dto.response.board.DeleteBoardResponseDto;
 import com.project.codematchr.dto.response.board.FavoriteListResponseDto;
+import com.project.codematchr.dto.response.board.GetBoardListResponseDto;
 import com.project.codematchr.dto.response.board.GetBoardResponseDto;
 import com.project.codematchr.dto.response.board.GetCommentListResponseDto;
 import com.project.codematchr.dto.response.board.GetFavoriteListResponseDto;
@@ -31,6 +32,7 @@ import com.project.codematchr.entity.BoardViewEntity;
 import com.project.codematchr.entity.CommentEntity;
 import com.project.codematchr.entity.FavoriteEntity;
 import com.project.codematchr.entity.UserEntity;
+import com.project.codematchr.entity.resultSet.BoardListResultSet;
 import com.project.codematchr.entity.resultSet.CommentListResultSet;
 import com.project.codematchr.repository.BoardRepository;
 import com.project.codematchr.repository.BoardViewRepository;
@@ -410,6 +412,59 @@ public ResponseEntity<? super PatchBoardResponseDto> patchBoard(String boardWrit
 
         return GetSearchBoardResponseDto.success(boardList);
 
+    }
+
+    @Override
+    public ResponseEntity<? super GetBoardListResponseDto> getBoardList(Integer section) {
+
+        List<BoardListResponseDto> boardList = null;
+
+        try {
+            // description: 최신 게시물 리스트 불러오기 //
+            Integer limit = (section - 1) * 50;
+            List<BoardListResultSet> resultSets = boardRepository.getBoardList(limit);
+
+            // description: 검색 결과를 ResponseDto 형태로 변환 //
+            boardList = BoardListResponseDto.copyList(resultSets);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetBoardListResponseDto.success(boardList);
+
+    }
+
+    @Override
+    public ResponseEntity<? super GetBoardListResponseDto> getBoardViewList(Integer section) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBoardViewList'");
+    }
+
+    @Override
+    public ResponseEntity<? super GetBoardListResponseDto> getBoardFavoriteList(Integer section) {
+
+        List<BoardListResponseDto> boardList= null;
+
+        try {
+            // description: 좋아요 게시물 리스트 불러오기 //
+            Integer limit = (section - 1) * 50;
+            List<BoardListResultSet> resultSets = boardRepository.getBoardFavoriteList(limit);
+
+            // description: 검색 결과를 ResponseDto 형태로 변환 //
+            boardList = BoardListResponseDto.copyList(resultSets);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetBoardListResponseDto.success(boardList);
+
+    }
+
+    @Override
+    public ResponseEntity<? super GetBoardListResponseDto> getBoardCommentList(Integer section) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBoardCommentList'");
     }
 
    

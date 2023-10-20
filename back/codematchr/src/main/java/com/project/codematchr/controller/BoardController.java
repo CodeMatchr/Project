@@ -18,6 +18,7 @@ import com.project.codematchr.dto.request.board.PatchBoardRequestDto;
 import com.project.codematchr.dto.request.board.PostBoardRequestDto;
 import com.project.codematchr.dto.request.board.PostcommentRequestDto;
 import com.project.codematchr.dto.response.board.DeleteBoardResponseDto;
+import com.project.codematchr.dto.response.board.GetBoardListResponseDto;
 import com.project.codematchr.dto.response.board.GetBoardResponseDto;
 import com.project.codematchr.dto.response.board.GetCommentListResponseDto;
 import com.project.codematchr.dto.response.board.GetFavoriteListResponseDto;
@@ -168,6 +169,39 @@ public class BoardController {
         return response;
     }
     
+    // API : 게시물 리스트 최신순 조회 메서드 //
+    @GetMapping("/board-list/{section}")
+    public ResponseEntity<? super GetBoardListResponseDto> getBoardList(
+        @PathVariable Integer section
+    ){
+        ResponseEntity<? super GetBoardListResponseDto> response = boardService.getBoardList(section);
+        return response;
+    }
+    // API : 게시물 리스트 조회수 조회 메서드 //
+    @GetMapping("/board-list/view/{section}")
+    public ResponseEntity<? super GetBoardListResponseDto> getBoardViewList(
+        @PathVariable Integer section
+    ){
+        ResponseEntity<? super GetBoardListResponseDto> response = boardService.getBoardViewList(section);
+        return response;
+    }
+
+    // API : 게시물 리스트 좋아요 조회 메서드 //
+    @GetMapping("/board-list/favorite/{section}")
+    public ResponseEntity<? super GetBoardListResponseDto> getBoardFavoriteList(
+        @PathVariable Integer section
+    ){
+        ResponseEntity<? super GetBoardListResponseDto> response = boardService.getBoardFavoriteList(section);
+        return response;
+    }
+    // API : 게시물 리스트 댓글 조회 메서드 //
+    @GetMapping("/board-list/comment/{section}")
+    public ResponseEntity<? super GetBoardListResponseDto> getBoardCommentList(
+        @PathVariable Integer section
+    ){
+        ResponseEntity<? super GetBoardListResponseDto> response = boardService.getBoardCommentList(section);
+        return response;
+    }
 
 }
 

@@ -23,6 +23,7 @@ import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Fav
 import GetTop3CommentResponseDto from 'src/interfaces/response/board/getTop3Comment.response.dto';
 import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
 import DeleteBoardResponseDto from 'src/interfaces/response/board/delete-board.response.dto';
+import { GetBoardListResponeDto } from 'src/interfaces/response/board';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -68,6 +69,9 @@ const GET_TOP3_FAVORITE_BOARD_LIST_URL = () => `${API_DOMAIN}/board/top-3/favori
 const GET_TOP3_COMMENT_BOARD_LIST_URL = () => `${API_DOMAIN}/board/top-3/comment`;
 // 메인페이지 top3 조회수
 const GET_TOP3_VIEW_BOARD_LIST_URL = () => `${API_DOMAIN}/board/top-3/view`;
+
+// 게시물 불러오기 최신순 //
+const  GET_BOARD_LIST_CURRENT = (section: number) => `${API_DOMAIN}/board/board-list/${section}`;
 
 
 // 로그인 //
@@ -407,4 +411,18 @@ export const uploadFileRequest = async (data: FormData) => {
     });
     return result;
 
+  }
+
+  // 게시물 불러오기 최신순 //
+  export const getBoardListCurrentRequest = async (section : number) => {
+    const result = await axios.get(GET_BOARD_LIST_CURRENT(section))
+    .then((response) => {
+        const responseBody : GetBoardListResponeDto = response.data;
+        return responseBody;
+    })
+    .catch((error) => {
+        const responseBody : ResponseDto = error.response.data;
+        return responseBody;
+    });
+    return result;
   }

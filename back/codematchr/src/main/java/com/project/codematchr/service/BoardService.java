@@ -6,6 +6,7 @@ import com.project.codematchr.dto.request.board.PatchBoardRequestDto;
 import com.project.codematchr.dto.request.board.PostBoardRequestDto;
 import com.project.codematchr.dto.request.board.PostcommentRequestDto;
 import com.project.codematchr.dto.response.board.DeleteBoardResponseDto;
+import com.project.codematchr.dto.response.board.GetBoardListResponseDto;
 import com.project.codematchr.dto.response.board.GetBoardResponseDto;
 import com.project.codematchr.dto.response.board.GetCommentListResponseDto;
 import com.project.codematchr.dto.response.board.GetFavoriteListResponseDto;
@@ -54,4 +55,12 @@ public interface BoardService {
     // method : 검색 게시물 리스트 조회 메서드 //
     ResponseEntity<? super GetSearchBoardResponseDto> getSearchBoard(String searchword);
 
+    // 게시물 리스트 최신 메서드 //
+    ResponseEntity<? super GetBoardListResponseDto> getBoardList(Integer section);
+    // 게시물 리스트 조회수 메서드 //
+    ResponseEntity<? super GetBoardListResponseDto> getBoardViewList(Integer section);
+    // 게시물 리스트 좋아요 메서드 //
+    ResponseEntity<? super GetBoardListResponseDto> getBoardFavoriteList(Integer section);
+    // 게시물 리스트 댓글 메서드 //
+    ResponseEntity<? super GetBoardListResponseDto> getBoardCommentList(Integer section);
 }

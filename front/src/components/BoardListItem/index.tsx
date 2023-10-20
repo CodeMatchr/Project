@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './style.css';
 import BoardListResponseDto from 'src/interfaces/response/board/board-list.response.dto';
 
 import { dateFormat } from 'src/utils';
+import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
+import { useNavigate } from 'react-router-dom';
+import ResponseDto from 'src/interfaces/response/response.dto';
+import { BOARD_PATH } from 'src/constants';
+import { getBoardRequest } from 'src/apis';
 
 interface Props {
   item : BoardListResponseDto;
@@ -12,7 +17,7 @@ interface Props {
 // component //
 export default function BoardListItem({item} : Props) {
 
-  // state//
+  // state //
   const {boardNumber, boardTitle, boardContents, boardImageUrl} = item;
   const {boardViewCount, boardCommentCount, boardFavoriteCount} = item;
   const {boardWriteDatetime, boardWriterNickname, boardWriterProfileImageUrl} = item;
@@ -20,11 +25,13 @@ export default function BoardListItem({item} : Props) {
   const boardBackground = boardImageUrl ? { backgroundImage : `url(${boardImageUrl})` } : { backgroundColor: 'rgba(0, 0, 0, 0.6)' };
   const writerBackground = boardWriterProfileImageUrl ? { backgroundImage : `url(${boardWriterProfileImageUrl})` } : { backgroundColor: 'rgba(0, 0, 0, 0.6)' };
 
+
   // function //
 
   // event handler //
 
   // effect //
+
 
   // render //
   return (

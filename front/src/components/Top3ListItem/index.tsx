@@ -28,6 +28,7 @@ export default function Top3ListItem({item} : Props) {
 
     // 네비게이터 함수 //
     const navigator = useNavigate();
+    
     // function //
     const getBoardResponseHandler = (responseBody: GetBoardResponseDto | ResponseDto) => {
         const { code } = responseBody;
