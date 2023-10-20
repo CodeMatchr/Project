@@ -6,11 +6,16 @@ import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-import { BOARD_PATH, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH } from '../../constants';
+import { BOARD_PATH, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH, WRITE_PATH } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
 import CompareCode from 'src/components/CompareCode';
+import GetTop3CommentResponseDto from 'src/interfaces/response/board/getTop3Comment.response.dto';
+import ResponseDto from 'src/interfaces/response/response.dto';
+import { getCommentListRequest, getFavoriteListRequest, getViewListRequest } from 'src/apis';
+import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Favorite.response.dto';
+import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
 
 // component //
 export default function Main() {
@@ -21,7 +26,6 @@ export default function Main() {
   // 페이지 이동을 위한 네비게이트 함수 //
   const navigator = useNavigate();
 
- 
 
   // event handler //
 
@@ -53,57 +57,90 @@ export default function Main() {
     // Top3 에 해당하는 Board 리스트 상태 (View(default), Favorite, Comment) //
     const[currentTop3BoardList, setCurrentTop3BoardList] = useState<BoardListResponseDto[]>([]);
     // Top3 조회수 Board 리스트 Tab 버튼 클릭 상태 //
-    const[top3ViewBoardListTabState, setTop3ViewBoardListTabState] = useState<boolean>(true);
+    const[top3ViewBoardListTabState, setTop3ViewBoardListTabState] = useState<boolean>(false);
     // Top3 좋아요 수 Board 리스트 Tab 버튼 클릭 상태 //
     const[top3FavoriteBoardListTabState, setTop3FavoriteBoardListTabState] = useState<boolean>(false);
     // Top3 댓글수 Board 리스트 Tab 버튼 클릭 상태 //
     const[top3CommentBoardListTabState, setTop3CommentBoardListTabState] = useState<boolean>(false);
 
+    // 버튼 클릭 상태 //
+    const [click, setClick] = useState();
+
 
 
     // function //
-    
+    // top3 좋아요 //
+    const getTop3FavoriteListResponseHandler = (responseBody: GetTop3FavoriteResponseDto | ResponseDto) => {
+      const { code } = responseBody;
+      if (code === 'DE') alert('데이터베이스 에러입니다.');
+      if (code !== 'SU') return;
+
+      const { top3Favorite } = responseBody as GetTop3FavoriteResponseDto;
+      setCurrentTop3BoardList(top3Favorite);
+
+        setTop3FavoriteBoardListTabState(true);
+        setTop3ViewBoardListTabState(false);
+        setTop3CommentBoardListTabState(false);
+    }
+    // top3 댓글 //
+    const getTop3CommentListResponseHandler = (responseBody : GetTop3CommentResponseDto | ResponseDto) => {
+      const {code} =responseBody;
+      if (code === 'DE') alert('데이터베이스 에러입니다.');
+      if (code !== 'SU') return;
+
+      const {top3Comment} = responseBody as GetTop3CommentResponseDto;
+      setCurrentTop3BoardList(top3Comment);
+
+        setTop3CommentBoardListTabState(true);
+        setTop3ViewBoardListTabState(false);
+        setTop3FavoriteBoardListTabState(false);
+    }
+
+    // top3 조회수 //
+    const getTop3ViewListResponseHandler = (responseBody : GetTop3ViewResponseDto | ResponseDto) => {
+      const {code} = responseBody;
+      if (code === 'DE') alert('데이터베이스 에러입니다.');
+      if (code !== 'SU') return;
+
+      const {top3View} = responseBody as GetTop3ViewResponseDto;
+      setCurrentTop3BoardList(top3View);
+      
+        setTop3ViewBoardListTabState(true);
+        setTop3FavoriteBoardListTabState(false);
+        setTop3CommentBoardListTabState(false);
+    }
 
     // event handler //
     // Board 리스트 페이지 이동 버튼 클릭 이벤트 //
-    // todo : 플러스 버튼 클릭시 어디로?? //
     const onBoardListClickHandler = () => {
-      navigator(BOARD_PATH);  
+      navigator(WRITE_PATH);  
     }
 
     // Top3 조회수 Board 리스트 Tab 버튼 클릭 이벤트 //
     const onTop3ViewBoardListTabClickHandler = () => {
-      if (!top3ViewBoardListTabState) {
-        setTop3ViewBoardListTabState(true);
-        setTop3FavoriteBoardListTabState(false);
-        setTop3CommentBoardListTabState(false);
-        // setCurrentTop3BoardList();
-      }
-      
+      if (top3ViewBoardListTabState) return;
+      getViewListRequest().then(getTop3ViewListResponseHandler);
     }
 
     // Top3 좋아요 수 Board 리스트 Tab 버튼 클릭 이벤트 //
     const onTop3FavoriteBoardListTabClickHandler = () => {
-      if (!top3FavoriteBoardListTabState) {
-        setTop3FavoriteBoardListTabState(true);
-        setTop3ViewBoardListTabState(false);
-        setTop3CommentBoardListTabState(false);
-        // setCurrentTop3BoardList(top3FavoriteBoardListMock);
-      }
+      if (top3FavoriteBoardListTabState) return;
+      getFavoriteListRequest().then(getTop3FavoriteListResponseHandler);
+      
     }
 
     // Top3 댓글수 Board 리스트 Tab 버튼 클릭 이벤트 //
     const onTop3CommentBoardListTabClickHandler = () => {
-      if (!top3CommentBoardListTabState) {
-        setTop3CommentBoardListTabState(true);
-        setTop3ViewBoardListTabState(false);
-        setTop3FavoriteBoardListTabState(false);
-        // setCurrentTop3BoardList(top3CommentBoardListMock);
-      }
+      if (top3CommentBoardListTabState) return;
+      getCommentListRequest().then(getTop3CommentListResponseHandler);
       
     }
 
     // effect //
+    
+   
+
+
     
 
     // render //
