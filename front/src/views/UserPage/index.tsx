@@ -266,9 +266,9 @@ const navigator = useNavigate();
       
     }
 
+    //            component           //
     //            event handler           //
    
-    //            component           //
     // description: 유저 이메일이 바뀔때 마다 게시물 리스트 불러오기 //
     useEffect(() => {
       if (!userEmail) {

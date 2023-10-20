@@ -139,6 +139,7 @@ export default function Main() {
     }
 
     // effect //
+    // 맨처음 //
     useEffect(() => {
       getViewListRequest().then(getTop3ViewListResponseHandler);
     }, []);

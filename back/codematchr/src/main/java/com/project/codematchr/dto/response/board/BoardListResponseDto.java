@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.project.codematchr.entity.BoardViewEntity;
+import com.project.codematchr.entity.resultSet.BoardListResultSet;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,7 +31,7 @@ public class BoardListResponseDto {
     this.boardImageUrl = boardViewEntity.getImageUrl();
     this.boardViewCount = boardViewEntity.getViewCount();
     this.boardCommentCount = boardViewEntity.getCommentCount();
-    this.boardFavoriteCount = boardViewEntity.getViewCount();
+    this.boardFavoriteCount = boardViewEntity.getFavoriteCount();
     this.boardWriteDatetime = boardViewEntity.getWriteDatetime();
     this.userProfileImageUrl = boardViewEntity.getWriterProfileImageUrl();
     this.userNickname = boardViewEntity.getWriterNickname();
@@ -41,6 +42,30 @@ public class BoardListResponseDto {
 
     for(BoardViewEntity entity:boardViewEntities) {
       BoardListResponseDto board = new BoardListResponseDto(entity);
+      boardList.add(board);
+    }
+    return boardList;
+  }
+
+  // 최신 게시물 조회 //
+  public BoardListResponseDto(BoardListResultSet boardListResultSet) {
+    this.boardNumber = boardListResultSet.getBoardNumber();
+    this.boardTitle = boardListResultSet.getBoardTitle();
+    this.boardContents = boardListResultSet.getBoardContents();
+    this.boardImageUrl = boardListResultSet.getBoardImageUrl();
+    this.boardViewCount = boardListResultSet.getBoardViewCount();
+    this.boardCommentCount = boardListResultSet.getBoardCommentCount();
+    this.boardFavoriteCount = boardListResultSet.getBoardFavoriteCount();
+    this.boardWriteDatetime = boardListResultSet.getBoardWriteDatetime();
+    this.userProfileImageUrl = boardListResultSet.getUserProfileImageUrl();
+    this.userNickname = boardListResultSet.getUserNickname();
+  }
+
+  public static List<BoardListResponseDto> copyList(List<BoardListResultSet> boardListResultSets) {
+    List<BoardListResponseDto> boardList = new ArrayList<>();
+
+    for(BoardListResultSet resultSet:boardListResultSets) {
+      BoardListResponseDto board = new BoardListResponseDto(resultSet);
       boardList.add(board);
     }
     return boardList;
