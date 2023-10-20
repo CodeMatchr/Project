@@ -25,8 +25,8 @@ public class UserRoomListResponseDto {
     this.roomTitle = roomViewEntity.getRoomTitle();
     this.roomManagerNickname = roomViewEntity.getRoomManagerNickname();
     this.roomManagerProfileImageUrl = roomViewEntity.getRoomManagerProfileImageUrl();
-    this.roomMemberCount = roomViewEntity.getRoomMemberCount();
-    this.userEmail = roomViewEntity.getUserEmail();
+    this.roomMemberCount = roomViewEntity.getRoomUserCount();
+    this.userEmail = roomViewEntity.getRoomManagerEmail();
   }
 
   public static List<UserRoomListResponseDto> copyEntityList(List<RoomViewEntity> roomViewEntities ){

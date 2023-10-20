@@ -36,3 +36,25 @@ SELECT
     U.user_state_message AS user_state_message, 
     U.user_profile_image_url AS user_profile_image_url 
     FROM `user` AS U;
+
+
+
+
+
+
+// 새로운거 //
+SELECT
+    R.room_number AS roomNumber,
+    R.room_title as roomTitle, 
+    R.room_image_url as roomImageUrl, 
+    R.room_password as roomPassword,
+    R.room_datetime as roomDatetime,
+    R.room_user_count as roomUserCount,
+    U.user_email as roomManagerEmail,
+    U.user_nickname as roomManagerNickname,
+    U.user_profile_image_url as roomManagerProfileImageUrl
+from room AS R
+INNER JOIN user AS U
+ON R.room_manager_email = U.user_email
+ORDER BY R.room_datetime DESC
+LIMIT 1, 50;

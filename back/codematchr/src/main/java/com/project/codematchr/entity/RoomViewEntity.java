@@ -18,11 +18,10 @@ public class RoomViewEntity {
     private int roomNumber;
     private String roomTitle;
     private String roomImageUrl;
-    private int roomMemberCount;
+    private String roomPassword;
+    private String roomDatetime;
+    private int roomUserCount;
+    private String roomManagerEmail;
     private String roomManagerNickname;
     private String roomManagerProfileImageUrl;
-    
-    private String userEmail;
-   
-
 }
