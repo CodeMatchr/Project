@@ -11,7 +11,6 @@ import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.ResponseDto;
 import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
-import com.project.codematchr.dto.response.room.GetCurrentRoomListResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
 import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomImageUrlResponseDto;

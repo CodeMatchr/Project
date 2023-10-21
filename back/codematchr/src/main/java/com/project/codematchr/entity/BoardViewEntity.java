@@ -16,13 +16,13 @@ import lombok.NoArgsConstructor;
 public class BoardViewEntity {
   @Id
   private int boardNumber;
-  private String title;
-  private String contents;
-  private String imageUrl;
-  private int viewCount;
-  private int commentCount;
-  private int favoriteCount;
-  private String writeDatetime;
+  private String boardTitle;
+  private String boardContents;
+  private String boardImageUrl;
+  private int boardViewCount;
+  private int boardCommentCount;
+  private int boardFavoriteCount;
+  private String boardWriteDatetime;
   private String writerNickname;
   private String writerProfileImageUrl;
   private String writerEmail;

@@ -163,6 +163,7 @@ export default function BoardList() {
     }
   }
 
+  // effect //
   // 현재 페이지가 바뀔 때마다 board 리스트 변경 //
   useEffect(() => {
     getViewBoardList(currentList);

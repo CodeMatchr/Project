@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import com.project.codematchr.common.response.ResponseCode;
 import com.project.codematchr.common.response.ResponseMessage;
 import com.project.codematchr.dto.response.ResponseDto;
-import com.project.codematchr.entity.RoomEntity;
 
 import java.util.List;
 

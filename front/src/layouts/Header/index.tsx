@@ -35,6 +35,9 @@ export default function Header() {
     // 유저페이지 여부 //
     const isUser = user && pathname.includes(USER_PATH(user.userEmail));
 
+    
+    
+
     // event handler //
     // 메인 페이지 이동 버튼 클릭 이벤트(로고 및 로고 텍스트 버튼 클릭 시) //
     const onLogoButtonClickHandler = () => {
@@ -65,6 +68,8 @@ export default function Header() {
     const onSearchIconButtonClickHandler = () => {
         if (searchIconState) setSearchIconState(false);
         else setSearchIconState(true);
+
+        
     }
     // effect //
     // 로그인 유저 정보 여부 //

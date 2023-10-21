@@ -90,6 +90,7 @@ const GET_COMMENT_LIST_URL = (boardNumber: number | string) => `${API_DOMAIN}/bo
 const PUT_FAVORITE_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}/favorite`;
 
 
+
 // 로그인 //
 export const signInRequest = async (data : SignInRequestDto) => {
     const result = await axios.post(SIGN_IN_URL(), data)

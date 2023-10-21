@@ -16,24 +16,32 @@ import lombok.Getter;
 public class GetBoardResponseDto extends ResponseDto{
     
     private int boardNumber;
-    private String title;
-    private String contents;
-    private String imageUrl;
-    private String writeDatetime;
-    private String writerEmail;
-    private String writerNickname;
-    private String writerProfileImageUrl;
+    private String boardTitle;
+    private String boardContents;
+    private String boardImageUrl;
+
+    private int boardViewCount;
+    private int boardCommentCount;
+    private int boardFavoriteCount;
+
+    private String boardWriteDatetime;
+    private String boardWriterEmail;
+    private String boardWriterNickname;
+    private String boardWriterProfileImageUrl;
 
     private GetBoardResponseDto(String code, String message, BoardViewEntity boardViewEntity) {
         super(code, message);
         this.boardNumber = boardViewEntity.getBoardNumber();
-        this.title = boardViewEntity.getTitle();
-        this.contents = boardViewEntity.getContents();
-        this.imageUrl = boardViewEntity.getImageUrl();
-        this.writeDatetime = boardViewEntity.getWriteDatetime();
-        this.writerEmail = boardViewEntity.getWriterEmail();
-        this.writerNickname = boardViewEntity.getWriterNickname();
-        this.writerProfileImageUrl = boardViewEntity.getWriterProfileImageUrl();
+        this.boardTitle = boardViewEntity.getBoardTitle();
+        this.boardContents = boardViewEntity.getBoardContents();
+        this.boardImageUrl = boardViewEntity.getBoardImageUrl();
+        this.boardWriteDatetime = boardViewEntity.getBoardWriteDatetime();
+        this.boardWriterEmail = boardViewEntity.getWriterEmail();
+        this.boardWriterNickname = boardViewEntity.getWriterNickname();
+        this.boardWriterProfileImageUrl = boardViewEntity.getWriterProfileImageUrl();
+        this.boardViewCount = boardViewEntity.getBoardViewCount();
+        this.boardCommentCount = boardViewEntity.getBoardCommentCount();
+        this.boardFavoriteCount = boardViewEntity.getBoardFavoriteCount();
     }
 
     public static ResponseEntity<GetBoardResponseDto> success(BoardViewEntity boardViewEntity) {

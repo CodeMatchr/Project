@@ -167,6 +167,9 @@
 .board-detail-favorite-list-user{
     margin-left: 15px;
     margin-top: 15px;
+
+    display: flex;
+    flex-direction: row;
 }
 
 .board-detail-comment-list{
@@ -201,6 +204,8 @@
 /* favorite list */
 .favorite-list-item-box{
     display: flex;
+    flex-direction: column;
+
     justify-content: space-between;
     align-items: center;
     width: 330px;

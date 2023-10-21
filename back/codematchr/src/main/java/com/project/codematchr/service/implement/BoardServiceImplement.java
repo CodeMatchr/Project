@@ -177,7 +177,7 @@ public ResponseEntity<? super PatchBoardResponseDto> patchBoard(String boardWrit
 
         try {
             // description : 최신순으로 상위 3개 게시물 조회 //
-            List<BoardViewEntity> boardViewEntities = boardViewRepository.findTop3ByOrderByWriteDatetimeDesc();
+            List<BoardViewEntity> boardViewEntities = boardViewRepository.findTop3ByOrderByBoardWriteDatetimeDesc();
 
             // description : entity를 dto형태로 변환 //
             top3Current = BoardListResponseDto.copyEntityList(boardViewEntities);
@@ -199,7 +199,7 @@ public ResponseEntity<? super PatchBoardResponseDto> patchBoard(String boardWrit
 
         try {
             // description : 댓글 순으로 상위 3개 게시물 조회 //
-            List<BoardViewEntity> boardViewEntities = boardViewRepository.findTop3ByOrderByCommentCountDesc();
+            List<BoardViewEntity> boardViewEntities = boardViewRepository.findTop3ByOrderByBoardCommentCountDesc();
 
             // description: entity를 dto 형태로 변환 //
             top3Comment = BoardListResponseDto.copyEntityList(boardViewEntities);
@@ -220,7 +220,7 @@ public ResponseEntity<? super PatchBoardResponseDto> patchBoard(String boardWrit
 
         try {
             // description : 좋아요 상위 3개 게시물 조회 //
-            List<BoardViewEntity> boardViewEntities = boardViewRepository.findTop3ByOrderByFavoriteCountDesc();
+            List<BoardViewEntity> boardViewEntities = boardViewRepository.findTop3ByOrderByBoardFavoriteCountDesc();
 
             // description : entity를 dto로 변환 //
             top3Favorite = BoardListResponseDto.copyEntityList(boardViewEntities);
@@ -241,7 +241,7 @@ public ResponseEntity<? super PatchBoardResponseDto> patchBoard(String boardWrit
 
         try {
             // description : 좋아요 상위 3개 게시물 조회 //
-            List<BoardViewEntity> boardViewEntities = boardViewRepository.findTop3ByOrderByViewCountDesc();
+            List<BoardViewEntity> boardViewEntities = boardViewRepository.findTop3ByOrderByBoardViewCountDesc();
 
             // description : entity를 dto로 변환 //
             top3View = BoardListResponseDto.copyEntityList(boardViewEntities);
@@ -336,7 +336,7 @@ public ResponseEntity<? super PatchBoardResponseDto> patchBoard(String boardWrit
 
         try {
             // description : 특정 이메일에 해당하는 게시물 리스트 조회 //
-            List<BoardViewEntity> boardViewEntities = boardViewRepository.findByWriterEmailOrderByWriteDatetimeDesc(writerEmail);
+            List<BoardViewEntity> boardViewEntities = boardViewRepository.findByWriterEmailOrderByBoardWriteDatetimeDesc(writerEmail);
             
             // description : entity를 dto로 변환 //
             boardList = BoardListResponseDto.copyEntityList(boardViewEntities);
@@ -400,7 +400,7 @@ public ResponseEntity<? super PatchBoardResponseDto> patchBoard(String boardWrit
 
         try {
             // description : 검색어가 제목과 내용에 포함되어 있는 데이터 조회 //
-            List<BoardViewEntity> boardViewEntities = boardViewRepository.findByTitleContainsOrContentsContainsOrderByWriteDatetimeDesc(searchWord, searchWord);
+            List<BoardViewEntity> boardViewEntities = boardViewRepository.findByBoardTitleContainsOrBoardContentsContainsOrderByBoardWriteDatetimeDesc(searchWord, searchWord);
 
             // description : entity를 dto로 변환 //
             boardList = BoardListResponseDto.copyEntityList(boardViewEntities);

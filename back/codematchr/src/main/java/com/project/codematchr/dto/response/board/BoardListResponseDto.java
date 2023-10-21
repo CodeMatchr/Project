@@ -26,13 +26,13 @@ public class BoardListResponseDto {
 
   public BoardListResponseDto(BoardViewEntity boardViewEntity) {
     this.boardNumber = boardViewEntity.getBoardNumber();
-    this.boardTitle = boardViewEntity.getTitle();
-    this.boardContents = boardViewEntity.getContents();
-    this.boardImageUrl = boardViewEntity.getImageUrl();
-    this.boardViewCount = boardViewEntity.getViewCount();
-    this.boardCommentCount = boardViewEntity.getCommentCount();
-    this.boardFavoriteCount = boardViewEntity.getFavoriteCount();
-    this.boardWriteDatetime = boardViewEntity.getWriteDatetime();
+    this.boardTitle = boardViewEntity.getBoardTitle();
+    this.boardContents = boardViewEntity.getBoardContents();
+    this.boardImageUrl = boardViewEntity.getBoardImageUrl();
+    this.boardViewCount = boardViewEntity.getBoardViewCount();
+    this.boardCommentCount = boardViewEntity.getBoardCommentCount();
+    this.boardFavoriteCount = boardViewEntity.getBoardFavoriteCount();
+    this.boardWriteDatetime = boardViewEntity.getBoardWriteDatetime();
     this.userProfileImageUrl = boardViewEntity.getWriterProfileImageUrl();
     this.userNickname = boardViewEntity.getWriterNickname();
   }
