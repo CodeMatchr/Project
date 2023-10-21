@@ -15,17 +15,29 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GetUserRoomListResponseDto extends ResponseDto {
-  
-  List<UserRoomListResponseDto> roomList;
 
-  private GetUserRoomListResponseDto(String code, String message, List<UserRoomListResponseDto> roomList) {
+  private List<RoomListResponseDto> roomList;
+
+  private GetUserRoomListResponseDto(String code, String message, List<RoomListResponseDto> roomList) {
     super(code, message);
     this.roomList = roomList;
   }
 
-  public static ResponseEntity<GetUserRoomListResponseDto> success(List<UserRoomListResponseDto> roomList){
+  public static ResponseEntity<GetUserRoomListResponseDto> success(List<RoomListResponseDto> roomList) {
     GetUserRoomListResponseDto result = new GetUserRoomListResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS, roomList);
     return ResponseEntity.status(HttpStatus.OK).body(result);
   }
+  
+  // List<UserRoomListResponseDto> roomList;
+
+  // private GetUserRoomListResponseDto(String code, String message, List<UserRoomListResponseDto> roomList) {
+  //   super(code, message);
+  //   this.roomList = roomList;
+  // }
+
+  // public static ResponseEntity<GetUserRoomListResponseDto> success(List<UserRoomListResponseDto> roomList){
+  //   GetUserRoomListResponseDto result = new GetUserRoomListResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS, roomList);
+  //   return ResponseEntity.status(HttpStatus.OK).body(result);
+  // }
 
 }

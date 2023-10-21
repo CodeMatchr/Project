@@ -19,6 +19,8 @@ public class RoomListResponseDto {
     private String roomDatetime;
     private String roomManagerEmail;
     private int roomUserCount;
+    private String roomManagerNickname;
+    private String roomManagerProfileImageUrl;
 
     public RoomListResponseDto(RoomViewEntity roomViewEntity) {
         this.roomNumber = roomViewEntity.getRoomNumber();
@@ -41,21 +43,23 @@ public class RoomListResponseDto {
         return roomList;
     }
 
-    public RoomListResponseDto(RoomListResultSet roomListResultSet) {
-        this.roomNumber = roomListResultSet.getRoomNumber();
-        this.roomTitle = roomListResultSet.getRoomTitle();
-        this.roomImageUrl = roomListResultSet.getRoomImageUrl();
-        this.roomPassword = roomListResultSet.getRoomPassword();
-        this.roomDatetime = roomListResultSet.getRoomDatetime();
-        this.roomManagerEmail = roomListResultSet.getRoomManagerEmail();
-        this.roomUserCount = roomListResultSet.getRoomUserCount();
+    public RoomListResponseDto(RoomListResultSet rommListResultSet) {
+        this.roomNumber = rommListResultSet.getRoomNumber();
+        this.roomTitle = rommListResultSet.getRoomTitle();
+        this.roomImageUrl = rommListResultSet.getRoomImageUrl();
+        this.roomPassword = rommListResultSet.getRoomPassword();
+        this.roomDatetime = rommListResultSet.getRoomDatetime();
+        this.roomManagerEmail = rommListResultSet.getRoomManagerEmail();
+        this.roomUserCount = rommListResultSet.getRoomUserCount();
+        this.roomManagerNickname = rommListResultSet.getRoomManagerNickname();
+        this.roomManagerProfileImageUrl = rommListResultSet.getRoomManagerProfileImageUrl();
     }
 
     public static List<RoomListResponseDto> copyCurrentList(List<RoomListResultSet> roomListResultSets) {
         List<RoomListResponseDto> roomList = new ArrayList<>();
 
-        for(RoomListResultSet roomListResultSet: roomListResultSets) {
-            RoomListResponseDto room = new RoomListResponseDto(roomListResultSet);
+        for(RoomListResultSet resultSet : roomListResultSets) {
+            RoomListResponseDto room = new RoomListResponseDto(resultSet);
             roomList.add(room);
         }
 
