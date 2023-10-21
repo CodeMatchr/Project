@@ -1,28 +1,27 @@
-// package com.project.codematchr.entity;
+package com.project.codematchr.entity;
 
-// import javax.persistence.Entity;
-// import javax.persistence.Id;
-// import javax.persistence.Table;
+import java.io.Serializable;
 
-// import com.project.codematchr.dto.request.authentication.SignInRequestDto;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
 
-// import lombok.AllArgsConstructor;
-// import lombok.Getter;
-// import lombok.NoArgsConstructor;
+import com.project.codematchr.entity.pk.RoomJoinPk;
 
-// @Getter
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity(name="roomJoin")
-// @Table(name="roomJoin")
-// public class RoomJoinEntity {
-//     @Id
-//     private String userEmail;
-//     @Id
-//     private int roomNumber;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-//     public RoomJoinEntity(SignInRequestDto dto) {
-//         this.userEmail = dto.getUserEmail();
-//     }
-
-// }
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name="room_join")
+@Table(name="roomJoin")
+@IdClass(RoomJoinPk.class)
+public class RoomJoinEntity implements Serializable {
+    @Id
+    private int roomNumber;
+    @Id
+    private String userEmail;
+}

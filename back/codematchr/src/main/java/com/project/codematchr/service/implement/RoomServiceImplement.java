@@ -20,9 +20,11 @@ import com.project.codematchr.dto.response.room.PatchRoomTitleResponseDto;
 import com.project.codematchr.dto.response.room.PostRoomResponseDto;
 import com.project.codematchr.dto.response.room.RoomListResponseDto;
 import com.project.codematchr.entity.RoomEntity;
+import com.project.codematchr.entity.RoomJoinEntity;
 import com.project.codematchr.entity.RoomViewEntity;
 import com.project.codematchr.entity.UserEntity;
 import com.project.codematchr.entity.resultSet.RoomListResultSet;
+import com.project.codematchr.repository.RoomJoinRepository;
 import com.project.codematchr.repository.RoomRepository;
 import com.project.codematchr.repository.RoomViewRepository;
 import com.project.codematchr.repository.UserRepository;
@@ -37,6 +39,7 @@ public class RoomServiceImplement implements RoomService {
     private final UserRepository userRepository;
     private final RoomRepository roomRepository;
     private final RoomViewRepository roomViewRepository;
+    private final RoomJoinRepository roomJoinRepository;
 
     // 다인원 채팅방 생성
     @Override
@@ -47,12 +50,19 @@ public class RoomServiceImplement implements RoomService {
             UserEntity existsByUserEmail = userRepository.findByUserEmail(userEmail);
             if(existsByUserEmail == null) return PostRoomResponseDto.noExistedUserEmail();
 
-            // Entity 생성
+            // Entity 생성 - room 엔티티
             RoomEntity roomEntity = new RoomEntity(userEmail, postRoomRequestDto);
 
-            // 데이터베이스 저장
+            // 데이터베이스 저장 - room
             roomRepository.save(roomEntity);
-            
+
+            int roomNumber = roomEntity.getRoomNumber();
+
+            // Entity 생성 - roomJoin 엔터티
+            RoomJoinEntity roomJoinEntity = new RoomJoinEntity(roomNumber, userEmail);
+
+            // 데이터베이스 저장 - roomJoin
+            roomJoinRepository.save(roomJoinEntity);
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
