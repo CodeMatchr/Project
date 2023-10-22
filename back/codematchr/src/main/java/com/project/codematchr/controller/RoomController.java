@@ -13,13 +13,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.codematchr.dto.request.room.PatchRoomEntranceRequestDto;
+import com.project.codematchr.dto.request.room.PatchRoomExitRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomImageUrlRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomPasswordRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
+<<<<<<< HEAD
 import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
+=======
+import com.project.codematchr.dto.response.room.PatchRoomEntranceResponseDto;
+import com.project.codematchr.dto.response.room.PatchRoomExitResponseDto;
+>>>>>>> 6c4e0c701fe83abefe0b4b52a20a5370ef1c6637
 import com.project.codematchr.dto.response.room.PatchRoomImageUrlResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomPasswordResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomTitleResponseDto;
@@ -102,10 +109,25 @@ public class RoomController {
     }
 
 
-    // API : 특정 사용자가 특정 채팅방 입장
+    // API : 특정 사용자가 특정 채팅방 입장 - 방장이 아닌 경우 //
+    @PatchMapping("/{roomNumber}/entrance")
+    public ResponseEntity<? super PatchRoomEntranceResponseDto> patchRoomEntrance(
+        @AuthenticationPrincipal String userEmail,
+        @PathVariable("roomNumber") Integer roomNumber,
+        @RequestBody @Valid PatchRoomEntranceRequestDto patchRoomEntranceRequsetDto) {
+            ResponseEntity<? super PatchRoomEntranceResponseDto> response = roomService.patchRoomEntrance(roomNumber, userEmail, patchRoomEntranceRequsetDto);
+            return response;
+        }
 
-
-    // API : 특정 사용자가 특정 채팅방을 나가기
+    // API : 특정 사용자가 특정 채팅방을 나가기 //
+    @PatchMapping("/{roomNumber}/exit")
+    public ResponseEntity<? super PatchRoomExitResponseDto> patchRoomExit(
+        @AuthenticationPrincipal String userEmail,
+        @PathVariable("roomNumber") Integer roomNumber,
+        @RequestBody @Valid PatchRoomExitRequestDto patchRoomExitRequestDto) {
+            ResponseEntity<? super PatchRoomExitResponseDto> response = roomService.patchRoomExit(roomNumber, userEmail, patchRoomExitRequestDto);
+            return response;
+        }
 
     
     

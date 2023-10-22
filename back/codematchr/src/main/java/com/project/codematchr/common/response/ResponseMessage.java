@@ -57,4 +57,7 @@ public interface ResponseMessage {
 
     // 이미 설정되어 있는 다인원 채팅방 비밀번호(기존 다인원 채팅방 비밀번호) Message
     String EXISTED_ROOM_PASSWORD = "Existed Room Password";
+
+    // 채팅방 비밀번호가 불인치 Code (NCP) //
+    String NOT_CORRECT_PASSWORD =  "Not Correct Password";
 }

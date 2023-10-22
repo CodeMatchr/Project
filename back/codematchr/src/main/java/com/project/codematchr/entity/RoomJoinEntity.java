@@ -24,4 +24,6 @@ public class RoomJoinEntity implements Serializable {
     private int roomNumber;
     @Id
     private String userEmail;
+
+    
 }
