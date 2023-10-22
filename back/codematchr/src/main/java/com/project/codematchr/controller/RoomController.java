@@ -20,13 +20,10 @@ import com.project.codematchr.dto.request.room.PatchRoomPasswordRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
-import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
-<<<<<<< HEAD
 import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
-=======
+import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomEntranceResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomExitResponseDto;
->>>>>>> 6c4e0c701fe83abefe0b4b52a20a5370ef1c6637
 import com.project.codematchr.dto.response.room.PatchRoomImageUrlResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomPasswordResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomTitleResponseDto;

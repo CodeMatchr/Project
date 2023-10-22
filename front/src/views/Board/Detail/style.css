@@ -115,12 +115,30 @@
     justify-content: center;
 }
 
+.board-detail-favorite-show-red-icon{
+    margin-right: 15px;
+    width: 30px;
+    height: 30px;
+    background-image: url(../Detail/assets/red-heart.png);
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+    border-radius: 50%;
+}
+.board-detail-favorite-show-red-icon:hover {
+    cursor: pointer;
+}
+
 .board-detail-favorite-show-icon{
     margin-right: 15px;
     width: 30px;
     height: 30px;
-    background-color: aqua;
+    background-image: url(../Detail/assets/heart.png);
+    background-position: 50% 50%;
+    background-size: 100% 100%;
     border-radius: 50%;
+}
+.board-detail-favorite-show-icon:hover {
+    cursor: pointer;
 }
 
 .board-detail-favorite{

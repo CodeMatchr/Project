@@ -20,13 +20,12 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
     UserEntity findByUserEmail(String userEmail);
 
     @Query(value = 
-  "SELECT * " +
-  "FROM user " +
-  "WHERE user_email IN ( " +
-      "SELECT user_email " +
-      "FROM favorite " +
-      "WHERE favorite_board_number = ?1 " +
-    ") ", nativeQuery = true
+    "SELECT  * " +
+    "from user AS U " +
+    "INNER join favorite AS F " +
+    "on U.user_email = F.favorite_user_email " +
+    "WHERE favorite_board_number = ?1 ",
+    nativeQuery = true
   ) 
   List<UserEntity> getFavoriteList(Integer boardNumber);
 

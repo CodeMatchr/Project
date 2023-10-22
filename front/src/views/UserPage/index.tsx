@@ -13,9 +13,8 @@ import { useUserStore } from 'src/store';
 import { useCookies } from 'react-cookie';
 import { GetUserBoardListResponseDto, GetUserResponseDto, GetUserRoomListResponseDto } from 'src/interfaces/response/User';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { getUserBoardListRequest, getUserRequest, getUserRoomListRequest, patchNicknameRequest, patchProfileImageUrlRequest, patchStateMessageRequest, uploadFileRequest } from 'src/apis';
+import {  getUserBoardListRequest, getUserRequest, getUserRoomListRequest, patchNicknameRequest, patchProfileImageUrlRequest, patchStateMessageRequest, uploadFileRequest } from 'src/apis';
 import { PatchNicknameRequestDto, PatchProfileImageUrlRequestDto, PatchStateMessageRequestDto } from 'src/interfaces/request/user';
-import MyCompareCodeList from 'src/components/MyCompareCodeList';
 
 
 //            component           //
@@ -265,6 +264,7 @@ const navigator = useNavigate();
       changeSection(boardList.length, COUNT_BY_PAGE);
       
     }
+    
 
     //            component           //
     //            event handler           //

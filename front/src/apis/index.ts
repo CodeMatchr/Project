@@ -83,11 +83,11 @@ const  GET_BOARD_LIST_COMMENT = (section: number) => `${API_DOMAIN}/board/board-
 const  GET_BOARD_LIST_VIEW = (section: number) => `${API_DOMAIN}/board/board-list/view/${section}`;
 
 // 좋아요 리스트 불러오기 //
-const GET_FAVORITE_LIST_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}/favorite-list`;
+const GET_FAVORITE_LIST_URL = (favoriteBoardNumber: number | string) => `${API_DOMAIN}/board/${favoriteBoardNumber}/favorite-list`;
 // 댓글 리스트 불러오기 //
-const GET_COMMENT_LIST_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}/comment-list`;
+const GET_COMMENT_LIST_URL = (commentBoardNumber: number | string) => `${API_DOMAIN}/board/${commentBoardNumber}/comment-list`;
 // 좋아요 수정 //
-const PUT_FAVORITE_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}/favorite`;
+const PUT_FAVORITE_URL = (favoriteBoardNumber: number | string) => `${API_DOMAIN}/board/${favoriteBoardNumber}/favorite`;
 
 
 
@@ -502,8 +502,8 @@ export const uploadFileRequest = async (data: FormData) => {
   }
 
   // 좋아요 버튼 //
-  export const putFavoriteRequest = async (boardNumber: number | string, token: string) => {
-    const result = await axios.put(PUT_FAVORITE_URL(boardNumber), {}, { headers: { Authorization: `Bearer ${token}` } })
+  export const putFavoriteRequest = async (favoriteBoardNumber: number | string, token: string) => {
+    const result = await axios.put(PUT_FAVORITE_URL(favoriteBoardNumber), {}, { headers: { Authorization: `Bearer ${token}` } })
     .then((response) => {
       const responseBody: PutFavoriteResponseDto = response.data;
       const { code } = responseBody;
@@ -518,8 +518,8 @@ export const uploadFileRequest = async (data: FormData) => {
   }
 
   // 게시물 좋아요 리스트 //
-  export const getBoardFavoriteListRequest = async (boardNumber: number | string) => {
-    const result = await axios.get(GET_FAVORITE_LIST_URL(boardNumber))
+  export const getBoardFavoriteListRequest = async (favoriteBoardNumber: number | string) => {
+    const result = await axios.get(GET_FAVORITE_LIST_URL(favoriteBoardNumber))
     .then((response) => {
       const responseBody: GetFavoriteListResponseDto = response.data;
       return responseBody;
@@ -532,8 +532,8 @@ export const uploadFileRequest = async (data: FormData) => {
   }
   
   // 게시물 댓글 리스트 //
-  export const getBoardCommentListRequest = async (boardNumber: number | string) => {
-    const result = await axios.get(GET_COMMENT_LIST_URL(boardNumber))
+  export const getBoardCommentListRequest = async (commentBoardNumber: number | string) => {
+    const result = await axios.get(GET_COMMENT_LIST_URL(commentBoardNumber))
     .then((response) => {
       const responseBody: GetCommentListResponseDto = response.data;
       return responseBody;
