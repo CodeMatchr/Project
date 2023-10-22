@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.project.codematchr.dto.request.room.PatchRoomEntranceRequestDto;
+import com.project.codematchr.dto.request.room.PatchRoomExitRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomImageUrlRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomPasswordRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
@@ -61,6 +63,16 @@ public class RoomEntity {
     // 다인원 채팅방 비밀번호 수정
     public void setRoomPassword(PatchRoomPasswordRequestDto patchRoomPasswordRequestDto) {
         this.roomPassword = patchRoomPasswordRequestDto.getRoomPassword();
+    }
+
+    // 다인원 채팅방 사용자 인원수 증가(입장)
+    public void patchRoomEntrance(PatchRoomEntranceRequestDto patchRoomEntranceRequestDto) {
+        this.roomUserCount++;
+    }
+
+    // 다인원 채팅방 사용자 인원수 감소(퇴장)
+    public void patchRoomExit(PatchRoomExitRequestDto patchRoomExitRequestDto) {
+        this.roomUserCount--;
     }
 
     
