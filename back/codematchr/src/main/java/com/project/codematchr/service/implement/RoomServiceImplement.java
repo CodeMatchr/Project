@@ -14,6 +14,7 @@ import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.ResponseDto;
 import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
+import com.project.codematchr.dto.response.room.GetRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomEntranceResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomExitResponseDto;
@@ -306,5 +307,33 @@ public class RoomServiceImplement implements RoomService {
 
         return PatchRoomExitResponseDto.success();
     }
+
+    // 특정 다인원 채팅방에 속해 있는 사용자가 해당 채팅방 입장 //
+    // @Override
+    // public ResponseEntity<? super GetRoomResponseDto> getRoom(Integer roomNumber, String userEmail) {
+
+    //     RoomViewEntity roomViewEntity = null;
+    //     RoomJoinEntity roomJoinEntity = null;
+
+    //     try {
+    //         // 존재하는 다인원 채팅방 번호 확인 //
+    //         roomViewEntity = roomViewRepository.findByRoomNumber(roomNumber);
+
+    //         roomJoinEntity = roomJoinRepository.findByRoomNumber(roomNumber);
+
+    //         // 존재하는 다인원 채팅방인지 확인 //
+    //         if(roomViewEntity == null) return GetRoomResponseDto.noExistedRoomNumber();
+
+    //         // 특정한 다인원 채팅방에 속해 있는 사용자인지 확인 //
+    //         RoomJoinEntity roomJoinEntity = roomJoinRepository.findByUserEmail(userEmail);
+    //         if(roomJoinEntity == null) return PatchRoomExitResponseDto.noExistedUserEmail();
+
+    //     } catch (Exception exception) {
+    //         exception.printStackTrace();
+    //         return ResponseDto.databaseError();
+    //     }
+
+    //     return GetRoomResponseDto.success(roomViewEntity);
+    // }
 
 }

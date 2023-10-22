@@ -10,6 +10,7 @@ import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
+import com.project.codematchr.dto.response.room.GetRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomEntranceResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomExitResponseDto;
@@ -45,4 +46,7 @@ public interface RoomService {
     
     // Method : 특정 사용자가 특정 채팅방을 나가기 - 방장이 아닌 경우 //
     ResponseEntity<? super PatchRoomExitResponseDto> patchRoomExit(Integer roomNumber, String userEmail, PatchRoomExitRequestDto patchRoomExitRequestDto);
+
+    // Method : 특정 다인원 채팅방에 속해 있는 사용자가 해당 채팅방 입장 //
+    // ResponseEntity<? super GetRoomResponseDto> getRoom(Integer roomNumber, String userEmail);
 }
