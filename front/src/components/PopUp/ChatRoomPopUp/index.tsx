@@ -1,12 +1,13 @@
 import React, { Dispatch, SetStateAction, useState, ChangeEvent, useRef, useEffect } from 'react'
 import './style.css'; 
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { CHAT_PATH, MAIN_PATH, ROOM_PATH } from '../../../constants';
+import { AUTHENTICATION_PATH, CHAT_PATH, MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH } from '../../../constants';
 import useCreateRoomStore from 'src/store/room.store';
 import { Cookies, useCookies } from 'react-cookie';
 import path from 'path';
 import PostRoomRequestDto from 'src/interfaces/request/room/post-room.request.dto';
-import { postRoomRequest } from 'src/apis';
+import { postRoomRequest, uploadFileRequest } from 'src/apis';
+import { useRoomStore, useUserStore } from 'src/store';
 
 //            component           //
 // description : 채팅방 만들기 팝업창 // 
@@ -21,7 +22,7 @@ const {userEmail} = useParams();
 // description : 방 이름 상태 //
 const [roomName, setRoomName] = useState<string>('');
 // description : 방 비밀번호 상태 //
-const [roomPassword, setPassword] = useState<string>('');
+const [roomPasswordInput, setPasswordInput] = useState<string>('');
 // description : 방 이름 에러 상태 //
 const [roomNameError, setRoomNameError] = useState<boolean>(false);
 // description : 방 비밀번호 에러 상태 //
@@ -34,20 +35,42 @@ const [cookies] = useCookies();
 
 const { pathname } = useLocation();
 
+// 로그인 사용자 정보 상태 //
+const { user, setUser } = useUserStore();
+
 // 채팅방 정보를 저장할 상태 //
-const {roomTitle, /*roomPassword,*/ roomImage, setRoomTitle, setRoomPassword, setRoomImage, resetRoom} = useCreateRoomStore();
+const { roomNumber, roomTitle, roomPassword, roomImage, setRoomTitle, setRoomPassword, setRoomImage, resetRoom } = useRoomStore();
 // 이미지를 저장할 상태 //
 const [roomImageUrl, setRoomImageUrl] = useState<string>('')
 
 //            function           //
-// 채팅방 생성 //
+// 파일 업로드 //
+const fileUpload = async () => {
+  if (roomImage === null) return null;
+
+  const data = new FormData();
+  data.append('file', roomImage);
+
+  const imageUrl = await uploadFileRequest(data);
+  return imageUrl;
+}
+
+// Room 생성 함수 //
 const postRoomResponseHandler = (code : string) => {
-  if(code === "NE") alert('존재하지 않는 사용자 이메일입니다.');
-  if(code === "VF") alert('필수 데이터를 입력하지 않았습니다.');
-  if(code === 'DE') alert('데이터베이스 에러입니다.');
+  if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+  if (code == 'VF') alert('필수 데이터를 입력하지 않았습니다.');
+  if (code == 'DE') alert('데이터베이스 에러입니다.');
+  if (code == 'SU') return;
 
   resetRoom();
-  
+
+  if(!user) {
+    alert('로그인이 필요합니다.')
+    navigator(AUTHENTICATION_PATH);
+    return;
+  }
+
+  navigator(ROOM_PATH);
 }
 
 
@@ -61,7 +84,7 @@ const onRoomNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
 // description : 방 비밀번호 변경 이벤트 처리 함수 //
 const onRoomPasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
   const roomPassword = event.target.value;
-  setPassword(roomPassword);
+  setPasswordInput(roomPassword);
 }
 
 // description : 채팅방 만들기 생성 클릭 이벤트 //
@@ -69,18 +92,16 @@ const onRoomPasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
 const onCreateClickHandler = async () => {
   const token = cookies.accessToken;
 
-  if(pathname === MAIN_PATH) {
+  if(pathname === ROOM_POST_PATH) {
+    const imageUrl = await fileUpload();
+
     const data : PostRoomRequestDto = {
         roomTitle: roomTitle,
-        roomImage: null,
-        roomImageUrl: null,
-        roomPassword: roomPassword
+        roomPassword: roomPassword,
+        roomImageUrl: imageUrl
     }
-    postRoomRequest(userEmail as string, data, token).then(postRoomResponseHandler);
+    postRoomRequest(data, token).then(postRoomResponseHandler);
   }
-
-  navigator(CHAT_PATH);
-
 }
 // description : 채팅방 만들기 취소 클릭 이벤트 //
 const onCancelClickHandler = () => {

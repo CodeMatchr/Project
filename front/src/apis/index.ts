@@ -243,12 +243,27 @@ export const postBoardRequest = async (data : PostBoardRequestDto, token:string)
 }
 
 
+const POST_ROOM_URL = () => `${API_DOMAIN}/room/create`;
 const GET_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/chat`;
-const POST_ROOM_URL = (userEmail : string) => `${API_DOMAIN}/room/create/${userEmail}`;
 const PATCH_ROOM_TITLE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomTitle`;
 const PATCH_ROOM_PASSWORD_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomPassword`;
 const PATCH_ROOM_IMAGE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomImageUrl`;
 
+
+// 채팅방 만들기 //
+export const postRoomRequest = async (data : PostRoomRequestDto, token : string) => {
+    const result = await axios.post(POST_ROOM_URL(), data, { headers: { Authorization: `Bearer ${token}` } })
+    .then((response) => {
+        const responseBody: PostRoomResponseDto = response.data;
+        const { code } = responseBody;
+        return code;
+    }).catch((error) => {
+        const responseBody: ResponseDto = error.response.data;
+        const { code } = responseBody;
+        return code;
+    });
+    return result;
+}
 
 
 // 채팅방 불러오기 //
@@ -262,21 +277,6 @@ export const getRoomRequest = async (roomNuber : number | string) => {
         return responseBody;
     })
 
-    return result;
-}
-
-// 채팅방 만들기 //
-export const postRoomRequest = async (userEmail: string, data: PostRoomRequestDto, token: string) => {
-    const result = await axios.post(POST_ROOM_URL(userEmail), data, { headers: { Authorization: `Bearer ${token}` } })
-    .then((response) => {
-        const responseBody: PostRoomResponseDto = response.data;
-        const { code } = responseBody;
-        return code;
-    }).catch((error) => {
-        const responseBody: ResponseDto = error.response.data;
-        const { code } = responseBody;
-        return code;
-    })
     return result;
 }
 
