@@ -20,6 +20,7 @@ import com.project.codematchr.dto.request.room.PatchRoomPasswordRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
 import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
+import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
 import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomEntranceResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomExitResponseDto;
