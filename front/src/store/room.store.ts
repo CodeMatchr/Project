@@ -3,9 +3,9 @@ import { create } from "zustand";
 interface RoomStore {
     roomNumber : string;
     roomTitle : string;
+    roomPassword : string;
     roomImage : File | null;
     roomImageUrl : string | null;
-    roomPassword : string;
     // roomDateTime : string;
     // roomMemberCount : number;
     // roomUserEmail : String;
@@ -16,10 +16,9 @@ interface RoomStore {
 
     setRoomNumber : (roomNumber: string) => void;
     setRoomTitle : (roomTitle: string) => void;
+    setRoomPassword : (roomPassword : string) => void;
     setRoomImage : (roomImage : File | null) => void;
     setRoomImageUrl : (roomImageUrl : string | null) => void;
-    setRoomPassword : (roomPassword : string) => void;
-
     resetRoom : () => void;
 }
 

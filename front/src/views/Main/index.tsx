@@ -6,7 +6,7 @@ import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-import {BOARD_LIST_PATH,  MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH} from '../../constants';
+import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH} from '../../constants';
 import { useNavigate} from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
@@ -16,6 +16,8 @@ import ResponseDto from 'src/interfaces/response/response.dto';
 import {  getCommentListRequest, getFavoriteListRequest, getViewListRequest } from 'src/apis';
 import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Favorite.response.dto';
 import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
+import { useRoomStore, useUserStore } from 'src/store';
+import GetRoomListResponseDto from 'src/interfaces/response/room/get-room-list.response.dto';
 
 // component //
 export default function Main() {
@@ -190,13 +192,17 @@ export default function Main() {
 
     // state //
     // 페이지네이션과 관련된 상태 및 함수
-    const{totalPage, currentPage, currentSection, onPageClickHandler, onPreviousClickHandler, onNextClickHandler, changeSection} = usePagination();
+    const {totalPage, currentPage, currentSection, onPageClickHandler, onPreviousClickHandler, onNextClickHandler, changeSection} = usePagination();
+    // 로그인 사용자 정보 상태 //
+    const { user, setUser } = useUserStore();
+    // Room 정보를 저장할 상태 //
+    const { roomNumber, roomTitle, roomPassword, roomImage, setRoomTitle, setRoomPassword, setRoomImage, resetRoom } = useRoomStore();
     // Room 에 해당하는 전체 리스트 상태
-    const[currentRoomList, setCurrentRoomList] = useState<RoomListResponseDto[]>([]);
+    const [currentRoomList, setCurrentRoomList] = useState<RoomListResponseDto[]>([]);
     // Room 에 해당하는 전체 갯수 상태
-    const[roomCount, setRoomCount] = useState<number>(1);
+    const [roomCount, setRoomCount] = useState<number>(1);
     // Room 현재 페이지에서 보여줄 Room 게시물 리스트 상태
-    const[pageRoomList, setPageRoomList] = useState<RoomListResponseDto[]>([])
+    const [pageRoomList, setPageRoomList] = useState<RoomListResponseDto[]>([])
     // 검색어 상태 //
     const [searchWord, setSearchWord] = useState<String>('');
     // 검색 아이콘 버튼 클릭 상태 //
@@ -207,7 +213,6 @@ export default function Main() {
     const [popUpRoomVisible, setPopUpRoomVisible] = useState<boolean>(false);
     // 채팅방 팝업창 상태 //
     const [selectRoomNumber, setSelectRoomNumber] = useState<number>(-1);
-  
 
     // function //
     const getPageRoomList = (roomList : RoomListResponseDto[]) => {
@@ -217,6 +222,15 @@ export default function Main() {
       const pageRoomList = roomList.slice(startIndex, lastIndex);
 
       setPageRoomList(pageRoomList);
+    }
+
+    const getRoomList = (responseBody : GetRoomListResponseDto | ResponseDto) => {
+      const { code } = responseBody;
+      if(code === 'DE') alert('데이터베이스 에러입니다.');
+      if(code !== 'SU') return;
+
+      const { roomList } = responseBody as GetRoomListResponseDto;
+      setCurrentRoomList(roomList);
     }
 
     // event handler //
@@ -255,8 +269,6 @@ export default function Main() {
       }
       setSelectRoomNumber(roomNumber);
     }
-
-    
 
     // effect //
     // 현재 페이지가 바뀔때 마다 Room 리스트 변경//

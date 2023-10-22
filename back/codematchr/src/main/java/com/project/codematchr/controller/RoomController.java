@@ -105,7 +105,6 @@ public class RoomController {
             return response;
     }
 
-
     // API : 특정 사용자가 특정 채팅방 입장 - 방장이 아닌 경우 //
     @PatchMapping("/{roomNumber}/entrance")
     public ResponseEntity<? super PatchRoomEntranceResponseDto> patchRoomEntrance(
@@ -126,6 +125,14 @@ public class RoomController {
             return response;
         }
 
+    // API : 특정 다인원 채팅방에 속해 있는 사용자가 해당 채팅방 입장 //
+    // @GetMapping("/{roomNumber}")
+    // public ResponseEntity<? super GetRoomResponseDto> getRoom(
+    //     @AuthenticationPrincipal String userEmail,
+    //     @PathVariable("roomNumber") Integer roomNumber) {
+    //         ResponseEntity<? super GetRoomResponseDto> response = roomService.getRoom(roomNumber, userEmail);
+    //         return response;
+    //     }
     
     
 }
