@@ -41,13 +41,13 @@ export const USER_PAGE_PATH_VARIABLE = ':userEmail';
 // Room | Chat
 export const ROOM_PATH = '/room';
 export const ROOM_POST_PATH = '/room/create';
-export const ROOM_DETAIL_PATH = (roomNumber : number | string) => `/detail/${roomNumber}`;
+export const ROOM_DETAIL_PATH = (roomNumber : number | string) => `/${roomNumber}`;
 export const ROOM_LIST_PATH = (roomNumber : number | string) => `${ROOM_PATH}/${ROOM_DETAIL_PATH(roomNumber)}`;
 
 export const ROOM_NUMBER_PATH_VARIABLE = ':roomNumber';
 
 // Chat
-export const CHAT_PATH = `${ROOM_PATH}/${ROOM_DETAIL_PATH}/chat`;
+export const CHAT_PATH = `${ROOM_PATH}/${ROOM_DETAIL_PATH}`;
 
 // Compare
 export const COMPARE_PATH = '/compare';

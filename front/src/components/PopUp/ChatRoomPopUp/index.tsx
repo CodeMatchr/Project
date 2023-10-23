@@ -95,8 +95,7 @@ const onCreateClickHandler = async () => {
         roomPassword: roomPasswordInput,
         roomImageUrl: imageUrl
     }
-    
-    
+
     postRoomRequest(data, token).then(postRoomResponseHandler);
   
 }
@@ -117,7 +116,6 @@ const onFileUploadClickHandler = () => {
 
 //   return;
 // }, [userEmail]);
-
 //            render           //
   return (
     <div id='popup-wrapper'>

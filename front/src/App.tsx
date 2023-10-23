@@ -97,7 +97,7 @@ useEffect(() => {
         <Route path={POPUP_MANAGER_NAME_PATH} element={<ChatManagerNamePopUp/>} />
         <Route path={POPUP_MANAGER_PASSWORD_PATH} element={<ChatManagerPasswordPopUp/>} />
         <Route path={POPUP_MANAGER_IMAGE_PATH} element={<ChatManagerImagePopUp/>} />
-        <Route path={POPUP_MANAGER_BYE_PATH} element={<ChatManagerByePopUp/>} />  */}
+        <Route path={POPUP_MANAGER_BYE_PATH} element={<ChatManagerByePopUp/>} /> */}
 
       </Routes>
       <Footer/>

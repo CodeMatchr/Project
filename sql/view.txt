@@ -18,7 +18,7 @@ ON B.board_writer_email = U.user_email;
 
 /* friend_view */
 CREATE VIEW friend_view AS
-SELECT 
+SELECT
     F.friend_my_email AS friend_my_email,
     F.friend_email AS friend_email,
     U.user_nickname AS user_nickname, 
@@ -37,12 +37,29 @@ SELECT
     U.user_profile_image_url AS user_profile_image_url 
     FROM `user` AS U;
 
+/* room_view */
+drop VIEW room_view ;
+CREATE VIEW room_view AS
+SELECT
+    R.room_number AS room_number,
+    R.room_title as room_title, 
+    R.room_image_url as room_image_url, 
+    R.room_password as room_password,
+    R.room_datetime as room_datetime,
+    R.room_user_count as room_user_count,
+    U.user_email as room_manager_email,
+    U.user_nickname as room_manager_nickname,
+    U.user_profile_image_url as room_manager_profile_image_url
+from room AS R
+INNER JOIN user AS U
+ON R.room_manager_email = U.user_email;
 
 
 
 
 
-// 새로운거 //
+
+// 쿼리문 - roomRepository //
 SELECT
     R.room_number AS roomNumber,
     R.room_title as roomTitle, 
