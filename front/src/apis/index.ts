@@ -26,6 +26,7 @@ import DeleteBoardResponseDto from 'src/interfaces/response/board/delete-board.r
 import { GetBoardListResponeDto, GetCommentListResponseDto, GetFavoriteListResponseDto } from 'src/interfaces/response/board';
 import PutFavoriteResponseDto from 'src/interfaces/response/board/put-favorite.response.dto';
 import { PostCommentRequestDto } from 'src/interfaces/request/board';
+import GetSearchBoardResponseDto from 'src/interfaces/response/board/get-search-board.response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -93,6 +94,8 @@ const PUT_FAVORITE_URL = (favoriteBoardNumber: number | string) => `${API_DOMAIN
 // 댓글 작성 //
 const POST_COMMENT_URL = (commentBoardNumber : number | string) => `${API_DOMAIN}/board/${commentBoardNumber}/comment`;
 
+// 검색 게시물 //
+const SEARCH_BOARD_URL = (searchWord : string ) => `${API_DOMAIN}/board/search/${searchWord}`;
 
 
 // 로그인 //
@@ -557,5 +560,25 @@ export const uploadFileRequest = async (data: FormData) => {
             const {code} = responseBody;
             return code;
         })
-        .catch
+        .catch((error) => {
+            const responseBody : ResponseDto = error.response.data;
+            const {code} = responseBody;
+            return code;
+        })
+        return result;
+  }
+
+
+  // 검색 게시물 //
+  export const getSearchBoardRequest = async (searchWord : string) => {
+    const result = await axios.get(SEARCH_BOARD_URL(searchWord))
+        .then((response) => {
+            const responseBody : GetSearchBoardResponseDto = response.data;
+            return responseBody;
+        })
+        .catch((error) => {
+            const responseBody : ResponseDto = error.response.data;
+            return responseBody;
+        })
+        return result;
   }

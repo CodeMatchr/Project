@@ -2,19 +2,21 @@
 CREATE VIEW board_view AS
 SELECT
 B.board_number AS board_number,
-B.board_title AS title,
-B.board_contents AS contents,
-B.board_image_url AS image_url,
-B.board_view_count AS view_count,
-B.board_comment_count AS comment_count,
-B.board_favorite_count AS favorite_count,
-B.board_write_datetime AS write_datetime,
-U.user_email AS writer_email,
-U.user_profile_image_url AS writer_profile_image_url,
-U.user_nickname AS writer_nickname
+B.board_title AS board_title,
+B.board_contents AS board_contents,
+B.board_image_url AS board_image_url,
+B.board_view_count AS board_view_count,
+B.board_comment_count AS board_comment_count,
+B.board_favorite_count AS board_favorite_count,
+B.board_write_datetime AS board_write_datetime,
+U.user_email AS user_email,
+U.user_profile_image_url AS user_profile_image_url,
+U.user_nickname AS user_nickname
 FROM board AS B
 INNER JOIN user AS U
-ON B.board_writer_email = U.user_email;
+ON B.board_writer_email = U.user_email
+ORDER BY B.board_write_datetime DESC 
+LIMIT 1, 50;
 
 /* friend_view */
 CREATE VIEW friend_view AS
