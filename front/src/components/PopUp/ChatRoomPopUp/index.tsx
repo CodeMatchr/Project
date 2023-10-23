@@ -37,7 +37,6 @@ const { pathname } = useLocation();
 
 // 로그인 사용자 정보 상태 //
 const { user, setUser } = useUserStore();
-
 // 채팅방 정보를 저장할 상태 //
 const { roomNumber, roomTitle, roomPassword, roomImage, setRoomTitle, setRoomPassword, setRoomImage, resetRoom } = useRoomStore();
 // 이미지를 저장할 상태 //
@@ -70,7 +69,7 @@ const postRoomResponseHandler = (code : string) => {
     return;
   }
 
-  navigator(ROOM_PATH);
+  navigator(ROOM_DETAIL_PATH(roomNumber));
 }
 
 
@@ -115,11 +114,11 @@ const onFileUploadClickHandler = () => {
 
 //            component           //
 //            effect           //
-// useEffect(() => {
-//   if (!userEmail) navigator(MAIN_PATH);
+useEffect(() => {
+  if (!userEmail) navigator(MAIN_PATH);
 
-//   return;
-// }, [userEmail]);
+  return;
+}, [userEmail]);
 //            render           //
   return (
     <div id='popup-wrapper'>
