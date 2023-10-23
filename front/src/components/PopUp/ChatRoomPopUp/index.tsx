@@ -113,11 +113,7 @@ const onCreateClickHandler = async () => {
         roomPassword: roomPasswordInput,
         roomImageUrl: imageUrl
     }
-<<<<<<< HEAD
-
-=======
     
->>>>>>> d129b94ed68c9188a2b02f2cf602b99f8024530d
     postRoomRequest(data, token).then(postRoomResponseHandler);
   
 }
@@ -138,8 +134,6 @@ const onFileUploadClickHandler = () => {
 
 //   return;
 // }, [userEmail]);
-<<<<<<< HEAD
-=======
 
 // roomNumber 가 바뀔 때 마다 실행 //
 let roomNumberFlag = true;
@@ -156,7 +150,6 @@ useEffect(() => {
   getRoomRequest(roomNumber).then(getRoomResponseHandler);
 }, [roomNumber]);
 
->>>>>>> d129b94ed68c9188a2b02f2cf602b99f8024530d
 //            render           //
   return (
     <div id='popup-wrapper'>

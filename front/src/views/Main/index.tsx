@@ -236,7 +236,9 @@ export default function Main() {
       if(code !== 'SU') return;
 
       const { roomList } = responseBody as GetCurrentRoomListResponseDto;
-      changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE)
+      changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE);
+      getPageRoomList(roomList);
+      // ! getPageRoomList -> 이거 없어서 메인화면에 안뜨더라구요.
       setCurrentRoomList(roomList);
     }
 
@@ -294,6 +296,8 @@ export default function Main() {
     useEffect(() => {
       GetCurrentRoomListRequest(currentSection).then(getCurrnetRoomListResponseHandler);
     }, [currentSection]);
+
+    
 
     // render //
     return(

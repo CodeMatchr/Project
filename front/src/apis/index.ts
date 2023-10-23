@@ -258,7 +258,9 @@ export const postBoardRequest = async (data : PostBoardRequestDto, token:string)
 
 const POST_ROOM_URL = () => `${API_DOMAIN}/room/create`;
 const GET_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}`;
-const GET_CURRENT_ROOM_LIST_URL = (section : number) => `${API_DOMAIN}/current-room/${section}`;
+// ! -> 수정했는데, 확인해보니 websecurity 수정하고, /room 넣어주니 잘 불러와지네요.
+const GET_CURRENT_ROOM_LIST_URL = (section : number) => `${API_DOMAIN}/room/current-room/${section}`;
+// !
 const PATCH_ROOM_TITLE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomTitle`;
 const PATCH_ROOM_PASSWORD_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomPassword`;
 const PATCH_ROOM_IMAGE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomImageUrl`;
