@@ -60,6 +60,7 @@ public class RoomServiceImplement implements RoomService {
             // 데이터베이스 저장 - room
             roomRepository.save(roomEntity);
 
+            // roomJoin - roomNumber //
             int roomNumber = roomEntity.getRoomNumber();
 
             // Entity 생성 - roomJoin 엔터티
@@ -116,11 +117,11 @@ public class RoomServiceImplement implements RoomService {
         try {
             // 존재하는 특정 다인원 채팅방 번호 확인
             RoomEntity roomEntity = roomRepository.findByRoomNumber(roomNumber);
-            if(roomEntity == null) return PatchRoomTitleResponseDto.noExistedRoomNumber();
+            if(roomEntity == null) return PatchRoomImageUrlResponseDto.noExistedRoomNumber();
 
             // 권한 없음(다인원 채팅방을 생성한 사용자 이메일과 입력받은 사용자 이메일이 일치하는지 확인)
             boolean equalUserEmail = roomEntity.getRoomManagerEmail().equals(userEmail);
-            if(!equalUserEmail) return PatchRoomTitleResponseDto.noPermission();
+            if(!equalUserEmail) return PatchRoomImageUrlResponseDto.noPermission();
 
             // 특정 다인원 채팅방 이미지 Url 수정
             roomEntity.setRoomImageUrl(patchRoomImageUrlRequestDto);
@@ -142,13 +143,15 @@ public class RoomServiceImplement implements RoomService {
         try {
             // 존재하는 특정 다인원 채팅방 번호 확인
             RoomEntity roomEntity = roomRepository.findByRoomNumber(roomNumber);
-            if(roomEntity == null) return PatchRoomTitleResponseDto.noExistedRoomNumber();
+            if(roomEntity == null) return PatchRoomPasswordResponseDto.noExistedRoomNumber();
 
             // 권한 없음(다인원 채팅방을 생성한 사용자 이메일과 입력받은 사용자 이메일이 일치하는지 확인)
             boolean equalUserEmail = roomEntity.getRoomManagerEmail().equals(userEmail);
-            if(!equalUserEmail) return PatchRoomTitleResponseDto.noPermission();
+            if(!equalUserEmail) return PatchRoomPasswordResponseDto.noPermission();
 
             // 이미 설정되어 있는 비밀번호 확인
+            boolean equalPassword = roomEntity.getRoomPassword().equals(patchRoomPasswordRequestDto.getRoomPassword());
+            if(equalPassword) return PatchRoomPasswordResponseDto.existedRoomPassword();
 
             // 특정 다인원 채팅방 비밀번호 수정
             roomEntity.setRoomPassword(patchRoomPasswordRequestDto);
@@ -167,21 +170,23 @@ public class RoomServiceImplement implements RoomService {
     }
 
     // 다인원 채팅방 삭제
-    public ResponseEntity<? super DeleteRoomResponseDto> deleteRoom(Integer roomNumber, String userEail){
+    public ResponseEntity<? super DeleteRoomResponseDto> deleteRoom(Integer roomNumber, String userEmail){
 
         try {
-
             // 존재하는 채팅방인지 확인
             RoomEntity roomEntity = roomRepository.findByRoomNumber(roomNumber);
-            if(roomNumber==null) return DeleteRoomResponseDto.noExistedRoomNumber();
+            if(roomEntity==null) return DeleteRoomResponseDto.noExistedRoomNumber();
 
             // 방장인지 아닌지? (아니면 권한없음)
-            boolean equalEmail = roomEntity.getRoomManagerEmail().equals(userEail);
+            boolean equalEmail = roomEntity.getRoomManagerEmail().equals(userEmail);
             if(!equalEmail) return DeleteRoomResponseDto.noPermission();
+
+            // roomJoin - 해당되는 데이터 먼저 삭제(제약조건)
+            RoomJoinEntity roomJoinEntity = roomJoinRepository.findByRoomNumber(roomNumber);
+            if(roomJoinEntity != null) roomJoinRepository.delete(roomJoinEntity);
 
             // 채팅방 삭제
             roomRepository.delete(roomEntity);
-
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -249,11 +254,29 @@ public class RoomServiceImplement implements RoomService {
 
             // 존재하는 다인원 채팅방 번호인지 확인 //
             RoomEntity roomEntity = roomRepository.findByRoomNumber(roomNumber);
-            if(roomEntity == null) return PatchRoomTitleResponseDto.noExistedRoomNumber();
+            if(roomEntity == null) return PatchRoomEntranceResponseDto.noExistedRoomNumber();
 
             // 해당 다인원 채팅방의 비밀번호가 입력한 비밀번호와 일치하는지 확인 //
             boolean equalPassword = roomEntity.getRoomPassword().equals(patchRoomEntranceRequestDto.getRoomPassword());
             if(!equalPassword) return PatchRoomEntranceResponseDto.notCorrectPassword();
+
+            // 기존 채팅방에 소속된 사용자 확인 1 방장 //
+            boolean existedRoomUser = roomEntity.getRoomManagerEmail().equals(userEmail);
+            if(existedRoomUser) return PatchRoomEntranceResponseDto.existedUserEmail();
+
+            // 기존 채팅방에 소속된 사용자 확인 2 다인원 채팅방 소속자들이 소속된 roomJoin roomNumber
+            RoomJoinEntity roomJoinEntity = roomJoinRepository.findByRoomNumber(roomNumber);
+            if(roomJoinEntity == null) return PatchRoomEntranceResponseDto.noExistedRoomNumber();
+
+            // 기존 채팅방에 소속된 사용자 확인 3 다인원 채팅방 소속자들이 소속된 roomJoin userEmail
+            boolean equalEmail = roomJoinEntity.getUserEmail().equals(userEmail);
+            if(equalEmail) return PatchRoomEntranceResponseDto.existedUserEmail();
+
+            // Entity 생성 - roomJoin 엔터티 생성
+            RoomJoinEntity roomJoinEntityPost = new RoomJoinEntity(roomEntity.getRoomNumber(), userEmail);
+
+            // 데이터베이스 저장 - roomJoin
+            roomJoinRepository.save(roomJoinEntityPost);
 
             // 다인원 채팅방 정보 수정 - 채팅방 인원수 1증가 //
             roomEntity.patchRoomEntrance(patchRoomEntranceRequestDto);
@@ -261,20 +284,12 @@ public class RoomServiceImplement implements RoomService {
             // 데이터베이스 저장 - room //
             roomRepository.save(roomEntity);
 
-            // Entity 생성 - roomJoin 엔터티
-            RoomJoinEntity roomJoinEntity = new RoomJoinEntity(roomEntity.getRoomNumber(), userEmail);
-
-            // 데이터베이스 저장 - roomJoin
-            roomJoinRepository.save(roomJoinEntity);
-            
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
 
         return PatchRoomEntranceResponseDto.success();
-
-
 
     }
 
@@ -287,10 +302,14 @@ public class RoomServiceImplement implements RoomService {
             RoomEntity roomEntity = roomRepository.findByRoomNumber(roomNumber);
             if(roomEntity == null) return PatchRoomTitleResponseDto.noExistedRoomNumber();
 
-            // 특정한 다인원 채팅방에 속해 있는 사용자인지 확인 //
-            RoomJoinEntity roomJoinEntity = roomJoinRepository.findByUserEmail(userEmail);
-            if(roomJoinEntity == null) return PatchRoomExitResponseDto.noExistedUserEmail();
+            // 기존 채팅방에 소속된 사용자 확인 2 다인원 채팅방 소속자들이 소속된 roomJoin roomNumber
+            RoomJoinEntity roomJoinEntity = roomJoinRepository.findByRoomNumberAndUserEmail(roomNumber, userEmail);
+            if(roomJoinEntity == null) return PatchRoomEntranceResponseDto.noExistedRoomNumber();
 
+            // 방장인지 아닌지? (방장이면 권한없음)
+            boolean equalEmail = roomEntity.getRoomManagerEmail().equals(userEmail);
+            if(equalEmail) return PatchRoomTitleResponseDto.noPermission();
+            
             // 다인원 채팅방 정보 수정 - 채팅방 인원수 1 감소 //
             roomEntity.patchRoomExit(patchRoomExitRequestDto);
 
@@ -309,31 +328,30 @@ public class RoomServiceImplement implements RoomService {
     }
 
     // 특정 다인원 채팅방에 속해 있는 사용자가 해당 채팅방 입장 //
-    // @Override
-    // public ResponseEntity<? super GetRoomResponseDto> getRoom(Integer roomNumber, String userEmail) {
+    @Override
+    public ResponseEntity<? super GetRoomResponseDto> getRoom(Integer roomNumber, String userEmail) {
 
-    //     RoomViewEntity roomViewEntity = null;
-    //     RoomJoinEntity roomJoinEntity = null;
+        RoomViewEntity roomViewEntity = null;
+        RoomJoinEntity roomJoinEntity = null;
 
-    //     try {
-    //         // 존재하는 다인원 채팅방 번호 확인 //
-    //         roomViewEntity = roomViewRepository.findByRoomNumber(roomNumber);
+        try {
+            // 존재하는 다인원 채팅방 번호 확인 //
+            roomViewEntity = roomViewRepository.findByRoomNumber(roomNumber);
+            if(roomViewEntity == null) return GetRoomResponseDto.noExistedRoomNumber();
 
-    //         roomJoinEntity = roomJoinRepository.findByRoomNumber(roomNumber);
+            // 특정한 다인원 채팅방에 속해 있는 사용자인지 확인 //
+            roomJoinEntity = roomJoinRepository.findByRoomNumberAndUserEmail(roomNumber, userEmail);
+            if(roomJoinEntity == null) return GetRoomResponseDto.noExistedUserEmail();
 
-    //         // 존재하는 다인원 채팅방인지 확인 //
-    //         if(roomViewEntity == null) return GetRoomResponseDto.noExistedRoomNumber();
+            // 데이터베이스 저장
+            roomViewRepository.save(roomViewEntity);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
 
-    //         // 특정한 다인원 채팅방에 속해 있는 사용자인지 확인 //
-    //         RoomJoinEntity roomJoinEntity = roomJoinRepository.findByUserEmail(userEmail);
-    //         if(roomJoinEntity == null) return PatchRoomExitResponseDto.noExistedUserEmail();
-
-    //     } catch (Exception exception) {
-    //         exception.printStackTrace();
-    //         return ResponseDto.databaseError();
-    //     }
-
-    //     return GetRoomResponseDto.success(roomViewEntity);
-    // }
+        return GetRoomResponseDto.success(roomViewEntity);
+    }
 
 }

@@ -30,6 +30,12 @@ public class PatchRoomEntranceResponseDto extends ResponseDto {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
 
+    // 이미 존재하는 사용자 인지//
+    public static ResponseEntity<ResponseDto> existedUserEmail() {
+        ResponseDto result = new ResponseDto(ResponseCode.EXISTED_USER_EMAIL, ResponseMessage.EXISTED_USER_EMAIL);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+    }
+
     // 존재하는 다인원 채팅방 인지 //
     public static ResponseEntity<ResponseDto> noExistedRoomNumber() {
         ResponseDto result = new ResponseDto(ResponseCode.NO_EXISTED_BOARD_NUMBER, ResponseMessage.NO_EXISTED_ROOM_NUMBER);
@@ -41,6 +47,14 @@ public class PatchRoomEntranceResponseDto extends ResponseDto {
         ResponseDto result = new ResponseDto(ResponseCode.NOT_CORRECT_PASSWORD, ResponseMessage.NOT_CORRECT_PASSWORD);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
+
+    // 권한 없음(다인원 채팅방을 생성한 사용자 이메일과 입력받은 사용자 이메일이 일치하는지 확인)
+    public static ResponseEntity<ResponseDto> noPermission() {
+        ResponseDto result = new ResponseDto(ResponseCode.NO_PERMISSION, ResponseMessage.NO_PERMISSION);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(result);
+    }
+
+
 
 
 
