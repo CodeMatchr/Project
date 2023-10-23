@@ -136,7 +136,6 @@ CREATE TABLE friend (
 
 
 
-
 CREATE TABLE room (
    room_number INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
    room_title TEXT NOT NULL,

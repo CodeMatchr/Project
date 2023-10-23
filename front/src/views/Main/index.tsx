@@ -6,18 +6,20 @@ import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH} from '../../constants';
+import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH} from '../../constants';
 import { useNavigate} from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
 import CompareCode from 'src/components/CompareCode';
 import GetTop3CommentResponseDto from 'src/interfaces/response/board/getTop3Comment.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import {  getCommentListRequest, getFavoriteListRequest, getViewListRequest } from 'src/apis';
+import {  getCommentListRequest, getFavoriteListRequest, getViewListRequest, postRoomRequest } from 'src/apis';
 import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Favorite.response.dto';
 import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
 import { useRoomStore, useUserStore } from 'src/store';
 import GetRoomListResponseDto from 'src/interfaces/response/room/get-room-list.response.dto';
+import { access } from 'fs';
+import { useCookies } from 'react-cookie';
 
 // component //
 export default function Main() {
@@ -214,6 +216,7 @@ export default function Main() {
     // 채팅방 팝업창 상태 //
     const [selectRoomNumber, setSelectRoomNumber] = useState<number>(-1);
 
+
     // function //
     const getPageRoomList = (roomList : RoomListResponseDto[]) => {
       const startIndex = MAIN_ROOM_COUNT_BY_PAGE * (currentPage - 1);
@@ -255,6 +258,7 @@ export default function Main() {
         setPopUpVisible(true);
         setPopUpRoomVisible(false);
       }
+   
     }
 
     // 채팅방 리스트 입장 버튼 클릭 이벤트
@@ -269,6 +273,7 @@ export default function Main() {
       }
       setSelectRoomNumber(roomNumber);
     }
+   
 
     // effect //
     // 현재 페이지가 바뀔때 마다 Room 리스트 변경//

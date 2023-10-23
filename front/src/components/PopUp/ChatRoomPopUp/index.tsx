@@ -1,10 +1,8 @@
 import React, { Dispatch, SetStateAction, useState, ChangeEvent, useRef, useEffect } from 'react'
 import './style.css'; 
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { AUTHENTICATION_PATH, CHAT_PATH, MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH } from '../../../constants';
-import useCreateRoomStore from 'src/store/room.store';
+import { AUTHENTICATION_PATH, CHAT_PATH, MAIN_PATH, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH } from '../../../constants';
 import { Cookies, useCookies } from 'react-cookie';
-import path from 'path';
 import PostRoomRequestDto from 'src/interfaces/request/room/post-room.request.dto';
 import { postRoomRequest, uploadFileRequest } from 'src/apis';
 import { useRoomStore, useUserStore } from 'src/store';
@@ -61,8 +59,6 @@ const postRoomResponseHandler = (code : string) => {
   if (code == 'DE') alert('데이터베이스 에러입니다.');
   if (code == 'SU') return;
 
-  resetRoom();
-
   if(!user) {
     alert('로그인이 필요합니다.')
     navigator(AUTHENTICATION_PATH);
@@ -91,16 +87,18 @@ const onRoomPasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
 const onCreateClickHandler = async () => {
   const token = cookies.accessToken;
 
-  if(pathname === ROOM_POST_PATH) {
     const imageUrl = await fileUpload();
 
+    
     const data : PostRoomRequestDto = {
-        roomTitle: roomTitle,
-        roomPassword: roomPassword,
+        roomTitle: roomName,
+        roomPassword: roomPasswordInput,
         roomImageUrl: imageUrl
     }
+    
+    
     postRoomRequest(data, token).then(postRoomResponseHandler);
-  }
+  
 }
 // description : 채팅방 만들기 취소 클릭 이벤트 //
 const onCancelClickHandler = () => {
@@ -114,11 +112,12 @@ const onFileUploadClickHandler = () => {
 
 //            component           //
 //            effect           //
-useEffect(() => {
-  if (!userEmail) navigator(MAIN_PATH);
+// useEffect(() => {
+//   if (!userEmail) navigator(MAIN_PATH);
 
-  return;
-}, [userEmail]);
+//   return;
+// }, [userEmail]);
+
 //            render           //
   return (
     <div id='popup-wrapper'>
