@@ -2,6 +2,10 @@ import React, { useState, useRef } from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_PATH, ROOM_PATH } from '../../../constants';
+import { useCookies } from 'react-cookie';
+import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
+import ResponseDto from 'src/interfaces/response/response.dto';
+import { useRoomStore } from 'src/store';
 
 // interface Props {
 //     popUpType: string
@@ -11,10 +15,13 @@ import { MAIN_PATH, ROOM_PATH } from '../../../constants';
 //            component           //
 // description : 채팅방 매니저 팝업창 //
 export default function ChatManagerByePopUp() {
-    //            state           //
-    // description : 네비게이터 //
-    const navigator = useNavigate();
 
+    //            state           //
+
+    const { roomNumber, roomTitle, roomPassword, roomImage, roomImageUrl, resetRoom, setRoomNumber, setRoomImageUrl, setRoomImage, setRoomPassword, setRoomTitle } = useRoomStore();
+
+    const [cookies, setCookie] = useCookies();
+    
     // description : 채팅방 변경 상태 //
     // todo : 채팅방에서 변경 버튼 클릭시 string으로? boolean? //
     const [roomChanege, setRoomChange] = useState<boolean>(true);
@@ -44,6 +51,31 @@ export default function ChatManagerByePopUp() {
 
 
     //            function           //
+    // description : 네비게이터 //
+    const navigator = useNavigate();
+
+    // 채팅방 불러오기 응답 처리 //
+    const getRoomResponseHnadler = (responseBody : GetRoomResponseDto | ResponseDto) => {
+        const {code} = responseBody;
+        if (code == 'NR') alert('존재하지 않는 채팅방입니다.');
+        if (code != 'SU') {
+            navigator(MAIN_PATH);
+            return;
+        }
+
+        const { roomTitle, roomPassword, roomImageUrl } = responseBody as GetRoomResponseDto
+        setRoomTitle(roomTitle);
+        setRoomPassword(roomPassword);
+        setRoomImageUrl(roomImageUrl);
+    }
+
+    // 채팅방 삭제 응답 처리 //
+    
+
+    // 채팅방 나가기 응답 처리 //
+
+    
+
     //            event handler           //
     // description : 변경 버튼 클릭 이벤트 //
     // todo : 변경 위치 다시 확인해서 수정해야함 //

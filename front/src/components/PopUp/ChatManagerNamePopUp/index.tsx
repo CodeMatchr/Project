@@ -1,15 +1,13 @@
 import React, { useState, useRef, ChangeEvent } from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
-import { MAIN_PATH, ROOM_PATH } from '../../../constants';
+import { MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH } from '../../../constants';
 import { useRoomStore } from 'src/store';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-
-// interface Props {
-//     popUpType: string
-// { popUpType }: Props
-// }
+import { useCookies } from 'react-cookie';
+import { PatchRoomTitleRequestDto } from 'src/interfaces/request/room';
+import { PatchRoomTitleRequest } from 'src/apis';
 
 //            component           //
 // description : 채팅방 매니저 팝업창 //
@@ -18,7 +16,9 @@ export default function ChatManagerNamePopUp() {
     // description : 네비게이터 //
     const navigator = useNavigate();
 
-    const { roomTitle, roomPassword, roomImage, roomImageUrl, resetRoom, setRoomNumber, setRoomImageUrl, setRoomImage, setRoomPassword, setRoomTitle } = useRoomStore();
+    const { roomNumber, roomTitle, roomPassword, roomImage, roomImageUrl, resetRoom, setRoomNumber, setRoomImageUrl, setRoomImage, setRoomPassword, setRoomTitle } = useRoomStore();
+
+    const [cookies, setCookie] = useCookies();
 
     // description : 채팅방 변경 상태 //
     // todo : 채팅방에서 변경 버튼 클릭시 string으로? boolean? //
@@ -52,8 +52,8 @@ export default function ChatManagerNamePopUp() {
     // 채팅방 불러오기 응답 처리 //
     const getRoomResponseHnadler = (responseBody : GetRoomResponseDto | ResponseDto) => {
         const {code} = responseBody;
-        if(code === 'NR') alert('존재하지 않는 채팅방입니다.');
-        if(code !== 'SU') {
+        if (code == 'NR') alert('존재하지 않는 채팅방입니다.');
+        if (code != 'SU') {
             navigator(MAIN_PATH);
             return;
         }
@@ -64,34 +64,44 @@ export default function ChatManagerNamePopUp() {
         setRoomImageUrl(roomImageUrl);
     }
 
-    //            event handler           //
-    // description : 변경 버튼 클릭 이벤트 //
+    const patchRoomTitleResponseHandler = (code : string) => {
+        if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+        if (code == 'NR') alert('존재하지 않는 다인원 채팅방 번호입니다.');
+        if (code == 'NP') alert('권한이 없습니다.');
+        if (code == 'ER') alert('이미 설정되어 있는 다인원 채팅방 제목입니다.');
+        if (code != 'SU') return;
+
+        resetRoom();
+
+        if(!roomNumber) return;
+        navigator(ROOM_DETAIL_PATH(roomNumber));
+    }
+
+    // description : 다인원 채팅방 제목 변경 이벤트 //
     const onTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setRoomTitle(event.target.value);
     }
 
+    //            event handler           //
+    
+    // 변경 버튼 클릭 이벤트 //
+    const onChangeClickHandler = async () => {
+        const token = cookies.accessToken;
 
-    // todo : 변경 위치 다시 확인해서 수정해야함 //
-    const onChangeClickHandler = () => {
-        navigator(ROOM_PATH);
+        const data : PatchRoomTitleRequestDto = {
+            roomTitle : roomTitle
+        }
+
+        PatchRoomTitleRequest(roomNumber, data, token).then(patchRoomTitleResponseHandler);
     }
     // description : 취소 버튼 클릭 이벤트 //
     // todo : 변경 위치 다시 확인해서 수정해야함 //
     const onCancelClickHandler = () => {
-        navigator(MAIN_PATH);
+        navigator(ROOM_DETAIL_PATH(roomNumber));
     }
-    // description : 나가기 버튼 클릭 이벤트 //
-    // todo : 변경 위치 다시 확인해서 수정해야함 //
-    const onExitClickHandler = () => {
-        navigator(MAIN_PATH);
-    }
-    // description : 파일 업로드 버튼 클릭 이벤트 //
-    const onFileUploadClickHandler = () => {
-        if(!fileInputRef.current) return;
-        fileInputRef.current.click();
-    }
-    //            component           //
+
     //            effect           //
+    
     //            render           //
     return (
     <div id='popup-manager-wrapper'>
@@ -111,7 +121,7 @@ export default function ChatManagerNamePopUp() {
             </div>
             <div className='popup-manager-bottom-box'>
                 <div className='popup-manager-bottom-button-change-box'>
-                    <button className='popup-manager-bottom-button-change' onClick={onExitClickHandler}>변경</button>
+                    <button className='popup-manager-bottom-button-change' onClick={onChangeClickHandler}>변경</button>
                 </div>
                 <div className='popup-manager-bottom-button-cancel-box'>
                     <button className='popup-manager-bottom-button-cancel' onClick={onCancelClickHandler}>취소</button>

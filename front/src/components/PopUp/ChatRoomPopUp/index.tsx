@@ -4,8 +4,11 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AUTHENTICATION_PATH, CHAT_PATH, MAIN_PATH, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH } from '../../../constants';
 import { Cookies, useCookies } from 'react-cookie';
 import PostRoomRequestDto from 'src/interfaces/request/room/post-room.request.dto';
-import { postRoomRequest, uploadFileRequest } from 'src/apis';
+import { getRoomRequest, postRoomRequest, uploadFileRequest } from 'src/apis';
 import { useRoomStore, useUserStore } from 'src/store';
+import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
+import ResponseDto from 'src/interfaces/response/response.dto';
+import { transpileModule } from 'typescript';
 
 //            component           //
 // description : 채팅방 만들기 팝업창 // 
@@ -39,6 +42,8 @@ const { user, setUser } = useUserStore();
 const { roomNumber, roomTitle, roomPassword, roomImage, setRoomTitle, setRoomPassword, setRoomImage, resetRoom } = useRoomStore();
 // 이미지를 저장할 상태 //
 const [roomImageUrl, setRoomImageUrl] = useState<string>('')
+// 채팅방 상태 //
+const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
 
 //            function           //
 // 파일 업로드 //
@@ -68,6 +73,20 @@ const postRoomResponseHandler = (code : string) => {
   navigator(ROOM_DETAIL_PATH(roomNumber));
 }
 
+// Room detail(채팅방) 불러오기 응답처리 함수 //
+const getRoomResponseHandler = (responseBody : GetRoomResponseDto | ResponseDto) => {
+  const { code } = responseBody;
+  if(code == 'NR') alert('존재하는 않는 다인원 채팅방 번호입니다.');
+  if(code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+  if(code !== 'SU') {
+    navigator(MAIN_PATH);
+    return;
+  }
+
+  const room = responseBody as GetRoomResponseDto;
+  setRoom(room);
+}
+
 
 //            event handler           //
 // description : 방 이름 변경 이벤트 처리 함수 //
@@ -83,7 +102,6 @@ const onRoomPasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
 }
 
 // description : 채팅방 만들기 생성 클릭 이벤트 //
-// todo : 이동 위치 확인해서 수정하기 //
 const onCreateClickHandler = async () => {
   const token = cookies.accessToken;
 
@@ -95,7 +113,6 @@ const onCreateClickHandler = async () => {
         roomPassword: roomPasswordInput,
         roomImageUrl: imageUrl
     }
-    
     
     postRoomRequest(data, token).then(postRoomResponseHandler);
   
@@ -117,6 +134,21 @@ const onFileUploadClickHandler = () => {
 
 //   return;
 // }, [userEmail]);
+
+// roomNumber 가 바뀔 때 마다 실행 //
+let roomNumberFlag = true;
+useEffect(() => {
+  if(roomNumberFlag) {
+    roomNumberFlag = false;
+    return;
+  }
+  if(!roomNumber) {
+    alert('채팅방 번호가 잘못되었습니다.');
+    navigator(MAIN_PATH);
+    return;
+  }
+  getRoomRequest(roomNumber).then(getRoomResponseHandler);
+}, [roomNumber]);
 
 //            render           //
   return (

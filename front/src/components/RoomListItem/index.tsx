@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './style.css';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import ChatComePopUP from '../PopUp/ChatComePopUp';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     onClick: () => void;
@@ -23,6 +24,7 @@ export default function RoomListItem({onClick, item} : Props) {
     const [popUpVisible, setPopUpVisible] = useState<boolean>(false);
 
     // function //
+    const navigator = useNavigate();
 
     // event handler //
     // 채팅방 입장 버튼 클릭 이벤트
