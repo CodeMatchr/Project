@@ -48,5 +48,5 @@ public interface RoomService {
     ResponseEntity<? super PatchRoomExitResponseDto> patchRoomExit(Integer roomNumber, String userEmail, PatchRoomExitRequestDto patchRoomExitRequestDto);
 
     // Method : 특정 다인원 채팅방에 속해 있는 사용자가 해당 채팅방 입장 //
-    // ResponseEntity<? super GetRoomResponseDto> getRoom(Integer roomNumber, String userEmail);
+    ResponseEntity<? super GetRoomResponseDto> getRoom(Integer roomNumber, String userEmail);
 }

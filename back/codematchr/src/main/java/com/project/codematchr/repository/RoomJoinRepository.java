@@ -11,4 +11,6 @@ public interface RoomJoinRepository extends JpaRepository<RoomJoinEntity, Intege
     RoomJoinEntity findByUserEmail(String userEmail);
     // 특정 다인원 채팅방의 번호
     RoomJoinEntity findByRoomNumber(Integer roomNumber);
+    // 특정 다인원 채팅방의 번호
+    RoomJoinEntity findByRoomNumberAndUserEmail(Integer roomNumber, String userEmail);
 }
