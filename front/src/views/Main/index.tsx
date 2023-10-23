@@ -6,20 +6,21 @@ import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_PATH} from '../../constants';
+import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  COUNT_BY_PAGE,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH} from '../../constants';
 import { useNavigate} from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
 import CompareCode from 'src/components/CompareCode';
 import GetTop3CommentResponseDto from 'src/interfaces/response/board/getTop3Comment.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import {  getCommentListRequest, getFavoriteListRequest, getViewListRequest, postRoomRequest } from 'src/apis';
+import {  GetCurrentRoomListRequest, getCommentListRequest, getCurrentListRequest, getFavoriteListRequest, getViewListRequest, postRoomRequest } from 'src/apis';
 import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Favorite.response.dto';
 import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
 import { useRoomStore, useUserStore } from 'src/store';
-import GetRoomListResponseDto from 'src/interfaces/response/room/get-room-list.response.dto';
+import GetRoomListResponseDto from 'src/interfaces/response/room/get-current-room-list.response.dto';
 import { access } from 'fs';
 import { useCookies } from 'react-cookie';
+import GetCurrentRoomListResponseDto from 'src/interfaces/response/room/get-current-room-list.response.dto';
 
 // component //
 export default function Main() {
@@ -218,6 +219,7 @@ export default function Main() {
 
 
     // function //
+    // 페이지네이션 //
     const getPageRoomList = (roomList : RoomListResponseDto[]) => {
       const startIndex = MAIN_ROOM_COUNT_BY_PAGE * (currentPage - 1);
       const lastIndex = roomList.length > MAIN_ROOM_COUNT_BY_PAGE * currentPage ?
@@ -227,12 +229,14 @@ export default function Main() {
       setPageRoomList(pageRoomList);
     }
 
-    const getRoomList = (responseBody : GetRoomListResponseDto | ResponseDto) => {
+    // 현재 채팅방 리스트 불러오기 응답처리 함수 //
+    const getCurrnetRoomListResponseHandler = (responseBody : GetCurrentRoomListResponseDto | ResponseDto) => {
       const { code } = responseBody;
       if(code === 'DE') alert('데이터베이스 에러입니다.');
       if(code !== 'SU') return;
 
-      const { roomList } = responseBody as GetRoomListResponseDto;
+      const { roomList } = responseBody as GetCurrentRoomListResponseDto;
+      changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE)
       setCurrentRoomList(roomList);
     }
 
@@ -275,7 +279,6 @@ export default function Main() {
       setSelectRoomNumber(roomNumber);
     }
    
-
     // effect //
     // 현재 페이지가 바뀔때 마다 Room 리스트 변경//
     useEffect(() => {
@@ -285,6 +288,11 @@ export default function Main() {
     // 현재 섹션이 바뀔때 마다 페이지 리스트 변경 //
     useEffect(() => {
       changeSection(currentRoomList.length, MAIN_ROOM_COUNT_BY_PAGE);
+    }, [currentSection]);
+
+
+    useEffect(() => {
+      GetCurrentRoomListRequest(currentSection).then(getCurrnetRoomListResponseHandler);
     }, [currentSection]);
 
     // render //

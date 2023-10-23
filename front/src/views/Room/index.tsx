@@ -3,11 +3,14 @@ import React, { useState, useEffect } from 'react';
 import './style.css';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import Pagination from '../../components/Pagination';
-import { MAIN_ROOM_COUNT_BY_PAGE_FUll } from '../../constants';
+import { COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import { usePagination } from '../../hooks';
 import RoomFullListItem from '../../components/RoomFullListItem';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
+import GetCurrentRoomListResponseDto from 'src/interfaces/response/room/get-current-room-list.response.dto';
+import ResponseDto from 'src/interfaces/response/response.dto';
+import { GetCurrentRoomListRequest } from 'src/apis';
 
 // component //
 export default function Room() {
@@ -17,7 +20,7 @@ export default function Room() {
   // Room 에 해당하는 전체 리스트 상태
   const[currentRoomList, setCurrentRoomList] = useState<RoomListResponseDto[]>([]);
   // Room 에 해당하는 전체 갯수 상태
-  const[roomCount, setRoomCount] = useState<number>(1);
+  const[roomCount, setRoomCount] = useState<number>(0);
   // Room 현재 페이지에서 보여줄 Room 게시물 리스트 상태
   const[pageRoomList, setPageRoomList] = useState<RoomListResponseDto[]>([])
   // 검색어 상태 //
@@ -28,6 +31,7 @@ export default function Room() {
   const [popUpRoomVisible, setPopUpRoomVisible] = useState<boolean>(false);
   // 채팅방 팝업창 상태 //
   const [selectRoomNumber, setSelectRoomNumber] = useState<number>(-1);
+
   // function //
   const navigator = useNavigate();
 
@@ -38,6 +42,20 @@ export default function Room() {
     const pageRoomList = roomList.slice(startIndex, lastIndex);
 
     setPageRoomList(pageRoomList);
+  }
+
+  // 현재 모든 다인원 채팅방 리스트 응답처리 함수 //
+  const getCurrentRoomListResponseHandler = (responseBody : GetCurrentRoomListResponseDto | ResponseDto) => {
+    const { code } = responseBody;
+    if(code === 'DE') alert('데이터베이스 에러입니다.');
+    if(code !== 'SU') return;
+
+    const { roomList } = responseBody as GetCurrentRoomListResponseDto;
+
+    setRoomCount(roomList.length);
+    getPageRoomList(roomList);
+    setCurrentRoomList(roomList);
+    changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE_FUll)
   }
 
   // event handler //
@@ -61,6 +79,10 @@ export default function Room() {
   // 현재 섹션이 바뀔때 마다 페이지 리스트 변경 //
   useEffect(() => {
     changeSection(currentRoomList.length, MAIN_ROOM_COUNT_BY_PAGE_FUll);
+  }, [currentSection]);
+
+  useEffect(() => {
+    GetCurrentRoomListRequest(currentSection).then(getCurrentRoomListResponseHandler);
   }, [currentSection]);
 
   // render //

@@ -26,6 +26,12 @@ import DeleteBoardResponseDto from 'src/interfaces/response/board/delete-board.r
 import { GetBoardListResponeDto, GetCommentListResponseDto, GetFavoriteListResponseDto } from 'src/interfaces/response/board';
 import PutFavoriteResponseDto from 'src/interfaces/response/board/put-favorite.response.dto';
 import { PostCommentRequestDto } from 'src/interfaces/request/board';
+import GetCurrentRoomListResponseDto from 'src/interfaces/response/room/get-current-room-list.response.dto';
+import { PatchRoomImageUrlRequestDto } from 'src/interfaces/request/room';
+import DeleteRoomResponseDto from 'src/interfaces/response/room/delete-room.response.dto';
+import { error } from 'console';
+import PatchRoomExitRequsetDto from 'src/interfaces/request/room/patch-room-exit-request.dto';
+import PatchRoomExitResponseDto from 'src/interfaces/response/room/patch-room-exit-response.dto';
 import GetSearchBoardResponseDto from 'src/interfaces/response/board/get-search-board.response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
@@ -251,11 +257,13 @@ export const postBoardRequest = async (data : PostBoardRequestDto, token:string)
 
 
 const POST_ROOM_URL = () => `${API_DOMAIN}/room/create`;
-const GET_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/chat`;
+const GET_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}`;
+const GET_CURRENT_ROOM_LIST_URL = (section : number) => `${API_DOMAIN}/current-room/${section}`;
 const PATCH_ROOM_TITLE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomTitle`;
 const PATCH_ROOM_PASSWORD_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomPassword`;
 const PATCH_ROOM_IMAGE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomImageUrl`;
-
+const DELETE_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}`;
+const PATCH_ROOM_ENTRANCE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/entrance`;
 
 // 채팅방 만들기 //
 export const postRoomRequest = async (data : PostRoomRequestDto, token : string) => {
@@ -272,12 +280,25 @@ export const postRoomRequest = async (data : PostRoomRequestDto, token : string)
     return result;
 }
 
-
 // 채팅방 불러오기 //
 export const getRoomRequest = async (roomNuber : number | string) => {
     const result = await axios.get(GET_ROOM_URL(roomNuber))
     .then((response) => {
         const responseBody: GetRoomResponseDto = response.data;
+        return responseBody;
+    }).catch((error) => {
+        const responseBody: ResponseDto = error.response.data;
+        return responseBody;
+    })
+
+    return result;
+}
+
+// 현재 모든 채팅방 리스트 가져오기 //
+export const GetCurrentRoomListRequest = async (section: number) => {
+    const result = await axios.get(GET_CURRENT_ROOM_LIST_URL(section))
+    .then((response) => {
+        const responseBody: GetCurrentRoomListResponseDto = response.data;
         return responseBody;
     }).catch((error) => {
         const responseBody: ResponseDto = error.response.data;
@@ -320,7 +341,7 @@ export const PatchRoomPasswordRequest = async (roomNumber : number | string, dat
 }
 
 // 채팅방 이미지 수정 //
-export const PatchRoomImageUrlRequest = async (roomNumber : number |string, data : PatchRoomPasswordRequestDto, token : string) => {
+export const PatchRoomImageUrlRequest = async (roomNumber : number |string, data : PatchRoomImageUrlRequestDto, token : string) => {
     const result = await axios.patch(PATCH_ROOM_IMAGE_URL(roomNumber), data, { headers : {Authorization : `Bearer ${token}`} })
     .then((response) => {
         const responseBody : PatchRoomImageUrlResponseDto = response.data;
@@ -334,6 +355,39 @@ export const PatchRoomImageUrlRequest = async (roomNumber : number |string, data
 
     return result;
 }
+
+// 채팅방 삭제 //
+export const DeleteRoomRequest = async (roomNumber : number | string, token : string) => {
+    const result = await axios.delete(DELETE_ROOM_URL(roomNumber), { headers : {Authorization : `Bearer ${token}`} })
+    .then((response) => {
+        const responseBody : DeleteBoardResponseDto = response.data;
+        const { code } = responseBody;
+        return code;
+    }).catch((error) => {
+        const responseBody : ResponseDto = error.response.data;
+        const { code } = responseBody;
+        return code;
+    });
+
+    return result;
+}
+
+// 채팅방 나가기 //
+export const PatchRoomExitRequest = async (roomNumber : number | string, data : PatchRoomExitRequsetDto , token : string) => {
+    const result = await axios.patch(PATCH_ROOM_ENTRANCE_URL(roomNumber))
+    .then((response) => {
+        const responseBody : PatchRoomExitResponseDto = response.data;
+        const { code } = responseBody;
+        return code;
+    }).catch((error) => {
+        const responseBody : ResponseDto = error.response.data;
+        const { code } = responseBody;
+        return code;
+    });
+
+    return result;
+}
+
 
 // 파일 업로드 //
 export const uploadFileRequest = async (data: FormData) => {

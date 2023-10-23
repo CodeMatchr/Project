@@ -89,7 +89,7 @@ useEffect(() => {
         {/* 비교 분석 결과 화면 COMPARE */}
         <Route path={COMPARE_PATH} />
 
-        {/* 채팅방 화면 CHAT */}
+        {/* 다인원 채팅방 화면 CHAT */}
         <Route path={ROOM_DETAIL_PATH(ROOM_NUMBER_PATH_VARIABLE)} element={<Chat/>} />
         {/* 검색 화면 SEARCH */}
         <Route path={SEARCH_PATH(SEARCH_WORD_PATH_VARIABLE)} element={<SearchList />} />
