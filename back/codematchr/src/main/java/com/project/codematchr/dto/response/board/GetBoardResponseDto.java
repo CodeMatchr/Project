@@ -25,9 +25,9 @@ public class GetBoardResponseDto extends ResponseDto{
     private int boardFavoriteCount;
 
     private String boardWriteDatetime;
-    private String boardWriterEmail;
-    private String boardWriterNickname;
-    private String boardWriterProfileImageUrl;
+    private String boardUserEmail;
+    private String boardUserNickname;
+    private String boardUserProfileImageUrl;
 
     private GetBoardResponseDto(String code, String message, BoardViewEntity boardViewEntity) {
         super(code, message);
@@ -36,9 +36,9 @@ public class GetBoardResponseDto extends ResponseDto{
         this.boardContents = boardViewEntity.getBoardContents();
         this.boardImageUrl = boardViewEntity.getBoardImageUrl();
         this.boardWriteDatetime = boardViewEntity.getBoardWriteDatetime();
-        this.boardWriterEmail = boardViewEntity.getWriterEmail();
-        this.boardWriterNickname = boardViewEntity.getWriterNickname();
-        this.boardWriterProfileImageUrl = boardViewEntity.getWriterProfileImageUrl();
+        this.boardUserEmail = boardViewEntity.getUserEmail();
+        this.boardUserNickname = boardViewEntity.getUserNickname();
+        this.boardUserProfileImageUrl = boardViewEntity.getUserProfileImageUrl();
         this.boardViewCount = boardViewEntity.getBoardViewCount();
         this.boardCommentCount = boardViewEntity.getBoardCommentCount();
         this.boardFavoriteCount = boardViewEntity.getBoardFavoriteCount();

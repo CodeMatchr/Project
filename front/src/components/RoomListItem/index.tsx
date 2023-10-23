@@ -14,7 +14,7 @@ export default function RoomListItem({onClick, item} : Props) {
 
     // state //
     const { roomNumber, roomTitle, roomImageUrl } = item;
-    const { roomMemberCount } = item;
+    const { roomUserCount } = item;
     const { roomManagerNickname } = item;
 
     const roomImageBackground =  roomImageUrl ? { backgroundImage : `url(${roomImageUrl})` } : { backgroundColor : 'rgba(0, 0, 0, 0.6)' };
@@ -39,7 +39,7 @@ export default function RoomListItem({onClick, item} : Props) {
             <div className='room-list-room-profile' style={roomImageBackground}></div>
             <div className='room-list-room-title'>{roomTitle}</div>
             <div className='room-list-room-manager-nickname'>{roomManagerNickname}</div>
-            <div className='room-list-room-member-count'>{`인원수 ${roomMemberCount}`}</div>
+            <div className='room-list-room-member-count'>{`인원수 ${roomUserCount}`}</div>
         </div>
         
     )

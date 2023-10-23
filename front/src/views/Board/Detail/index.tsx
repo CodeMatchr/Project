@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
 import GetFavoriteListResponseDto, { FavoriteListResponseDto } from 'src/interfaces/response/board/get-favorite-list.response.dto';
 import GetCommentListResponseDto, { CommentListResponseDto } from 'src/interfaces/response/board/get-comment-list.response.dto';
-import { BOARD_LIST_PATH, COUNT_BY_PAGE_COMMENT, MAIN_PATH } from 'src/constants';
+import { BOARD_LIST_PATH, BOARD_UPDATE_PATH, COUNT_BY_PAGE_COMMENT, MAIN_PATH } from 'src/constants';
 import ResponseDto from 'src/interfaces/response/response.dto';
 import { usePagination } from 'src/hooks';
 import { deleteBoardRequest, getBoardCommentListRequest, getBoardFavoriteListRequest, getBoardRequest, getCommentListRequest, getFavoriteListRequest, putFavoriteRequest } from 'src/apis';
@@ -63,7 +63,7 @@ export default function BoardDetail() {
     const getBoardResponseHandler = (responseBody: GetBoardResponseDto | ResponseDto) => {
         const { code } = responseBody;
     
-        if (code === 'NB') alert('존재하지 않는 게시물입니다.');
+        if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
         if (code === 'VF') alert('게시물번호가 잘못되었습니다.');
         if (code === 'DE') alert('데이터베이스 에러입니다.');
         if (code !== 'SU') {
@@ -140,8 +140,8 @@ export default function BoardDetail() {
 
     // 게시물 수정 클릭 //
     const onBoardUpdateClickHandler = () => {
-        if(!board) return;
-        navigator(MAIN_PATH);
+        if(!boardNumber) return;
+        navigator(BOARD_UPDATE_PATH(boardNumber));
     }
 
     // 게시물 삭제 클릭 //
@@ -150,6 +150,13 @@ export default function BoardDetail() {
         const token = cookies.accessToken;
         deleteBoardRequest(boardNumber, token).then(deleteBoardResponseHandler);
     }
+
+    // 댓글 작성시 입력 이벤트 //
+    const onCommentChangeHandler = (event:ChangeEvent<HTMLInputElement>) => {
+        setComment(event.target.value);
+    }
+
+    
 
     // effect //
     // 게시물 번호가 바뀌면 랜더링 //
@@ -184,13 +191,11 @@ export default function BoardDetail() {
       }, [boardNumber, user]);
       
 
-    
-
     return (
         
         <div id='board-detail-wrapper'>
             <div className='board-detail-button-box'>
-                    <div className='board-detail-update-button' onClick={onBoardUpdateClickHandler}>수정</div>
+                    <div className='board-detail-update-button' onClick={() => onBoardUpdateClickHandler()}>수정</div>
                     <div className='board-detail-delete-button' onClick={onBoardDeleteClickHandler}>삭제</div>
             </div>
             <div className='board-detail-box'>    
@@ -264,6 +269,17 @@ export default function BoardDetail() {
                         onPageClickHandler={onPageClickHandler}
                     />
                     )}
+                </div>
+                <div className='comment-list-write-box'>
+                    <div className='comment-list-write-box'>
+                        <div className='comment-list-write'>댓글 작성</div>
+                    </div>
+                    <div className='comment-list-write-comment-box'>
+                        <input className='comment-list-write-comment-input' onChange={onCommentChangeHandler} />
+                    </div>
+                    <div className='comment-list-write-button-box'>
+                        <button className='comment-list-write-button'>작성</button>
+                    </div>
                 </div>
             </div>
         </div>

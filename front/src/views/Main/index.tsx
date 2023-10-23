@@ -6,7 +6,7 @@ import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH} from '../../constants';
+import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_PATH} from '../../constants';
 import { useNavigate} from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
@@ -266,6 +266,7 @@ export default function Main() {
       else{
         setPopUpRoomVisible(true);
         setPopUpVisible(false);
+       
       }
       setSelectRoomNumber(roomNumber);
     }

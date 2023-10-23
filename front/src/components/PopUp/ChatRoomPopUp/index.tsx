@@ -91,7 +91,6 @@ const onRoomPasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
 const onCreateClickHandler = async () => {
   const token = cookies.accessToken;
 
-  if(pathname === ROOM_POST_PATH) {
     const imageUrl = await fileUpload();
 
     const data : PostRoomRequestDto = {
@@ -99,8 +98,13 @@ const onCreateClickHandler = async () => {
         roomPassword: roomPassword,
         roomImageUrl: imageUrl
     }
+
+    setRoomTitle(roomTitle);
+    setRoomPassword(roomPassword);
+    setRoomImageUrl(roomImageUrl);
+
     postRoomRequest(data, token).then(postRoomResponseHandler);
-  }
+  
 }
 // description : 채팅방 만들기 취소 클릭 이벤트 //
 const onCancelClickHandler = () => {
@@ -114,11 +118,11 @@ const onFileUploadClickHandler = () => {
 
 //            component           //
 //            effect           //
-useEffect(() => {
-  if (!userEmail) navigator(MAIN_PATH);
+// useEffect(() => {
+//   if (!userEmail) navigator(MAIN_PATH);
 
-  return;
-}, [userEmail]);
+//   return;
+// }, [userEmail]);
 //            render           //
   return (
     <div id='popup-wrapper'>

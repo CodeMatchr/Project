@@ -9,10 +9,11 @@ import PostBoardResponseDto from "./post-board.response.dto";
 import GetBoardListResponeDto from "./get-board-list.response.dto";
 import GetCommentListResponseDto from "./get-comment-list.response.dto";
 import GetFavoriteListResponseDto from "./get-favorite-list.response.dto";
+import PostCommentResponseDto from "./post-comment.response.dto";
 
 export type {
   GetTop3ResponseDto,GetTop3CommentResponseDto, GetTop3FavoriteResponseDto,
   GetTop3ViewResponseDto, BoardDetailResponseDto, BoardListResponseDto,
   PatchBoardResponseDto, PostBoardResponseDto, GetBoardListResponeDto,
-  GetCommentListResponseDto, GetFavoriteListResponseDto
+  GetCommentListResponseDto, GetFavoriteListResponseDto, PostCommentResponseDto
 }

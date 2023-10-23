@@ -68,32 +68,6 @@ CREATE TABLE favorite (
    FOREIGN KEY (favorite_user_email) REFERENCES user (user_email)
 );
 
-/* room Table */
-/* room_number : INT PK, NN, UQ, AI */
-/* room_title : TEXT NN */
-/* room_image_url : TEXT */
-/* room_password : VARCHAR(255) NN */
-/* room_user_email : VARCHAR(100) FK, NN */
-/* room_manager_email : VARCHAR(100) FK, NN */
-/* room_accessor_email : VARCHAR(100) FK, NN */
-/* room_member_count : INT NN */
-/* room_is_multi : TINYINT(1) NN */
-CREATE TABLE room (
-   room_number INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
-   room_title TEXT NOT NULL,
-   room_image_url TEXT,
-   room_password VARCHAR(255) NOT NULL,
-   room_datetime DATETIME NOT NULL DEFAULT NOW(),
-   room_user_email VARCHAR(100) NOT NULL,
-   room_manager_email VARCHAR(100) NOT NULL,
-   room_accessor_email VARCHAR(100) NOT NULL,
-   room_member_count INT NOT NULL,
-   room_is_multi TINYINT(1) NOT NULL,
-   FOREIGN KEY (room_user_email) REFERENCES user (user_email),
-   FOREIGN KEY (room_manager_email) REFERENCES user (user_email),
-   FOREIGN KEY (room_accessor_email) REFERENCES user (user_email)
-);
-
 /* compare Table */
 /* compare_result_number : INT PK, NN, UQ, AI */
 /* compare_control_group : TEXT NN */
@@ -150,8 +124,8 @@ CREATE TABLE room (
 
 /* roomJoin Table */
 CREATE TABLE room_join (
-   room_number INT NOT NULL UNIQUE,
-   user_email VARCHAR(100) NOT NULL UNIQUE,
+   room_number INT NOT NULL,
+   user_email VARCHAR(100) NOT NULL,
    PRIMARY KEY (room_number, user_email),
    FOREIGN KEY (user_email) REFERENCES user (user_email),
    FOREIGN KEY (room_number) REFERENCES room (room_number)

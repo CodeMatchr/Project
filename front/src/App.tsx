@@ -18,6 +18,12 @@ import { useUserStore } from './store';
 import { getSignInUserRequest } from './apis';
 import BoardList from './views/Board/List';
 import BoardUpdate from './views/Board/Update';
+import ChatRoomPopUp from './components/PopUp/ChatRoomPopUp';
+import ChatComePopUP from './components/PopUp/ChatComePopUp';
+import ChatManagerNamePopUp from './components/PopUp/ChatManagerNamePopUp';
+import ChatManagerPasswordPopUp from './components/PopUp/ChatManagerPasswordPopUp';
+import ChatManagerImagePopUp from './components/PopUp/ChatManagerImagePopUp';
+import ChatManagerByePopUp from './components/PopUp/ChatManagerByePopUp';
 
 
 function App() {
@@ -86,12 +92,12 @@ useEffect(() => {
         <Route path={CHAT_PATH} element={<Chat/>} />
 
         {/* 팝업창 PopUp */}
-        {/* <Route path={POPUP_ROOM_PATH} element={<ChatRoomPopUp/>} />
+        <Route path={POPUP_ROOM_PATH} element={<ChatRoomPopUp/>} />
         <Route path={POPUP_COME_PATH} element={<ChatComePopUP/>} />
         <Route path={POPUP_MANAGER_NAME_PATH} element={<ChatManagerNamePopUp/>} />
         <Route path={POPUP_MANAGER_PASSWORD_PATH} element={<ChatManagerPasswordPopUp/>} />
         <Route path={POPUP_MANAGER_IMAGE_PATH} element={<ChatManagerImagePopUp/>} />
-        <Route path={POPUP_MANAGER_BYE_PATH} element={<ChatManagerByePopUp/>} /> */}
+        <Route path={POPUP_MANAGER_BYE_PATH} element={<ChatManagerByePopUp/>} />
 
       </Routes>
       <Footer/>
