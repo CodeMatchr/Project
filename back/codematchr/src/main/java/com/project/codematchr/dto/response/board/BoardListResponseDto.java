@@ -33,8 +33,8 @@ public class BoardListResponseDto {
     this.boardCommentCount = boardViewEntity.getBoardCommentCount();
     this.boardFavoriteCount = boardViewEntity.getBoardFavoriteCount();
     this.boardWriteDatetime = boardViewEntity.getBoardWriteDatetime();
-    this.userProfileImageUrl = boardViewEntity.getWriterProfileImageUrl();
-    this.userNickname = boardViewEntity.getWriterNickname();
+    this.userProfileImageUrl = boardViewEntity.getUserProfileImageUrl();
+    this.userNickname = boardViewEntity.getUserNickname();
   }
 
   public static List<BoardListResponseDto> copyEntityList(List<BoardViewEntity> boardViewEntities) {

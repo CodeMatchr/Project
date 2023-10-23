@@ -336,7 +336,7 @@ public ResponseEntity<? super PatchBoardResponseDto> patchBoard(String boardWrit
 
         try {
             // description : 특정 이메일에 해당하는 게시물 리스트 조회 //
-            List<BoardViewEntity> boardViewEntities = boardViewRepository.findByWriterEmailOrderByBoardWriteDatetimeDesc(writerEmail);
+            List<BoardViewEntity> boardViewEntities = boardViewRepository.findByUserEmailOrderByBoardWriteDatetimeDesc(writerEmail);
             
             // description : entity를 dto로 변환 //
             boardList = BoardListResponseDto.copyEntityList(boardViewEntities);

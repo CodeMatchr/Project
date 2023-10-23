@@ -25,6 +25,7 @@ import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.re
 import DeleteBoardResponseDto from 'src/interfaces/response/board/delete-board.response.dto';
 import { GetBoardListResponeDto, GetCommentListResponseDto, GetFavoriteListResponseDto } from 'src/interfaces/response/board';
 import PutFavoriteResponseDto from 'src/interfaces/response/board/put-favorite.response.dto';
+import { PostCommentRequestDto } from 'src/interfaces/request/board';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -60,7 +61,7 @@ const PATCH_BOARD_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/$
 // 게시물 삭제 //
 const DELETE_BOARD_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}`;
 
-// 게시물 수정시 게시물 불러오기 //
+// 게시물 불러오기 //
 const GET_BOARD_URL = (boardNumber:number | string) => `${API_DOMAIN}/board/${boardNumber}`;
 
 
@@ -88,6 +89,9 @@ const GET_FAVORITE_LIST_URL = (favoriteBoardNumber: number | string) => `${API_D
 const GET_COMMENT_LIST_URL = (commentBoardNumber: number | string) => `${API_DOMAIN}/board/${commentBoardNumber}/comment-list`;
 // 좋아요 수정 //
 const PUT_FAVORITE_URL = (favoriteBoardNumber: number | string) => `${API_DOMAIN}/board/${favoriteBoardNumber}/favorite`;
+
+// 댓글 작성 //
+const POST_COMMENT_URL = (commentBoardNumber : number | string) => `${API_DOMAIN}/board/${commentBoardNumber}/comment`;
 
 
 
@@ -543,4 +547,15 @@ export const uploadFileRequest = async (data: FormData) => {
       return responseBody;
     });
     return result;
+  }
+
+  // 댓글 작성 //
+  export const postCommentRequest = async (commentBoardNumber : number | string, data: PostCommentRequestDto, token: string) => {
+    const result = await axios.post(POST_COMMENT_URL(commentBoardNumber), data, { headers: { Authorization: `Bearer ${token}` } })
+        .then((response) => {
+            const responseBody : PostBoardResponseDto = response.data;
+            const {code} = responseBody;
+            return code;
+        })
+        .catch
   }

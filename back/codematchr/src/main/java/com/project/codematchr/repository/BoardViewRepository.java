@@ -26,7 +26,7 @@ public interface BoardViewRepository extends JpaRepository<BoardViewEntity, Inte
   List<BoardViewEntity> findTop3ByOrderByBoardViewCountDesc();
   
   // description : 특정 유저의 게시물 리스트 조회 //
-  List<BoardViewEntity> findByWriterEmailOrderByBoardWriteDatetimeDesc(String writerEmail);
+  List<BoardViewEntity> findByUserEmailOrderByBoardWriteDatetimeDesc(String writerEmail);
   
   // description : 검색어 리스트 조회 //
   List<BoardViewEntity> findByBoardTitleContainsOrBoardContentsContainsOrderByBoardWriteDatetimeDesc(String title, String contents);
