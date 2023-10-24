@@ -200,7 +200,7 @@ export default function Main() {
     // 로그인 사용자 정보 상태 //
     const { user, setUser } = useUserStore();
     // Room 정보를 저장할 상태 //
-    const { roomNumber, roomTitle, roomPassword, roomImage, setRoomTitle, setRoomPassword, setRoomImage, resetRoom } = useRoomStore();
+    const { roomNumber, roomTitle, roomPassword, roomImage, setRoomNumber, setRoomTitle, setRoomPassword, setRoomImage, resetRoom } = useRoomStore();
     // Room 에 해당하는 전체 리스트 상태
     const [currentRoomList, setCurrentRoomList] = useState<RoomListResponseDto[]>([]);
     // Room 에 해당하는 전체 갯수 상태

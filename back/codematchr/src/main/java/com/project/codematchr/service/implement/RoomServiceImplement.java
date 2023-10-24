@@ -49,6 +49,8 @@ public class RoomServiceImplement implements RoomService {
     @Override
     public ResponseEntity<? super PostRoomResponseDto> postRoom(String userEmail, PostRoomRequestDto postRoomRequestDto) {
 
+        Integer roomNumber = null;
+
         try {
             // 존재하는 사용자 이메일 확인
             UserEntity existsByUserEmail = userRepository.findByUserEmail(userEmail);
@@ -61,7 +63,7 @@ public class RoomServiceImplement implements RoomService {
             roomRepository.save(roomEntity);
 
             // roomJoin - roomNumber //
-            int roomNumber = roomEntity.getRoomNumber();
+            roomNumber = roomEntity.getRoomNumber();
 
             // Entity 생성 - roomJoin 엔터티
             RoomJoinEntity roomJoinEntity = new RoomJoinEntity(roomNumber, userEmail);
@@ -73,7 +75,7 @@ public class RoomServiceImplement implements RoomService {
             return ResponseDto.databaseError();
         }
 
-        return PostRoomResponseDto.success();
+        return PostRoomResponseDto.success(roomNumber);
     }
 
     // 특정 다인원 채팅방 제목 수정
@@ -340,6 +342,8 @@ public class RoomServiceImplement implements RoomService {
             if(roomViewEntity == null) return GetRoomResponseDto.noExistedRoomNumber();
 
             // 특정한 다인원 채팅방에 속해 있는 사용자인지 확인 //
+            System.out.println(roomNumber);
+            System.out.println(userEmail);
             roomJoinEntity = roomJoinRepository.findByRoomNumberAndUserEmail(roomNumber, userEmail);
             if(roomJoinEntity == null) return GetRoomResponseDto.noExistedUserEmail();
 

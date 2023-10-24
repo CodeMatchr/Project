@@ -131,8 +131,9 @@ export default function Chat() {
 
     // effect //
     useEffect(() => {
+        const accessToken = cookies.accessToken;
         if(!roomNumber) return;
-        getRoomRequest(roomNumber).then(getRoomResponseHnadler);
+        getRoomRequest(roomNumber, accessToken).then(getRoomResponseHnadler);
     }, [roomNumber]);
 
     
@@ -140,7 +141,7 @@ export default function Chat() {
     return (
     <div className='chat'>
         <div className='chat-top'>
-            <div className='chat-top-left'>채팅방에 입장하였습니다.</div>
+            <div className='chat-top-left'>`{roomTitle} 채팅방에 입장하였습니다.`</div>
             <div className='chat-top-right'>
                 <div className='chat-top-right-name-button' onClick={onNameIconButtonClickHandler}>이름 변경</div>
                 {popUpNameState && <div className='chat-manager-pop-up'><ChatManagerNamePopUp/></div>}

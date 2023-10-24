@@ -274,19 +274,17 @@ export const postRoomRequest = async (data : PostRoomRequestDto, token : string)
     const result = await axios.post(POST_ROOM_URL(), data, { headers: { Authorization: `Bearer ${token}` } })
     .then((response) => {
         const responseBody: PostRoomResponseDto = response.data;
-        const { code } = responseBody;
-        return code;
+        return responseBody
     }).catch((error) => {
         const responseBody: ResponseDto = error.response.data;
-        const { code } = responseBody;
-        return code;
+        return responseBody
     });
     return result;
 }
 
 // 채팅방 불러오기 //
-export const getRoomRequest = async (roomNuber : number | string) => {
-    const result = await axios.get(GET_ROOM_URL(roomNuber))
+export const getRoomRequest = async (roomNuber : number | string, token: string) => {
+    const result = await axios.get(GET_ROOM_URL(roomNuber), { headers: { Authorization: `Bearer ${token}` } })
     .then((response) => {
         const responseBody: GetRoomResponseDto = response.data;
         return responseBody;

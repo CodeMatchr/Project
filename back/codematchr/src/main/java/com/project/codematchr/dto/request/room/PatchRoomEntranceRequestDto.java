@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PatchRoomEntranceRequestDto {
     
-    @NotBlank
     private String roomPassword;
 
 }

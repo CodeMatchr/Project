@@ -38,7 +38,7 @@ public class WebSecurityConfig {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .authorizeRequests()
             .antMatchers("/", "/api/v1/authentication/**", "/api/v1/file/**" ).permitAll()
-            .antMatchers(HttpMethod.GET , "/api/v1/board/**", "/api/v1/room/**").permitAll()
+            .antMatchers(HttpMethod.GET , "/api/v1/board/**", "/api/v1/room/current-room/*").permitAll()
             .antMatchers(HttpMethod.GET , "/api/v1/user/*").permitAll()
             .antMatchers(HttpMethod.GET , "/api/v1/friend/**").permitAll()
             .anyRequest().authenticated().and()
