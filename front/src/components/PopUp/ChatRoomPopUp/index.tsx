@@ -117,8 +117,7 @@ const onCreateClickHandler = async () => {
         roomPassword: roomPasswordInput,
         roomImageUrl: imageUrl
     }
-
-    // setRoom(room);
+    
     setRoomTitle(roomTitle);
     setRoomPassword(roomPassword);
     setRoomImageUrl(roomImageUrl);
