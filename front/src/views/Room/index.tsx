@@ -103,7 +103,7 @@ export default function Room() {
       </div>
       <div className='room-bottom'>
         {pageRoomList.map((item) => <RoomFullListItem onClick={() => onRoomListItemClickHandler(item.roomNumber)} item={item}/>)}
-        {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP roomNumber={selectRoomNumber} /></div>}
+        {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP selectRoomNumber={selectRoomNumber} /></div>}
       </div>
       <Pagination
         totalPage={totalPage}

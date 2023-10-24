@@ -405,7 +405,7 @@ const navigator = useNavigate();
         </div>
         <div className='userpage-chat-room'>
           {viewChatList.map((item) => (<RoomFullListItem onClick={() => onRoomListItemClickHandler(item.roomNumber)} item={item}/>))}
-          {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP roomNumber={selectRoomNumber} /></div>}
+          {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP selectRoomNumber={selectRoomNumber} /></div>}
         </div>
         <div className='userpage-chat-pagination'>
           <Pagination

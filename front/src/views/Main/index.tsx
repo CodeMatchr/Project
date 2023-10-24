@@ -5,8 +5,9 @@ import BoardListResponseDto from '../../interfaces/response/board/board-list.res
 import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
-import { usePagination } from '../../hooks'
-import { BOARD_LIST_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH} from '../../constants';
+import { usePagination } from '../../hooks';
+import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  COUNT_BY_PAGE,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH} from '../../constants';
+
 import { useNavigate} from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
@@ -233,10 +234,9 @@ export default function Main() {
       if(code !== 'SU') return;
 
       const { roomList } = responseBody as GetCurrentRoomListResponseDto;
-      changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE);
       getPageRoomList(roomList);
-      // ! getPageRoomList -> 이거 없어서 메인화면에 안뜨더라구요.
       setCurrentRoomList(roomList);
+      changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE);
     }
 
     // event handler //
@@ -322,7 +322,7 @@ export default function Main() {
           <div className='main-bottom-bottom-list-box'>
             {/* map 함수 돌릴것 3개 */}
             {pageRoomList.map((item) => <><RoomListItem onClick={() => onRoomListItemClickHandler(item.roomNumber)} item={item}/></>)}
-            {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP roomNumber={selectRoomNumber} /></div>}
+            {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP selectRoomNumber={selectRoomNumber} /></div>}
           </div>
         </div>
         <Pagination

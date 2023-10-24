@@ -34,9 +34,9 @@ export default function BoardList() {
   // 타이틀 텍스트 상태 //
   const [title, setTitle] = useState<string>('');
 
-
   // 현재 페이지에서 보여줄 board 리스트 상태 //
   const [viewBoardList, setViewBoardList] = useState<BoardListResponseDto[]>([]);
+
   // 페이지네이션 함수 //
   const getViewBoardList = (boardList : BoardListResponseDto[]) => {
     const startIndex = MAIN_ROOM_COUNT_BY_PAGE_FUll * (currentPage -1);

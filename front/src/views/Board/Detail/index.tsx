@@ -36,8 +36,8 @@ export default function BoardDetail() {
     // 좋아요 리스트 상태 //
     const [favoriteList, setFavoriteList] = useState<FavoriteListResponseDto[]>([]);
 
-    // 댓글 리스트 상태 //
-    const [commentList, setCommentList] = useState<CommentListResponseDto[]>([]);
+    // 댓글 전체 리스트 상태 //
+    const [currentCommentList, setCurrentCommentList] = useState<CommentListResponseDto[]>([]);
 
     // 현재 페이지에서 보여줄 댓글 리스트 상태 //
     const [pageCommentList, setPageCommentList] = useState<CommentListResponseDto[]>([]);
@@ -97,12 +97,12 @@ export default function BoardDetail() {
         if (code === 'VF') alert('잘못된 게시물번호입니다.');
         if (code === 'DE') alert('데이터베이스 에러입니다.');
         if (code !== 'SU') {
-          setCommentList([]);
+          setCurrentCommentList([]);
           return;
         }
     
         const { commentList } = responseBody as GetCommentListResponseDto;
-        setCommentList(commentList);
+        setCurrentCommentList(commentList);
         getPageCommentList(commentList);
         changeSection(commentList.length, COUNT_BY_PAGE_COMMENT);
       }
@@ -198,12 +198,14 @@ export default function BoardDetail() {
 
     // 현재 페이지가 바뀔때 마다 검색 게시물 분류하기 //
     useEffect(() => {
-        getPageCommentList(commentList);
+        getPageCommentList(currentCommentList);
     }, [currentPage]);
     // 현재 페이지가 바뀔때 마다 페이지 리스트 변경 //
     useEffect(() => {
-        changeSection(commentList.length, COUNT_BY_PAGE_COMMENT);
+        changeSection(currentCommentList.length, COUNT_BY_PAGE_COMMENT);
     }, [currentSection]);
+    
+    
     // 좋아요 리스트 변경시 실행 //
     useEffect(() => {
         const favorited = favoriteList.findIndex((item) => item.userEmail === user?.userEmail);
@@ -249,7 +251,7 @@ export default function BoardDetail() {
                     </div>
                     <div className='board-detail-comment-icon-box'>
                         <div className='board-detail-comment-show-icon' ></div>
-                        <div className='board-detail-comment'>{`댓글 ${commentList.length}`}</div>
+                        <div className='board-detail-comment'>{`댓글 ${currentCommentList.length}`}</div>
                     </div>
                 </div>
             </div>
@@ -270,9 +272,9 @@ export default function BoardDetail() {
             </div>
 
             <div className='board-detail-comment-list'>
-                <div className='board-detail-comment-list-title'>댓글{commentList.length}</div>
+                <div className='board-detail-comment-list-title'>댓글{currentCommentList.length}</div>
                 <div className='board-detail-comment-list-user'>
-                    {commentList.map((item) => (
+                    {pageCommentList.map((item) => (
                         <div className='comment-list-item-box'>
                             <div className='comment-list-item-writer-profile'>
                                 <div className='comment-list-item-profile-image'>{item.profileImageUrl}</div>
@@ -284,7 +286,7 @@ export default function BoardDetail() {
                             <div className='comment-list-item-comment'>{item.contents}</div>
                         </div>
                     ))}
-                    {commentList.length !== 0 && (
+                    {pageCommentList.length !== 0 && (
                     <Pagination 
                         totalPage={totalPage} 
                         currentPage={currentPage} 
