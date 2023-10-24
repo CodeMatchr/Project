@@ -66,7 +66,7 @@ export default function Top3ListItem({item} : Props) {
                 <div className='top3-board-list-mid'>
                     <div className='top3-board-list-mid-title'>{ boardTitle }</div>
                     <div className='top3-board-list-mid-contents'>
-                        { boardContents.length > 50 ? boardContents.substring(0,47) + "..." : boardContents }
+                        { boardContents.length > 40 ? boardContents.substring(0,37) + "..." : boardContents }
                         </div>
                 </div>
                 <div className='top3-board-list-bottom'>

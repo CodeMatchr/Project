@@ -63,4 +63,5 @@ public interface BoardService {
     ResponseEntity<? super GetBoardListResponseDto> getBoardFavoriteList(Integer section);
     // 게시물 리스트 댓글 메서드 //
     ResponseEntity<? super GetBoardListResponseDto> getBoardCommentList(Integer section);
+
 }

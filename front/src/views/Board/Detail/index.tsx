@@ -239,7 +239,7 @@ export default function BoardDetail() {
                 <div className='board-detail-body'>
                     <div className='board-detail-body-contents'>{board?.boardContents}</div>
                     <div className='board-detail-body-image-box'>
-                        <img className='board-detail-image' src="" alt="board-detail-image" />
+                        <img className='board-detail-image' src={board?.boardImageUrl ? board.boardImageUrl : ''} />
                     </div>
                 </div>
                 <div className='board-detail-show-button'>

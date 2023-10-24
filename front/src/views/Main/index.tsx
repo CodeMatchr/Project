@@ -6,7 +6,7 @@ import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  COUNT_BY_PAGE,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH} from '../../constants';
+import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  COUNT_BY_PAGE,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH, WRITE_PATH} from '../../constants';
 
 import { useNavigate} from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
@@ -130,9 +130,12 @@ export default function Main() {
 
     // event handler //
     // Board 리스트 페이지 이동 버튼 클릭 이벤트 //
-    // todo : 나중에 게시물 리스트 페이지로 이동하도록 수정 //
     const onBoardListClickHandler = () => {
       navigator(BOARD_LIST_PATH);  
+    }
+    // 게시물 작성 이동 버튼 클릭 이벤트 //
+    const onWriteButtonClickHandler = () => {
+      navigator(WRITE_PATH);
     }
 
     // Top3 조회수 Board 리스트 Tab 버튼 클릭 이벤트 //
@@ -176,7 +179,7 @@ export default function Main() {
           <div className='main-mid-top3-board-list'>
             <div className='main-mid-top3-board-list-top'>
               <div className='main-mid-top3-board-list-top-title'>{title}</div>
-              <div className='main-mid-top3-board-list-top-plus-button' onClick={ onBoardListClickHandler }></div>
+              <div className='main-mid-top3-board-list-top-plus-button' onClick={ onWriteButtonClickHandler }>작성</div>
             </div>
             <div className='main-mid-top3-board-list-bottom'>
               {currentTop3BoardList.map((item) => (<Top3ListItem item={item}/>))}

@@ -45,8 +45,11 @@
   width: 90px;
   height: 90px;
 
-  background-color: aqua;
   border-radius: 120px;
+  
+  background-repeat: none;
+  background-position: 50% 50%;
+  background-size: 100% 100%;
 }
 
 .userpage-profile-image:hover {

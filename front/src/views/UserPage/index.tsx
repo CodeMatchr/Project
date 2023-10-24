@@ -200,7 +200,7 @@ const navigator = useNavigate();
       <div className='userpage-top-wrapper'>
         <div className='userpage-profile-box'>
           <div className='userpage-profile-image' style={{ backgroundImage: `url(${userProfileImageUrl})` }} onClick={onProfileClickHandler}>
-            <input type='file' style={{display: 'none'}} ref={fileInputRef} accept='image/*' />
+            <input type='file' style={{display: 'none'}} ref={fileInputRef} accept='image/*' onChange={onImageInputChangeHandler} />
           </div>
         </div>
         <div className='userpage-user-info-box'>

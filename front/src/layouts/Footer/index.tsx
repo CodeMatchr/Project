@@ -1,14 +1,20 @@
 import React from 'react';
 import './style.css';
+import { useNavigate } from 'react-router-dom';
+import { MAIN_PATH } from 'src/constants';
 
 // component //
 export default function Footer() {
 
     // state //
+    const navigator = useNavigate();
 
     // function //
 
     // event handler //
+    const onLogoButtonClickHandler = () => {
+        navigator(MAIN_PATH);
+    }
 
     // effect //
 
@@ -17,8 +23,8 @@ export default function Footer() {
         <div id='footer'>
             <div className='footer-box'>
                 <div className='footer-left'>
-                    <div className='footer-left-logo'>
-                        <div className='footer-left-logo-icon'>logo</div>
+                    <div className='footer-left-logo' onClick={onLogoButtonClickHandler} >
+                        <div className='footer-left-logo-icon'></div>
                         <div className='footer-left-logo-text'>Code Matchr</div>
                     </div>
                     <div className='footer-left-copyright'>Copyright &copy; 2023 CopyMatchr. All Rights Reserved.</div>

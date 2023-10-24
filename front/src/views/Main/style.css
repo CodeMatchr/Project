@@ -129,17 +129,17 @@
     margin-top: 10px;
     margin-right: 10px;
 
-    width: 30px;
+    width: 100px;
     height: 30px;
-    border-radius: 50%;
+    border-radius: 15px;
     text-align: center;
     line-height: 30px;
     cursor: pointer;
     transition: all 0.3s;
-    background-image: url(./assets/plus-button-icon.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+
+    font-weight: 600;
+
+    background-color: rgba(0,0,0,0.1);
 }
 
 .main-mid-top3-board-list-top-plus-button:hover{
