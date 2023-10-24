@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 interface RoomStore {
-    roomNumber : string;
+    roomNumber : number;
     roomTitle : string;
     roomPassword : string;
     roomImage : File | null;
@@ -14,7 +14,7 @@ interface RoomStore {
     // roomManagerProfileImageUrl : string | null;
     // roomIsMulti : boolean;
 
-    setRoomNumber : (roomNumber: string) => void;
+    setRoomNumber : (roomNumber: number) => void;
     setRoomTitle : (roomTitle: string) => void;
     setRoomPassword : (roomPassword : string) => void;
     setRoomImage : (roomImage : File | null) => void;
@@ -23,7 +23,7 @@ interface RoomStore {
 }
 
 const useRoomStore = create<RoomStore>((set) => ({
-    roomNumber: '',
+    roomNumber: 0,
     roomTitle: '',
     roomImage: null,
     roomImageUrl: null,
@@ -33,7 +33,7 @@ const useRoomStore = create<RoomStore>((set) => ({
     setRoomImage: (roomImage) => set((state) => ({...state, roomImage})),
     setRoomImageUrl: (roomImageUrl) => set((state) => ({...state, roomImageUrl})),
     setRoomPassword: (roomCreatePassword) => set((state) => ({...state, roomCreatePassword})),
-    resetRoom: () => set((state) => ({...state, roomNumber: '', roomTitle: '', roomImage: null, roomPassword: ''}))
+    resetRoom: () => set((state) => ({...state, roomNumber: 0, roomTitle: '', roomImage: null, roomPassword: ''}))
 }));
 
 export default useRoomStore;
