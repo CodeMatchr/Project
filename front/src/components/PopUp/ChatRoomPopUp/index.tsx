@@ -76,9 +76,9 @@ const postRoomResponseHandler = (code : string) => {
 // Room detail(채팅방) 불러오기 응답처리 함수 //
 const getRoomResponseHandler = (responseBody : GetRoomResponseDto | ResponseDto) => {
   const { code } = responseBody;
-  if(code == 'NR') alert('존재하는 않는 다인원 채팅방 번호입니다.');
-  if(code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
-  if(code !== 'SU') {
+  if (code == 'NR') alert('존재하는 않는 다인원 채팅방 번호입니다.');
+  if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+  if (code !== 'SU') {
     navigator(MAIN_PATH);
     return;
   }
@@ -113,19 +113,10 @@ const onCreateClickHandler = async () => {
         roomPassword: roomPasswordInput,
         roomImageUrl: imageUrl
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     setRoomTitle(roomTitle);
     setRoomPassword(roomPassword);
     setRoomImageUrl(roomImageUrl);
-
-=======
-    
->>>>>>> d129b94ed68c9188a2b02f2cf602b99f8024530d
-=======
-    
->>>>>>> 41a0342a26ba2cbb23a53fe7561be198ceada49b
     postRoomRequest(data, token).then(postRoomResponseHandler);
   
 }
@@ -143,14 +134,11 @@ const onFileUploadClickHandler = () => {
 //            effect           //
 // useEffect(() => {
 //   if (!userEmail) navigator(MAIN_PATH);
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 
 //   return;
 // }, [userEmail]);
-=======
-=======
->>>>>>> 41a0342a26ba2cbb23a53fe7561be198ceada49b
+
 
 //   return;
 // }, [userEmail]);
@@ -170,10 +158,7 @@ useEffect(() => {
   getRoomRequest(roomNumber).then(getRoomResponseHandler);
 }, [roomNumber]);
 
-<<<<<<< HEAD
->>>>>>> d129b94ed68c9188a2b02f2cf602b99f8024530d
-=======
->>>>>>> 41a0342a26ba2cbb23a53fe7561be198ceada49b
+
 //            render           //
   return (
     <div id='popup-wrapper'>

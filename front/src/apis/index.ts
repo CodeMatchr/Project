@@ -33,6 +33,8 @@ import { error } from 'console';
 import PatchRoomExitRequsetDto from 'src/interfaces/request/room/patch-room-exit-request.dto';
 import PatchRoomExitResponseDto from 'src/interfaces/response/room/patch-room-exit-response.dto';
 import GetSearchBoardResponseDto from 'src/interfaces/response/board/get-search-board.response.dto';
+import PatchRoomEntranceRequestDto from 'src/interfaces/request/room/patch-room-entrance-request.dto';
+import PatchRoomEntranceResponseDto from 'src/interfaces/response/room/patch-room-entrance-response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -374,6 +376,22 @@ export const DeleteRoomRequest = async (roomNumber : number | string, token : st
     return result;
 }
 
+// 채팅방 입장 //
+export const PatchRoomEntranceRequest = async (roomNumber : number | string, data : PatchRoomEntranceRequestDto, token : string) => {
+    const result = await axios.patch(PATCH_ROOM_ENTRANCE_URL(roomNumber), data, { headers : {Authorization : `Bearer ${token}`} })
+    .then((response) => {
+        const responseBody : PatchRoomEntranceResponseDto = response.data;
+        const { code } = responseBody;
+        return code;
+    }).catch((error) => {
+        const responseBody : ResponseDto = error.response.data;
+        const { code } = responseBody;
+        return code;
+    });
+
+    return result;
+}
+
 // 채팅방 나가기 //
 export const PatchRoomExitRequest = async (roomNumber : number | string, data : PatchRoomExitRequsetDto , token : string) => {
     const result = await axios.patch(PATCH_ROOM_ENTRANCE_URL(roomNumber))
@@ -389,6 +407,8 @@ export const PatchRoomExitRequest = async (roomNumber : number | string, data : 
 
     return result;
 }
+
+
 
 
 // 파일 업로드 //

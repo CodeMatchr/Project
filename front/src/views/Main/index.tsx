@@ -6,15 +6,8 @@ import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-<<<<<<< HEAD
-<<<<<<< HEAD
-import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_PATH} from '../../constants';
-=======
 import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  COUNT_BY_PAGE,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH} from '../../constants';
->>>>>>> d129b94ed68c9188a2b02f2cf602b99f8024530d
-=======
-import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  COUNT_BY_PAGE,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH} from '../../constants';
->>>>>>> 41a0342a26ba2cbb23a53fe7561be198ceada49b
+
 import { useNavigate} from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
@@ -333,7 +326,7 @@ export default function Main() {
           <div className='main-bottom-bottom-list-box'>
             {/* map 함수 돌릴것 3개 */}
             {pageRoomList.map((item) => <><RoomListItem onClick={() => onRoomListItemClickHandler(item.roomNumber)} item={item}/></>)}
-            {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP roomNumber={selectRoomNumber} /></div>}
+            {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP selectRoomNumber={selectRoomNumber} /></div>}
           </div>
         </div>
         <Pagination
