@@ -151,7 +151,7 @@ export const getSignInUserRequest = async (token: string) => {
     return result;
   }
 
-// 사용자 //
+// 사용자 정보 가져오기 //
 export const getUserRequest = async (userEmail:string) => {
     const result = await axios.get(GET_USER_URL(userEmail))
         .then((response) => {

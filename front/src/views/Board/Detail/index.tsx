@@ -280,7 +280,7 @@ export default function BoardDetail() {
                                 <div className='comment-list-item-profile-image'>{item.profileImageUrl}</div>
                                 <div className='comment-list-item-writer-data'>
                                     <div className='comment-list-item-writer-nickname'>{item.nickname}</div>
-                                    <div className='comment-list-item-write-time'>{item.writeDatetime}</div>
+                                    <div className='comment-list-item-write-time'>{ dateFormat(item.writeDatetime)}</div>
                                 </div>
                             </div>
                             <div className='comment-list-item-comment'>{item.contents}</div>

@@ -5,7 +5,7 @@ import { CHAT_PATH, MAIN_PATH, ROOM_DETAIL_PATH, ROOM_NUMBER_PATH_VARIABLE, ROOM
 import { useRoomStore } from 'src/store';
 import { useCookies } from 'react-cookie';
 import PatchRoomEntranceRequestDto from 'src/interfaces/request/room/patch-room-entrance-request.dto';
-import { PatchRoomEntranceRequest, getRoomRequest } from 'src/apis';
+import { PatchRoomEntranceRequest, getRoomRequest, postRoomRequest } from 'src/apis';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
 
@@ -19,19 +19,16 @@ export default function ChatComePopUP({ selectRoomNumber }: Props) {
 // description : 네비게이터 //
 const navigator = useNavigate();
 // description : 채팅방 비밀번호 상태 //
-const [roomPasswordInput, setPasswordInput] = useState<string>('');
+const [roomPasswordInput, setPasswordInput] = useState<string>(''); 
 // description : 채팅방 비밀번호 에러 상태 //
 const [roomPasswordError, setRoomPasswordError] = useState<boolean>(false);
-
-
-
 
 // 채팅방 정보를 저장할 상태 //
 const { roomNumber, roomTitle, roomPassword, setRoomTitle, setRoomPassword, resetRoom } = useRoomStore();
 const [cookies, setCookie] = useCookies();
 // 채팅방 상태 //
 const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
-
+const [roomName, setRoomName] = useState<string>('');
 
 //                      function                       //
 // Room detail(채팅방) 불러오기 응답처리 함수 //
@@ -43,7 +40,7 @@ const getRoomResponseHandler = (responseBody : GetRoomResponseDto | ResponseDto)
       navigator(MAIN_PATH);
       return;
     }
-  
+
     const room = responseBody as GetRoomResponseDto;
     setRoom(room);
   }
@@ -103,9 +100,7 @@ useEffect(() => {
   getRoomRequest(roomNumber, accessToken).then(getRoomResponseHandler);
 }, [roomNumber]);
 
-useEffect(() => {
 
-}, [roomTitle]);
 
 //                      render                       //
   return (
@@ -121,7 +116,7 @@ useEffect(() => {
                 <div className='popup-main-box-bottom'>
                     <div className='popup-main-bottom-room-name-box'>
                         <div className='popup-main-bottom-room-name'>방 이름</div>
-                        <div className='popup-main-bottom-room-name-title'>{roomTitle}</div>
+                        <div className='popup-main-bottom-room-name-title'>{roomName}</div>
                     </div> 
                     <div className='popup-main-bottom-room-password-box'>
                         <div className='popup-main-bottom-room-password'>비밀번호</div>

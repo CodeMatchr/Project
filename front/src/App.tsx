@@ -48,9 +48,6 @@ const getSignInUserResponseHandler = (result : GetLoginUserResponseDto | Respons
 
   setUser(result as GetLoginUserResponseDto);
   
-  console.log("app 로그인부분" + result);
-  console.log("app 로그인부분" + user);
-  console.log("app 로그인부분" + user?.userEmail);  
 }
 
 // effect //

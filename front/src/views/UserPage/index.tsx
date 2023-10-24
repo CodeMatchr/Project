@@ -63,6 +63,7 @@ const navigator = useNavigate();
       const { userNickname, userProfileImageUrl, userStateMessage } = result as GetUserResponseDto;
       setUserNickname(userNickname);
       setUserStateMessage(userStateMessage);
+      
       if (userProfileImageUrl) setUserProfileImageUrl(userProfileImageUrl);
       else setUserProfileImageUrl('');
 
@@ -81,6 +82,7 @@ const navigator = useNavigate();
       if (code === 'DE') alert('데이터베이스 에러입니다.');
       if (code !== 'SU')  return;
 
+      setUserNickname(userNickname);
       getUserRequest(user.userEmail).then(getUserResponseHandler);
 
     }
@@ -93,7 +95,10 @@ const navigator = useNavigate();
       if (code === 'DE') alert('데이터베이스 에러입니다.');
       if (code !== 'SU') return;
 
-      getUserRequest(user.userEmail).then(getUserResponseHandler);
+      if(code === 'SU'){
+        getUserRequest(user.userEmail).then(getUserResponseHandler);
+        setUserStateMessage(userStateMessage);
+      }
     }
     
     
@@ -172,15 +177,18 @@ const navigator = useNavigate();
     
     //            component           //
     //            effect           //
-    // description: 유저 이메일 상태가 바뀔 때마다 실행 //
+    // description: 유저 이메일 상태 또는 이메일이 바뀔 때마다 실행 //
     useEffect(() => {
-      if (!userEmail) navigator(MAIN_PATH);
-      
+      if(!userEmail) navigator(MAIN_PATH);
+      if(!user) return;
+            
       const isMyPage = user?.userEmail === userEmail;
       if (isMyPage) {
+
         if (user?.userProfileImageUrl) setUserProfileImageUrl(user?.userProfileImageUrl);
         else setUserProfileImageUrl('');
         setUserNickname(user?.userNickname as string);
+        setUserStateMessage(userStateMessage);
       } else {
         getUserRequest(userEmail as string).then(getUserResponseHandler);
       }
@@ -211,7 +219,7 @@ const navigator = useNavigate();
             {messageChange ? (
               <input className='userpage-user-message-text-input' type='text' value={userStateMessage} onChange={onMessageChangeHandler} />
             ) : (
-              <div className='userpage-user-message-text'>{userStateMessage}</div>
+              <input className='userpage-user-message-text-input' type='text' value={user?.userStateMessage} readOnly />
             )}
             <div className='userpage-user-message-button' onClick={onMessageButtonClickHandler}></div>
           </div>
