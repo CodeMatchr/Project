@@ -342,8 +342,10 @@ public class RoomServiceImplement implements RoomService {
             if(roomViewEntity == null) return GetRoomResponseDto.noExistedRoomNumber();
 
             // 특정한 다인원 채팅방에 속해 있는 사용자인지 확인 //
-            roomJoinEntity = roomJoinRepository.findByRoomNumberAndUserEmail(roomNumber, userEmail);
-            if(roomJoinEntity == null) return GetRoomResponseDto.noExistedUserEmail();
+            // System.out.println(roomNumber);
+            // System.out.println(userEmail);
+            // roomJoinEntity = roomJoinRepository.findByRoomNumberAndUserEmail(roomNumber, userEmail);
+            // if(roomJoinEntity == null) return GetRoomResponseDto.noExistedUserEmail();
 
             // 데이터베이스 저장
             roomViewRepository.save(roomViewEntity);

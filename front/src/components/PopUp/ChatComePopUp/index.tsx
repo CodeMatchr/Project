@@ -28,14 +28,14 @@ const { roomNumber, roomTitle, roomPassword, setRoomTitle, setRoomPassword, rese
 const [cookies, setCookie] = useCookies();
 // 채팅방 상태 //
 const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
-const [roomName, setRoomName] = useState<string>('');
+const [roomNumberFlag, setRoomNumberFlag] = useState<boolean>(true);
 
 //                      function                       //
 // Room detail(채팅방) 불러오기 응답처리 함수 //
 const getRoomResponseHandler = (responseBody : GetRoomResponseDto | ResponseDto) => {
     const { code } = responseBody;
     if (code == 'NR') alert('존재하는 않는 다인원 채팅방 번호입니다.');
-    if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+    // if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
     if (code !== 'SU') {
       navigator(MAIN_PATH);
       return;
@@ -43,6 +43,7 @@ const getRoomResponseHandler = (responseBody : GetRoomResponseDto | ResponseDto)
 
     const room = responseBody as GetRoomResponseDto;
     setRoom(room);
+    setRoomTitle(room.roomTitle);
   }
 
 // Room 입장 함수 //
@@ -73,8 +74,6 @@ const onComeClickHandler = async () => {
     const data : PatchRoomEntranceRequestDto = {
         roomPassword : roomPasswordInput
     }
-
-
     PatchRoomEntranceRequest(selectRoomNumber, data, token).then(patchRoomEntranceResponseHandler);
 }
 // description : 취소 버튼 클릭 이벤트 //
@@ -85,20 +84,20 @@ const onCancelClickHandler = () => {
 
 //                      component                       //
 //                      effect                       //
-let roomNumberFlag = true;
+// let roomNumberFlag = true;
 useEffect(() => {
   if(roomNumberFlag) {
-    roomNumberFlag = false;
+    setRoomNumberFlag(false);
     return;
   }
-  if(!roomNumber) {
+  if(!selectRoomNumber) {
     alert('채팅방 번호가 잘못되었습니다.');
     navigator(MAIN_PATH);
     return;
   }
   const accessToken = cookies.accessToken;
-  getRoomRequest(roomNumber, accessToken).then(getRoomResponseHandler);
-}, [roomNumber]);
+  getRoomRequest(selectRoomNumber, accessToken).then(getRoomResponseHandler);
+}, [selectRoomNumber, roomNumberFlag]);
 
 
 
@@ -116,7 +115,7 @@ useEffect(() => {
                 <div className='popup-main-box-bottom'>
                     <div className='popup-main-bottom-room-name-box'>
                         <div className='popup-main-bottom-room-name'>방 이름</div>
-                        <div className='popup-main-bottom-room-name-title'>{roomName}</div>
+                        <div className='popup-main-bottom-room-name-title'>{roomTitle}</div>
                     </div> 
                     <div className='popup-main-bottom-room-password-box'>
                         <div className='popup-main-bottom-room-password'>비밀번호</div>

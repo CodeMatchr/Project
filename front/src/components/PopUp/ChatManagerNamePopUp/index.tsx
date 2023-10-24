@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEvent } from 'react'
+import React, { useState, useRef, ChangeEvent, useEffect } from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH } from '../../../constants';
@@ -7,7 +7,7 @@ import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.d
 import ResponseDto from 'src/interfaces/response/response.dto';
 import { useCookies } from 'react-cookie';
 import { PatchRoomTitleRequestDto } from 'src/interfaces/request/room';
-import { PatchRoomTitleRequest } from 'src/apis';
+import { PatchRoomTitleRequest, getRoomRequest } from 'src/apis';
 
 //            component           //
 // description : 채팅방 매니저 팝업창 //
@@ -47,21 +47,25 @@ export default function ChatManagerNamePopUp() {
     // description : 파일 업로드 버튼 //
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    // 채팅방 상태 //
+const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
+
 
     //            function           //
     // 채팅방 불러오기 응답 처리 //
     const getRoomResponseHnadler = (responseBody : GetRoomResponseDto | ResponseDto) => {
         const {code} = responseBody;
         if (code == 'NR') alert('존재하지 않는 채팅방입니다.');
+        if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
         if (code != 'SU') {
             navigator(MAIN_PATH);
             return;
         }
 
-        const { roomTitle, roomPassword, roomImageUrl } = responseBody as GetRoomResponseDto
+        const room = responseBody as GetRoomResponseDto;
+        setRoom(room);
+        const { roomTitle } = room;
         setRoomTitle(roomTitle);
-        setRoomPassword(roomPassword);
-        setRoomImageUrl(roomImageUrl);
     }
 
     const patchRoomTitleResponseHandler = (code : string) => {
@@ -83,7 +87,6 @@ export default function ChatManagerNamePopUp() {
     }
 
     //            event handler           //
-    
     // 변경 버튼 클릭 이벤트 //
     const onChangeClickHandler = async () => {
         const token = cookies.accessToken;
@@ -94,13 +97,28 @@ export default function ChatManagerNamePopUp() {
 
         PatchRoomTitleRequest(roomNumber, data, token).then(patchRoomTitleResponseHandler);
     }
+
     // description : 취소 버튼 클릭 이벤트 //
-    // todo : 변경 위치 다시 확인해서 수정해야함 //
     const onCancelClickHandler = () => {
         navigator(ROOM_DETAIL_PATH(roomNumber));
     }
 
     //            effect           //
+    let roomNumberFlag = true;
+    useEffect(() => {
+    if(roomNumberFlag) {
+        roomNumberFlag = false;
+        return;
+    }
+    if(!roomNumber) {
+        alert('채팅방 번호가 잘못되었습니다.');
+        navigator(MAIN_PATH);
+        return;
+    }
+    const accessToken = cookies.accessToken;
+    getRoomRequest(roomNumber, accessToken).then(getRoomResponseHnadler);
+    }, [roomNumber, roomTitle, roomPassword, roomImage, roomImageUrl]);
+
     
     //            render           //
     return (
