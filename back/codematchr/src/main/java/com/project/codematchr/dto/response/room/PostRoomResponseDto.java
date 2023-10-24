@@ -13,14 +13,17 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class PostRoomResponseDto extends ResponseDto {
+
+    private Integer roomNumber;
     
-    private PostRoomResponseDto(String code, String message) {
+    private PostRoomResponseDto(String code, String message, Integer roomNumber) {
         super(code, message);
+        this.roomNumber = roomNumber;
     }
 
     // 성공
-    public static ResponseEntity<PostRoomResponseDto> success() {
-        PostRoomResponseDto result = new PostRoomResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+    public static ResponseEntity<PostRoomResponseDto> success(Integer roomNumber) {
+        PostRoomResponseDto result = new PostRoomResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS, roomNumber);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

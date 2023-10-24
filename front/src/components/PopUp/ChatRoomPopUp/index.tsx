@@ -9,6 +9,7 @@ import { useRoomStore, useUserStore } from 'src/store';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
 import { transpileModule } from 'typescript';
+import PostRoomResponseDto from 'src/interfaces/response/room/post-room.response.dto';
 
 //            component           //
 // description : 채팅방 만들기 팝업창 // 
@@ -16,8 +17,6 @@ export default function ChatRoomPopUp() {
 //            state           //
 // description : 네비게이터 //
 const navigator = useNavigate();
-
-const {userEmail} = useParams();
 
 // todo : 상태 string / boolean 확인 잘하기, 받아오는 값 //
 // description : 방 이름 상태 //
@@ -58,19 +57,22 @@ const fileUpload = async () => {
 }
 
 // Room 생성 함수 //
-const postRoomResponseHandler = (code : string) => {
+const postRoomResponseHandler = (responseBody : PostRoomResponseDto | ResponseDto) => {
+  const { code } = responseBody;
   if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
   if (code == 'VF') alert('필수 데이터를 입력하지 않았습니다.');
   if (code == 'DE') alert('데이터베이스 에러입니다.');
-  if (code == 'SU') return;
+  if (code == 'SU') {
+    const { roomNumber } = responseBody as PostRoomResponseDto;
+    alert('채팅방이 생성되었습니다. 해당 채팅방으로 이동합니다.');
+    navigator(ROOM_DETAIL_PATH(roomNumber));
+  }
 
   if(!user) {
     alert('로그인이 필요합니다.')
     navigator(AUTHENTICATION_PATH);
     return;
   }
-
-  navigator(ROOM_DETAIL_PATH(roomNumber));
 }
 
 // Room detail(채팅방) 불러오기 응답처리 함수 //
@@ -114,6 +116,7 @@ const onCreateClickHandler = async () => {
         roomImageUrl: imageUrl
     }
 
+    // setRoom(room);
     setRoomTitle(roomTitle);
     setRoomPassword(roomPassword);
     setRoomImageUrl(roomImageUrl);
@@ -155,7 +158,8 @@ useEffect(() => {
     navigator(MAIN_PATH);
     return;
   }
-  getRoomRequest(roomNumber).then(getRoomResponseHandler);
+  const accessToken = cookies.accessToken;
+  getRoomRequest(roomNumber, accessToken).then(getRoomResponseHandler);
 }, [roomNumber]);
 
 //            render           //

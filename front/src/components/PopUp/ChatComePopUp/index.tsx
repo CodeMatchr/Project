@@ -1,11 +1,13 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, {ChangeEvent, useEffect, useState} from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { CHAT_PATH, MAIN_PATH, ROOM_DETAIL_PATH, ROOM_NUMBER_PATH_VARIABLE, ROOM_PATH } from '../../../constants';
 import { useRoomStore } from 'src/store';
 import { useCookies } from 'react-cookie';
 import PatchRoomEntranceRequestDto from 'src/interfaces/request/room/patch-room-entrance-request.dto';
-import { PatchRoomEntranceRequest } from 'src/apis';
+import { PatchRoomEntranceRequest, getRoomRequest } from 'src/apis';
+import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
+import ResponseDto from 'src/interfaces/response/response.dto';
 
 interface Props {
     selectRoomNumber : number;
@@ -16,10 +18,8 @@ export default function ChatComePopUP({ selectRoomNumber }: Props) {
 //                      state                       //
 // description : 네비게이터 //
 const navigator = useNavigate();
-// description : 채팅방 이름 상태 //
-const [roomName, setRoomName] = useState<string>('');
 // description : 채팅방 비밀번호 상태 //
-const [roomPasswordInput, setPasswordInput] = useState<string>('???');
+const [roomPasswordInput, setPasswordInput] = useState<string>('');
 // description : 채팅방 비밀번호 에러 상태 //
 const [roomPasswordError, setRoomPasswordError] = useState<boolean>(false);
 
@@ -29,16 +29,32 @@ const [roomPasswordError, setRoomPasswordError] = useState<boolean>(false);
 // 채팅방 정보를 저장할 상태 //
 const { roomNumber, roomTitle, roomPassword, setRoomTitle, setRoomPassword, resetRoom } = useRoomStore();
 const [cookies, setCookie] = useCookies();
+// 채팅방 상태 //
+const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
 
 
 //                      function                       //
+// Room detail(채팅방) 불러오기 응답처리 함수 //
+const getRoomResponseHandler = (responseBody : GetRoomResponseDto | ResponseDto) => {
+    const { code } = responseBody;
+    if (code == 'NR') alert('존재하는 않는 다인원 채팅방 번호입니다.');
+    if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+    if (code !== 'SU') {
+      navigator(MAIN_PATH);
+      return;
+    }
+  
+    const room = responseBody as GetRoomResponseDto;
+    setRoom(room);
+  }
+
 // Room 입장 함수 //
 const patchRoomEntranceResponseHandler = (code : string) => {
     if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
     if (code == 'NR') alert('존재하는 않는 다인원 채팅방 번호입니다.');
     if (code == 'NCP') alert('비밀번호가 알맞지 않습니다.');
-    if (code == 'SU') {
-        navigator(ROOM_DETAIL_PATH(roomNumber));
+    if (code == 'SU' || code == 'EE') {
+        navigator(ROOM_DETAIL_PATH(selectRoomNumber));
         return;
     }
     if (code != 'SU') {
@@ -61,7 +77,8 @@ const onComeClickHandler = async () => {
         roomPassword : roomPasswordInput
     }
 
-    PatchRoomEntranceRequest(roomNumber, data, token).then(patchRoomEntranceResponseHandler);
+
+    PatchRoomEntranceRequest(selectRoomNumber, data, token).then(patchRoomEntranceResponseHandler);
 }
 // description : 취소 버튼 클릭 이벤트 //
 // todo : 취소버튼 클릭시 채팅방 리스트 화면으로 이동하게 다시 해야함 //
@@ -71,6 +88,24 @@ const onCancelClickHandler = () => {
 
 //                      component                       //
 //                      effect                       //
+let roomNumberFlag = true;
+useEffect(() => {
+  if(roomNumberFlag) {
+    roomNumberFlag = false;
+    return;
+  }
+  if(!roomNumber) {
+    alert('채팅방 번호가 잘못되었습니다.');
+    navigator(MAIN_PATH);
+    return;
+  }
+  const accessToken = cookies.accessToken;
+  getRoomRequest(roomNumber, accessToken).then(getRoomResponseHandler);
+}, [roomNumber]);
+
+useEffect(() => {
+
+}, [roomTitle]);
 
 //                      render                       //
   return (
@@ -92,7 +127,7 @@ const onCancelClickHandler = () => {
                         <div className='popup-main-bottom-room-password'>비밀번호</div>
                         <div className='popup-main-bottom-room-password-container'>
                             {roomPasswordError? (
-                                <input className='popup-main-bottom-room-password-input-error'></input>
+                                <input className='popup-main-bottom-room-password-input-error' onChange={onPasswordChangeHandler}></input>
                                 ) : (
                                 <input className='popup-main-bottom-room-password-input' onChange={onPasswordChangeHandler}></input>
                             )}
