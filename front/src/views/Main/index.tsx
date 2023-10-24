@@ -18,9 +18,6 @@ import {  GetCurrentRoomListRequest, getCommentListRequest, getCurrentListReques
 import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Favorite.response.dto';
 import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
 import { useRoomStore, useUserStore } from 'src/store';
-import GetRoomListResponseDto from 'src/interfaces/response/room/get-current-room-list.response.dto';
-import { access } from 'fs';
-import { useCookies } from 'react-cookie';
 import GetCurrentRoomListResponseDto from 'src/interfaces/response/room/get-current-room-list.response.dto';
 
 // component //
@@ -237,10 +234,9 @@ export default function Main() {
       if(code !== 'SU') return;
 
       const { roomList } = responseBody as GetCurrentRoomListResponseDto;
-      changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE);
       getPageRoomList(roomList);
-      // ! getPageRoomList -> 이거 없어서 메인화면에 안뜨더라구요.
       setCurrentRoomList(roomList);
+      changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE);
     }
 
     // event handler //

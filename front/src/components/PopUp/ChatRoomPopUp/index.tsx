@@ -164,7 +164,6 @@ useEffect(() => {
   getRoomRequest(roomNumber, accessToken).then(getRoomResponseHandler);
 }, [roomNumber]);
 
-
 //            render           //
   return (
     <div id='popup-wrapper'>
