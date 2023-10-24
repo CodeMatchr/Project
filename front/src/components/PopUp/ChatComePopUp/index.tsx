@@ -13,7 +13,7 @@ export default function ChatComePopUP({ roomNumber }: Props) {
 // description : 네비게이터 //
 const navigator = useNavigate();
 // description : 채팅방 이름 상태 //
-const [roomName, setRoomName] = useState<string>('Chat Room Come Come Come');
+const [roomName, setRoomName] = useState<string>('');
 // description : 채팅방 비밀번호 상태 //
 const [roomPassword, setRoomPassword] = useState<string>('');
 // description : 채팅방 비밀번호 에러 상태 //
@@ -25,6 +25,7 @@ const [roomPasswordError, setRoomPasswordError] = useState<boolean>(false);
 // todo : 입장버튼 클릭시 해당 채팅방으로 이동하게 구현해야함, 사용자 검증도 필요함//
 const onComeClickHandler = () => {
     navigator(ROOM_PATH);
+    
 }
 // description : 취소 버튼 클릭 이벤트 //
 // todo : 취소버튼 클릭시 채팅방 리스트 화면으로 이동하게 다시 해야함 //

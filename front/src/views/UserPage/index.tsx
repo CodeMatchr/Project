@@ -70,8 +70,6 @@ const navigator = useNavigate();
         const after = { userEmail: userEmail as string, userNickname, userProfileImageUrl, userStateMessage };
         setUser(after);
       }
-      console.log("1:" +user?.userEmail);
-      console.log("2:" +user);
     }
     
     // description: 닉네임 변경 응답 처리 함수 //
@@ -186,7 +184,6 @@ const navigator = useNavigate();
       } else {
         getUserRequest(userEmail as string).then(getUserResponseHandler);
       }
-      console.log("5"+ user?.userEmail);
 
     }, [userEmail , user]);
     

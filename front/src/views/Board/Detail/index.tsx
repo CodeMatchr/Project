@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './style.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUserStore } from 'src/store';
@@ -12,7 +12,6 @@ import { usePagination } from 'src/hooks';
 import { deleteBoardRequest, getBoardCommentListRequest, getBoardFavoriteListRequest, getBoardRequest, getCommentListRequest, getFavoriteListRequest, postCommentRequest, putFavoriteRequest } from 'src/apis';
 import { dateFormat } from 'src/utils';
 import Pagination from 'src/components/Pagination';
-import { PostCommentResponseDto } from 'src/interfaces/response/board';
 import { PostCommentRequestDto } from 'src/interfaces/request/board';
 
 // component //
@@ -49,14 +48,15 @@ export default function BoardDetail() {
     // 댓글 상태 //
     const [comment, setComment] = useState<string>('');
 
+
     // function //
     const navigator = useNavigate();
 
     // 댓글 리스트 페이지네이션 //
     const getPageCommentList = (commentList: CommentListResponseDto[]) => {
-        const lastIndex = commentList.length > COUNT_BY_PAGE_COMMENT * currentPage ?
-          COUNT_BY_PAGE_COMMENT * currentPage : commentList.length;
         const startIndex = COUNT_BY_PAGE_COMMENT * (currentPage - 1);
+        const lastIndex = commentList.length > COUNT_BY_PAGE_COMMENT * currentPage ?
+                        COUNT_BY_PAGE_COMMENT * currentPage : commentList.length;
         const pageCommentList = commentList.slice(startIndex, lastIndex);
         setPageCommentList(pageCommentList);
       }
@@ -137,10 +137,9 @@ export default function BoardDetail() {
         if(code === 'DE') alert('데이터베이스 에러입니다.');
         if(code !== 'SU') return;
 
-        setComment('');
         if(!boardNumber) return;
         getBoardCommentListRequest(boardNumber).then(getBoardCommentListResponseHandler);
-
+        
     }
 
     // event handler //
@@ -168,6 +167,7 @@ export default function BoardDetail() {
     // 댓글 작성시 입력 이벤트 //
     const onCommentChangeHandler = (event:ChangeEvent<HTMLInputElement>) => {
         setComment(event.target.value);
+       
     }
 
     // 댓글 작성 클릭 //
@@ -178,11 +178,10 @@ export default function BoardDetail() {
         const data : PostCommentRequestDto = {
             commentContents : comment
         }
-
+        
         postCommentRequest(boardNumber, data, token ).then(postCommentResponseHandler);
     }
 
-    
 
     // effect //
     // 게시물 번호가 바뀌면 랜더링 //

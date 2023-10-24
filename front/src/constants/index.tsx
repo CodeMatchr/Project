@@ -83,6 +83,7 @@ export const COUNT_BY_MAIN_ROOM_SECTION = MAIN_ROOM_COUNT_BY_PAGE * MAIN_ROOM_CO
 
 // Board -detail pagination //
 export const COUNT_BY_PAGE = 5;
+export const COUNT_BY_PAGE_THREE = 3;
 export const COUNT_BY_PAGE_COMMENT = 3;
 export const PAGE_BY_SECTION = 10;
 export const COUNT_BY_SECTION = COUNT_BY_PAGE * PAGE_BY_SECTION;

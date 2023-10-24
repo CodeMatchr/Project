@@ -113,19 +113,11 @@ const onCreateClickHandler = async () => {
         roomPassword: roomPasswordInput,
         roomImageUrl: imageUrl
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     setRoomTitle(roomTitle);
     setRoomPassword(roomPassword);
     setRoomImageUrl(roomImageUrl);
 
-=======
-    
->>>>>>> d129b94ed68c9188a2b02f2cf602b99f8024530d
-=======
-    
->>>>>>> 41a0342a26ba2cbb23a53fe7561be198ceada49b
     postRoomRequest(data, token).then(postRoomResponseHandler);
   
 }
@@ -143,14 +135,9 @@ const onFileUploadClickHandler = () => {
 //            effect           //
 // useEffect(() => {
 //   if (!userEmail) navigator(MAIN_PATH);
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 //   return;
 // }, [userEmail]);
-=======
-=======
->>>>>>> 41a0342a26ba2cbb23a53fe7561be198ceada49b
 
 //   return;
 // }, [userEmail]);
@@ -170,10 +157,6 @@ useEffect(() => {
   getRoomRequest(roomNumber).then(getRoomResponseHandler);
 }, [roomNumber]);
 
-<<<<<<< HEAD
->>>>>>> d129b94ed68c9188a2b02f2cf602b99f8024530d
-=======
->>>>>>> 41a0342a26ba2cbb23a53fe7561be198ceada49b
 //            render           //
   return (
     <div id='popup-wrapper'>

@@ -5,16 +5,8 @@ import BoardListResponseDto from '../../interfaces/response/board/board-list.res
 import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
-import { usePagination } from '../../hooks';
-<<<<<<< HEAD
-<<<<<<< HEAD
-import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_PATH} from '../../constants';
-=======
-import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  COUNT_BY_PAGE,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH} from '../../constants';
->>>>>>> d129b94ed68c9188a2b02f2cf602b99f8024530d
-=======
-import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  COUNT_BY_PAGE,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH} from '../../constants';
->>>>>>> 41a0342a26ba2cbb23a53fe7561be198ceada49b
+import { usePagination } from '../../hooks'
+import { BOARD_LIST_PATH, MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH} from '../../constants';
 import { useNavigate} from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
@@ -25,9 +17,6 @@ import {  GetCurrentRoomListRequest, getCommentListRequest, getCurrentListReques
 import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Favorite.response.dto';
 import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
 import { useRoomStore, useUserStore } from 'src/store';
-import GetRoomListResponseDto from 'src/interfaces/response/room/get-current-room-list.response.dto';
-import { access } from 'fs';
-import { useCookies } from 'react-cookie';
 import GetCurrentRoomListResponseDto from 'src/interfaces/response/room/get-current-room-list.response.dto';
 
 // component //
