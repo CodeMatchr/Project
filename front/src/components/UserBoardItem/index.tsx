@@ -77,7 +77,9 @@ useEffect(() => {
             </div>
             <div className='user-board-text-box'>
                 <div className='user-board-text-title'>{boardTitle}</div>
-                <div className='user-board-text-contents'>{boardContents}</div>
+                <div className='user-board-text-contents'>
+                  {boardContents.length > 100 ? boardContents.substring(0,97) + '...' : boardContents}
+                </div>
             </div>
             <div className='user-board-count-box'>
                 {`댓글 ${boardCommentCount} · 좋아요${boardFavoriteCount} · 조회수${boardViewCount}`}

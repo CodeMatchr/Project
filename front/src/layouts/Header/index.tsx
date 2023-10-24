@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, KeyboardEvent,ChangeEvent } from 'react';
 import './style.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AUTHENTICATION_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, USER_PAGE_PATH_VARIABLE, USER_PATH } from '../../constants';
+import { AUTHENTICATION_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, SEARCH_PATH, SEARCH_WORD_PATH_VARIABLE, USER_PAGE_PATH_VARIABLE, USER_PATH } from '../../constants';
 import { useUserStore } from 'src/store';
 import { useCookies } from 'react-cookie';
 
@@ -12,7 +12,7 @@ export default function Header() {
     // 로그인 상태 //
     const [signIn, setSignIn] = useState<boolean>(false);
     // 검색어 상태 //
-    const [searchWord, setSearchWord] = useState<String>('');
+    const [searchWord, setSearchWord] = useState<string>('');
     // 검색 아이콘 버튼 클릭 상태 //
     const [searchIconState, setSearchIconState] = useState<boolean>(false);
     // 로그인 유저 정보 상태 //
@@ -21,6 +21,8 @@ export default function Header() {
     const [cookies, setCookie] = useCookies();
     // url 경로 상태 //
     const { pathname } = useLocation();
+    // 검색버튼 Ref 상태 //
+    const searchButtonRef = useRef<HTMLDivElement | null>(null);
    
 
 
@@ -64,18 +66,45 @@ export default function Header() {
         navigator(USER_PATH(user.userEmail));
     }
 
+    // 검색어 변경 //
+    const onSearchChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchWord(event.target.value);
+    }
+
     // 검색 아이콘 버튼 클릭 이벤트 //
     const onSearchIconButtonClickHandler = () => {
         if (searchIconState) setSearchIconState(false);
         else setSearchIconState(true);
+    }
 
+    // 검색 버튼 클릭 이벤트 //
+    const onSearchButtonClickHandler = () => {
+        if(!searchWord){
+            alert('검색어를 입력해주세요.');
+            return;
+        }
+        navigator(SEARCH_PATH(searchWord));
         
     }
+    // 검색창 엔터 //
+    const onSearchEnterPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key !== 'Enter') return;
+        if (!searchButtonRef.current) return;
+        searchButtonRef.current.click();
+    }
+
     // effect //
     // 로그인 유저 정보 여부 //
     useEffect(() => {
         setSignIn(user !== null);
     }, [user]);
+    // 검색어 path 바뀔떄 //
+    useEffect (() => {
+        if(!pathname.includes(SEARCH_PATH(''))) {
+            setSearchWord('');
+            setSearchIconState(false);
+        }
+    }, [pathname]);
 
    
 
@@ -96,8 +125,8 @@ export default function Header() {
                     )}
                     {(searchIconState) ? (
                         <div className='header-right-search'>
-                            <input className='header-right-search-input' placeholder='검색어를 입력해주세요.' />
-                            <div className='header-right-search-icon-button' onClick={ onSearchIconButtonClickHandler }></div>
+                            <input className='header-right-search-input' placeholder='검색어를 입력해주세요.' value={searchWord} onChange={onSearchChangeHandler} onKeyDown={onSearchEnterPressHandler} />
+                            <div ref={searchButtonRef}  className='header-right-search-icon-button' onClick={ onSearchButtonClickHandler }></div>
                         </div>) : (
                             <div className='header-right-search-icon-only'>
                                 <div className='header-right-search-icon-button' onClick={ onSearchIconButtonClickHandler }></div>

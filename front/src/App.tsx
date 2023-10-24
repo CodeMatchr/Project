@@ -3,7 +3,7 @@ import './App.css';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 import Main from './views/Main';
-import { AUTHENTICATION_PATH, BOARD_DETAIL_PATH, BOARD_DETAIL_TEST_PATH, BOARD_LIST_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, CHAT_PATH, COMPARE_PATH, MAIN_PATH, POPUP_BOARD_PATH, POPUP_COME_PATH, POPUP_MANAGER_BYE_PATH, POPUP_MANAGER_IMAGE_PATH, POPUP_MANAGER_NAME_PATH, POPUP_MANAGER_PASSWORD_PATH,  POPUP_PATH, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_LIST_PATH, ROOM_NUMBER_PATH_VARIABLE, ROOM_PATH, USER_ITEM_PATH, USER_PAGE_PATH_VARIABLE, USER_PATH, WRITE_PATH } from './constants';
+import { AUTHENTICATION_PATH, BOARD_DETAIL_PATH, BOARD_DETAIL_TEST_PATH, BOARD_LIST_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, CHAT_PATH, COMPARE_PATH, MAIN_PATH, POPUP_BOARD_PATH, POPUP_COME_PATH, POPUP_MANAGER_BYE_PATH, POPUP_MANAGER_IMAGE_PATH, POPUP_MANAGER_NAME_PATH, POPUP_MANAGER_PASSWORD_PATH,  POPUP_PATH, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_LIST_PATH, ROOM_NUMBER_PATH_VARIABLE, ROOM_PATH, SEARCH_PATH, SEARCH_WORD_PATH_VARIABLE, USER_ITEM_PATH, USER_PAGE_PATH_VARIABLE, USER_PATH, WRITE_PATH } from './constants';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Authentication from './views/Authentication';
 import BoardWrite from './views/Board/Write';
@@ -24,6 +24,7 @@ import ChatManagerNamePopUp from './components/PopUp/ChatManagerNamePopUp';
 import ChatManagerPasswordPopUp from './components/PopUp/ChatManagerPasswordPopUp';
 import ChatManagerImagePopUp from './components/PopUp/ChatManagerImagePopUp';
 import ChatManagerByePopUp from './components/PopUp/ChatManagerByePopUp';
+import SearchList from './views/Board/Search';
 
 
 function App() {
@@ -90,18 +91,17 @@ useEffect(() => {
 
         {/* 다인원 채팅방 화면 CHAT */}
         <Route path={ROOM_DETAIL_PATH(ROOM_NUMBER_PATH_VARIABLE)} element={<Chat/>} />
+        {/* 검색 화면 SEARCH */}
+        <Route path={SEARCH_PATH(SEARCH_WORD_PATH_VARIABLE)} element={<SearchList />} />
+        
 
         {/* 팝업창 PopUp */}
-        <Route path={POPUP_ROOM_PATH} element={<ChatRoomPopUp/>} />
+        {/* <Route path={POPUP_ROOM_PATH} element={<ChatRoomPopUp/>} />
         <Route path={POPUP_COME_PATH} element={<ChatComePopUP/>} />
         <Route path={POPUP_MANAGER_NAME_PATH} element={<ChatManagerNamePopUp/>} />
         <Route path={POPUP_MANAGER_PASSWORD_PATH} element={<ChatManagerPasswordPopUp/>} />
         <Route path={POPUP_MANAGER_IMAGE_PATH} element={<ChatManagerImagePopUp/>} />
-<<<<<<< HEAD
-        <Route path={POPUP_MANAGER_BYE_PATH} element={<ChatManagerByePopUp/>} />
-=======
-        <Route path={POPUP_MANAGER_BYE_PATH} element={<ChatManagerByePopUp/>} />  */}
->>>>>>> d129b94ed68c9188a2b02f2cf602b99f8024530d
+        <Route path={POPUP_MANAGER_BYE_PATH} element={<ChatManagerByePopUp/>} /> */}
 
       </Routes>
       <Footer/>

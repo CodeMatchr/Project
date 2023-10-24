@@ -26,12 +26,14 @@ export const DETAIL_PATH = (boardNumber : number | string) => `detail/${boardNum
 export const BOARD_DETAIL_PATH = (boardNumber : number | string) => `${BOARD_PATH}/${DETAIL_PATH(boardNumber)}`;
 export const BOARD_DETAIL_TEST_PATH = '/board/detail';
 export const BOARD_LIST_PATH = '/board/list';
+export const BOARD_NUMBER_PATH_VARIABLE = ':boardNumber';
 
 export const WRITE_PATH = '/write';
 export const BOARD_WRITE_PATH = () => `${BOARD_PATH}/${WRITE_PATH}}`;
 
+export const SEARCH_PATH = (searchWord:string) => `board/search/${searchWord}`;
+export const SEARCH_WORD_PATH_VARIABLE = ':searchWord';
 
-export const BOARD_NUMBER_PATH_VARIABLE = ':boardNumber';
 
 // User
 export const USER_PATH = (userEmail:string) => `/user/${userEmail}`;
@@ -41,13 +43,8 @@ export const USER_PAGE_PATH_VARIABLE = ':userEmail';
 // Room | Chat
 export const ROOM_PATH = '/room';
 export const ROOM_POST_PATH = '/room/create';
-<<<<<<< HEAD
-export const ROOM_DETAIL_PATH = (roomNumber : number | string) => `/${roomNumber}`;
-=======
 export const ROOM_DETAIL_PATH = (roomNumber : number | string) => `/room/${roomNumber}`;
->>>>>>> d129b94ed68c9188a2b02f2cf602b99f8024530d
 export const ROOM_LIST_PATH = (roomNumber : number | string) => `${ROOM_PATH}/${ROOM_DETAIL_PATH(roomNumber)}`;
-
 export const ROOM_NUMBER_PATH_VARIABLE = ':roomNumber';
 
 // Chat

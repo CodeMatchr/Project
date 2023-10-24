@@ -59,7 +59,9 @@ export default function BoardListItem({item} : Props) {
       <div className='board-list-mid'>
         <div className='board-list-mid-top'>
           <div className='board-title'>{ boardTitle }</div>
-          <div className='board-contents'>{ boardContents }</div>
+          <div className='board-contents'>
+            { boardContents.length > 100 ? boardContents.substring(0,97) + "..." : boardContents }
+           </div>
           <div className='board-write-datetime'>{ dateFormat(boardWriteDatetime) }</div>
         </div>
         <div className='board-list-mid-bottom'>

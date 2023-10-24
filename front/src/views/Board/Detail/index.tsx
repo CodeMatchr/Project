@@ -9,9 +9,11 @@ import GetCommentListResponseDto, { CommentListResponseDto } from 'src/interface
 import { BOARD_LIST_PATH, BOARD_UPDATE_PATH, COUNT_BY_PAGE_COMMENT, MAIN_PATH } from 'src/constants';
 import ResponseDto from 'src/interfaces/response/response.dto';
 import { usePagination } from 'src/hooks';
-import { deleteBoardRequest, getBoardCommentListRequest, getBoardFavoriteListRequest, getBoardRequest, getCommentListRequest, getFavoriteListRequest, putFavoriteRequest } from 'src/apis';
+import { deleteBoardRequest, getBoardCommentListRequest, getBoardFavoriteListRequest, getBoardRequest, getCommentListRequest, getFavoriteListRequest, postCommentRequest, putFavoriteRequest } from 'src/apis';
 import { dateFormat } from 'src/utils';
 import Pagination from 'src/components/Pagination';
+import { PostCommentResponseDto } from 'src/interfaces/response/board';
+import { PostCommentRequestDto } from 'src/interfaces/request/board';
 
 // component //
 export default function BoardDetail() {
@@ -89,7 +91,7 @@ export default function BoardDetail() {
     }
 
     // 댓글 리스트 불러오기 //
-    const getCommentListResponseHandler = (responseBody: GetCommentListResponseDto | ResponseDto) => {
+    const getBoardCommentListResponseHandler = (responseBody: GetCommentListResponseDto | ResponseDto) => {
         const { code } = responseBody;
     
         if (code === 'VF') alert('잘못된 게시물번호입니다.');
@@ -129,6 +131,18 @@ export default function BoardDetail() {
     getBoardFavoriteListRequest(boardNumber).then(getFavoriteResponseHandler);
     }
 
+    // 댓글 작성 함수 //
+    const postCommentResponseHandler = (code : string) => {
+        if(code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+        if(code === 'DE') alert('데이터베이스 에러입니다.');
+        if(code !== 'SU') return;
+
+        setComment('');
+        if(!boardNumber) return;
+        getBoardCommentListRequest(boardNumber).then(getBoardCommentListResponseHandler);
+
+    }
+
     // event handler //
 
     // 좋아요 버튼 클릭 //
@@ -156,6 +170,18 @@ export default function BoardDetail() {
         setComment(event.target.value);
     }
 
+    // 댓글 작성 클릭 //
+    const onCommentClickHandler = () => {
+        if(!boardNumber) return;
+        const token = cookies.accessToken;
+
+        const data : PostCommentRequestDto = {
+            commentContents : comment
+        }
+
+        postCommentRequest(boardNumber, data, token ).then(postCommentResponseHandler);
+    }
+
     
 
     // effect //
@@ -168,7 +194,7 @@ export default function BoardDetail() {
 
         getBoardRequest(boardNumber).then(getBoardResponseHandler);
         getBoardFavoriteListRequest(boardNumber).then(getFavoriteResponseHandler);
-        getBoardCommentListRequest(boardNumber).then(getCommentListResponseHandler);
+        getBoardCommentListRequest(boardNumber).then(getBoardCommentListResponseHandler);
     }, [boardNumber]);
 
     // 현재 페이지가 바뀔때 마다 검색 게시물 분류하기 //
@@ -237,7 +263,6 @@ export default function BoardDetail() {
                                 <div className='favorite-list-item-profile-image'></div>
                                 <div className='favorite-list-item-writer-data'>
                                     <div className='favorite-list-item-writer-nickname'>{item.userNickname}</div>
-                                    <div className='favorite-list-item-write-time'>2023.10.22</div>
                                 </div>
                             </div>
                         </div>
@@ -278,7 +303,11 @@ export default function BoardDetail() {
                         <input className='comment-list-write-comment-input' onChange={onCommentChangeHandler} />
                     </div>
                     <div className='comment-list-write-button-box'>
-                        <button className='comment-list-write-button'>작성</button>
+                       {comment.length === 0 ? (
+                            <button className='comment-list-write-button' >작성</button>
+                       ) : (
+                            <button className='comment-list-write-button' onClick={onCommentClickHandler} >작성</button>
+                       )} 
                     </div>
                 </div>
             </div>

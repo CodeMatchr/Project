@@ -391,3 +391,10 @@
 .comment-list-write-button:hover{
     cursor: pointer;
 }
+
+.board-detail-body-contents{
+    margin: 15px;
+    
+    font-size: 32px;
+    font-weight: 500;
+}

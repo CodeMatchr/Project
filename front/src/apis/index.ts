@@ -32,6 +32,7 @@ import DeleteRoomResponseDto from 'src/interfaces/response/room/delete-room.resp
 import { error } from 'console';
 import PatchRoomExitRequsetDto from 'src/interfaces/request/room/patch-room-exit-request.dto';
 import PatchRoomExitResponseDto from 'src/interfaces/response/room/patch-room-exit-response.dto';
+import GetSearchBoardResponseDto from 'src/interfaces/response/board/get-search-board.response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -99,6 +100,8 @@ const PUT_FAVORITE_URL = (favoriteBoardNumber: number | string) => `${API_DOMAIN
 // 댓글 작성 //
 const POST_COMMENT_URL = (commentBoardNumber : number | string) => `${API_DOMAIN}/board/${commentBoardNumber}/comment`;
 
+// 검색 게시물 //
+const SEARCH_BOARD_URL = (searchWord : string ) => `${API_DOMAIN}/board/search/${searchWord}`;
 
 
 // 로그인 //
@@ -255,7 +258,9 @@ export const postBoardRequest = async (data : PostBoardRequestDto, token:string)
 
 const POST_ROOM_URL = () => `${API_DOMAIN}/room/create`;
 const GET_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}`;
-const GET_CURRENT_ROOM_LIST_URL = (section : number) => `${API_DOMAIN}/current-room/${section}`;
+// ! -> 수정했는데, 확인해보니 websecurity 수정하고, /room 넣어주니 잘 불러와지네요.
+const GET_CURRENT_ROOM_LIST_URL = (section : number) => `${API_DOMAIN}/room/current-room/${section}`;
+// !
 const PATCH_ROOM_TITLE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomTitle`;
 const PATCH_ROOM_PASSWORD_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomPassword`;
 const PATCH_ROOM_IMAGE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomImageUrl`;
@@ -611,5 +616,25 @@ export const uploadFileRequest = async (data: FormData) => {
             const {code} = responseBody;
             return code;
         })
-        .catch
+        .catch((error) => {
+            const responseBody : ResponseDto = error.response.data;
+            const {code} = responseBody;
+            return code;
+        })
+        return result;
+  }
+
+
+  // 검색 게시물 //
+  export const getSearchBoardRequest = async (searchWord : string) => {
+    const result = await axios.get(SEARCH_BOARD_URL(searchWord))
+        .then((response) => {
+            const responseBody : GetSearchBoardResponseDto = response.data;
+            return responseBody;
+        })
+        .catch((error) => {
+            const responseBody : ResponseDto = error.response.data;
+            return responseBody;
+        })
+        return result;
   }
