@@ -13,6 +13,7 @@ import { useCookies } from 'react-cookie';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
 import { MAIN_PATH } from 'src/constants';
+import { getRoomRequest } from 'src/apis';
 
 // component //
 export default function Chat() {
@@ -129,6 +130,10 @@ export default function Chat() {
     }
 
     // effect //
+    useEffect(() => {
+        if(!roomNumber) return;
+        getRoomRequest(roomNumber).then(getRoomResponseHnadler);
+    }, [roomNumber]);
 
     
     // render //

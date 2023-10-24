@@ -1,19 +1,22 @@
 import React, { useState, useRef } from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
-import { MAIN_PATH, ROOM_PATH } from '../../../constants';
-
-// interface Props {
-//     popUpType: string
-// { popUpType }: Props
-// }
+import { MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH } from '../../../constants';
+import { useRoomStore } from 'src/store';
+import { useCookies } from 'react-cookie';
+import { PatchRoomImageUrlRequestDto } from 'src/interfaces/request/room';
+import { PatchRoomImageUrlRequest, uploadFileRequest } from 'src/apis';
+import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
+import ResponseDto from 'src/interfaces/response/response.dto';
 
 //            component           //
 // description : 채팅방 매니저 팝업창 //
 export default function ChatManagerImagePopUp() {
     //            state           //
-    // description : 네비게이터 //
-    const navigator = useNavigate();
+    
+    const { roomNumber, roomTitle, roomPassword, roomImage, roomImageUrl, resetRoom, setRoomNumber, setRoomImageUrl, setRoomImage, setRoomPassword, setRoomTitle } = useRoomStore();
+
+    const [cookies, setCookie] = useCookies();
 
     // description : 채팅방 변경 상태 //
     // todo : 채팅방에서 변경 버튼 클릭시 string으로? boolean? //
@@ -42,31 +45,72 @@ export default function ChatManagerImagePopUp() {
     // description : 파일 업로드 버튼 //
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-
     //            function           //
+    // 네비게이터 //
+    const navigator = useNavigate();
+
+    // 파일 업로드 //
+    const fileUpload = async () => {
+    if (roomImage === null) return null;
+  
+    const data = new FormData();
+    data.append('file', roomImage);
+  
+    const imageUrl = await uploadFileRequest(data);
+    return imageUrl;
+    }
+
+    // 채팅방 불러오기 응답 처리 //
+    const getRoomResponseHnadler = (responseBody : GetRoomResponseDto | ResponseDto) => {
+        const {code} = responseBody;
+        if (code == 'NR') alert('존재하지 않는 채팅방입니다.');
+        if (code != 'SU') {
+            navigator(MAIN_PATH);
+            return;
+        }
+
+        const { roomTitle, roomPassword, roomImageUrl } = responseBody as GetRoomResponseDto
+        setRoomTitle(roomTitle);
+        setRoomPassword(roomPassword);
+        setRoomImageUrl(roomImageUrl);
+    }
+
+    const patchRoomImageUrlResponseHandler = (code: string) => {
+        if (code == 'NR') alert ('존재하지 않는 다인원 채팅방 번호입니다.');
+        if (code == 'NP') alert ('권한이 없습니다.');
+        if (code != 'SU') return;
+
+        resetRoom();
+
+        if(!roomNumber) return;
+        navigator(ROOM_DETAIL_PATH(roomNumber));
+    }
+
     //            event handler           //
     // description : 변경 버튼 클릭 이벤트 //
-    // todo : 변경 위치 다시 확인해서 수정해야함 //
-    const onChangeClickHandler = () => {
-        navigator(ROOM_PATH);
+    const onChangeClickHandler = async () => {
+        const token = cookies.accessToken;
+
+        const imageUrl = roomImage ? await fileUpload() : roomImageUrl;
+
+        const data : PatchRoomImageUrlRequestDto = {
+            roomImageUrl : imageUrl
+        }
+
+        PatchRoomImageUrlRequest(roomNumber, data, token).then(patchRoomImageUrlResponseHandler);
     }
     // description : 취소 버튼 클릭 이벤트 //
-    // todo : 변경 위치 다시 확인해서 수정해야함 //
     const onCancelClickHandler = () => {
-        navigator(MAIN_PATH);
-    }
-    // description : 나가기 버튼 클릭 이벤트 //
-    // todo : 변경 위치 다시 확인해서 수정해야함 //
-    const onExitClickHandler = () => {
-        navigator(MAIN_PATH);
+        navigator(ROOM_DETAIL_PATH(roomNumber));
     }
     // description : 파일 업로드 버튼 클릭 이벤트 //
     const onFileUploadClickHandler = () => {
         if(!fileInputRef.current) return;
         fileInputRef.current.click();
     }
-    //            component           //
+
     //            effect           //
+    
     //            render           //
     return (
     <div id='popup-manager-wrapper'>
@@ -88,7 +132,7 @@ export default function ChatManagerImagePopUp() {
             </div>
             <div className='popup-manager-bottom-box'>
                 <div className='popup-manager-bottom-button-change-box'>
-                    <button className='popup-manager-bottom-button-change' onClick={onExitClickHandler}>변경</button>
+                    <button className='popup-manager-bottom-button-change' onClick={onChangeClickHandler}>변경</button>
                 </div>
                 <div className='popup-manager-bottom-button-cancel-box'>
                     <button className='popup-manager-bottom-button-cancel' onClick={onCancelClickHandler}>취소</button>

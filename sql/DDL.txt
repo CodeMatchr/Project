@@ -96,21 +96,6 @@ CREATE TABLE friend (
    FOREIGN KEY (friend_email) REFERENCES user (user_email)
 );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 CREATE TABLE room (
    room_number INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
    room_title TEXT NOT NULL,

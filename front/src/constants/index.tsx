@@ -41,7 +41,11 @@ export const USER_PAGE_PATH_VARIABLE = ':userEmail';
 // Room | Chat
 export const ROOM_PATH = '/room';
 export const ROOM_POST_PATH = '/room/create';
+<<<<<<< HEAD
 export const ROOM_DETAIL_PATH = (roomNumber : number | string) => `/${roomNumber}`;
+=======
+export const ROOM_DETAIL_PATH = (roomNumber : number | string) => `/room/${roomNumber}`;
+>>>>>>> d129b94ed68c9188a2b02f2cf602b99f8024530d
 export const ROOM_LIST_PATH = (roomNumber : number | string) => `${ROOM_PATH}/${ROOM_DETAIL_PATH(roomNumber)}`;
 
 export const ROOM_NUMBER_PATH_VARIABLE = ':roomNumber';

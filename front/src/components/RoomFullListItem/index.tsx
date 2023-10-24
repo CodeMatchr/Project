@@ -2,6 +2,7 @@ import React from 'react';
 
 import './style.css';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     onClick: () => void
@@ -19,8 +20,12 @@ export default function RoomFullListItem({onClick, item} : Props) {
 
 
   // function //
+  const navigator = useNavigate();
 
   // event handler //
+  const onClickHandler = () => {
+    
+  }
 
   // effect //
 
