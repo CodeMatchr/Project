@@ -268,7 +268,7 @@ public class RoomServiceImplement implements RoomService {
 
             // 기존 채팅방에 소속된 사용자 확인 2 다인원 채팅방 소속자들이 소속된 roomJoin roomNumber
             RoomJoinEntity roomJoinEntity = roomJoinRepository.findByRoomNumberAndUserEmail(roomNumber, userEmail);
-            if(roomJoinEntity == null) return PatchRoomEntranceResponseDto.noExistedRoomNumber();
+            if(roomJoinEntity != null) return PatchRoomEntranceResponseDto.existedUserEmail();
 
             // Entity 생성 - roomJoin 엔터티 생성
             RoomJoinEntity roomJoinEntityPost = new RoomJoinEntity(roomEntity.getRoomNumber(), userEmail);

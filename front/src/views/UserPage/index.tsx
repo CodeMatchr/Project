@@ -284,7 +284,6 @@ const navigator = useNavigate();
         navigator(MAIN_PATH);
         return;
       }
-
       getUserBoardListRequest(userEmail).then(getUserBoardListResponseHandler);
     }, [userEmail]);
 
@@ -352,9 +351,9 @@ const navigator = useNavigate();
     //            function           //
     // description : 페이지네이션 함수 //
     const getViewChatList = (chatList : RoomListResponseDto[]) => {
-      const startIndex = MAIN_ROOM_COUNT_BY_PAGE_FUll * (currentPage -1);
-      const lastIndex = chatList.length > MAIN_ROOM_COUNT_BY_PAGE_FUll * currentPage ? 
-      MAIN_ROOM_COUNT_BY_PAGE_FUll * currentPage : chatList.length;
+      const startIndex = MAIN_ROOM_COUNT_BY_PAGE * (currentPage -1);
+      const lastIndex = chatList.length > MAIN_ROOM_COUNT_BY_PAGE * currentPage ? 
+      MAIN_ROOM_COUNT_BY_PAGE * currentPage : chatList.length;
       const viewChatList = chatList.slice(startIndex, lastIndex);
       setViewChatList(viewChatList);
     }
@@ -367,7 +366,7 @@ const navigator = useNavigate();
       const { roomList } = responseBody as GetUserRoomListResponseDto;
       getViewChatList(roomList);
       setCurrentChatList(roomList);
-      changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE_FUll);
+      changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE);
     }
     
     //            event handler           //
@@ -385,9 +384,9 @@ const navigator = useNavigate();
         navigator(MAIN_PATH);
         return;
       }
-      getUserRoomListRequest(userEmail).then(getUserRoomListResponseHandler);
-      console.log("room :" + userEmail);
-    }, [currentSection, userEmail]);
+      const accessToken = cookies.accessToken;
+      getUserRoomListRequest(userEmail, accessToken).then(getUserRoomListResponseHandler);
+    }, [userEmail]);
 
     // description : 현재 페이지가 바뀔 때마다 chat 리스트 변경 //
     useEffect(() => {
