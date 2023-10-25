@@ -6,7 +6,6 @@ import ResponseDto from '../../../interfaces/response/response.dto';
 import GetBoardResponseDto from '../../../interfaces/response/board/get-board.response.dto';
 import { BOARD_DETAIL_PATH, MAIN_PATH, UPDATE_PATH } from '../../../constants';
 import { getBoardRequest, patchBoardRequest, uploadFileRequest } from 'src/apis';
-import { access } from 'fs';
 import { useCookies } from 'react-cookie';
 import { PatchBoardRequestDto } from 'src/interfaces/request/board';
 
@@ -20,23 +19,22 @@ const textAreaRef = useRef<HTMLTextAreaElement>(null);
 // description : file input 요소에 대한 참조 상태 //
 const fileInputRef = useRef<HTMLInputElement>(null);
 // description : 게시물 정보를 저장할 상태 //
-const { boardTitle , boardContents , boardImageUrl } = useBoardWriteStore();
+const { boardTitle , boardContents , boardImageUrl, boardImage } = useBoardWriteStore();
 const { setBoardNumber, setBoardTitle, setBoardContents, setBoardImage, setBoardImageUrl, resetBoard } = useBoardWriteStore();
 // description : 게시물 번호 상태 //
 const {boardNumber} = useParams();
 
 const [cookies, setCookie] = useCookies();
 
-const {pathname} = useLocation();
-
 //           function          //
 const navigator = useNavigate();
 // 파일 업로드 //
+// !
 const fileUpload = async () => {
-    if (boardImageUrl === null) return null;
+    if (boardImage === null) return null;
 
     const data = new FormData();
-    data.append('file', boardImageUrl);
+    data.append('file', boardImage);
 
     const imageUrl = await uploadFileRequest(data);
     return imageUrl;
@@ -61,7 +59,7 @@ const getBoardResponseHandler = (responseBody : GetBoardResponseDto | ResponseDt
     setBoardImageUrl(boardImageUrl);
 
 }
-// description: 게시물 수정 함수 //
+//  게시물 수정 응답 //
 const patchBoardResponseHandler = (code: string) => {
     if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
     if (code === 'NB') alert('존재하지 않는 게시물 번호입니다.');
@@ -88,7 +86,8 @@ const onBoardUpdateButtonClickHandler = async () => {
 
     if (!boardNumber) return;
 
-      const imageUrl = boardImageUrl ? await fileUpload() : boardImageUrl;
+    // !
+      const imageUrl = boardImage ? await fileUpload() : boardImage;
 
       const data: PatchBoardRequestDto = {
         boardTitle: boardTitle,

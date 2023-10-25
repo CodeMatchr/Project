@@ -224,9 +224,8 @@ export default function Main() {
     const getPageRoomList = (roomList : RoomListResponseDto[]) => {
       const startIndex = MAIN_ROOM_COUNT_BY_PAGE * (currentPage - 1);
       const lastIndex = roomList.length > MAIN_ROOM_COUNT_BY_PAGE * currentPage ?
-        MAIN_ROOM_COUNT_BY_PAGE * currentPage : roomList.length;
+      MAIN_ROOM_COUNT_BY_PAGE * currentPage : roomList.length;
       const pageRoomList = roomList.slice(startIndex, lastIndex);
-
       setPageRoomList(pageRoomList);
     }
 

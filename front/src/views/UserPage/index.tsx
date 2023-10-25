@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './style.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BOARD_LIST_PATH, COUNT_BY_PAGE, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, WRITE_PATH } from '../../constants';
+import { BOARD_LIST_PATH, COUNT_BY_PAGE, MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll, WRITE_PATH } from '../../constants';
 import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import UserBoardItem from '../../components/UserBoardItem';
 import Pagination from '../../components/Pagination';
@@ -271,15 +271,13 @@ const navigator = useNavigate();
       
     }
     
-
-    //            component           //
     //            event handler           //
-   
     // 타이틀 클릭시 게시물 리스트로 이동 //
     const onBoardTitleClickHandler = () => {
       navigator(BOARD_LIST_PATH);
     }
 
+    // effect //
     // description: 유저 이메일이 바뀔때 마다 게시물 리스트 불러오기 //
     useEffect(() => {
       if (!userEmail) {
@@ -357,21 +355,20 @@ const navigator = useNavigate();
     const getViewChatList = (chatList : RoomListResponseDto[]) => {
       const startIndex = MAIN_ROOM_COUNT_BY_PAGE * (currentPage -1);
       const lastIndex = chatList.length > MAIN_ROOM_COUNT_BY_PAGE * currentPage ? 
-      MAIN_ROOM_COUNT_BY_PAGE * currentPage : chatList.length;
-      
+                        MAIN_ROOM_COUNT_BY_PAGE * currentPage : chatList.length;
       const viewChatList = chatList.slice(startIndex, lastIndex);
       setViewChatList(viewChatList);
     }
     // description : 사용자 작성 채팅방 리스트 불러오기 응답 처리 함수 //
-    const getUserRoomListResponseHandler = (responseBody:GetUserRoomListResponseDto | ResponseDto) => {
+    const getUserRoomListResponseHandler = (responseBody : GetUserRoomListResponseDto | ResponseDto) => {
       const {code} = responseBody;
       if(code === 'DE') alert('데이터베이스 에러입니다.');
       if(code !== 'SU') return;
 
       const { roomList } = responseBody as GetUserRoomListResponseDto;
-      setCurrentChatList(roomList);
       getViewChatList(roomList);
-      changeSection(roomList.length, COUNT_BY_PAGE);
+      setCurrentChatList(roomList);
+      changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE);
     }
     
     //            event handler           //
@@ -380,7 +377,7 @@ const navigator = useNavigate();
       setPopUpRoomVisible(true);
       setSelectRoomNumber(roomNumber);
     }
-    //            component           //
+
     //            effect           //
     // description: 유저 이메일이 바뀔때 마다 채팅방 리스트 불러오기 //
     useEffect(() => {
@@ -389,22 +386,20 @@ const navigator = useNavigate();
         navigator(MAIN_PATH);
         return;
       }
-      
-      getUserRoomListRequest(userEmail).then(getUserRoomListResponseHandler);
-      
-      console.log("room :" + userEmail);
+      const accessToken = cookies.accessToken;
+      getUserRoomListRequest(userEmail, accessToken).then(getUserRoomListResponseHandler);
     }, [userEmail]);
-    
 
     // description : 현재 페이지가 바뀔 때마다 chat 리스트 변경 //
     useEffect(() => {
       getViewChatList(currentChatList);
     }, [currentPage]);
-    
+
     // description : 현재 섹션이 바뀔 때마다 chat 리스트 변경 //
     useEffect(() => {
       changeSection(currentChatList.length, MAIN_ROOM_COUNT_BY_PAGE);
     }, [currentSection]);
+
 
     //            render           //
     return (
@@ -432,11 +427,9 @@ const navigator = useNavigate();
 // description : 유저 이메일 상태가 바뀔때마다 실행 //
 useEffect(() => {
   if (!userEmail) navigator(MAIN_PATH);
-
   const isMyPage = user?.userEmail === userEmail;
   setUserPage(isMyPage);
 
-  console.log("final : " +user?.userEmail);
 }, [userEmail, user]);
 
 

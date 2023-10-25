@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEvent, useEffect } from 'react'
+import React, { useState, useRef, ChangeEvent, useEffect, SetStateAction, Dispatch } from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH } from '../../../constants';
@@ -11,11 +11,12 @@ import ResponseDto from 'src/interfaces/response/response.dto';
 
 interface Props {
     selectRoomNumber : number;
+    setPopUpImageState : Dispatch<SetStateAction<boolean>>;
 }
 
 //            component           //
 // description : 채팅방 매니저 팝업창 //
-export default function ChatManagerImagePopUp({selectRoomNumber} : Props) {
+export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageState} : Props) {
     //            state           //
     
     const { roomNumber, roomTitle, roomPassword, roomImage, roomImageUrl, resetRoom, setRoomNumber, setRoomImageUrl, setRoomImage, setRoomPassword, setRoomTitle } = useRoomStore();
@@ -24,9 +25,6 @@ export default function ChatManagerImagePopUp({selectRoomNumber} : Props) {
 
     // 채팅방 상태 //
     const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
-
-    // description : 채팅방 이미지 변경 인풋 상태 //
-    // const [roomImageInputChange, setRoomImageInputChange] = useState<string>('');
 
     // description : 채팅방 나가기 버튼 상태 //
     const [roomExit, setRoomExit] = useState<boolean>(false);
@@ -60,11 +58,6 @@ export default function ChatManagerImagePopUp({selectRoomNumber} : Props) {
             return;
         }
 
-        // const { roomTitle, roomPassword, roomImageUrl } = responseBody as GetRoomResponseDto
-        // setRoomTitle(roomTitle);
-        // setRoomPassword(roomPassword);
-        // setRoomImageUrl(roomImageUrl);
-
         const room = responseBody as GetRoomResponseDto;
     
         setRoom(room);
@@ -73,9 +66,6 @@ export default function ChatManagerImagePopUp({selectRoomNumber} : Props) {
     }
 
     // Room imageUrl 변경 이벤트 //
-    // const onRoomImageUrlChangeHandler = (event : ChangeEvent<HTMLInputElement>) => {
-    //     setRoomImageInputChange(event.target.value);
-    // }
 
     const patchRoomImageUrlResponseHandler = (code: string) => {
         if (code == 'NR') alert ('존재하지 않는 다인원 채팅방 번호입니다.');

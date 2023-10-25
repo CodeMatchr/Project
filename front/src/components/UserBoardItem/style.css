@@ -42,7 +42,8 @@
 
     display: flex;
 
-    background-color: aqua;
+    background-position: 50% 50%;
+    background-size: 100% 100%;
 
     border-radius: 20px;
 
@@ -109,7 +110,8 @@
     width: 180px;
     height: 180px;
 
-    background-color: black;
+    background-position: 50% 50%;
+    background-size: 100% 100%;
 
     border-radius: 15px;
 }

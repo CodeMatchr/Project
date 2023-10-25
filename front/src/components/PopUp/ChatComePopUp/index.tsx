@@ -35,7 +35,7 @@ const [roomNumberFlag, setRoomNumberFlag] = useState<boolean>(true);
 const getRoomResponseHandler = (responseBody : GetRoomResponseDto | ResponseDto) => {
     const { code } = responseBody;
     if (code == 'NR') alert('존재하는 않는 다인원 채팅방 번호입니다.');
-    // if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+    if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
     if (code !== 'SU') {
       navigator(MAIN_PATH);
       return;

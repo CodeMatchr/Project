@@ -1,18 +1,18 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './style.css';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useUserStore } from 'src/store';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useBoardWriteStore, useUserStore } from 'src/store';
 import { useCookies } from 'react-cookie';
 import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
 import GetFavoriteListResponseDto, { FavoriteListResponseDto } from 'src/interfaces/response/board/get-favorite-list.response.dto';
 import GetCommentListResponseDto, { CommentListResponseDto } from 'src/interfaces/response/board/get-comment-list.response.dto';
-import { BOARD_LIST_PATH, BOARD_UPDATE_PATH, COUNT_BY_PAGE_COMMENT, MAIN_PATH } from 'src/constants';
+import { BOARD_LIST_PATH, BOARD_UPDATE_PATH, COUNT_BY_PAGE_COMMENT, MAIN_PATH, UPDATE_PATH } from 'src/constants';
 import ResponseDto from 'src/interfaces/response/response.dto';
 import { usePagination } from 'src/hooks';
-import { deleteBoardRequest, getBoardCommentListRequest, getBoardFavoriteListRequest, getBoardRequest, getCommentListRequest, getFavoriteListRequest, postCommentRequest, putFavoriteRequest } from 'src/apis';
+import { deleteBoardRequest, getBoardCommentListRequest, getBoardFavoriteListRequest, getBoardRequest, postCommentRequest, putFavoriteRequest } from 'src/apis';
 import { dateFormat } from 'src/utils';
 import Pagination from 'src/components/Pagination';
-import { PostCommentRequestDto } from 'src/interfaces/request/board';
+import { PatchBoardRequestDto, PostCommentRequestDto } from 'src/interfaces/request/board';
 
 // component //
 export default function BoardDetail() {
@@ -49,8 +49,27 @@ export default function BoardDetail() {
     const [comment, setComment] = useState<string>('');
 
 
+    // 게시물 정보를 저장할 상태 //
+    // const { boardTitle , boardContents , boardImage , setBoardTitle , setBoardContents , setBoardImage, resetBoard} = useBoardWriteStore();
+
+    // 경로 상태 //
+    const { pathname } = useLocation();
+
+
+
     // function //
     const navigator = useNavigate();
+
+    // 파일 업로드 //
+//     const fileUpload = async () => {
+//         if (boardImage === null) return null;
+
+//         const data = new FormData();
+//         data.append('file', boardImage);
+
+//         const imageUrl = await uploadFileRequest(data);
+//         return imageUrl;
+//   }
 
     // 댓글 리스트 페이지네이션 //
     const getPageCommentList = (commentList: CommentListResponseDto[]) => {
@@ -152,10 +171,38 @@ export default function BoardDetail() {
     }
 
     // 게시물 수정 클릭 //
-    const onBoardUpdateClickHandler = () => {
+    const onBoardUpdateClickHandler = async () => {
         if(!boardNumber) return;
         navigator(BOARD_UPDATE_PATH(boardNumber));
+
+        // const token = cookies.accessToken;
+
+        //     const imageUrl = boardImage ?  await fileUpload() : boardImage ;
+
+        //     const data: PatchBoardRequestDto = {
+        //         boardTitle : boardTitle,
+        //         boardContents : boardContents,
+        //         boardImageUrl : imageUrl
+        //     }
+        //     patchBoardRequest(boardNumber, data, token).then(patchBoardResponseHandler);
+
     }
+
+    // 게시물 수정 응답 //
+    // const patchBoardResponseHandler = (code: string) => {
+    //     if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+    //     if (code === 'NB') alert('존재하지 않는 게시물입니다.');
+    //     if (code === 'NP') alert('권한이 없습니다.');
+    //     if (code === 'VF') alert('필수 데이터를 입력하지 않았습니다.');
+    //     if (code === 'AF') alert('로그인이 필요합니다.');
+    //     if (code === 'DE') alert('데이터베이스 에러입니다.');
+    //     if (code !== 'SU') return;
+    
+    //     resetBoard();
+    
+    //     if (!boardNumber) return;
+    //     navigator(MAIN_PATH);
+    //   }
 
     // 게시물 삭제 클릭 //
     const onBoardDeleteClickHandler = () => {
@@ -190,7 +237,6 @@ export default function BoardDetail() {
             alert('게시물 번호를 다시 확인해주세요.');
             return;
         }
-
         getBoardRequest(boardNumber).then(getBoardResponseHandler);
         getBoardFavoriteListRequest(boardNumber).then(getFavoriteResponseHandler);
         getBoardCommentListRequest(boardNumber).then(getBoardCommentListResponseHandler);
@@ -222,7 +268,7 @@ export default function BoardDetail() {
         
         <div id='board-detail-wrapper'>
             <div className='board-detail-button-box'>
-                    <div className='board-detail-update-button' onClick={() => onBoardUpdateClickHandler()}>수정</div>
+                    <div className='board-detail-update-button' onClick={onBoardUpdateClickHandler}>수정</div>
                     <div className='board-detail-delete-button' onClick={onBoardDeleteClickHandler}>삭제</div>
             </div>
             <div className='board-detail-box'>    
@@ -239,7 +285,7 @@ export default function BoardDetail() {
                 <div className='board-detail-body'>
                     <div className='board-detail-body-contents'>{board?.boardContents}</div>
                     <div className='board-detail-body-image-box'>
-                        <img className='board-detail-image' src={board?.boardImageUrl ? board.boardImageUrl : ''} />
+                        <img className='board-detail-image' style={{backgroundImage: `url(${board?.boardImageUrl ? board?.boardImageUrl : ''})`}} />
                     </div>
                 </div>
                 <div className='board-detail-show-button'>
