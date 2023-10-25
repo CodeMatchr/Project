@@ -20,10 +20,10 @@ export default function BoardListItem({item} : Props) {
   // state //
   const {boardNumber, boardTitle, boardContents, boardImageUrl} = item;
   const {boardViewCount, boardCommentCount, boardFavoriteCount} = item;
-  const {boardWriteDatetime, boardWriterNickname, boardWriterProfileImageUrl} = item;
+  const {boardWriteDatetime, boardUserNickname, boardUserProfileImageUrl} = item;
 
   const boardBackground = boardImageUrl ? { backgroundImage : `url(${boardImageUrl})` } : { backgroundColor: 'rgba(0, 0, 0, 0.6)' };
-  const writerBackground = boardWriterProfileImageUrl ? { backgroundImage : `url(${boardWriterProfileImageUrl})` } : { backgroundColor: 'rgba(0, 0, 0, 0.6)' };
+  const writerBackground = boardUserProfileImageUrl ? { backgroundImage : `url(${boardUserProfileImageUrl})` } : { backgroundColor: 'rgba(0, 0, 0, 0.6)' };
 
   const navigator = useNavigate();
   const [board, setBoard] = useState<GetBoardResponseDto | null>(null);
@@ -72,7 +72,7 @@ export default function BoardListItem({item} : Props) {
       </div>
       <div className='board-list-right'>
           <div className='board-writer-profile' style={ writerBackground }></div>
-          <div className='board-writer-nickname'>{ boardWriterNickname }</div>
+          <div className='board-writer-nickname'>{ boardUserNickname }</div>
       </div>
     </div>
   )

@@ -21,8 +21,8 @@ public class BoardListResponseDto {
   private int boardCommentCount; 
   private int boardFavoriteCount; 
   private String boardWriteDatetime;
-  private String userProfileImageUrl;
-  private String userNickname;
+  private String boardUserProfileImageUrl;
+  private String boardUserNickname;
 
   public BoardListResponseDto(BoardViewEntity boardViewEntity) {
     this.boardNumber = boardViewEntity.getBoardNumber();
@@ -33,8 +33,8 @@ public class BoardListResponseDto {
     this.boardCommentCount = boardViewEntity.getBoardCommentCount();
     this.boardFavoriteCount = boardViewEntity.getBoardFavoriteCount();
     this.boardWriteDatetime = boardViewEntity.getBoardWriteDatetime();
-    this.userProfileImageUrl = boardViewEntity.getUserProfileImageUrl();
-    this.userNickname = boardViewEntity.getUserNickname();
+    this.boardUserProfileImageUrl = boardViewEntity.getUserProfileImageUrl();
+    this.boardUserNickname = boardViewEntity.getUserNickname();
   }
 
   public static List<BoardListResponseDto> copyEntityList(List<BoardViewEntity> boardViewEntities) {
@@ -57,8 +57,8 @@ public class BoardListResponseDto {
     this.boardCommentCount = boardListResultSet.getBoardCommentCount();
     this.boardFavoriteCount = boardListResultSet.getBoardFavoriteCount();
     this.boardWriteDatetime = boardListResultSet.getBoardWriteDatetime();
-    this.userProfileImageUrl = boardListResultSet.getUserProfileImageUrl();
-    this.userNickname = boardListResultSet.getUserNickname();
+    this.boardUserProfileImageUrl = boardListResultSet.getUserProfileImageUrl();
+    this.boardUserNickname = boardListResultSet.getUserNickname();
   }
 
   public static List<BoardListResponseDto> copyList(List<BoardListResultSet> boardListResultSets) {

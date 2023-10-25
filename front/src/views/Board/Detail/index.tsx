@@ -47,15 +47,7 @@ export default function BoardDetail() {
 
     // 댓글 상태 //
     const [comment, setComment] = useState<string>('');
-
-
-    // 게시물 정보를 저장할 상태 //
-    // const { boardTitle , boardContents , boardImage , setBoardTitle , setBoardContents , setBoardImage, resetBoard} = useBoardWriteStore();
-
-    // 경로 상태 //
-    const { pathname } = useLocation();
-
-
+ 
 
     // function //
     const navigator = useNavigate();
@@ -92,6 +84,7 @@ export default function BoardDetail() {
           return;
         }
 
+        console.log("1" +board?.boardImageUrl);
         setBoard(responseBody as GetBoardResponseDto);
     }
 
@@ -229,6 +222,7 @@ export default function BoardDetail() {
         postCommentRequest(boardNumber, data, token ).then(postCommentResponseHandler);
     }
 
+  
 
     // effect //
     // 게시물 번호가 바뀌면 랜더링 //
@@ -278,14 +272,14 @@ export default function BoardDetail() {
                         <div className='board-detail-title'>{board?.boardTitle}</div>
                     </div>
                     <div className='board-detail-writer-profile'>
-                        <div className='board-detail-writer-profile-image' style={{ backgroundImage: `url(${board?.boardWriterProfileImageUrl ? board.boardWriterProfileImageUrl : ''})` }} ></div>
-                        <div className='board-detail-writer-nickname'>{board?.boardWriterNickname}</div>
+                        <div className='board-detail-writer-profile-image' style={{ backgroundImage: `url(${board?.boardUserProfileImageUrl ? board.boardUserProfileImageUrl : ''})` }} ></div>
+                        <div className='board-detail-writer-nickname'>{board?.boardUserNickname}</div>
                     </div>
                 </div>
                 <div className='board-detail-body'>
                     <div className='board-detail-body-contents'>{board?.boardContents}</div>
                     <div className='board-detail-body-image-box'>
-                        <img className='board-detail-image' style={{backgroundImage: `url(${board?.boardImageUrl ? board?.boardImageUrl : ''})`}} />
+                        <img className='board-detail-image' src={board?.boardImageUrl ? board.boardImageUrl : ''} />
                     </div>
                 </div>
                 <div className='board-detail-show-button'>
@@ -306,8 +300,8 @@ export default function BoardDetail() {
                 <div className='board-detail-favorite-list-user'>
                     {favoriteList.map((item) => (
                         <div className='favorite-list-item-box'>
-                            <div className='favorite-list-item-writer-profile' style={{ backgroundImage: `url(${item.userProfileImageUrl})` }} >
-                                <div className='favorite-list-item-profile-image'></div>
+                            <div className='favorite-list-item-writer-profile'>
+                                <div className='favorite-list-item-profile-image' style={{ backgroundImage: `url(${item.userProfileImageUrl})` }}  ></div>
                                 <div className='favorite-list-item-writer-data'>
                                     <div className='favorite-list-item-writer-nickname'>{item.userNickname}</div>
                                 </div>
@@ -323,7 +317,7 @@ export default function BoardDetail() {
                     {pageCommentList.map((item) => (
                         <div className='comment-list-item-box'>
                             <div className='comment-list-item-writer-profile'>
-                                <div className='comment-list-item-profile-image'>{item.profileImageUrl}</div>
+                                <div className='comment-list-item-profile-image' style={{ backgroundImage: `url(${item.profileImageUrl})` }} ></div>
                                 <div className='comment-list-item-writer-data'>
                                     <div className='comment-list-item-writer-nickname'>{item.nickname}</div>
                                     <div className='comment-list-item-write-time'>{ dateFormat(item.writeDatetime)}</div>

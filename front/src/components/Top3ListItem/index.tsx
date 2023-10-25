@@ -19,10 +19,10 @@ export default function Top3ListItem({item} : Props) {
     // state //
     const { boardNumber, boardTitle, boardContents, boardImageUrl } = item;
     const { boardViewCount, boardCommentCount, boardFavoriteCount } = item;
-    const { boardWriteDatetime, boardWriterNickname, boardWriterProfileImageUrl } = item;
+    const { boardWriteDatetime, boardUserNickname, boardUserProfileImageUrl } = item;
 
     const boardBackground = boardImageUrl ? { backgroundImage : `url(${boardImageUrl})` } : { backgroundColor: 'rgba(0, 0, 0, 0.6)' };
-    const writerBackground = boardWriterProfileImageUrl ? { backgroundImage : `url(${boardWriterProfileImageUrl})` } : { backgroundColor: 'rgba(0, 0, 0, 0.6)' };
+    const writerBackground = boardUserProfileImageUrl ? { backgroundImage : `url(${boardUserProfileImageUrl})` } : { backgroundColor: 'rgba(0, 0, 0, 0.6)' };
 
     const [board, setBoard] = useState<GetBoardResponseDto | null>(null);
 
@@ -59,7 +59,7 @@ export default function Top3ListItem({item} : Props) {
             <div className='top3-board-list-top'>
                 <div className='top3-board-list-top-profile' style={writerBackground}></div>
                     <div className='top3-board-list-top-box'>
-                        <div className='top3-board-list-top-profile-nickname'>{boardWriterNickname}</div>
+                        <div className='top3-board-list-top-profile-nickname'>{boardUserNickname}</div>
                         <div className='top3-board-list-top-board-date'>{ dateFormat(boardWriteDatetime) }</div>
                     </div>
                 </div>

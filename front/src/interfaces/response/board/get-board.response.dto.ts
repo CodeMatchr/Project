@@ -11,7 +11,7 @@ export default interface GetBoardResponseDto extends ResponseDto {
     boardFavoriteCount : number;
 
     boardWriteDatetime : string;
-    boardWriterNickname: string;
-    boardWriterProfileImageUrl : string | null;
-    boardWriterEmail : string;
+    boardUserNickname: string;
+    boardUserProfileImageUrl : string | null;
+    boardUserEmail : string;
 }

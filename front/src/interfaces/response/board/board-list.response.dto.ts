@@ -8,6 +8,6 @@ export default interface BoardListResponseDto {
     boardFavoriteCount : number;
 
     boardWriteDatetime : string;
-    boardWriterNickname: string;
-    boardWriterProfileImageUrl : string | null;
+    boardUserNickname: string;
+    boardUserProfileImageUrl : string | null;
 }

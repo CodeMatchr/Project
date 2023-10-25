@@ -22,11 +22,11 @@ const navigator = useNavigate();
 
 // description: 속성으로 받아오는 게시물 관련 상태 //
 const { boardNumber, boardTitle, boardContents, boardImageUrl } = item;
-const { boardWriterProfileImageUrl, boardWriterNickname, boardWriteDatetime } = item;
+const { boardUserProfileImageUrl, boardUserNickname, boardWriteDatetime } = item;
 const { boardFavoriteCount, boardCommentCount, boardViewCount } = item;
 
 // description : 프로필 이미지 상태 //
-// const roomProfileImageBackground = boardWriterProfileImageUrl ? {backgroundImage : `url(${boardWriterProfileImageUrl})`} : { backgroundColor : 'rgba(0, 0, 0, 0.6)' };
+const roomProfileImageBackground = boardUserProfileImageUrl ? {backgroundImage : `url(${boardUserProfileImageUrl})`} : { backgroundColor : 'rgba(0, 0, 0, 0.6)' };
 // description : 게시물 이미지 상태 //
 const roomBoardImageBackground = boardImageUrl ? {backgroundImage : `url(${boardImageUrl})`} : { backgroundColor : 'rgba(0, 0, 0, 0.6)' };
 
@@ -71,9 +71,9 @@ useEffect(() => {
     <div id='user-board-wrapper' onClick={onclickHandler}>
         <div className='user-board-left-box'>
             <div className='user-board-info-box'>
-                <div className='user-board-info-profile' style={{ backgroundImage: `url(${boardWriterProfileImageUrl ? boardWriterProfileImageUrl : ''})` }} ></div>
+                <div className='user-board-info-profile' style={roomProfileImageBackground} ></div>
                 <div className='user-board-info-data'>
-                    <div className='user-board-info-nickname'>{boardWriterNickname}</div>
+                    <div className='user-board-info-nickname'>{boardUserNickname}</div>
                     <div className='user-board-info-datetime'>{boardWriteDatetime}</div>
                 </div>
             </div>
