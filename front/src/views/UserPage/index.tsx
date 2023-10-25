@@ -285,7 +285,6 @@ const navigator = useNavigate();
         navigator(MAIN_PATH);
         return;
       }
-
       getUserBoardListRequest(userEmail).then(getUserBoardListResponseHandler);
     }, [userEmail]);
 
@@ -355,7 +354,7 @@ const navigator = useNavigate();
     const getViewChatList = (chatList : RoomListResponseDto[]) => {
       const startIndex = MAIN_ROOM_COUNT_BY_PAGE * (currentPage -1);
       const lastIndex = chatList.length > MAIN_ROOM_COUNT_BY_PAGE * currentPage ? 
-                        MAIN_ROOM_COUNT_BY_PAGE * currentPage : chatList.length;
+      MAIN_ROOM_COUNT_BY_PAGE * currentPage : chatList.length;
       const viewChatList = chatList.slice(startIndex, lastIndex);
       setViewChatList(viewChatList);
     }

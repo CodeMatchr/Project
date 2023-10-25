@@ -226,7 +226,7 @@ return result;
 }
 
 // 유저 페이지 채팅방 리스트 불러오기 //
-export const getUserRoomListRequest = async (userEmail: string, token:string) => {
+export const getUserRoomListRequest = async (userEmail: string, token : string) => {
     const result = await axios.get(GET_USER_ROOM_LIST_URL(userEmail), { headers: { Authorization: `Bearer ${token}` } })
     .then((response) => {
         const responseBody: GetUserRoomListResponseDto = response.data;
@@ -266,6 +266,8 @@ const PATCH_ROOM_PASSWORD_URL = (roomNumber : number | string) => `${API_DOMAIN}
 const PATCH_ROOM_IMAGE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomImageUrl`;
 const DELETE_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}`;
 const PATCH_ROOM_ENTRANCE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/entrance`;
+const PATCH_ROOM_EXIT_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/exit`;
+
 
 // 채팅방 만들기 //
 export const postRoomRequest = async (data : PostRoomRequestDto, token : string) => {
@@ -390,7 +392,7 @@ export const PatchRoomEntranceRequest = async (roomNumber : number | string, dat
 
 // 채팅방 나가기 //
 export const PatchRoomExitRequest = async (roomNumber : number | string, data : PatchRoomExitRequsetDto , token : string) => {
-    const result = await axios.patch(PATCH_ROOM_ENTRANCE_URL(roomNumber))
+    const result = await axios.patch(PATCH_ROOM_EXIT_URL(roomNumber), data, { headers : {Authorization : `Bearer ${token}`} })
     .then((response) => {
         const responseBody : PatchRoomExitResponseDto = response.data;
         const { code } = responseBody;

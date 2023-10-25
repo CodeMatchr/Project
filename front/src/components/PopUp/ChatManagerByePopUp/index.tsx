@@ -99,10 +99,6 @@ export default function ChatManagerByePopUp({selectRoomNumber, setPopUpExitState
 
     //            effect           //
     useEffect(() => {
-        // if (roomNumberFlag) {
-        //     setRoomNumberFlag(false);
-        //     return;
-        // }
         if (!selectRoomNumber) {
             alert('채팅방 번호가 잘못되었습니다.');
             navigator(ROOM_DETAIL_PATH(roomNumber));

@@ -34,6 +34,9 @@ export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageSt
 
     const [roomNumberFlag, setRoomNumberFlag] = useState<boolean>(true);
 
+    // 이미지를 저장할 상태 //
+    const [roomImageState, setRoomImageState] = useState<string>('');
+
     //            function           //
     // 네비게이터 //
     const navigator = useNavigate();
@@ -66,14 +69,20 @@ export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageSt
     }
 
     // Room imageUrl 변경 이벤트 //
+    const onImageInputChangeHandler = (event : ChangeEvent<HTMLInputElement>) => {
+        if(!event.target.files || !event.target.files.length) return;
+        const imageUrl = URL.createObjectURL(event.target.files[0]);
+        setRoomImageState(imageUrl);
+        setRoomImage(event.target.files[0])
+    }
 
     const patchRoomImageUrlResponseHandler = (code: string) => {
         if (code == 'NR') alert ('존재하지 않는 다인원 채팅방 번호입니다.');
         if (code == 'NP') alert ('권한이 없습니다.');
         if (code != 'SU') return;
 
-        resetRoom();
-
+        const accessToken = cookies.accessToken;
+        getRoomRequest(roomNumber, accessToken).then(getRoomResponseHnadler);
         if(!roomNumber) return;
         navigator(ROOM_DETAIL_PATH(roomNumber));
     }
@@ -83,7 +92,7 @@ export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageSt
     const onChangeClickHandler = async () => {
         const token = cookies.accessToken;
 
-        const imageUrl = roomImage ? await fileUpload() : roomImageUrl;
+        const imageUrl = roomImage ? await fileUpload() : roomImage;
 
         const data : PatchRoomImageUrlRequestDto = {
             roomImageUrl : imageUrl
@@ -93,7 +102,7 @@ export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageSt
     }
     // description : 취소 버튼 클릭 이벤트 //
     const onCancelClickHandler = () => {
-        navigator(ROOM_DETAIL_PATH(roomNumber));
+        setPopUpImageState(false);
     }
     // description : 파일 업로드 버튼 클릭 이벤트 //
     const onFileUploadClickHandler = () => {
@@ -103,6 +112,7 @@ export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageSt
 
     //            effect           //
     useEffect(() => {
+        console.log(`roomNumber : ${roomNumber}`)
         if(roomNumberFlag) {
             setRoomNumberFlag(false);
             return;
@@ -126,7 +136,7 @@ export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageSt
             <div className='popup-manager-middle-box'>
                 <div className='popop-manager-middle-file-box'>
                     <div className='popup-manager-middle-file'>
-                       <div className='popup-manager-middle-file-button' onClick={onFileUploadClickHandler}>File<input className='file-button' ref={fileInputRef} type='file'accept='image/*' style={{ display: 'none' }}></input></div>
+                       <div className='popup-manager-middle-file-button' onClick={onFileUploadClickHandler}>File<input className='file-button' ref={fileInputRef} type='file'accept='image/*' style={{ display: 'none' }} onChange={onImageInputChangeHandler}></input></div>
                     </div>
                 </div>
                 <div className='popup-manager-middle-text-box'>

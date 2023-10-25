@@ -56,6 +56,7 @@ const patchRoomEntranceResponseHandler = (code : string) => {
         return;
     }
     if (code != 'SU') {
+        console.log(selectRoomNumber);
         navigator(MAIN_PATH);
         return;
     }
