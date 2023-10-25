@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEvent } from 'react'
+import React, { useState, useRef, ChangeEvent, useEffect } from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH } from '../../../constants';
@@ -7,47 +7,30 @@ import { useRoomStore } from 'src/store';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
 import { PatchRoomPasswordRequestDto } from 'src/interfaces/request/room';
-import { PatchRoomPasswordRequest } from 'src/apis';
+import { PatchRoomPasswordRequest, getRoomRequest } from 'src/apis';
 
-// interface Props {
-//     popUpType: string
-// { popUpType }: Props
-// }
+interface Props {
+    selectRoomNumber : number;
+}
 
 //            component           //
 // description : 채팅방 매니저 팝업창 //
-export default function ChatManagerPasswordPopUp() {
+export default function ChatManagerPasswordPopUp({selectRoomNumber} : Props) {
     //            state           //
     const { roomNumber, roomTitle, roomPassword, roomImage, roomImageUrl, resetRoom, setRoomNumber, setRoomImageUrl, setRoomImage, setRoomPassword, setRoomTitle } = useRoomStore();
 
     const [cookies, setCookie] = useCookies();
 
-    // description : 채팅방 변경 상태 //
-    // todo : 채팅방에서 변경 버튼 클릭시 string으로? boolean? //
-    const [roomChanege, setRoomChange] = useState<boolean>(true);
-    // description : 채팅방 인풋 상태 //
-    const [roomInputChange, setRoomInputChange] = useState<boolean>(true);
-
-    // description : 채팅방 이름 변경 상태 //
-    const [roomNameChange, setRoomNameChange] = useState<boolean>(true);
-    // description : 채팅방 이름 변경 인풋 상태 //
-    const [roomNameInputChange, setRoomNameInputChange] = useState<boolean>(true);
-    
-    // description : 채팅방 비밀번호 변경 상태 //
-    const [roomPasswordChanege, setRoomPasswordChange] = useState<boolean>(false);
     // description : 채팅방 비밀번호 변경 인풋 상태 //
-    const [roomPasswordInputChange, setRoomPasswordInputChange] = useState<boolean>(false);
-
-    // description : 채팅방 이미지 변경 상태 //
-    const [roomImageChanege, setRoomImageChange] = useState<boolean>(false);
-    // description : 채팅방 이미지 변경 인풋 상태 //
-    const [roomImageInputChange, setRoomImageInputChange] = useState<boolean>(false);
+    const [roomPasswordInputChange, setRoomPasswordInputChange] = useState<string>('');
 
     // description : 채팅방 나가기 버튼 상태 //
     const [roomExit, setRoomExit] = useState<boolean>(false);
 
-    // description : 파일 업로드 버튼 //
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    // 채팅방 상태 //
+    const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
+
+    const [roomNumberFlag, setRoomNumberFlag] = useState<boolean>(true);
 
 
     //            function           //
@@ -63,15 +46,21 @@ export default function ChatManagerPasswordPopUp() {
             return;
         }
 
-        const { roomTitle, roomPassword, roomImageUrl } = responseBody as GetRoomResponseDto
-        setRoomTitle(roomTitle);
-        setRoomPassword(roomPassword);
-        setRoomImageUrl(roomImageUrl);
+        // const { roomTitle, roomPassword, roomImageUrl } = responseBody as GetRoomResponseDto
+        // setRoomTitle(roomTitle);
+        // setRoomPassword(roomPassword);
+        // setRoomImageUrl(roomImageUrl);
+
+        const room = responseBody as GetRoomResponseDto;
+    
+        setRoom(room);
+        setRoomNumber(room.roomNumber);
+        setRoomTitle(room.roomPassword);
     }
 
     // 비밀번호 변경 이벤트 //
     const onRoomPasswordChangeHandler = (event : ChangeEvent<HTMLInputElement>) => {
-        setRoomPassword(event.target.value);
+        setRoomPasswordInputChange(event.target.value);
     }
 
     const patchRoomPasswordResponseHandler = (code : string) => {
@@ -89,25 +78,34 @@ export default function ChatManagerPasswordPopUp() {
 
     //            event handler           //
     // description : 변경 버튼 클릭 이벤트 //
-    // todo : 변경 위치 다시 확인해서 수정해야함 //
     const onChangeClickHandler = async () => {
         const token = cookies.accessToken;
 
         const data : PatchRoomPasswordRequestDto = {
-            roomPassword : roomPassword
+            roomPassword : roomPasswordInputChange
         }
 
         PatchRoomPasswordRequest(roomNumber, data, token).then(patchRoomPasswordResponseHandler);
-
     }
     // description : 취소 버튼 클릭 이벤트 //
     const onCancelClickHandler = () => {
         navigator(ROOM_DETAIL_PATH(roomNumber));
     }
 
-
-    //            component           //
     //            effect           //
+    useEffect(() => {
+        if(roomNumberFlag) {
+            setRoomNumberFlag(false);
+            return;
+        }
+        if(!roomNumber) {
+            alert('채팅방 번호가 잘못되었습니다.');
+            navigator(MAIN_PATH);
+            return;
+        }
+        const accessToken = cookies.accessToken;
+        getRoomRequest(roomNumber, accessToken).then(getRoomResponseHnadler);
+        }, [roomNumber, roomTitle, roomPassword, roomImage, roomImageUrl]);
     //            render           //
     return (
     <div id='popup-manager-wrapper'>

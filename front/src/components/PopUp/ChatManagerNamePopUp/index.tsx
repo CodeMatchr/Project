@@ -9,9 +9,13 @@ import { useCookies } from 'react-cookie';
 import { PatchRoomTitleRequestDto } from 'src/interfaces/request/room';
 import { PatchRoomTitleRequest, getRoomRequest } from 'src/apis';
 
+interface Props {
+    selectRoomNumber : number;
+}
+
 //            component           //
 // description : 채팅방 매니저 팝업창 //
-export default function ChatManagerNamePopUp() {
+export default function ChatManagerNamePopUp({selectRoomNumber} : Props) {
     //            state           //
     // description : 네비게이터 //
     const navigator = useNavigate();
@@ -20,26 +24,8 @@ export default function ChatManagerNamePopUp() {
 
     const [cookies, setCookie] = useCookies();
 
-    // description : 채팅방 변경 상태 //
-    // todo : 채팅방에서 변경 버튼 클릭시 string으로? boolean? //
-    const [roomChanege, setRoomChange] = useState<boolean>(true);
-    // description : 채팅방 인풋 상태 //
-    const [roomInputChange, setRoomInputChange] = useState<boolean>(true);
-
-    // description : 채팅방 이름 변경 상태 //
-    const [roomNameChange, setRoomNameChange] = useState<boolean>(true);
     // description : 채팅방 이름 변경 인풋 상태 //
-    const [roomNameInputChange, setRoomNameInputChange] = useState<boolean>(true);
-    
-    // description : 채팅방 비밀번호 변경 상태 //
-    const [roomPasswordChanege, setRoomPasswordChange] = useState<boolean>(false);
-    // description : 채팅방 비밀번호 변경 인풋 상태 //
-    const [roomPasswordInputChange, setRoomPasswordInputChange] = useState<boolean>(false);
-
-    // description : 채팅방 이미지 변경 상태 //
-    const [roomImageChanege, setRoomImageChange] = useState<boolean>(false);
-    // description : 채팅방 이미지 변경 인풋 상태 //
-    const [roomImageInputChange, setRoomImageInputChange] = useState<boolean>(false);
+    const [roomNameInputChange, setRoomNameInputChange] = useState<string>('');
 
     // description : 채팅방 나가기 버튼 상태 //
     const [roomExit, setRoomExit] = useState<boolean>(false);
@@ -48,7 +34,10 @@ export default function ChatManagerNamePopUp() {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // 채팅방 상태 //
-const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
+    const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
+
+    const [roomNumberFlag, setRoomNumberFlag] = useState<boolean>(true);
+
 
 
     //            function           //
@@ -56,16 +45,23 @@ const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
     const getRoomResponseHnadler = (responseBody : GetRoomResponseDto | ResponseDto) => {
         const {code} = responseBody;
         if (code == 'NR') alert('존재하지 않는 채팅방입니다.');
-        if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+        // if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
         if (code != 'SU') {
             navigator(MAIN_PATH);
             return;
         }
 
         const room = responseBody as GetRoomResponseDto;
+                
+        
         setRoom(room);
-        const { roomTitle } = room;
-        setRoomTitle(roomTitle);
+        setRoomNumber(room.roomNumber);
+        setRoomTitle(room.roomTitle);
+    }
+
+    // description : 다인원 채팅방 제목 변경 이벤트 //
+    const onTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setRoomNameInputChange(event.target.value);
     }
 
     const patchRoomTitleResponseHandler = (code : string) => {
@@ -77,22 +73,19 @@ const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
 
         resetRoom();
 
+
         if(!roomNumber) return;
         navigator(ROOM_DETAIL_PATH(roomNumber));
     }
 
-    // description : 다인원 채팅방 제목 변경 이벤트 //
-    const onTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setRoomTitle(event.target.value);
-    }
-
+    
     //            event handler           //
     // 변경 버튼 클릭 이벤트 //
     const onChangeClickHandler = async () => {
         const token = cookies.accessToken;
 
         const data : PatchRoomTitleRequestDto = {
-            roomTitle : roomTitle
+            roomTitle : roomNameInputChange
         }
 
         PatchRoomTitleRequest(roomNumber, data, token).then(patchRoomTitleResponseHandler);
@@ -104,10 +97,9 @@ const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
     }
 
     //            effect           //
-    let roomNumberFlag = true;
     useEffect(() => {
     if(roomNumberFlag) {
-        roomNumberFlag = false;
+        setRoomNumberFlag(false);
         return;
     }
     if(!roomNumber) {

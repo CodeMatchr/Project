@@ -42,6 +42,8 @@ export default function Chat() {
     // 나가기 채팅방 팝업창 상태
     const [popUpExitState, setPopUpExitState] = useState<boolean>(false);
 
+    const [selectRoomNumber, setSelectRoomNumber] = useState<number>(0);
+
     
 
     // function //
@@ -57,7 +59,8 @@ export default function Chat() {
             return;
         }
 
-        const { roomTitle, roomPassword, roomImageUrl } = responseBody as GetRoomResponseDto
+        const { roomNumber, roomTitle, roomPassword, roomImageUrl } = responseBody as GetRoomResponseDto
+        setRoomNumber(roomNumber);
         setRoomTitle(roomTitle);
         setRoomPassword(roomPassword);
         setRoomImageUrl(roomImageUrl);
@@ -144,13 +147,13 @@ export default function Chat() {
             <div className='chat-top-left'>`{roomTitle} 채팅방에 입장하였습니다.`</div>
             <div className='chat-top-right'>
                 <div className='chat-top-right-name-button' onClick={onNameIconButtonClickHandler}>이름 변경</div>
-                {popUpNameState && <div className='chat-manager-pop-up'><ChatManagerNamePopUp/></div>}
+                {popUpNameState && <div className='chat-manager-pop-up'><ChatManagerNamePopUp selectRoomNumber={selectRoomNumber}/></div>}
                 <div className='chat-top-right-password-button' onClick={onPasswordIconButtonClickHandler}>비밀번호 변경</div>
-                {popUpPasswordState && <div className='chat-manager-pop-up'><ChatManagerPasswordPopUp/></div>}
+                {popUpPasswordState && <div className='chat-manager-pop-up'><ChatManagerPasswordPopUp selectRoomNumber={selectRoomNumber}/></div>}
                 <div className='chat-top-right-iamge-button' onClick={onImageIconButtonClickHandler}>이미지 변경</div>
-                {popUpImageState && <div className='chat-manager-pop-up'><ChatManagerImagePopUp/></div>}
+                {popUpImageState && <div className='chat-manager-pop-up'><ChatManagerImagePopUp selectRoomNumber={selectRoomNumber}/></div>}
                 <div className='chat-top-right-exit-button' onClick={onExitIconButtonClickHandler}>나가기</div>
-                {popUpExitState && <div className='chat-manager-pop-up'><ChatManagerByePopUp/></div>}
+                {popUpExitState && <div className='chat-manager-pop-up'><ChatManagerByePopUp selectRoomNumber={selectRoomNumber}/></div>}
             </div>
         </div>
         <div className='chat-mid'>
