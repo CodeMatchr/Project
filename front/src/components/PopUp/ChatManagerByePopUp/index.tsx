@@ -1,30 +1,28 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, Dispatch, SetStateAction, useEffect, DOMAttributes } from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH } from '../../../constants';
 import { useCookies } from 'react-cookie';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { useRoomStore } from 'src/store';
+import { useRoomStore, useUserStore } from 'src/store';
+import { DeleteRoomRequest, PatchRoomExitRequest, getRoomRequest } from 'src/apis';
+import PatchRoomExitRequsetDto from 'src/interfaces/request/room/patch-room-exit-request.dto';
 
 interface Props {
     selectRoomNumber : number;
+    setPopUpExitState : Dispatch<SetStateAction<boolean>>;
 }
 
 //            component           //
 // description : 채팅방 매니저 팝업창 //
-export default function ChatManagerByePopUp({selectRoomNumber} : Props) {
+export default function ChatManagerByePopUp({selectRoomNumber, setPopUpExitState} : Props) {
 
     //            state           //
     const { roomNumber, roomTitle, roomPassword, roomImage, roomImageUrl, resetRoom, setRoomNumber, setRoomImageUrl, setRoomImage, setRoomPassword, setRoomTitle } = useRoomStore();
+    const { user } = useUserStore();
 
     const [cookies, setCookie] = useCookies();
-
-    // description : 채팅방 나가기 버튼 상태 //
-    const [roomExit, setRoomExit] = useState<boolean>(false);
-
-    // description : 파일 업로드 버튼 //
-    const fileInputRef = useRef<HTMLInputElement>(null);
 
     // 채팅방 상태 //
     const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
@@ -37,6 +35,7 @@ export default function ChatManagerByePopUp({selectRoomNumber} : Props) {
 
     // 채팅방 불러오기 응답 처리 //
     const getRoomResponseHnadler = (responseBody : GetRoomResponseDto | ResponseDto) => {
+        
         const {code} = responseBody;
         if (code == 'NR') alert('존재하지 않는 채팅방입니다.');
         if (code != 'SU') {
@@ -44,10 +43,12 @@ export default function ChatManagerByePopUp({selectRoomNumber} : Props) {
             return;
         }
 
-        const { roomTitle, roomPassword, roomImageUrl } = responseBody as GetRoomResponseDto
-        setRoomTitle(roomTitle);
-        setRoomPassword(roomPassword);
-        setRoomImageUrl(roomImageUrl);
+        const room = responseBody as GetRoomResponseDto;
+        console.log(room);
+
+        setRoom(room);
+        setRoomNumber(room.roomNumber);
+        setRoomTitle(room.roomTitle);
     }
 
     // 채팅방 삭제 응답 처리 //
@@ -58,6 +59,7 @@ export default function ChatManagerByePopUp({selectRoomNumber} : Props) {
         if (code != 'SU') return;
 
         resetRoom();
+        setPopUpExitState(false);
         navigator(MAIN_PATH);
     }
 
@@ -71,23 +73,45 @@ export default function ChatManagerByePopUp({selectRoomNumber} : Props) {
         navigator(MAIN_PATH);
     }
     
-
     //            event handler           //
     // description : 취소 버튼 클릭 이벤트 //
     // todo : 변경 위치 다시 확인해서 수정해야함 //
     const onCancelClickHandler = () => {
-        navigator(MAIN_PATH);
+        setPopUpExitState(false);
     }
     // description : 나가기 버튼 클릭 이벤트 //
     // todo : 변경 위치 다시 확인해서 수정해야함 //
-    const onExitClickHandler = () => {
+    const onExitClickHandler = async () => {
         const token = cookies.accessToken;
-
-        navigator(MAIN_PATH);
+        const data : PatchRoomExitRequsetDto = {}
+        console.log(room);
+        console.log(user);
+        if (!room || !user) return;
+        const isManager = room.roomManagerEmail === user.userEmail;
+        if (isManager) {
+            DeleteRoomRequest(roomNumber, token).then(deleteRoomResponseHandler);
+        } else {
+            PatchRoomExitRequest(roomNumber, data, token).then(patchRoomExitResponseHandler);
+        }
+        setPopUpExitState(false);
     }
 
 
     //            effect           //
+    useEffect(() => {
+        // if (roomNumberFlag) {
+        //     setRoomNumberFlag(false);
+        //     return;
+        // }
+        if (!selectRoomNumber) {
+            alert('채팅방 번호가 잘못되었습니다.');
+            navigator(ROOM_DETAIL_PATH(roomNumber));
+            return;
+        }
+        const accessToken = cookies.accessToken;
+        getRoomRequest(selectRoomNumber, accessToken).then(getRoomResponseHnadler);
+        }, [selectRoomNumber, roomTitle]);
+
     //            render           //
     return (
     <div id='popup-manager-wrapper'>

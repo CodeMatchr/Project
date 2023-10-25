@@ -184,8 +184,8 @@ public class RoomServiceImplement implements RoomService {
             if(!equalEmail) return DeleteRoomResponseDto.noPermission();
 
             // roomJoin - 해당되는 데이터 먼저 삭제(제약조건)
-            RoomJoinEntity roomJoinEntity = roomJoinRepository.findByRoomNumber(roomNumber);
-            if(roomJoinEntity != null) roomJoinRepository.delete(roomJoinEntity);
+            List<RoomJoinEntity> roomJoinEntities = roomJoinRepository.findByRoomNumber(roomNumber);
+            roomJoinRepository.deleteAll(roomJoinEntities);
 
             // 채팅방 삭제
             roomRepository.delete(roomEntity);
@@ -267,12 +267,8 @@ public class RoomServiceImplement implements RoomService {
             if(existedRoomUser) return PatchRoomEntranceResponseDto.existedUserEmail();
 
             // 기존 채팅방에 소속된 사용자 확인 2 다인원 채팅방 소속자들이 소속된 roomJoin roomNumber
-            RoomJoinEntity roomJoinEntity = roomJoinRepository.findByRoomNumber(roomNumber);
+            RoomJoinEntity roomJoinEntity = roomJoinRepository.findByRoomNumberAndUserEmail(roomNumber, userEmail);
             if(roomJoinEntity == null) return PatchRoomEntranceResponseDto.noExistedRoomNumber();
-
-            // 기존 채팅방에 소속된 사용자 확인 3 다인원 채팅방 소속자들이 소속된 roomJoin userEmail
-            boolean equalEmail = roomJoinEntity.getUserEmail().equals(userEmail);
-            if(equalEmail) return PatchRoomEntranceResponseDto.existedUserEmail();
 
             // Entity 생성 - roomJoin 엔터티 생성
             RoomJoinEntity roomJoinEntityPost = new RoomJoinEntity(roomEntity.getRoomNumber(), userEmail);

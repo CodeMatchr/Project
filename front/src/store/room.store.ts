@@ -6,13 +6,6 @@ interface RoomStore {
     roomPassword : string;
     roomImage : File | null;
     roomImageUrl : string | null;
-    // roomDateTime : string;
-    // roomMemberCount : number;
-    // roomUserEmail : String;
-    // roomManagerNickname : string;
-    // roomAccessorEmail : string;
-    // roomManagerProfileImageUrl : string | null;
-    // roomIsMulti : boolean;
 
     setRoomNumber : (roomNumber: number) => void;
     setRoomTitle : (roomTitle: string) => void;
