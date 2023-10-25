@@ -115,7 +115,7 @@ export default function BoardDetail() {
         if (code === 'VF') alert('잘못된 입력입니다.');
         if (code === 'DE') alert('데이터베이스 에러입니다.');
         if (code !== 'SU') return;
-  
+        
         alert('게시물 삭제 성공');
         navigator(MAIN_PATH);
       }

@@ -28,8 +28,6 @@ import PutFavoriteResponseDto from 'src/interfaces/response/board/put-favorite.r
 import { PostCommentRequestDto } from 'src/interfaces/request/board';
 import GetCurrentRoomListResponseDto from 'src/interfaces/response/room/get-current-room-list.response.dto';
 import { PatchRoomImageUrlRequestDto } from 'src/interfaces/request/room';
-import DeleteRoomResponseDto from 'src/interfaces/response/room/delete-room.response.dto';
-import { error } from 'console';
 import PatchRoomExitRequsetDto from 'src/interfaces/request/room/patch-room-exit-request.dto';
 import PatchRoomExitResponseDto from 'src/interfaces/response/room/patch-room-exit-response.dto';
 import GetSearchBoardResponseDto from 'src/interfaces/response/board/get-search-board.response.dto';
@@ -43,7 +41,7 @@ const SIGN_UP_URL = () => `${API_DOMAIN}/authentication/sign-up`;
 const SIGN_IN_URL = () => `${API_DOMAIN}/authentication/sign-in`;
 
 // 로그인 사용자 정보 불러오기 //
-const GET_SIGN_IN_USER_URL = () => `http://localhost:4040/api/v1/user`;
+const GET_SIGN_IN_USER_URL = () => `${API_DOMAIN}/user`;
 // 사용자 //
 const GET_USER_URL = (userEmail: string) => `${API_DOMAIN}/user/${userEmail}`;
 
@@ -63,7 +61,7 @@ const PATCH_USER_STATE_MESSAGE_URL = () => `${API_DOMAIN}/user/state-message`;
 const POST_BOARD_URL = () => `${API_DOMAIN}/board`;
 
 // 파일 업로드 //
-const UPLOAD_FILE = () => `http://localhost:4040/file/upload`;
+const UPLOAD_FILE = () => `http://localhost:4040/api/v1/file/upload`;
 
 // 게시물 수정 //
 const PATCH_BOARD_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}`;

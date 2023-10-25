@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name="room_join")
-@Table(name="roomJoin")
+@Table(name="room_join")
 @IdClass(RoomJoinPk.class)
 public class RoomJoinEntity implements Serializable {
     @Id
