@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState, ChangeEvent, useRef, useEffect } from 'react'
+import React, { Dispatch, SetStateAction, useState, ChangeEvent, useRef, useEffect, KeyboardEvent } from 'react'
 import './style.css'; 
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AUTHENTICATION_PATH, CHAT_PATH, MAIN_PATH, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH } from '../../../constants';
@@ -10,6 +10,7 @@ import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.d
 import ResponseDto from 'src/interfaces/response/response.dto';
 import { transpileModule } from 'typescript';
 import PostRoomResponseDto from 'src/interfaces/response/room/post-room.response.dto';
+import { eventNames } from 'process';
 
 //            component           //
 // description : 채팅방 만들기 팝업창 // 
@@ -18,7 +19,7 @@ export default function ChatRoomPopUp() {
 // description : 네비게이터 //
 const navigator = useNavigate();
 
-// todo : 상태 string / boolean 확인 잘하기, 받아오는 값 //
+
 // description : 방 이름 상태 //
 const [roomName, setRoomName] = useState<string>('');
 // description : 방 비밀번호 상태 //
@@ -43,6 +44,9 @@ const { roomNumber, roomTitle, roomPassword, roomImage, setRoomTitle, setRoomPas
 const [roomImageUrl, setRoomImageUrl] = useState<string>('')
 // 채팅방 상태 //
 const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
+
+// 생성 버튼 Ref 상태 //
+const createButtonRef = useRef<HTMLDivElement | null>(null);
 
 //            function           //
 // 파일 업로드 //
@@ -132,19 +136,14 @@ const onFileUploadClickHandler = () => {
   fileInputRef.current.click();
 }
 
-//            component           //
+// Enter Key 누름 처리 //
+const onEnterKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+  if(event.key !== 'Enter') return;
+  if(!createButtonRef.current) return;
+  createButtonRef.current.click();
+}
+
 //            effect           //
-// useEffect(() => {
-//   if (!userEmail) navigator(MAIN_PATH);
-
-
-//   return;
-// }, [userEmail]);
-
-
-//   return;
-// }, [userEmail]);
-
 // roomNumber 가 바뀔 때 마다 실행 //
 let roomNumberFlag = true;
 useEffect(() => {
@@ -196,9 +195,9 @@ useEffect(() => {
             <div className='popup-main-bottom-room-password-box'>
               <div className='popup-main-bottom-room-password'>비밀번호</div>
               {roomPasswordError ? 
-              <input className='popup-main-bottom-room-password-input-error' type='text' placeholder='방 비밀번호를 입력해주세요.' onChange={onRoomPasswordHandler} />
+              <input className='popup-main-bottom-room-password-input-error' type='text' placeholder='방 비밀번호를 입력해주세요.' onChange={onRoomPasswordHandler} onKeyDown={onEnterKeyDownHandler} />
               :
-              <input className='popup-main-bottom-room-password-input' type='text' placeholder='방 비밀번호를 입력해주세요.' onChange={onRoomPasswordHandler} />
+              <input className='popup-main-bottom-room-password-input' type='text' placeholder='방 비밀번호를 입력해주세요.' onChange={onRoomPasswordHandler} onKeyDown={onEnterKeyDownHandler} />
               }
             </div>
             <div className='popup-main-bottom-room-input-error-box'>
@@ -208,8 +207,8 @@ useEffect(() => {
               <></>}
             </div>
             <div className='popup-main-bottom-button-box'>
-              <button className='popup-main-bottom-button-create' onClick={onCreateClickHandler} >생성</button>
-              <button className='popup-main-bottom-button-cancel' onClick={onCancelClickHandler} >취소</button>
+              <div className='popup-main-bottom-button-create' onClick={onCreateClickHandler} ref={createButtonRef} >생성</div>
+              <div className='popup-main-bottom-button-cancel' onClick={onCancelClickHandler} >취소</div>
             </div>
           </div>
         </div>

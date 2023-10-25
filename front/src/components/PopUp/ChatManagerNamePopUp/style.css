@@ -210,7 +210,9 @@
 
     border: none;
     border-radius: 25px;
-
+    text-align: center;
+    line-height: 48px;
+    background-color: #ccc;
     font-size: 24px;
     font-weight: 500;
 }
@@ -226,6 +228,9 @@
 
     border: none;
     border-radius: 25px;
+    text-align: center;
+    line-height: 48px;
+    background-color: #ccc;
 
     font-size: 24px;
     font-weight: 500;

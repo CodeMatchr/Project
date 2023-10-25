@@ -131,13 +131,16 @@ return (
                 <textarea ref={textAreaRef}  className="board-write-content" placeholder="본문을 작성해 주세요. 이미지 파일 업로드도 가능합니다." onChange={onContentChangeHandler} value={boardContents}></textarea>
             </div>
             <input ref={fileInputRef} type='file' accept='image/*' style={{ display: 'none' }} onChange={onImageInputChangeHandler} />          
+            {boardImageUrl && (
+            <div className="board-write-image-container">
+                <div className="image-button-box">
+                    <div className="board-write-image-delete-button" onClick={onImageCloseButtonClickHandler}>닫기</div>
+                </div>
+                <img className="board-write-image" src={boardImageUrl}/>
+            </div>
+            )}            
         </div>
-        {boardImageUrl && (
-        <div className="board-write-image-container">
-            <img className="board-write-image" src={boardImageUrl}/>
-            <div className="board-write-image-delete-button" onClick={onImageCloseButtonClickHandler}>닫기</div>
-        </div>
-            )}                   
+               
         <div className="board-button-container">
                  <div className="board-write-button" onClick={onBoardWriteButtonClickHandler} >작성</div>
                  <div className="board-cancle-button" onClick={onCancelClickHandler}>취소</div>

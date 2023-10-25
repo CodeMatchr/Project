@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEvent, useEffect, SetStateAction, Dispatch } from 'react'
+import React, { useState, useRef, ChangeEvent, useEffect, SetStateAction, Dispatch, KeyboardEvent } from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH } from '../../../constants';
@@ -30,6 +30,8 @@ export default function ChatManagerPasswordPopUp({selectRoomNumber, setPopUpPass
 
     const [roomNumberFlag, setRoomNumberFlag] = useState<boolean>(true);
 
+    // 변경 버튼 Ref 상태 //
+    const changeButtonRef = useRef<HTMLDivElement | null>(null);
 
     //            function           //
     // description : 네비게이터 //
@@ -85,6 +87,12 @@ export default function ChatManagerPasswordPopUp({selectRoomNumber, setPopUpPass
     const onCancelClickHandler = () => {
         setPopUpPasswordState(false);
     }
+    // Enter Key 누름 처리 //
+    const onEnterKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if(event.key !== 'Enter') return;
+        if(!changeButtonRef.current) return;
+        changeButtonRef.current.click();
+    }
 
     //            effect           //
     useEffect(() => {
@@ -113,16 +121,16 @@ export default function ChatManagerPasswordPopUp({selectRoomNumber, setPopUpPass
                 </div>
                 <div className='popup-manager-middle-text-box'>
                     <div className='popup-manager-middle-text'>
-                        <input className='popup-manager-middle-text-input' placeholder='변경할 비밀번호를 입력해주세요.' onChange={onRoomPasswordChangeHandler}></input>
+                        <input className='popup-manager-middle-text-input' placeholder='변경할 비밀번호를 입력해주세요.' onChange={onRoomPasswordChangeHandler} onKeyDown={onEnterKeyDownHandler}></input>
                     </div>
                 </div>
             </div>
             <div className='popup-manager-bottom-box'>
                 <div className='popup-manager-bottom-button-change-box'>
-                    <button className='popup-manager-bottom-button-change' onClick={onChangeClickHandler}>변경</button>
+                    <div className='popup-manager-bottom-button-change' onClick={onChangeClickHandler} ref={changeButtonRef}>변경</div>
                 </div>
                 <div className='popup-manager-bottom-button-cancel-box'>
-                    <button className='popup-manager-bottom-button-cancel' onClick={onCancelClickHandler}>취소</button>
+                    <div className='popup-manager-bottom-button-cancel' onClick={onCancelClickHandler}>취소</div>
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react'
+import React, {ChangeEvent, useEffect, useRef, useState, KeyboardEvent} from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { CHAT_PATH, MAIN_PATH, ROOM_DETAIL_PATH, ROOM_NUMBER_PATH_VARIABLE, ROOM_PATH } from '../../../constants';
@@ -29,6 +29,9 @@ const [cookies, setCookie] = useCookies();
 // 채팅방 상태 //
 const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
 const [roomNumberFlag, setRoomNumberFlag] = useState<boolean>(true);
+
+// 입장 버튼 Ref 상태 //
+const entranceButtonRef = useRef<HTMLDivElement | null>(null);
 
 //                      function                       //
 // Room detail(채팅방) 불러오기 응답처리 함수 //
@@ -83,7 +86,13 @@ const onCancelClickHandler = () => {
     navigator(MAIN_PATH);
 }
 
-//                      component                       //
+// Enter Key 누름 처리 //
+const onEnterKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+    if(event.key !== 'Enter') return;
+    if(!entranceButtonRef.current) return;
+    entranceButtonRef.current.click();
+  }
+
 //                      effect                       //
 // let roomNumberFlag = true;
 useEffect(() => {
@@ -122,9 +131,9 @@ useEffect(() => {
                         <div className='popup-main-bottom-room-password'>비밀번호</div>
                         <div className='popup-main-bottom-room-password-container'>
                             {roomPasswordError? (
-                                <input className='popup-main-bottom-room-password-input-error' onChange={onPasswordChangeHandler}></input>
+                                <input className='popup-main-bottom-room-password-input-error' onChange={onPasswordChangeHandler} onKeyDown={onEnterKeyDownHandler}></input>
                                 ) : (
-                                <input className='popup-main-bottom-room-password-input' onChange={onPasswordChangeHandler}></input>
+                                <input className='popup-main-bottom-room-password-input' onChange={onPasswordChangeHandler} onKeyDown={onEnterKeyDownHandler}></input>
                             )}
                             {roomPasswordError ? (
                                 <div className='popup-main-bottom-room-password-helper'>비밀번호가 올바르지않습니다. 다시 확인해주세요.</div>
@@ -134,8 +143,8 @@ useEffect(() => {
                         </div>
                     </div>
                     <div className='popup-main-bottom-button-box'>
-                        <button className='popup-main-bottom-button-come' onClick={onComeClickHandler}>입장</button>
-                        <button className='popup-main-bottom-button-cancel' onClick={onCancelClickHandler}>취소</button>
+                        <div className='popup-main-bottom-button-come' onClick={onComeClickHandler} ref={entranceButtonRef}>입장</div>
+                        <div className='popup-main-bottom-button-cancel' onClick={onCancelClickHandler}>취소</div>
                     </div>
                 </div>
             </div>

@@ -15,6 +15,8 @@ import { PatchBoardRequestDto } from 'src/interfaces/request/board';
 export default function BoardUpdate() {
 
 //          state          //
+const divAreaRef = useRef<HTMLDivElement>(null);
+
 // description : textarea 요소에 대한 참조 상태 //
 const textAreaRef = useRef<HTMLTextAreaElement>(null);
 // description : file input 요소에 대한 참조 상태 //
