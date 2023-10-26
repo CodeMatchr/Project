@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState, KeyboardEvent } from 'react';
 import './style.css';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useBoardWriteStore, useUserStore } from 'src/store';
@@ -47,7 +47,9 @@ export default function BoardDetail() {
 
     // 댓글 상태 //
     const [comment, setComment] = useState<string>('');
- 
+
+    // 댓글 작성 버튼 Ref 상태 //
+    const sendButtonRef = useRef<HTMLDivElement | null>(null);
 
     // function //
     const navigator = useNavigate();
@@ -119,7 +121,7 @@ export default function BoardDetail() {
         changeSection(commentList.length, COUNT_BY_PAGE_COMMENT);
       }
 
-      // 게시물 삭제 응답 //
+    // 게시물 삭제 응답 //
     const deleteBoardResponseHandler = (code: string) => {
         if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
         if (code === 'NB') alert('존재하지 않는 게시물입니다.');
@@ -155,6 +157,13 @@ export default function BoardDetail() {
     }
 
     // event handler //
+
+    // Enter Key 누름 처리 //
+    const onEnterKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if(event.key !== 'Enter') return;
+        if(!sendButtonRef.current) return;
+        sendButtonRef.current.click();
+    }
 
     // 좋아요 버튼 클릭 //
     const onFavoriteButtonClickHandler = () => {
@@ -336,18 +345,18 @@ export default function BoardDetail() {
                     />
                     )}
                 </div>
-                <div className='comment-list-write-box'>
+                <div className='comment-list-write-box-wrap'>
                     <div className='comment-list-write-box'>
                         <div className='comment-list-write'>댓글 작성</div>
                     </div>
                     <div className='comment-list-write-comment-box'>
-                        <input className='comment-list-write-comment-input' onChange={onCommentChangeHandler} />
+                        <input className='comment-list-write-comment-input' onChange={onCommentChangeHandler} onKeyDown={onEnterKeyDownHandler} />
                     </div>
                     <div className='comment-list-write-button-box'>
                        {comment.length === 0 ? (
-                            <button className='comment-list-write-button' >작성</button>
+                            <div className='comment-list-write-button' >작성</div>
                        ) : (
-                            <button className='comment-list-write-button' onClick={onCommentClickHandler} >작성</button>
+                            <div className='comment-list-write-button' ref={sendButtonRef} onClick={onCommentClickHandler}>작성</div>
                        )} 
                     </div>
                 </div>

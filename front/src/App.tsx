@@ -18,12 +18,6 @@ import { useUserStore } from './store';
 import { getSignInUserRequest } from './apis';
 import BoardList from './views/Board/List';
 import BoardUpdate from './views/Board/Update';
-import ChatRoomPopUp from './components/PopUp/ChatRoomPopUp';
-import ChatComePopUP from './components/PopUp/ChatComePopUp';
-import ChatManagerNamePopUp from './components/PopUp/ChatManagerNamePopUp';
-import ChatManagerPasswordPopUp from './components/PopUp/ChatManagerPasswordPopUp';
-import ChatManagerImagePopUp from './components/PopUp/ChatManagerImagePopUp';
-import ChatManagerByePopUp from './components/PopUp/ChatManagerByePopUp';
 import SearchList from './views/Board/Search';
 
 

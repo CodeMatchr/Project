@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, KeyboardEvent, ChangeEvent } from 'react';
 import { useState } from 'react';
 import './style.css';
 import InputBox from '../../components/InputBox';
@@ -106,7 +106,7 @@ const navigator = useNavigate();
           <div className='authentication-middle'>
             <div className='authentication-middle-input-container'>
               <InputBox label='Email address' type='text' placeholder='이메일을 입력해주세요.' error={error} value={userEmail} setValue={setUserEmail} />
-              <InputBox label='Password' labelError={passwordForgot ? 'Forgot Password ?' : ''} type={showPassword ? 'text' : 'password'} icon={showPassword ? INPUT_ICON.ON : INPUT_ICON.OFF} placeholder='비밀번호를 입력해주세요.' error={error} value={userPassword} setValue={setUserPassword} buttonHandler={onPasswordIconClickHandler}/>
+              <InputBox label='Password' labelError={passwordForgot ? 'Forgot Password ?' : ''} type={showPassword ? 'text' : 'password'} icon={showPassword ? INPUT_ICON.ON : INPUT_ICON.OFF} placeholder='비밀번호를 입력해주세요.' error={error} value={userPassword} setValue={setUserPassword} buttonHandler={onPasswordIconClickHandler} />
                 <div className='authentication-middle-button-box'>
                   {error && error ? 
                     <button className='authentication-middle-button-error'>Sign in</button> : 

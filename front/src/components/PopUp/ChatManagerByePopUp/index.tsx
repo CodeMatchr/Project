@@ -96,7 +96,6 @@ export default function ChatManagerByePopUp({selectRoomNumber, setPopUpExitState
         setPopUpExitState(false);
     }
 
-
     //            effect           //
     useEffect(() => {
         if (!selectRoomNumber) {
@@ -127,10 +126,10 @@ export default function ChatManagerByePopUp({selectRoomNumber, setPopUpExitState
             </div>
             <div className='popup-manager-bottom-box'>
                 <div className='popup-manager-bottom-button-change-box'>
-                    <button className='popup-manager-bottom-button-change' onClick={onExitClickHandler}>확인</button>
+                    <div className='popup-manager-bottom-button-change' onClick={onExitClickHandler}>확인</div>
                 </div>
                 <div className='popup-manager-bottom-button-cancel-box'>
-                    <button className='popup-manager-bottom-button-cancel' onClick={onCancelClickHandler}>취소</button>
+                    <div className='popup-manager-bottom-button-cancel' onClick={onCancelClickHandler}>취소</div>
                 </div>
             </div>
         </div>
