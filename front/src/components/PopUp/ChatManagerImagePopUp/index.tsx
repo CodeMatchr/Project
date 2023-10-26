@@ -80,6 +80,10 @@ export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageSt
         if (code == 'NR') alert ('존재하지 않는 다인원 채팅방 번호입니다.');
         if (code == 'NP') alert ('권한이 없습니다.');
         if (code != 'SU') return;
+        if (code == 'SU') {
+            alert('채팅방 이미지가 성공적으로 변경되었습니다.');
+            setPopUpImageState(false);
+        }
 
         const accessToken = cookies.accessToken;
         getRoomRequest(roomNumber, accessToken).then(getRoomResponseHnadler);

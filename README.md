@@ -29,3 +29,31 @@
 |provider|보안 토큰 생성|
 |repository|Spring 레이어드 아키텍처에서 데이터 접근 영역|
 |service|Spring 레이어드 아키텍처에서 비즈니스 영역|
+
+npm i -g @nestjs/cli
+
+nest-back
+
+nest new realtime-nest-back
+
+------------------------------
+
+npm i @nestjs/websockets @nestjs/platform-socket.io
+
+npm i socket.io
+
+nest g mo chat
+
+nest g co chat
+
+nest g pr chat
+
+npm run start:dev
+
+------------------------------
+
+front
+
+npm i axios sockjs-client @stomp/stompjs
+
+npm i socket.io-client

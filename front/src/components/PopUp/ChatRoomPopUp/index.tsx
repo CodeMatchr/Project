@@ -44,6 +44,8 @@ const { roomNumber, roomTitle, roomPassword, roomImage, setRoomTitle, setRoomPas
 const [roomImageUrl, setRoomImageUrl] = useState<string>('')
 // 채팅방 상태 //
 const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
+// 이미지를 저장할 상태 //
+const [roomImageState, setRoomImageState] = useState<string>('');
 
 // 생성 버튼 Ref 상태 //
 const createButtonRef = useRef<HTMLDivElement | null>(null);
@@ -58,6 +60,14 @@ const fileUpload = async () => {
 
   const imageUrl = await uploadFileRequest(data);
   return imageUrl;
+}
+
+// Room imageUrl 변경 이벤트 //
+const onImageInputChangeHandler = (event : ChangeEvent<HTMLInputElement>) => {
+  if(!event.target.files || !event.target.files.length) return;
+  const imageUrl = URL.createObjectURL(event.target.files[0]);
+  setRoomImageState(imageUrl);
+  setRoomImage(event.target.files[0])
 }
 
 // Room 생성 함수 //
@@ -111,13 +121,13 @@ const onRoomPasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
 const onCreateClickHandler = async () => {
   const token = cookies.accessToken;
 
-    const imageUrl = await fileUpload();
+  const imageUrl = roomImage ? await fileUpload() : roomImage;
 
     
-    const data : PostRoomRequestDto = {
-        roomTitle: roomName,
-        roomPassword: roomPasswordInput,
-        roomImageUrl: imageUrl
+  const data : PostRoomRequestDto = {
+      roomTitle: roomName,
+      roomPassword: roomPasswordInput,
+      roomImageUrl: imageUrl
     }
     
     setRoomTitle(roomTitle);
@@ -173,7 +183,7 @@ useEffect(() => {
             <div className='popup-main-top-image-box'>
               <div className='popup-main-image-text'>채팅방 이미지 업로드</div>
               <div className='popup-main-image-button' onClick={onFileUploadClickHandler}>
-              <input ref={fileInputRef} type='file' accept='image/*' style={{ display: 'none' }}/>
+              <input ref={fileInputRef} type='file' accept='image/*' style={{ display: 'none' }} onChange={onImageInputChangeHandler}/>
               </div>
             </div>
           </div>
