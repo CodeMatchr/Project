@@ -19,6 +19,9 @@ import { getSignInUserRequest } from './apis';
 import BoardList from './views/Board/List';
 import BoardUpdate from './views/Board/Update';
 import SearchList from './views/Board/Search';
+import usePathStore from './store/path.store';
+import ChatComePopUP from './components/PopUp/ChatComePopUp';
+import useRoomChatStore from './store/roomChat.store';
 
 
 function App() {
@@ -27,9 +30,13 @@ function App() {
 const {pathname} = useLocation();
 // 유저 스토어 상태 //
 const {user, setUser} = useUserStore();
-
 // Cookies 상태 //
 const [cookies, setCookie] = useCookies();
+
+const { roomChat } = useRoomChatStore();
+
+// nestJS //
+const { path } = usePathStore();
 
 // function //
 // 로그인 사용자 //
@@ -93,6 +100,13 @@ useEffect(() => {
         <Route path={POPUP_MANAGER_PASSWORD_PATH} element={<ChatManagerPasswordPopUp/>} />
         <Route path={POPUP_MANAGER_IMAGE_PATH} element={<ChatManagerImagePopUp/>} />
         <Route path={POPUP_MANAGER_BYE_PATH} element={<ChatManagerByePopUp/>} /> */}
+
+        {/* nestJS */}
+        {
+        path === '/enter' ? (<ChatComePopUP selectRoomNumber={roomChat} />) :
+        path === '/room' ? (<Chat/>) :
+        (<></>)
+      }
 
       </Routes>
       <Footer/>

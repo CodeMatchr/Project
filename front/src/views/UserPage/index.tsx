@@ -347,7 +347,7 @@ const navigator = useNavigate();
     // description : 채팅방 팝업창 상태 //
     const [popUpRoomVisible, setPopUpRoomVisible] = useState<boolean>(false);
     // description : 채팅방 팝업창 상태 //
-    const [selectRoomNumber, setSelectRoomNumber] = useState<number>(-1);
+    const [selectRoomNumber, setSelectRoomNumber] = useState<string>('');
 
     //            function           //
     // description : 페이지네이션 함수 //
@@ -374,7 +374,7 @@ const navigator = useNavigate();
     // description : 팝업창 //
     const onRoomListItemClickHandler = (roomNumber: number) => {
       setPopUpRoomVisible(true);
-      setSelectRoomNumber(roomNumber);
+      setSelectRoomNumber(String(roomNumber));
     }
 
     //            effect           //

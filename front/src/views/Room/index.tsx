@@ -30,7 +30,7 @@ export default function Room() {
   // 채팅방 팝업창 상태 //
   const [popUpRoomVisible, setPopUpRoomVisible] = useState<boolean>(false);
   // 채팅방 팝업창 상태 //
-  const [selectRoomNumber, setSelectRoomNumber] = useState<number>(-1);
+  const [selectRoomNumber, setSelectRoomNumber] = useState<string>('');
 
   // function //
   const navigator = useNavigate();
@@ -67,7 +67,7 @@ export default function Room() {
 
   const onRoomListItemClickHandler = (roomNumber: number) => {
     setPopUpRoomVisible(true);
-    setSelectRoomNumber(roomNumber);
+    setSelectRoomNumber(String(roomNumber));
   }
 
   // effect //

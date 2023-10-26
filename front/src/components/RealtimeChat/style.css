@@ -1,0 +1,120 @@
+.chat-bottom{
+    width: 1400px;
+}
+
+.chat-bottom-top{
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-size: 23px;
+    font-weight: 500;
+    background-color: aqua;
+}
+
+.chat-bottom-mid{
+    width: 1400px;
+    border: 5px solid #ccc;
+    /* box-sizing: border-box; */
+}
+
+.chat-bottom-mid-chat{
+    margin-top: 10px;
+    margin-left: 10px;
+    display: flex;
+
+}
+
+.chat-user-profile-image{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: cadetblue;
+    text-align: center;
+    line-height: 50px;
+}
+
+.chat-user-nickname{
+    margin-left: 15px;
+
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 50px;
+}
+
+.chat-contents{
+    margin-left: 20px;
+
+    width: 450px;
+    text-align: center;
+    line-height: 50px;
+    background-color: aquamarine;
+    border-radius: 15px;
+}
+
+.chat-datetime{
+    font-size: 14px;
+    margin-top: 33px;
+    margin-left: 10px;
+}
+
+.chat-bottom-mid-my-chat{
+    float: right;
+    display: flex;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.chat-my-datetime{
+    font-size: 14px;
+    margin-top: 33px;
+    margin-right: 10px;
+}
+
+.chat-my-contents{
+    width: 450px;
+    text-align: center;
+    line-height: 50px;
+    background-color: aquamarine;
+    border-radius: 15px;}
+
+.chat-bottom-bottom{
+    width: 1400px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    border-top: 5px solid #ccc;
+}
+
+.chat-bottom-bottom-input{
+    width: 1200px;
+    height: 100px;
+    border: none;
+    outline: none;
+    /* box-sizing: border-box; */
+    background-color:antiquewhite ;
+}
+
+.chat-bottom-bottom-input::placeholder{
+    text-align: center;
+    font-size: 28px;
+    color: #ccc;
+}
+
+.chat-bottom-bottom-button{
+    width: 200px;
+    height: 100px;
+    font-size: 28px;
+    text-align: center;
+    line-height: 100px;
+    background-color: aquamarine;
+    border-left: 5px solid #ccc;
+    transition: all;
+    cursor: pointer;
+}
+
+.chat-bottom-bottom-button:hover{
+    background-color: bisque;
+}

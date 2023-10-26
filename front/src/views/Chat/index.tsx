@@ -14,6 +14,7 @@ import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.d
 import ResponseDto from 'src/interfaces/response/response.dto';
 import { MAIN_PATH } from 'src/constants';
 import { getRoomRequest } from 'src/apis';
+import RealtimeChat from 'src/components/RealtimeChat';
 
 // component //
 export default function Chat() {
@@ -157,7 +158,7 @@ export default function Chat() {
         <div className='chat-mid'>
             <CompareCode/>
         </div>
-        <div className='chat-bottom'>
+        {/* <div className='chat-bottom'>
             <div className='chat-bottom-top'>채팅방 이름</div>
             <div className='chat-bottom-mid'>
                 <div className='chat-bottom-mid-chat'>
@@ -174,9 +175,9 @@ export default function Chat() {
                     <input className='chat-bottom-bottom-input' placeholder='채팅 메세지를 입력해주세요.'/>
                     <div className='chat-bottom-bottom-button'>전송</div>
                 </div>
-            </div>
-            
-        </div>
+            </div>    
+        </div> */}
+        <RealtimeChat roomNumber={roomNumber} />
     </div>
     )
 }

@@ -8,9 +8,11 @@ import PatchRoomEntranceRequestDto from 'src/interfaces/request/room/patch-room-
 import { PatchRoomEntranceRequest, getRoomRequest, postRoomRequest } from 'src/apis';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
+import usePathStore from 'src/store/path.store';
+import useRoomChatStore from 'src/store/roomChat.store';
 
 interface Props {
-    selectRoomNumber : number;
+    selectRoomNumber : string;
 }
 
 //                      component                       //
@@ -32,6 +34,20 @@ const [roomNumberFlag, setRoomNumberFlag] = useState<boolean>(true);
 
 // 입장 버튼 Ref 상태 //
 const entranceButtonRef = useRef<HTMLDivElement | null>(null);
+
+
+
+
+// nestJS //
+// path 상태 변경 //
+const { setPath } = usePathStore();
+// room 상태 변경 //
+const { roomChat, setRoomChat } = useRoomChatStore();
+// event handler : room 값 변경 처리 //
+const onRoomValueChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const roomChat = event.target.value;
+    setRoomChat(roomChat);
+  }
 
 //                      function                       //
 // Room detail(채팅방) 불러오기 응답처리 함수 //
@@ -79,6 +95,10 @@ const onComeClickHandler = async () => {
         roomPassword : roomPasswordInput
     }
     PatchRoomEntranceRequest(selectRoomNumber, data, token).then(patchRoomEntranceResponseHandler);
+
+    // nestJS //
+    if(!roomChat) return;
+    setPath('/room');
 }
 // description : 취소 버튼 클릭 이벤트 //
 // todo : 취소버튼 클릭시 채팅방 리스트 화면으로 이동하게 다시 해야함 //

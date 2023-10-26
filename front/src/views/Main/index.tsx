@@ -216,7 +216,7 @@ export default function Main() {
     // 채팅방 팝업창 상태 //
     const [popUpRoomVisible, setPopUpRoomVisible] = useState<boolean>(false);
     // 채팅방 팝업창 상태 //
-    const [selectRoomNumber, setSelectRoomNumber] = useState<number>(-1);
+    const [selectRoomNumber, setSelectRoomNumber] = useState<string>('');
 
 
     // function //
@@ -277,7 +277,7 @@ export default function Main() {
         setPopUpVisible(false);
        
       }
-      setSelectRoomNumber(roomNumber);
+      setSelectRoomNumber(String(roomNumber));
     }
    
     // effect //
