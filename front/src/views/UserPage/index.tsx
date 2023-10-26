@@ -189,7 +189,7 @@ const navigator = useNavigate();
         else setUserProfileImageUrl('');
 
         setUserNickname(user?.userNickname as string);
-        setUserStateMessage(userStateMessage);
+        setUserStateMessage(user.userStateMessage as string);
       } else {
         getUserRequest(userEmail as string).then(getUserResponseHandler);
       }
@@ -220,7 +220,7 @@ const navigator = useNavigate();
             {messageChange ? (
               <input className='userpage-user-message-text-input' type='text' value={userStateMessage} onChange={onMessageChangeHandler} />
             ) : (
-              <input className='userpage-user-message-text-input' type='text' value={user?.userStateMessage} readOnly />
+              <input className='userpage-user-message-text-input' type='text' value={userStateMessage} readOnly />
             )}
             <div className='userpage-user-message-button' onClick={onMessageButtonClickHandler}></div>
           </div>
