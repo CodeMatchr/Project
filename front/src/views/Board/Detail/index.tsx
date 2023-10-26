@@ -1,18 +1,18 @@
 import React, { ChangeEvent, useEffect, useRef, useState, KeyboardEvent } from 'react';
 import './style.css';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useUserStore } from 'src/store';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useBoardWriteStore, useUserStore } from 'src/store';
 import { useCookies } from 'react-cookie';
 import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
 import GetFavoriteListResponseDto, { FavoriteListResponseDto } from 'src/interfaces/response/board/get-favorite-list.response.dto';
 import GetCommentListResponseDto, { CommentListResponseDto } from 'src/interfaces/response/board/get-comment-list.response.dto';
-import { BOARD_LIST_PATH, BOARD_UPDATE_PATH, COUNT_BY_PAGE_COMMENT, MAIN_PATH } from 'src/constants';
+import { BOARD_LIST_PATH, BOARD_UPDATE_PATH, COUNT_BY_PAGE_COMMENT, MAIN_PATH, UPDATE_PATH } from 'src/constants';
 import ResponseDto from 'src/interfaces/response/response.dto';
 import { usePagination } from 'src/hooks';
-import { deleteBoardRequest, getBoardCommentListRequest, getBoardFavoriteListRequest, getBoardRequest, getCommentListRequest, getFavoriteListRequest, postCommentRequest, putFavoriteRequest } from 'src/apis';
+import { deleteBoardRequest, getBoardCommentListRequest, getBoardFavoriteListRequest, getBoardRequest, postCommentRequest, putFavoriteRequest } from 'src/apis';
 import { dateFormat } from 'src/utils';
 import Pagination from 'src/components/Pagination';
-import { PostCommentRequestDto } from 'src/interfaces/request/board';
+import { PatchBoardRequestDto, PostCommentRequestDto } from 'src/interfaces/request/board';
 
 // component //
 export default function BoardDetail() {
@@ -50,9 +50,21 @@ export default function BoardDetail() {
 
     // 댓글 작성 버튼 Ref 상태 //
     const sendButtonRef = useRef<HTMLDivElement | null>(null);
+ 
 
     // function //
     const navigator = useNavigate();
+
+    // 파일 업로드 //
+//     const fileUpload = async () => {
+//         if (boardImage === null) return null;
+
+//         const data = new FormData();
+//         data.append('file', boardImage);
+
+//         const imageUrl = await uploadFileRequest(data);
+//         return imageUrl;
+//   }
 
     // 댓글 리스트 페이지네이션 //
     const getPageCommentList = (commentList: CommentListResponseDto[]) => {
@@ -75,6 +87,7 @@ export default function BoardDetail() {
           return;
         }
 
+        console.log("1" +board?.boardImageUrl);
         setBoard(responseBody as GetBoardResponseDto);
     }
 
@@ -117,7 +130,7 @@ export default function BoardDetail() {
         if (code === 'VF') alert('잘못된 입력입니다.');
         if (code === 'DE') alert('데이터베이스 에러입니다.');
         if (code !== 'SU') return;
-  
+        
         alert('게시물 삭제 성공');
         navigator(MAIN_PATH);
       }
@@ -161,10 +174,38 @@ export default function BoardDetail() {
     }
 
     // 게시물 수정 클릭 //
-    const onBoardUpdateClickHandler = () => {
+    const onBoardUpdateClickHandler = async () => {
         if(!boardNumber) return;
         navigator(BOARD_UPDATE_PATH(boardNumber));
+
+        // const token = cookies.accessToken;
+
+        //     const imageUrl = boardImage ?  await fileUpload() : boardImage ;
+
+        //     const data: PatchBoardRequestDto = {
+        //         boardTitle : boardTitle,
+        //         boardContents : boardContents,
+        //         boardImageUrl : imageUrl
+        //     }
+        //     patchBoardRequest(boardNumber, data, token).then(patchBoardResponseHandler);
+
     }
+
+    // 게시물 수정 응답 //
+    // const patchBoardResponseHandler = (code: string) => {
+    //     if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+    //     if (code === 'NB') alert('존재하지 않는 게시물입니다.');
+    //     if (code === 'NP') alert('권한이 없습니다.');
+    //     if (code === 'VF') alert('필수 데이터를 입력하지 않았습니다.');
+    //     if (code === 'AF') alert('로그인이 필요합니다.');
+    //     if (code === 'DE') alert('데이터베이스 에러입니다.');
+    //     if (code !== 'SU') return;
+    
+    //     resetBoard();
+    
+    //     if (!boardNumber) return;
+    //     navigator(MAIN_PATH);
+    //   }
 
     // 게시물 삭제 클릭 //
     const onBoardDeleteClickHandler = () => {
@@ -191,6 +232,7 @@ export default function BoardDetail() {
         postCommentRequest(boardNumber, data, token ).then(postCommentResponseHandler);
     }
 
+  
 
     // effect //
     // 게시물 번호가 바뀌면 랜더링 //
@@ -199,7 +241,6 @@ export default function BoardDetail() {
             alert('게시물 번호를 다시 확인해주세요.');
             return;
         }
-
         getBoardRequest(boardNumber).then(getBoardResponseHandler);
         getBoardFavoriteListRequest(boardNumber).then(getFavoriteResponseHandler);
         getBoardCommentListRequest(boardNumber).then(getBoardCommentListResponseHandler);
@@ -231,7 +272,7 @@ export default function BoardDetail() {
         
         <div id='board-detail-wrapper'>
             <div className='board-detail-button-box'>
-                    <div className='board-detail-update-button' onClick={() => onBoardUpdateClickHandler()}>수정</div>
+                    <div className='board-detail-update-button' onClick={onBoardUpdateClickHandler}>수정</div>
                     <div className='board-detail-delete-button' onClick={onBoardDeleteClickHandler}>삭제</div>
             </div>
             <div className='board-detail-box'>    
@@ -241,8 +282,8 @@ export default function BoardDetail() {
                         <div className='board-detail-title'>{board?.boardTitle}</div>
                     </div>
                     <div className='board-detail-writer-profile'>
-                        <div className='board-detail-writer-profile-image' style={{ backgroundImage: `url(${board?.boardWriterProfileImageUrl ? board.boardWriterProfileImageUrl : ''})` }} ></div>
-                        <div className='board-detail-writer-nickname'>{board?.boardWriterNickname}</div>
+                        <div className='board-detail-writer-profile-image' style={{ backgroundImage: `url(${board?.boardUserProfileImageUrl ? board.boardUserProfileImageUrl : ''})` }} ></div>
+                        <div className='board-detail-writer-nickname'>{board?.boardUserNickname}</div>
                     </div>
                 </div>
                 <div className='board-detail-body'>
@@ -269,8 +310,8 @@ export default function BoardDetail() {
                 <div className='board-detail-favorite-list-user'>
                     {favoriteList.map((item) => (
                         <div className='favorite-list-item-box'>
-                            <div className='favorite-list-item-writer-profile' style={{ backgroundImage: `url(${item.userProfileImageUrl})` }} >
-                                <div className='favorite-list-item-profile-image'></div>
+                            <div className='favorite-list-item-writer-profile'>
+                                <div className='favorite-list-item-profile-image' style={{ backgroundImage: `url(${item.userProfileImageUrl})` }}  ></div>
                                 <div className='favorite-list-item-writer-data'>
                                     <div className='favorite-list-item-writer-nickname'>{item.userNickname}</div>
                                 </div>
@@ -286,7 +327,7 @@ export default function BoardDetail() {
                     {pageCommentList.map((item) => (
                         <div className='comment-list-item-box'>
                             <div className='comment-list-item-writer-profile'>
-                                <div className='comment-list-item-profile-image'>{item.profileImageUrl}</div>
+                                <div className='comment-list-item-profile-image' style={{ backgroundImage: `url(${item.profileImageUrl})` }} ></div>
                                 <div className='comment-list-item-writer-data'>
                                     <div className='comment-list-item-writer-nickname'>{item.nickname}</div>
                                     <div className='comment-list-item-write-time'>{ dateFormat(item.writeDatetime)}</div>

@@ -91,7 +91,9 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: aqua;
+
+    background-position: 50% 50%;
+    background-size: 100% 100%;
 }
 
 .board-detail-writer-nickname{
@@ -256,6 +258,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    
 
     gap: 50px;
 }
@@ -265,7 +268,10 @@
     height: 80px;
 
     border-radius: 50%;
-    background-color: bisque;
+    
+    background-repeat: none;
+    background-position: 50% 50%;
+    background-size: 100% 100%;
 }
 
 .favorite-list-item-writer-data{
@@ -311,7 +317,10 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background-color: bisque;
+
+    background-repeat: none;
+    background-position: 50% 50%;
+    background-size: 100% 100%;
 }
 
 .comment-list-item-writer-data{

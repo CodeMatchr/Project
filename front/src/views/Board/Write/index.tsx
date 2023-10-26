@@ -63,30 +63,30 @@ const postBoardResponseHandler = (code: string) => {
 
 
 //          event handler          //
-//description : 제목이 바뀔시 실행될 이벤트 //
+// 제목이 바뀔시 실행될 이벤트 //
 const onTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setBoardTitle(event.target.value);
 }
-// description : 본문 내용이 바뀔시 textarea 높이 변경 이벤트 //
+// 본문 내용이 바뀔시 textarea 높이 변경 이벤트 //
 const onContentChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setBoardContents(event.target.value);
     if (!textAreaRef.current) return;
     textAreaRef.current.style.height = 'auto';
     textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
   }
-// description : 이미지 변경 시 이미지 미리보기 //
+// 이미지 변경 시 이미지 미리보기 //
 const onImageInputChangeHandler = (event: ChangeEvent<HTMLInputElement>) =>{
     if(!event.target.files || !event.target.files.length) return;
     const imageUrl = URL.createObjectURL(event.target.files[0]);
     setBoardImageUrl(imageUrl);
     setBoardImage(event.target.files[0]);
 }
-//description : 이미지 업로드 버튼 클릭 이벤트 //
+// 이미지 업로드 버튼 클릭 이벤트 //
 const onImageUploadButtonClickHandler = () => {
     if (!fileInputRef.current) return;
     fileInputRef.current.click();
 }
-// description : 이미지 닫기 버튼 클릭 이벤트 //
+// 이미지 닫기 버튼 클릭 이벤트 //
 const onImageCloseButtonClickHandler = () => {
     if(!fileInputRef.current) return;
     fileInputRef.current.value = '';

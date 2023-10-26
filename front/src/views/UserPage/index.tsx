@@ -63,9 +63,7 @@ const navigator = useNavigate();
       const { userNickname, userProfileImageUrl, userStateMessage } = result as GetUserResponseDto;
       setUserNickname(userNickname);
       setUserStateMessage(userStateMessage);
-      
-      if (userProfileImageUrl) setUserProfileImageUrl(userProfileImageUrl);
-      else setUserProfileImageUrl('');
+      setUserProfileImageUrl(userProfileImageUrl);
 
       if (userEmail === user?.userEmail) {
         const after = { userEmail: userEmail as string, userNickname, userProfileImageUrl, userStateMessage };
@@ -80,9 +78,11 @@ const navigator = useNavigate();
       if (code === 'EN') alert('중복되는 닉네임입니다.');
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
-      if (code !== 'SU')  return;
+      if (code !== 'SU') {
+        setUserNickname(user.userNickname);
+        return;
+      }
 
-      setUserNickname(userNickname);
       getUserRequest(user.userEmail).then(getUserResponseHandler);
 
     }
@@ -93,12 +93,12 @@ const navigator = useNavigate();
       if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
-      if (code !== 'SU') return;
-
-      if(code === 'SU'){
-        getUserRequest(user.userEmail).then(getUserResponseHandler);
-        setUserStateMessage(userStateMessage);
+      if (code !== 'SU') {
+        setUserStateMessage(user.userStateMessage);
+        return;
       }
+      
+      getUserRequest(user.userEmail).then(getUserResponseHandler);
     }
     
     
@@ -108,7 +108,7 @@ const navigator = useNavigate();
       if (code === 'NE') alert('존재하지 않는 사용자 이메일 입니다.');
       if (code === 'VF') alert('잘못된 입력입니다.');
       if (code === 'DE') alert('데이터베이스 에러입니다.');
-      if (code === 'SU') {
+      if (code !== 'SU') {
         setUserProfileImageUrl(user.userProfileImageUrl);
         return;
       }
@@ -131,11 +131,11 @@ const navigator = useNavigate();
 
     //            event handler           //
     // description: 파일 인풋 변경 시 이미지 미리보기 //
-    const onImageInputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const onImageInputChangeHandler = async (event: ChangeEvent<HTMLInputElement>) => {
       if(!event.target.files || !event.target.files.length) return;
 
       const data = new FormData();
-      data.append('file', event.target.files[0]);
+      data.append('file', event.target.files[0])
       uploadFileRequest(data).then(profileUploadResponseHandler);
     }
     // description: 프로필 이미지 클릭시 파일 인풋창 열림 이벤트 //
@@ -187,6 +187,7 @@ const navigator = useNavigate();
 
         if (user?.userProfileImageUrl) setUserProfileImageUrl(user?.userProfileImageUrl);
         else setUserProfileImageUrl('');
+
         setUserNickname(user?.userNickname as string);
         setUserStateMessage(userStateMessage);
       } else {
@@ -395,7 +396,7 @@ const navigator = useNavigate();
 
     // description : 현재 섹션이 바뀔 때마다 chat 리스트 변경 //
     useEffect(() => {
-      changeSection(currentChatList.length, MAIN_ROOM_COUNT_BY_PAGE_FUll);
+      changeSection(currentChatList.length, MAIN_ROOM_COUNT_BY_PAGE);
     }, [currentSection]);
 
 
@@ -428,7 +429,6 @@ useEffect(() => {
   const isMyPage = user?.userEmail === userEmail;
   setUserPage(isMyPage);
 
-  console.log("final : " +user?.userEmail);
 }, [userEmail, user]);
 
 

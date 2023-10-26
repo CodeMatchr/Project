@@ -31,6 +31,7 @@ export default function ChatManagerNamePopUp({selectRoomNumber, setPopUpNameStat
     // 채팅방 상태 //
     const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
 
+    // 
     const [roomNumberFlag, setRoomNumberFlag] = useState<boolean>(true);
 
     // 변경 버튼 Ref 상태 //
@@ -52,6 +53,7 @@ export default function ChatManagerNamePopUp({selectRoomNumber, setPopUpNameStat
         setRoom(room);
         setRoomNumber(room.roomNumber);
         setRoomTitle(room.roomTitle);
+
     }
 
     // description : 다인원 채팅방 제목 변경 이벤트 //
@@ -83,6 +85,7 @@ export default function ChatManagerNamePopUp({selectRoomNumber, setPopUpNameStat
         }
 
         PatchRoomTitleRequest(roomNumber, data, token).then(patchRoomTitleResponseHandler);
+        console.log("5" + roomNumber);
     }
 
     // description : 취소 버튼 클릭 이벤트 //
@@ -101,6 +104,11 @@ export default function ChatManagerNamePopUp({selectRoomNumber, setPopUpNameStat
         navigator(ROOM_DETAIL_PATH(roomNumber));
         return;
     }
+    // if(!roomNumber) {
+    //     alert('채팅방 번호가 잘못되었습니다.');
+    //     navigator(MAIN_PATH);
+    //     return;
+    // }
     const accessToken = cookies.accessToken;
     getRoomRequest(selectRoomNumber, accessToken).then(getRoomResponseHnadler);
     }, [selectRoomNumber, roomTitle]);
