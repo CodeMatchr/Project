@@ -6,7 +6,7 @@ import Top3ListItem from '../../components/Top3ListItem';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import RoomListItem from '../../components/RoomListItem';
 import { usePagination } from '../../hooks';
-import {AUTHENTICATION_PATH, BOARD_LIST_PATH,  COUNT_BY_PAGE,  MAIN_PATH,  MAIN_ROOM_COUNT_BY_PAGE, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH, WRITE_PATH} from '../../constants';
+import {BOARD_LIST_PATH,  MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH, WRITE_PATH} from '../../constants';
 
 import { useNavigate} from 'react-router-dom';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
@@ -14,7 +14,7 @@ import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
 import CompareCode from 'src/components/CompareCode';
 import GetTop3CommentResponseDto from 'src/interfaces/response/board/getTop3Comment.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import {  GetCurrentRoomListRequest, getCommentListRequest, getCurrentListRequest, getFavoriteListRequest, getViewListRequest, postRoomRequest } from 'src/apis';
+import {  GetCurrentRoomListRequest, getCommentListRequest, getFavoriteListRequest, getViewListRequest } from 'src/apis';
 import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Favorite.response.dto';
 import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
 import { useRoomStore, useUserStore } from 'src/store';
@@ -69,9 +69,8 @@ export default function Main() {
 
     // 타이틀 상태 //
     const [title, setTitle] = useState<string>('');
- 
+    
     // function //
-
     // top3 좋아요 //
     const getTop3FavoriteListResponseHandler = (responseBody: GetTop3FavoriteResponseDto | ResponseDto) => {
       const { code } = responseBody;
@@ -112,22 +111,7 @@ export default function Main() {
         setTop3FavoriteBoardListTabState(false);
         setTop3CommentBoardListTabState(false);
     }
-    // top3 최신순 //
-    const getTop3CurrentListResponseHandler = (responseBody : GetTop3ViewResponseDto | ResponseDto) => {
-      const {code} = responseBody;
-      if (code === 'DE') alert('데이터베이스 에러입니다.');
-      if (code !== 'SU') return;
-
-      const {top3View} = responseBody as GetTop3ViewResponseDto;
-      setCurrentTop3BoardList(top3View);
-      
-        setTop3ViewBoardListTabState(false);
-        setTop3FavoriteBoardListTabState(false);
-        setTop3CommentBoardListTabState(false);
-    }
   
-    
-
     // event handler //
     // Board 리스트 페이지 이동 버튼 클릭 이벤트 //
     const onBoardListClickHandler = () => {
@@ -162,8 +146,8 @@ export default function Main() {
     // effect //
     // 맨처음 //
     useEffect(() => {
-      getViewListRequest().then(getTop3CurrentListResponseHandler);
-      setTitle('최신 TOP 3');
+      getViewListRequest().then(getTop3ViewListResponseHandler);
+      setTitle('조회수 TOP 3');
     }, []);
     
     // render //

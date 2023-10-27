@@ -50,7 +50,6 @@ export default function BoardDetail() {
 
     // 댓글 작성 버튼 Ref 상태 //
     const sendButtonRef = useRef<HTMLDivElement | null>(null);
- 
 
     // function //
     const navigator = useNavigate();

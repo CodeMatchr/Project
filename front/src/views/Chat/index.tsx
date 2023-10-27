@@ -23,7 +23,7 @@ export default function Chat() {
     // room 번호 path variable 상테 //
     const { roomNumber } = useParams();
     // 로그인 유저 정보 상태 //
-    const { user } = useUserStore();
+    const { user, setUser } = useUserStore();
     // 쿠키 상태 //
     const [cookies] = useCookies();
 

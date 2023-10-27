@@ -88,7 +88,6 @@ const onBoardUpdateButtonClickHandler = async () => {
 
     if (!boardNumber) return;
 
-    // !
       const imageUrl = boardImage ? await fileUpload() : boardImage;
 
       const data: PatchBoardRequestDto = {
