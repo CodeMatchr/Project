@@ -46,7 +46,9 @@ const fileUpload = async () => {
 
 // 취소 버튼 //
 const onCancelClickHandler = () => {
-    navigator(MAIN_PATH);
+    if(!user) return;
+    navigator(USER_PATH(user?.userEmail));
+    resetBoard();
 }
 // description: 게시물 작성 함수 //
 const postBoardResponseHandler = (code: string) => {
@@ -114,6 +116,9 @@ const onBoardWriteButtonClickHandler = async () => {
 //          component          //
 
 //          effect          //
+useEffect(() => {
+    resetBoard();
+}, []);
 
 
 

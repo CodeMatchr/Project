@@ -56,8 +56,8 @@ const navigator = useNavigate();
     // description : 유저 정보 응답 처리 함수 //
     const getUserResponseHandler = (result: GetUserResponseDto | ResponseDto) => {
       const { code } = result;
-      if (code === 'NE') alert('존재하지 않는 사용자 이메일 입니다.!!!');
-      if (code === 'DE') alert('데이터베이스 오류입니다.');
+      if (code === 'NE') return;
+      if (code === 'DE') return;
       if (code !== 'SU') return;
 
       const { userNickname, userProfileImageUrl, userStateMessage } = result as GetUserResponseDto;

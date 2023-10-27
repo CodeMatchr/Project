@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
@@ -37,6 +37,7 @@ const { roomChat } = useRoomChatStore();
 
 // nestJS //
 const { path } = usePathStore();
+
 
 // function //
 // 로그인 사용자 //

@@ -154,11 +154,11 @@ export default function BoardDetail() {
 
         if(!boardNumber) return;
         getBoardCommentListRequest(boardNumber).then(getBoardCommentListResponseHandler);
+        setComment('');
         
     }
 
     // event handler //
-
     // Enter Key 누름 처리 //
     const onEnterKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if(event.key !== 'Enter') return;
@@ -228,7 +228,7 @@ export default function BoardDetail() {
         const data : PostCommentRequestDto = {
             commentContents : comment
         }
-        
+        setComment('');
         postCommentRequest(boardNumber, data, token ).then(postCommentResponseHandler);
     }
 
@@ -236,6 +236,7 @@ export default function BoardDetail() {
 
     // effect //
     // 게시물 번호가 바뀌면 랜더링 //
+    
     useEffect(() => {
         if(!boardNumber) {
             alert('게시물 번호를 다시 확인해주세요.');
@@ -244,6 +245,16 @@ export default function BoardDetail() {
         getBoardRequest(boardNumber).then(getBoardResponseHandler);
         getBoardFavoriteListRequest(boardNumber).then(getFavoriteResponseHandler);
         getBoardCommentListRequest(boardNumber).then(getBoardCommentListResponseHandler);
+    }, [boardNumber]);
+    
+    // 두번 랜더링 안되고 한번만 랜더링 되게 리턴 시켜줌 //
+    let boardNumberFlag = true;
+    useEffect(() => {
+        if(boardNumberFlag) {
+            boardNumberFlag = false;
+            return;
+        }
+
     }, [boardNumber]);
 
     // 현재 페이지가 바뀔때 마다 검색 게시물 분류하기 //
@@ -267,7 +278,6 @@ export default function BoardDetail() {
         setFavorite(favorited !== -1);
       }, [boardNumber, user]);
       
-
     return (
         
         <div id='board-detail-wrapper'>

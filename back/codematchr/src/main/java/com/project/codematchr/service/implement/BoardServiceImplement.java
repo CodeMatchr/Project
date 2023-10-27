@@ -313,7 +313,7 @@ public ResponseEntity<? super PatchBoardResponseDto> patchBoard(String boardWrit
             }
             
             // description : 아직 좋아요 하지 않은 경우 //
-            if(!isFavorite) {
+            else{
                 favoriteRepository.save(favoriteEntity);
                 boardEntity.increaceFavoriteCount();
             }

@@ -1,4 +1,4 @@
-import React, { useRef, KeyboardEvent, ChangeEvent } from 'react';
+import React, { useRef, KeyboardEvent, ChangeEvent, useEffect, Dispatch, SetStateAction } from 'react';
 import { useState } from 'react';
 import './style.css';
 import InputBox from '../../components/InputBox';
@@ -8,11 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import { INPUT_ICON, MAIN_PATH, emailBlanck, emailPattern, telNumberPattern } from '../../constants';
 import { useDaumPostcodePopup, Address } from 'react-daum-postcode';
 import { useCookies } from 'react-cookie';
-import { useUserStore } from '../../store';
 import { SignInResponseDto, SignUpResponseDto } from '../../interfaces/response/authentication';
 import ResponseDto from '../../interfaces/response/response.dto';
 import { SignInRequestDto, SignUpRequestDto } from '../../interfaces/request/authentication';
 import { signInRequest, signUpRequest } from '../../apis';
+
 
 
 //            component           //
@@ -37,9 +37,6 @@ const navigator = useNavigate();
     const SignInCard = () => {
 
       //            state           //
-      // description : 로그인 유저 정보 상태 //
-      const { setUser } = useUserStore();
-
       // description : password icon 상태 //
       const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -52,13 +49,21 @@ const navigator = useNavigate();
       // description : password 찾기 상태 //
       const [passwordForgot, setPasswordForgot] = useState<boolean>(false);
 
+      
+
       //            function           //
       // description : 로그인 //
       const signInResponseHandler = (result : SignInResponseDto | ResponseDto) => {
         const { code } = result;
           if(code === 'SF') setError(true);
           if(code === 'DE') alert('데이터 베이스 오류입니다.');
-          if(code !== 'SU') return;
+          if(code !== 'SU') {
+            alert("로그인 실패");
+            setUserEmail('');
+            setUserPassword('');
+            setError(false);
+            return;
+          }
 
         const { token, expiredTime } = result as SignInResponseDto;
 
@@ -67,7 +72,9 @@ const navigator = useNavigate();
 
         setCookie('accessToken', token, { expires, path: MAIN_PATH});
         navigator(MAIN_PATH);
+
       } 
+      
 
       //            event handler           //
       // description: password icon 타입 변경 이벤트 //
@@ -80,17 +87,26 @@ const navigator = useNavigate();
       }
       // description : SignIn Button 클릭 이벤트 //
       const onSignInButtonClickHandler = async () => {
-
+        console.log(userEmail);
+        console.log(userPassword);
+        
         const data : SignInRequestDto = {
           userEmail,
           userPassword
         }
-
+        
+        console.log(`${data.userEmail}`);
         signInRequest(data).then(signInResponseHandler);
+      }
+      // 비밀번호 엔터 //
+      const onPasswordKeyDownHandler = (event:KeyboardEvent<HTMLInputElement>) => {
+        if(event.key !== 'Enter') return;
+        onSignInButtonClickHandler();
       }
 
       //            component           //
       //            effect           //
+
       //            render           //
       return (
         <div className='authentication-card'>
@@ -106,16 +122,16 @@ const navigator = useNavigate();
           <div className='authentication-middle'>
             <div className='authentication-middle-input-container'>
               <InputBox label='Email address' type='text' placeholder='이메일을 입력해주세요.' error={error} value={userEmail} setValue={setUserEmail} />
-              <InputBox label='Password' labelError={passwordForgot ? 'Forgot Password ?' : ''} type={showPassword ? 'text' : 'password'} icon={showPassword ? INPUT_ICON.ON : INPUT_ICON.OFF} placeholder='비밀번호를 입력해주세요.' error={error} value={userPassword} setValue={setUserPassword} buttonHandler={onPasswordIconClickHandler} />
+              <InputBox label='Password' labelError={passwordForgot ? 'Forgot Password ?' : ''} type={showPassword ? 'text' : 'password'} icon={showPassword ? INPUT_ICON.ON : INPUT_ICON.OFF} placeholder='비밀번호를 입력해주세요.' error={error} value={userPassword} setValue={setUserPassword} buttonHandler={onPasswordIconClickHandler} keyDownHandler={onPasswordKeyDownHandler} />
                 <div className='authentication-middle-button-box'>
                   {error && error ? 
                     <button className='authentication-middle-button-error'>Sign in</button> : 
-                    <button className='authentication-middle-button' onClick={onSignInButtonClickHandler}>Sign in</button>
+                    <div className='authentication-middle-button' onClick={onSignInButtonClickHandler}>Sign in</div>
                   }
                 </div>
             </div>
           </div>
-          <div className='authentication-bottom'>
+          {/* <div className='authentication-bottom'>
             <div className='authentication-bottom-line-box'>
               <div className='divider'></div>
               <div className='authentication-bottom-line-text'>Or continue with</div>
@@ -130,7 +146,7 @@ const navigator = useNavigate();
                 <div className='authentication-bottom-oauth-login-kakao'>Kakao</div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       )
     }
