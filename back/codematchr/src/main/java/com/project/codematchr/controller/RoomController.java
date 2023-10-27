@@ -19,9 +19,11 @@ import com.project.codematchr.dto.request.room.PatchRoomImageUrlRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomPasswordRequestDto;
 import com.project.codematchr.dto.request.room.PatchRoomTitleRequestDto;
 import com.project.codematchr.dto.request.room.PostRoomRequestDto;
+import com.project.codematchr.dto.response.board.GetSearchBoardResponseDto;
 import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomResponseDto;
+import com.project.codematchr.dto.response.room.GetSearchRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomEntranceResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomExitResponseDto;
@@ -134,6 +136,14 @@ public class RoomController {
             ResponseEntity<? super GetRoomResponseDto> response = roomService.getRoom(roomNumber, userEmail);
             return response;
         }
-    
+
+    // API : 검색 다인원 채팅방 리스트 조회 //
+    @GetMapping("search/{searchWord}")
+    public ResponseEntity<? super GetSearchRoomResponseDto> getSearchRoom(
+        @PathVariable String searchWord
+    ){
+        ResponseEntity<? super GetSearchRoomResponseDto> response = roomService.getSearchRoom(searchWord);
+        return response;
+    }
     
 }

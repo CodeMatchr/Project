@@ -303,7 +303,7 @@ export default function Main() {
       <div className='main-bottom'>
         <div className='main-bottom-title' onClick={ onRoomListButtonClickHandler }>Room</div>
         <div className='main-bottom-top'>
-          {(searchIconState) ? (
+          {/* {(searchIconState) ? (
             <div className='main-bottom-top-search'>
               <input className='main-bottom-top-search-input' placeholder='검색어를 입력해주세요.' />
               <div className='main-bottom-top-search-icon-button' onClick={ onSearchIconButtonClickHandler }></div>
@@ -313,7 +313,7 @@ export default function Main() {
               <div className='main-bottom-top-search-icon-button' onClick={ onSearchIconButtonClickHandler }></div>
             </div>
           )
-          }
+          } */}
           <div className='main-bottom-top-create-button' onClick={onRoomCreateIconButtonmClickHandler}>생성</div>
           {popUpVisible && <div className='chat-room-pop-up'><ChatRoomPopUp /></div>}
         </div>

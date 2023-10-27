@@ -128,7 +128,7 @@ export default function CompareCode() {
           {visibleSaveState ? (
             <div className='main-top-compare-result-show'>
               <div className='main-top-compare-result-button' onClick={compareButtonClickHandler}>compare</div>
-              <div className='main-top-compare-result-save-button' onClick={saveButtonCLickHandler}>save</div>
+              {/* <div className='main-top-compare-result-save-button' onClick={saveButtonCLickHandler}>save</div> */}
             </div>
           ) : (
             <div className='main-top-compare-result'>

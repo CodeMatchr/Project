@@ -13,4 +13,6 @@ public interface RoomViewRepository extends JpaRepository<RoomViewEntity, Intege
     // List<RoomEntity> findByRoomNumberOrderByRoomDatetimeDesc();
     // 특정 사용자의 다인원 채팅방 리스트 조회(최신순) //
     List<RoomViewEntity> findByRoomManagerEmailOrderByRoomDatetimeDesc(String userEmail);
+    // 검색어 리스트 조회 //
+    List<RoomViewEntity> findByRoomTitleContainsOrderByRoomDatetimeDesc(String searchWord);
 }

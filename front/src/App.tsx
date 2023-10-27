@@ -3,13 +3,13 @@ import './App.css';
 import Footer from './layouts/Footer';
 import Header from './layouts/Header';
 import Main from './views/Main';
-import { AUTHENTICATION_PATH, BOARD_DETAIL_PATH, BOARD_DETAIL_TEST_PATH, BOARD_LIST_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, CHAT_PATH, COMPARE_PATH, MAIN_PATH, POPUP_BOARD_PATH, POPUP_COME_PATH, POPUP_MANAGER_BYE_PATH, POPUP_MANAGER_IMAGE_PATH, POPUP_MANAGER_NAME_PATH, POPUP_MANAGER_PASSWORD_PATH,  POPUP_PATH, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_LIST_PATH, ROOM_NUMBER_PATH_VARIABLE, ROOM_PATH, SEARCH_PATH, SEARCH_WORD_PATH_VARIABLE, USER_ITEM_PATH, USER_PAGE_PATH_VARIABLE, USER_PATH, WRITE_PATH } from './constants';
+import { AUTHENTICATION_PATH, BOARD_DETAIL_PATH, BOARD_DETAIL_TEST_PATH, BOARD_LIST_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, CHAT_PATH, COMPARE_PATH, MAIN_PATH, POPUP_BOARD_PATH, POPUP_COME_PATH, POPUP_MANAGER_BYE_PATH, POPUP_MANAGER_IMAGE_PATH, POPUP_MANAGER_NAME_PATH, POPUP_MANAGER_PASSWORD_PATH,  POPUP_PATH, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_LIST_PATH, ROOM_NUMBER_PATH_VARIABLE, ROOM_PATH, ROOM_SEARCH_PATH, ROOM_SEARCH_PATH_VARIABLE, SEARCH_PATH, SEARCH_WORD_PATH_VARIABLE, USER_ITEM_PATH, USER_PAGE_PATH_VARIABLE, USER_PATH, WRITE_PATH } from './constants';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Authentication from './views/Authentication';
 import BoardWrite from './views/Board/Write';
 import BoardDetail from './views/Board/Detail';
 import UserPage from './views/UserPage';
-import Room from './views/Room';
+import Room from './views/Room/List';
 import Chat from './views/Chat';
 import { useCookies } from 'react-cookie';
 import GetLoginUserResponseDto from './interfaces/response/User/get-login-user.response.dto';
@@ -22,6 +22,7 @@ import SearchList from './views/Board/Search';
 import usePathStore from './store/path.store';
 import ChatComePopUP from './components/PopUp/ChatComePopUp';
 import useRoomChatStore from './store/roomChat.store';
+import RoomSearch from './views/Room/Search';
 
 
 function App() {
@@ -83,6 +84,7 @@ useEffect(() => {
 
         {/* 다인원 채팅방 화면 ROOM */}
         <Route path={ROOM_PATH} element={<Room/>} />
+        <Route path={ROOM_SEARCH_PATH(ROOM_SEARCH_PATH_VARIABLE)} element={<RoomSearch/>}/>
 
         {/* 비교 분석 결과 화면 COMPARE */}
         <Route path={COMPARE_PATH} />

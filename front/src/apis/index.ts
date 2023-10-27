@@ -33,6 +33,7 @@ import PatchRoomExitResponseDto from 'src/interfaces/response/room/patch-room-ex
 import GetSearchBoardResponseDto from 'src/interfaces/response/board/get-search-board.response.dto';
 import PatchRoomEntranceRequestDto from 'src/interfaces/request/room/patch-room-entrance-request.dto';
 import PatchRoomEntranceResponseDto from 'src/interfaces/response/room/patch-room-entrance-response.dto';
+import GetSearchRoomResponseDto from 'src/interfaces/response/room/get-search-room.response.dto';
 
 const API_DOMAIN = 'http://localhost:4040/api/v1';
 
@@ -267,6 +268,7 @@ const PATCH_ROOM_IMAGE_URL = (roomNumber : number | string) => `${API_DOMAIN}/ro
 const DELETE_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}`;
 const PATCH_ROOM_ENTRANCE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/entrance`;
 const PATCH_ROOM_EXIT_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/exit`;
+const GET_SEARCH_ROOM_URL = (searchWord : string) => `${API_DOMAIN}/room/search/${searchWord}`;
 
 
 // 채팅방 만들기 //
@@ -406,6 +408,19 @@ export const PatchRoomExitRequest = async (roomNumber : number | string, data : 
     return result;
 }
 
+// 채팅방 검색 //
+export const getSearchRoomRequest = async (searchWord : string) => {
+    const result = await axios.get(GET_SEARCH_ROOM_URL(searchWord))
+    .then((response) => {
+        const responseBody : GetSearchRoomResponseDto = response.data;
+        return responseBody;
+    })
+    .catch((error) => {
+        const responseBody : ResponseDto = error.response.data;
+        return responseBody;
+    })
+    return result;
+}
 
 
 

@@ -15,6 +15,7 @@ import com.project.codematchr.dto.response.ResponseDto;
 import com.project.codematchr.dto.response.room.DeleteRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomListResponseDto;
 import com.project.codematchr.dto.response.room.GetRoomResponseDto;
+import com.project.codematchr.dto.response.room.GetSearchRoomResponseDto;
 import com.project.codematchr.dto.response.room.GetUserRoomListResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomEntranceResponseDto;
 import com.project.codematchr.dto.response.room.PatchRoomExitResponseDto;
@@ -352,6 +353,27 @@ public class RoomServiceImplement implements RoomService {
         }
 
         return GetRoomResponseDto.success(roomViewEntity);
+    }
+
+    // 검색 다인원 채팅방 리스트 조회 //
+    @Override
+    public ResponseEntity<? super GetSearchRoomResponseDto> getSearchRoom(String searchWord) {
+
+        List<RoomListResponseDto> roomList = null;
+
+        try {
+            // 검색어가 제목에 포함되어 있는 데이터 조회 //
+            List<RoomViewEntity> roomViewEntities = roomViewRepository.findByRoomTitleContainsOrderByRoomDatetimeDesc(searchWord);
+            
+            // Entity 를 dto 로 변환 //
+            roomList = RoomListResponseDto.copyList(roomViewEntities);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetSearchRoomResponseDto.success(roomList);
     }
 
 }

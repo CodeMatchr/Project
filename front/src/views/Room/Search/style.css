@@ -10,7 +10,7 @@
     justify-content: space-between;
     align-items: center;
     width: 1400px;
-    background-color: lightcyan;
+    
 }
 
 .room-top-title{
@@ -72,7 +72,7 @@
     margin-top: 30px;
     width: 1400px;
     border-radius: 15px;
-    background-color: blanchedalmond;
+    background-color: whitesmoke;
 }
 
 .chat-room-pop-up{

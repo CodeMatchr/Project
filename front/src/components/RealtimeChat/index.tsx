@@ -41,9 +41,7 @@ export default function RealtimeChat({ roomNumber }: Props) {
 
   const {user} = useUserStore();
 
-  // const {userEmail, userNickname, userProfileImageUrl} = item;
-
-  const roomImageBackground =  roomImageUrl ? { backgroundImage : `url(${roomImageUrl})` } : { backgroundColor : 'rgba(0, 0, 0, 0.6)' };
+  const userImageBackground = (profileImage: string | null) =>  profileImage ? { backgroundImage : `url(${profileImage})` } : { backgroundColor : 'rgba(0, 0, 0, 0.6)' };
 
   // function //
 
@@ -67,7 +65,7 @@ export default function RealtimeChat({ roomNumber }: Props) {
     console.log(user?.userEmail);
     const datetime = moment().format('YYYY-MM-DD hh:mm:ss a');
     console.log(roomNumber);
-    const data: MessageDto = { id, room: roomNumber, nickname, message, datetime };
+    const data: MessageDto = { id, room: roomNumber, profileImage: String(user?.userProfileImageUrl), nickname: String(user?.userNickname), message, datetime };
     socket.emit('send', data);
     setMessage('');
   }
@@ -84,7 +82,7 @@ export default function RealtimeChat({ roomNumber }: Props) {
     messageItem: MessageDto;
   }
   const ChatMessageItem = ({messageItem}: ChatMessageItmeProps) => {
-    const { nickname, message, datetime } = messageItem;
+    const { profileImage, nickname, message, datetime } = messageItem;
     
     if(id === messageItem.id)
     return(
@@ -96,7 +94,7 @@ export default function RealtimeChat({ roomNumber }: Props) {
 
     return(
       <div className='chat-bottom-mid-chat'>
-          <div className='chat-user-profile-image'>icon</div>
+          <div className='chat-user-profile-image' style={userImageBackground(profileImage)}>icon</div>
           <div className='chat-user-nickname'>{nickname}</div>
           <div className='chat-contents'>{message}</div>
           <div className='chat-datetime'>{datetime}</div>

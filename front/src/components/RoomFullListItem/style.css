@@ -9,6 +9,7 @@
     height: 200px;
     border-radius: 15px;
     background-color: white;
+    border: 3px solid whitesmoke;
     transition: all 0.3s;
     cursor: pointer;
 }
