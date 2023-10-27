@@ -134,14 +134,14 @@ export default function RealtimeChat({ roomNumber }: Props) {
   // render //
   return (
     <div className='chat-bottom'>
-      <div className='chat-bottom-top'>채팅방 이름</div>
+      <div className='chat-bottom-top'>채팅</div>
       <div className='chat-bottom-mid' ref={roomContainerRef}>
         { messageList.map(messageItem => <ChatMessageItem messageItem={messageItem} />) }
-          <div className='chat-bottom-bottom'>
-              <input className='chat-bottom-bottom-input' placeholder='채팅 메세지를 입력해주세요.' type='text' value={message} onChange={onMessageChangeHandler} onKeyDown={onEnterKeyDownHandler}/>
-              <div className='chat-bottom-bottom-button' ref={sendButtonRef} onClick={onSendButtonClickHandler}>전송</div>
-          </div>
-        </div>    
+        <div className='chat-bottom-bottom'>
+          <input className='chat-bottom-bottom-input' placeholder='채팅 메세지를 입력해주세요.' type='text' value={message} onChange={onMessageChangeHandler} onKeyDown={onEnterKeyDownHandler}/>
+          <div className='chat-bottom-bottom-button' ref={sendButtonRef} onClick={onSendButtonClickHandler}>전송</div>
+        </div>
+      </div>    
     </div>
   )
 }

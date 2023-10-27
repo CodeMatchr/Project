@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useRef, useState, KeyboardEvent} from 'react'
 import './style.css';
 import { useNavigate } from 'react-router-dom';
-import { CHAT_PATH, MAIN_PATH, ROOM_DETAIL_PATH, ROOM_NUMBER_PATH_VARIABLE, ROOM_PATH } from '../../../constants';
+import { AUTHENTICATION_PATH, CHAT_PATH, MAIN_PATH, ROOM_DETAIL_PATH, ROOM_NUMBER_PATH_VARIABLE, ROOM_PATH } from '../../../constants';
 import { useRoomStore } from 'src/store';
 import { useCookies } from 'react-cookie';
 import PatchRoomEntranceRequestDto from 'src/interfaces/request/room/patch-room-entrance-request.dto';
@@ -68,6 +68,11 @@ const getRoomResponseHandler = (responseBody : GetRoomResponseDto | ResponseDto)
 // Room 입장 함수 //
 const patchRoomEntranceResponseHandler = (code : string) => {
     if (code == 'NE') alert('존재하지 않는 사용자 이메일입니다.');
+    if (code == 'AF') {
+        alert('로그인이 필요합니다.');
+        navigator(AUTHENTICATION_PATH);
+        return;
+    } 
     if (code == 'NR') alert('존재하는 않는 다인원 채팅방 번호입니다.');
     if (code == 'NCP') alert('비밀번호가 알맞지 않습니다.');
     if (code == 'SU' || code == 'EE') {

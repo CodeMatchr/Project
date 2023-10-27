@@ -158,25 +158,6 @@ export default function Chat() {
         <div className='chat-mid'>
             <CompareCode/>
         </div>
-        {/* <div className='chat-bottom'>
-            <div className='chat-bottom-top'>채팅방 이름</div>
-            <div className='chat-bottom-mid'>
-                <div className='chat-bottom-mid-chat'>
-                    <div className='chat-user-profile-image'>icon</div>
-                    <div className='chat-user-nickname'>접속자 닉네임</div>
-                    <div className='chat-contents'>채팅 내용</div>
-                    <div className='chat-datetime'>채팅 시간</div>
-                </div>
-                <div className='chat-bottom-mid-my-chat'>
-                    <div className='chat-my-datetime'>채팅 시간</div>
-                    <div className='chat-my-contents'>채팅 내용</div>
-                </div>
-                <div className='chat-bottom-bottom'>
-                    <input className='chat-bottom-bottom-input' placeholder='채팅 메세지를 입력해주세요.'/>
-                    <div className='chat-bottom-bottom-button'>전송</div>
-                </div>
-            </div>    
-        </div> */}
         <RealtimeChat roomNumber={roomNumber} />
     </div>
     )
