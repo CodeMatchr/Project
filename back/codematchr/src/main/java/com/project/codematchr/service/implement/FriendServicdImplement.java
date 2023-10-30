@@ -1,10 +1,7 @@
 package com.project.codematchr.service.implement;
-
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import com.project.codematchr.dto.response.ResponseDto;
 import com.project.codematchr.dto.request.friend.PostAddFriendRequestDto;
 import com.project.codematchr.dto.response.friend.DeleteFriendResponseDto;
@@ -14,25 +11,21 @@ import com.project.codematchr.dto.response.friend.GetFriendTotalListResponseDto;
 import com.project.codematchr.dto.response.friend.PostAddFriendResponseDto;
 import com.project.codematchr.entity.FriendAddEntity;
 import com.project.codematchr.entity.FriendViewEntity;
-import com.project.codematchr.entity.UserEntity;
 import com.project.codematchr.entity.UserViewEntity;
 import com.project.codematchr.repository.FriendAddRepository;
 import com.project.codematchr.repository.FriendRepository;
 import com.project.codematchr.repository.FriendTotalListRespository;
 import com.project.codematchr.service.FriendService;
-
 import lombok.RequiredArgsConstructor;
-
 
 @Service
 @RequiredArgsConstructor
 public class FriendServicdImplement implements FriendService {
 
-private final FriendRepository friendRepository;
-private final FriendAddRepository friendAddRepository;
-private final FriendTotalListRespository friendTotalListRespository;
+  private final FriendRepository friendRepository;
+  private final FriendAddRepository friendAddRepository;
+  private final FriendTotalListRespository friendTotalListRespository;
 
-  // description : 친구 전체 리스트 조회 //
   @Override
   public ResponseEntity<? super GetFriendTotalListResponseDto> getFriendTotalList(String friendMyEmail) {
   
@@ -51,7 +44,6 @@ private final FriendTotalListRespository friendTotalListRespository;
     
   }
 
-  // description : 친구 추가된 리스트 조회 //
   @Override
   public ResponseEntity<? super GetAddFriendListResponseDto> getFriendList(String friendMyEmail) {
 
@@ -72,7 +64,6 @@ private final FriendTotalListRespository friendTotalListRespository;
 
   }
   
-  // description : 친구 추가 //
   @Override
   public ResponseEntity<? super PostAddFriendResponseDto> addFriend(String friendMyEmail, PostAddFriendRequestDto postAddFriendRequestDto) {
 
@@ -91,18 +82,16 @@ private final FriendTotalListRespository friendTotalListRespository;
  
   }
 
-  // description : 친구 삭제 //
   @Override
   public ResponseEntity<? super DeleteFriendResponseDto> deleteFriend(String friendMyEmail, String friendEmail) {
 
     try {
-      // description : 존재하는 유저(친구)인지 확인 //
+  
       boolean hasAddFriend = friendAddRepository.existsByFriendEmail(friendEmail);
+      
       if(!hasAddFriend) return DeleteFriendResponseDto.noExistedUserEmail();
-
-      // description : 데이터 삭제 //
+  
       friendAddRepository.deleteByFriendEmail(friendEmail);
-
       
     } catch (Exception exception) {
       exception.printStackTrace();

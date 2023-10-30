@@ -1,16 +1,14 @@
 package com.project.codematchr.dto.response.room;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.project.codematchr.entity.RoomViewEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
 public class UserRoomListResponseDto {
+
   private int roomNumber;
   private String roomTitle;
   private String roomImageUrl;
@@ -30,12 +28,16 @@ public class UserRoomListResponseDto {
   }
 
   public static List<UserRoomListResponseDto> copyEntityList(List<RoomViewEntity> roomViewEntities ){
+
     List<UserRoomListResponseDto> roomList = new ArrayList<>();
 
     for(RoomViewEntity entity: roomViewEntities){
       UserRoomListResponseDto room = new UserRoomListResponseDto(entity);
       roomList.add(room);
     }
+
     return roomList;
+
   }
+  
 }

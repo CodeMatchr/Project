@@ -1,10 +1,7 @@
 package com.project.codematchr.dto.response.board;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.project.codematchr.entity.UserEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -30,9 +27,9 @@ public class FavoriteListResponseDto {
       FavoriteListResponseDto favoriteItem = new FavoriteListResponseDto(userEntity);
       favoriteList.add(favoriteItem);
     }
-    return favoriteList;
-  }
 
-  
+    return favoriteList;
+    
+  }
 
 }

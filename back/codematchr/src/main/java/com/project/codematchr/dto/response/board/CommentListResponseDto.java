@@ -1,10 +1,7 @@
 package com.project.codematchr.dto.response.board;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.project.codematchr.entity.resultSet.CommentListResultSet;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -18,7 +15,6 @@ public class CommentListResponseDto {
   private String profileImageUrl;
 
   public CommentListResponseDto(CommentListResultSet resultSet) {
-
     this.nickname = resultSet.getNickname();
     this.contents = resultSet.getContents();
     this.writeDatetime = resultSet.getWriteDatetime();
@@ -33,7 +29,9 @@ public class CommentListResponseDto {
       CommentListResponseDto commentItem = new CommentListResponseDto(resultSet);
       commentList.add(commentItem);
     }
+
     return commentList;
+    
   }
 
 

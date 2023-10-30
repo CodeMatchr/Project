@@ -1,5 +1,4 @@
 package com.project.codematchr.dto.request.room;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,5 +7,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PatchRoomPasswordRequestDto {
+
     private String roomPassword;
+
 }

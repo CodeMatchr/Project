@@ -1,18 +1,13 @@
 package com.project.codematchr.repository;
-
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 import com.project.codematchr.entity.UserViewEntity;
 
 @Repository
 public interface FriendTotalListRespository extends JpaRepository<UserViewEntity, String>{
     
-
-// description : 친구 추가 안한 사용자 조회 //
   @Query(
     value = 
     "SELECT " +
@@ -33,4 +28,5 @@ public interface FriendTotalListRespository extends JpaRepository<UserViewEntity
     nativeQuery = true
     )
     List<UserViewEntity> getFriendList(String friendMyEmail);
+    
 }

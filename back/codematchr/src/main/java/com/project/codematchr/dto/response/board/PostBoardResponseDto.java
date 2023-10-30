@@ -1,13 +1,9 @@
 package com.project.codematchr.dto.response.board;
-
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import com.project.codematchr.common.response.ResponseCode;
 import com.project.codematchr.common.response.ResponseMessage;
 import com.project.codematchr.dto.response.ResponseDto;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -28,4 +24,5 @@ public class PostBoardResponseDto extends ResponseDto {
         ResponseDto result = new ResponseDto(ResponseCode.NO_EXISTED_USER_EMAIL, ResponseMessage.NO_EXISTED_USER_EMAIL);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
       }
+      
 }

@@ -1,17 +1,15 @@
 package com.project.codematchr.dto.response.room;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.project.codematchr.entity.RoomViewEntity;
 import com.project.codematchr.entity.resultSet.RoomListResultSet;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
 public class RoomListResponseDto {
+
     private int roomNumber;
     private String roomTitle;
     private String roomImageUrl;
@@ -33,6 +31,7 @@ public class RoomListResponseDto {
     }
 
     public static List<RoomListResponseDto> copyList(List<RoomViewEntity> roomViewEntities) {
+
         List<RoomListResponseDto> roomList = new ArrayList<>();
 
         for(RoomViewEntity roomViewEntity: roomViewEntities) {
@@ -41,6 +40,7 @@ public class RoomListResponseDto {
         }
 
         return roomList;
+
     }
 
     public RoomListResponseDto(RoomListResultSet rommListResultSet) {
@@ -56,6 +56,7 @@ public class RoomListResponseDto {
     }
 
     public static List<RoomListResponseDto> copyCurrentList(List<RoomListResultSet> roomListResultSets) {
+
         List<RoomListResponseDto> roomList = new ArrayList<>();
 
         for(RoomListResultSet resultSet : roomListResultSets) {
@@ -64,5 +65,7 @@ public class RoomListResponseDto {
         }
 
         return roomList;
+        
     }
+
 }

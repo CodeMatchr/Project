@@ -1,9 +1,7 @@
 package com.project.codematchr.entity;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "board_view")
 @Table(name = "board_view")
 public class BoardViewEntity {
+
   @Id
   private int boardNumber;
   private String boardTitle;
