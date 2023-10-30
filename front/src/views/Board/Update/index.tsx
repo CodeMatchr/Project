@@ -1,37 +1,33 @@
-import React, { ChangeEvent, useRef, useState ,useEffect } from 'react'
-import './style.css';
+import React, { ChangeEvent, useRef, useEffect } from 'react'
+import { useNavigate, useParams  } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { getBoardRequest, patchBoardRequest, uploadFileRequest } from 'src/apis';
+import { BOARD_DETAIL_PATH, MAIN_PATH } from '../../../constants';
 import { useBoardWriteStore } from '../../../store';
-import { useLocation, useNavigate, useParams  } from 'react-router-dom';
+import { PatchBoardRequestDto } from 'src/interfaces/request/board';
 import ResponseDto from '../../../interfaces/response/response.dto';
 import GetBoardResponseDto from '../../../interfaces/response/board/get-board.response.dto';
-import { BOARD_DETAIL_PATH, MAIN_PATH, UPDATE_PATH } from '../../../constants';
-import { getBoardRequest, patchBoardRequest, uploadFileRequest } from 'src/apis';
-import { useCookies } from 'react-cookie';
-import { PatchBoardRequestDto } from 'src/interfaces/request/board';
+import './style.css';
 
-//         component         //
-//description : 게시물 수정 화면//
+//게시물 수정 화면//
 export default function BoardUpdate() {
 
-//          state          //
-const divAreaRef = useRef<HTMLDivElement>(null);
 
-// description : textarea 요소에 대한 참조 상태 //
+// textarea 요소에 대한 참조 상태 //
 const textAreaRef = useRef<HTMLTextAreaElement>(null);
-// description : file input 요소에 대한 참조 상태 //
+// file input 요소에 대한 참조 상태 //
 const fileInputRef = useRef<HTMLInputElement>(null);
-// description : 게시물 정보를 저장할 상태 //
+// 게시물 정보를 저장할 상태 //
 const { boardTitle , boardContents , boardImageUrl, boardImage } = useBoardWriteStore();
 const { setBoardNumber, setBoardTitle, setBoardContents, setBoardImage, setBoardImageUrl, resetBoard } = useBoardWriteStore();
-// description : 게시물 번호 상태 //
+// 게시물 번호 상태 //
 const {boardNumber} = useParams();
 
 const [cookies, setCookie] = useCookies();
 
-//           function          //
 const navigator = useNavigate();
+
 // 파일 업로드 //
-// !
 const fileUpload = async () => {
     if (boardImage === null) return null;
 
@@ -43,7 +39,7 @@ const fileUpload = async () => {
   }
 
 
-// description : 게시물 불러오기 //
+// 게시물 불러오기 //
 const getBoardResponseHandler = (responseBody : GetBoardResponseDto | ResponseDto) => {
     const {code} = responseBody;
 
@@ -75,7 +71,8 @@ const patchBoardResponseHandler = (code: string) => {
     if (!boardNumber) return;
     navigator(BOARD_DETAIL_PATH(boardNumber));
     }
-//          event handler          //
+
+
 // 취소 버튼 //
 const onCancelClickHandler = () => {
     navigator(MAIN_PATH);
@@ -99,30 +96,30 @@ const onBoardUpdateButtonClickHandler = async () => {
     }
 
 
-//description : 제목이 바뀔시 실행될 이벤트 //
+// 제목이 바뀔시 실행될 이벤트 //
 const onTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setBoardTitle(event.target.value);
 }
-// description : 본문 내용이 바뀔시 textarea 높이 변경 이벤트 //
+// 본문 내용이 바뀔시 textarea 높이 변경 이벤트 //
 const onContentChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setBoardContents(event.target.value);
     if (!textAreaRef.current) return;
     textAreaRef.current.style.height = 'auto';
     textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
   }
-// description : 이미지 변경 시 이미지 미리보기 //
+// 이미지 변경 시 이미지 미리보기 //
 const onImageInputChangeHandler = (event: ChangeEvent<HTMLInputElement>) =>{
     if(!event.target.files || !event.target.files.length) return;
     const imageUrl = URL.createObjectURL(event.target.files[0]);
     setBoardImageUrl(imageUrl);
     setBoardImage(event.target.files[0]);
 }
-//description : 이미지 업로드 버튼 클릭 이벤트 //
+// 이미지 업로드 버튼 클릭 이벤트 //
 const onImageUploadButtonClickHandler = () => {
     if (!fileInputRef.current)return;
     fileInputRef.current.click();
 }
-// description : 이미지 닫기 버튼 클릭 이벤트 //
+// 이미지 닫기 버튼 클릭 이벤트 //
 const onImageCloseButtonClickHandler = () => {
     if(!fileInputRef.current) return;
     fileInputRef.current.value = '';
@@ -130,13 +127,12 @@ const onImageCloseButtonClickHandler = () => {
 }
 
 
-//          component          //
 
-//          effect          //
 // 수정버튼 클릭 후 수정 안하고 메인 -> 글쓰기 하면 내용이 남아있는거 리셋하는 작업 //
 useEffect(() => {
     resetBoard();
   }, []);
+
 // 게시물 불러오기 //
 useEffect(() => {
     if(!boardNumber) {
@@ -146,7 +142,8 @@ useEffect(() => {
     }
     getBoardRequest(boardNumber).then(getBoardResponseHandler);
 },[boardNumber]);
-//           render           //
+
+
 return (
     <div id='board-write-wrapper'>
         <div className='board-write-container'>

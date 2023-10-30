@@ -103,6 +103,16 @@ const POST_COMMENT_URL = (commentBoardNumber : number | string) => `${API_DOMAIN
 // 검색 게시물 //
 const SEARCH_BOARD_URL = (searchWord : string ) => `${API_DOMAIN}/board/search/${searchWord}`;
 
+const POST_ROOM_URL = () => `${API_DOMAIN}/room/create`;
+const GET_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}`;
+const GET_CURRENT_ROOM_LIST_URL = (section : number) => `${API_DOMAIN}/room/current-room/${section}`;
+const PATCH_ROOM_TITLE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomTitle`;
+const PATCH_ROOM_PASSWORD_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomPassword`;
+const PATCH_ROOM_IMAGE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomImageUrl`;
+const DELETE_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}`;
+const PATCH_ROOM_ENTRANCE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/entrance`;
+const PATCH_ROOM_EXIT_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/exit`;
+
 
 // 로그인 //
 export const signInRequest = async (data : SignInRequestDto) => {
@@ -256,19 +266,6 @@ export const postBoardRequest = async (data : PostBoardRequestDto, token:string)
 }
 
 
-const POST_ROOM_URL = () => `${API_DOMAIN}/room/create`;
-const GET_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}`;
-// ! -> 수정했는데, 확인해보니 websecurity 수정하고, /room 넣어주니 잘 불러와지네요.
-const GET_CURRENT_ROOM_LIST_URL = (section : number) => `${API_DOMAIN}/room/current-room/${section}`;
-// !
-const PATCH_ROOM_TITLE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomTitle`;
-const PATCH_ROOM_PASSWORD_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomPassword`;
-const PATCH_ROOM_IMAGE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/roomImageUrl`;
-const DELETE_ROOM_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}`;
-const PATCH_ROOM_ENTRANCE_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/entrance`;
-const PATCH_ROOM_EXIT_URL = (roomNumber : number | string) => `${API_DOMAIN}/room/${roomNumber}/exit`;
-
-
 // 채팅방 만들기 //
 export const postRoomRequest = async (data : PostRoomRequestDto, token : string) => {
     const result = await axios.post(POST_ROOM_URL(), data, { headers: { Authorization: `Bearer ${token}` } })
@@ -405,9 +402,6 @@ export const PatchRoomExitRequest = async (roomNumber : number | string, data : 
 
     return result;
 }
-
-
-
 
 // 파일 업로드 //
 export const uploadFileRequest = async (data: FormData) => {

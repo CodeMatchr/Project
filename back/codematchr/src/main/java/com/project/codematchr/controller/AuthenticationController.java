@@ -17,8 +17,6 @@ import com.project.codematchr.service.AuthService;
 import lombok.RequiredArgsConstructor;
 
 
-
-// 인증 컨트롤러 //
 @RestController
 @RequestMapping("/api/v1/authentication")
 @RequiredArgsConstructor
@@ -26,7 +24,6 @@ public class AuthenticationController {
 
     private final AuthService authService;
     
-    // API : 회원가입 메서드 //
     @PostMapping("/sign-up")
     public ResponseEntity<? super SignUpResponseDto> signUp(
         @RequestBody @Valid SignUpRequestDto requestBody
@@ -35,7 +32,6 @@ public class AuthenticationController {
         return response;
     }
 
-    // API : 로그인 메서드 //
     @PostMapping("/sign-in")
     public ResponseEntity<? super SignInResponseDto> signIn(
         @RequestBody @Valid SignInRequestDto requestBody

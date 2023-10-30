@@ -1,27 +1,24 @@
 import React, {ChangeEvent , useRef , useState, useEffect}  from "react"
-
-import { useBoardWriteStore, useUserStore } from "../../../store";
-
-import './style.css';
 import { useCookies } from "react-cookie";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { BOARD_DETAIL_PATH, BOARD_NUMBER_PATH_VARIABLE, BOARD_PATH, BOARD_WRITE_PATH, MAIN_PATH, USER_PAGE_PATH_VARIABLE, USER_PATH, WRITE_PATH } from "src/constants";
-import PostBoardRequestDto from "src/interfaces/request/board/post-board.request.dto";
-import PatchBoardRequestDto from "src/interfaces/request/board/patch-board.request.dto";
-import { patchBoardRequest, postBoardRequest, uploadFileRequest } from "src/apis";
+import { useLocation, useNavigate } from "react-router-dom";
 
-//     component      //
-// description : 게시물 쓰기 화면 //
+import { postBoardRequest, uploadFileRequest } from "src/apis";
+import { USER_PATH, WRITE_PATH } from "src/constants";
+import { useBoardWriteStore, useUserStore } from "../../../store";
+import PostBoardRequestDto from "src/interfaces/request/board/post-board.request.dto";
+import './style.css';
+
+
+// 게시물 쓰기 화면 //
 export default function BoardWrite() {
 
-//          state          //
-// description : textarea 요소에 대한 참조 상태 //
+// textarea 요소에 대한 참조 상태 //
 const textAreaRef = useRef<HTMLTextAreaElement>(null);
-// description : file input 요소에 대한 참조 상태 //
+// file input 요소에 대한 참조 상태 //
 const fileInputRef = useRef<HTMLInputElement>(null);
-// description : 게시물 정보를 저장할 상태 //
+// 게시물 정보를 저장할 상태 //
 const { boardNumber, boardTitle , boardContents , boardImage , setBoardTitle , setBoardContents , setBoardImage, resetBoard} = useBoardWriteStore();
-// description : 이미지 저장할 상태 //
+// 이미지 저장할 상태 //
 const [boardImageUrl, setBoardImageUrl] = useState<string>('');
 // Cookies 상태 //
 const [cookies, setCookie] = useCookies();
@@ -29,10 +26,10 @@ const [cookies, setCookie] = useCookies();
 const navigator = useNavigate();
 // 로그인 유저 정보 상태 //
 const { user, setUser } = useUserStore();
-// description: url 경로 상태 //
+// url 경로 상태 //
 const { pathname } = useLocation();
 
-//          function          //
+
 // 파일 업로드 //
 const fileUpload = async () => {
     if (boardImage === null) return null;
@@ -50,7 +47,7 @@ const onCancelClickHandler = () => {
     navigator(USER_PATH(user?.userEmail));
     resetBoard();
 }
-// description: 게시물 작성 함수 //
+// 게시물 작성 함수 //
 const postBoardResponseHandler = (code: string) => {
     if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
     if (code === 'VF') alert('필수 데이터를 입력하지 않았습니다.');
@@ -64,7 +61,6 @@ const postBoardResponseHandler = (code: string) => {
   }
 
 
-//          event handler          //
 // 제목이 바뀔시 실행될 이벤트 //
 const onTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setBoardTitle(event.target.value);
@@ -113,16 +109,12 @@ const onBoardWriteButtonClickHandler = async () => {
     
   }
  
-//          component          //
-
-//          effect          //
 useEffect(() => {
     resetBoard();
 }, []);
 
 
 
-//           render           //
 return (
     <div id='board-write-wrapper'>
         <div className='board-write-container'>

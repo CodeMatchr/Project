@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
-import './style.css';
-import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
+import { GetCurrentRoomListRequest } from 'src/apis';
 import Pagination from '../../components/Pagination';
-import { COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll } from '../../constants';
-import { useNavigate } from 'react-router-dom';
-import { usePagination } from '../../hooks';
-import RoomFullListItem from '../../components/RoomFullListItem';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
+import RoomFullListItem from '../../components/RoomFullListItem';
+import { MAIN_ROOM_COUNT_BY_PAGE_FUll } from '../../constants';
+import { usePagination } from '../../hooks';
+import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
 import GetCurrentRoomListResponseDto from 'src/interfaces/response/room/get-current-room-list.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { GetCurrentRoomListRequest } from 'src/apis';
+import './style.css';
 
-// component //
 export default function Room() {
-  // state //
+
   // 페이지네이션과 관련된 상태 및 함수
   const{totalPage, currentPage, currentSection, onPageClickHandler, onPreviousClickHandler, onNextClickHandler, changeSection} = usePagination();  
   // Room 에 해당하는 전체 리스트 상태
@@ -32,8 +30,6 @@ export default function Room() {
   // 채팅방 팝업창 상태 //
   const [selectRoomNumber, setSelectRoomNumber] = useState<string>('');
 
-  // function //
-  const navigator = useNavigate();
 
   const getPageRoomList = (roomList : RoomListResponseDto[]) => {
     const startIndex = MAIN_ROOM_COUNT_BY_PAGE_FUll * (currentPage - 1);
@@ -58,7 +54,7 @@ export default function Room() {
     changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE_FUll)
   }
 
-  // event handler //
+
   // 검색 아이콘 버튼 클릭 이벤트 //
   const onSearchIconButtonClickHandler = () => {
     if (searchIconState == true) setSearchIconState(false);
@@ -70,7 +66,7 @@ export default function Room() {
     setSelectRoomNumber(String(roomNumber));
   }
 
-  // effect //
+
   // 현재 페이지가 바뀔때 마다 Room 리스트 변경//
   useEffect(() => {
     getPageRoomList(currentRoomList);
@@ -85,7 +81,7 @@ export default function Room() {
     GetCurrentRoomListRequest(currentSection).then(getCurrentRoomListResponseHandler);
   }, [currentSection]);
 
-  // render //
+  
   return (
     <div className='room'>
       <div className='room-top'>

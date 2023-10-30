@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
-
-import './style.css';
-import BoardListResponseDto from 'src/interfaces/response/board/board-list.response.dto';
-
-import BoardListItem from 'src/components/BoardListItem';
-import Pagination from 'src/components/Pagination';
-import { usePagination } from 'src/hooks';
-import ResponseDto from 'src/interfaces/response/response.dto';
-import {  MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE_FUll } from 'src/constants';
-import {  getSearchBoardRequest} from 'src/apis';
-import GetSearchBoardResponseDto from 'src/interfaces/response/board/get-search-board.response.dto';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import {  getSearchBoardRequest} from 'src/apis';
+import BoardListItem from 'src/components/BoardListItem';
+import Pagination from 'src/components/Pagination';
+import {  MAIN_PATH, MAIN_ROOM_COUNT_BY_PAGE_FUll } from 'src/constants';
+import { usePagination } from 'src/hooks';
 
-// component //
+import BoardListResponseDto from 'src/interfaces/response/board/board-list.response.dto';
+import ResponseDto from 'src/interfaces/response/response.dto';
+import GetSearchBoardResponseDto from 'src/interfaces/response/board/get-search-board.response.dto';
+import './style.css';
+
+
 export default function SearchList() {
 
-  // state //
   // 페이지네이션 //
   const{totalPage, currentPage, currentSection, onPageClickHandler, onPreviousClickHandler, onNextClickHandler, changeSection} = usePagination();
 
@@ -36,7 +34,6 @@ export default function SearchList() {
 
 
 
-  //function //
   
   // 페이지네이션 함수 //
   const getViewBoardList = (boardList : BoardListResponseDto[]) => {
@@ -64,10 +61,7 @@ export default function SearchList() {
     
   }
    
-  // event handler //
   
-
-  // effect //
   useEffect (() => {
     if(!searchWord) {
       alert('검색어가 올바르지 않습니다. 다시 확인해주세요.');

@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
-import './style.css';
-import BoardListResponseDto from 'src/interfaces/response/board/board-list.response.dto';
 
+import { getBoardListCommentRequest, getBoardListCurrentRequest, getBoardListFavoriteRequest, getBoardListViewRequest} from 'src/apis';
 import BoardListItem from 'src/components/BoardListItem';
 import Pagination from 'src/components/Pagination';
 import { usePagination } from 'src/hooks';
+import { COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll } from 'src/constants';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import {  COUNT_BY_PAGE, MAIN_ROOM_COUNT_BY_PAGE_FUll } from 'src/constants';
+import BoardListResponseDto from 'src/interfaces/response/board/board-list.response.dto';
 import { GetBoardListResponeDto } from 'src/interfaces/response/board';
-import { getBoardListCommentRequest, getBoardListCurrentRequest, getBoardListFavoriteRequest, getBoardListViewRequest} from 'src/apis';
+import './style.css';
 
 
-// component //
 export default function BoardList() {
 
-  // state //
   // 페이지네이션 //
   const{totalPage, currentPage, currentSection, onPageClickHandler, onPreviousClickHandler, onNextClickHandler, changeSection} = usePagination();
 
@@ -46,7 +44,6 @@ export default function BoardList() {
     setViewBoardList(viewBoardList);
 }
 
-  //function //
   // 게시물 최신순 리스트 불러오기 응답처리 함수 //
   const getCurrentBoardListResponseHandler = (responseBody: GetBoardListResponeDto | ResponseDto) => {
     const { code } = responseBody;
@@ -131,7 +128,6 @@ export default function BoardList() {
   }
 
    
-  // event handler //
   // 최신 tap 클릭 이벤트 //
   const onCurrentClickHandler = () => {
     if(!currentTap) {
@@ -163,7 +159,6 @@ export default function BoardList() {
     }
   }
 
-  // effect //
   // 현재 페이지가 바뀔 때마다 board 리스트 변경 //
   useEffect(() => {
     getViewBoardList(currentList);

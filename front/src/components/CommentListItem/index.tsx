@@ -1,18 +1,15 @@
 import React from 'react'
-import './style.css';
 import { CommentListResponseDto } from '../../interfaces/response/board/get-comment-list.response.dto';
+import './style.css';
 
 interface Props {
   item: CommentListResponseDto;
 }
 
-// component
 export default function CommentListItem({ item }: Props) {
 
-  // state //
   const { nickname, contents, writeDatetime, profileImageUrl } = item;
 
-  // function //
   // 현재시간과 작성시간의 차이 함수//
   const getTimeGap = () => {
     const writeDate = new Date(writeDatetime);
@@ -31,7 +28,6 @@ export default function CommentListItem({ item }: Props) {
     return result;
   }
 
-  // render //
   return (
     <div className='comment-list-item-box'>
       <div className='comment-list-item-writer'>

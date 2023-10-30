@@ -1,24 +1,18 @@
 import React from 'react';
-import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_PATH } from 'src/constants';
+import './style.css';
 
-// component //
 export default function Footer() {
 
-    // state //
     const navigator = useNavigate();
 
-    // function //
 
-    // event handler //
     const onLogoButtonClickHandler = () => {
         navigator(MAIN_PATH);
     }
 
-    // effect //
 
-    // render //
     return (
         <div id='footer'>
             <div className='footer-box'>

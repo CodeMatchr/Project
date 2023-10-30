@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction, useEffect, KeyboardEvent } from 'react';
-import './style.css';
+import React, { Dispatch, SetStateAction, KeyboardEvent } from 'react';
 import { INPUT_ICON } from '../../constants';
+import './style.css';
 
 interface Props {
   label : string;
@@ -17,26 +17,17 @@ interface Props {
 }
 
 
-//             component            //
 export default function InputBox({label,labelError,type,placeholder,value,icon,helper,error,setValue, buttonHandler, keyDownHandler}:Props) {
   
-//             state            //
-//             function            //
-//             event handler            //
-// 인풋 박스 입력값 변경 //
-const onChangeEventHandler = (value:string) => {
-  setValue(value);
-}
+  const onChangeEventHandler = (value:string) => {
+    setValue(value);
+  }
 
-// 키보드 엔터 // 
-const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-  if(!keyDownHandler) return;
-  keyDownHandler(event);
-}
-//             component            //
-//             effect            //
-
-//             render            //
+  const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+    if(!keyDownHandler) return;
+    keyDownHandler(event);
+  }
+  
   return (
    <div id='input-box'>
     <div className='input-box-label-container'>

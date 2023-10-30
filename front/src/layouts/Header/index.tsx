@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useRef, KeyboardEvent,ChangeEvent } from 'react';
-import './style.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AUTHENTICATION_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, SEARCH_PATH, SEARCH_WORD_PATH_VARIABLE, USER_PAGE_PATH_VARIABLE, USER_PATH } from '../../constants';
-import { useUserStore } from 'src/store';
 import { useCookies } from 'react-cookie';
+import { AUTHENTICATION_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, SEARCH_PATH, USER_PATH } from '../../constants';
+import { useUserStore } from 'src/store';
+import './style.css';
 
-// component //
 export default function Header() {
 
-    // state //
     // 로그인 상태 //
     const [signIn, setSignIn] = useState<boolean>(false);
     // 검색어 상태 //
@@ -26,7 +24,6 @@ export default function Header() {
    
 
 
-    // function //
     // 페이지 이동을 위한 네비게이트 함수 //
     const navigator = useNavigate();
 
@@ -38,9 +35,6 @@ export default function Header() {
     const isUser = user && pathname.includes(USER_PATH(user.userEmail));
 
     
-    
-
-    // event handler //
     // 메인 페이지 이동 버튼 클릭 이벤트(로고 및 로고 텍스트 버튼 클릭 시) //
     const onLogoButtonClickHandler = () => {
         navigator(MAIN_PATH);
@@ -93,7 +87,6 @@ export default function Header() {
         searchButtonRef.current.click();
     }
 
-    // effect //
     // 로그인 유저 정보 여부 //
     useEffect(() => {
         setSignIn(user !== null);
@@ -107,8 +100,6 @@ export default function Header() {
     }, [pathname]);
 
    
-
-    // render //
     return (
         <div id='header'>
             <div className='header-box'>

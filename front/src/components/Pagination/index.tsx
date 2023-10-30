@@ -15,18 +15,9 @@ interface Props{
     onNextClickHandler : () => void;
 }
 
-// component //
 export default function Pagination({ totalPage, currentPage, onPreviousClickHandler, onNextClickHandler, onPageClickHandler }: Props) {
 
-    // state //
-
-    // function //
-
-    // event handler //
-
-    // effect //
-
-    // render //
+  
     return (
         <div className='pagination'>
             <div className="pagination-button" onClick={onPreviousClickHandler}>

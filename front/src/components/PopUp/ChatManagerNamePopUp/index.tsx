@@ -1,43 +1,40 @@
 import React, { useState, useRef, ChangeEvent, useEffect, Dispatch, SetStateAction, KeyboardEvent } from 'react'
-import './style.css';
 import { useNavigate } from 'react-router-dom';
-import { MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH } from '../../../constants';
+import { useCookies } from 'react-cookie';
 import { useRoomStore } from 'src/store';
+import { PatchRoomTitleRequest, getRoomRequest } from 'src/apis';
+import { MAIN_PATH, ROOM_DETAIL_PATH } from '../../../constants';
+import { PatchRoomTitleRequestDto } from 'src/interfaces/request/room';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { useCookies } from 'react-cookie';
-import { PatchRoomTitleRequestDto } from 'src/interfaces/request/room';
-import { PatchRoomTitleRequest, getRoomRequest } from 'src/apis';
+import './style.css';
 
 interface Props {
     selectRoomNumber : number;
     setPopUpNameState: Dispatch<SetStateAction<boolean>>;
 }
 
-//            component           //
-// description : 채팅방 매니저 팝업창 //
+// 채팅방 매니저 이름 팝업창 //
 export default function ChatManagerNamePopUp({selectRoomNumber, setPopUpNameState} : Props) {
-    //            state           //
-    // description : 네비게이터 //
+
     const navigator = useNavigate();
 
     const { roomNumber, roomTitle, roomPassword, roomImage, roomImageUrl, resetRoom, setRoomNumber, setRoomImageUrl, setRoomImage, setRoomPassword, setRoomTitle } = useRoomStore();
 
     const [cookies, setCookie] = useCookies();
 
-    // description : 채팅방 이름 변경 인풋 상태 //
+    // 채팅방 이름 변경 인풋 상태 //
     const [roomNameInputChange, setRoomNameInputChange] = useState<string>('');
 
     // 채팅방 상태 //
     const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
 
-    // 
     const [roomNumberFlag, setRoomNumberFlag] = useState<boolean>(true);
 
     // 변경 버튼 Ref 상태 //
     const changeButtonRef = useRef<HTMLDivElement | null>(null);
 
-    //            function           //
+
     // 채팅방 불러오기 응답 처리 //
     const getRoomResponseHnadler = (responseBody : GetRoomResponseDto | ResponseDto) => {
         const {code} = responseBody;
@@ -56,7 +53,7 @@ export default function ChatManagerNamePopUp({selectRoomNumber, setPopUpNameStat
 
     }
 
-    // description : 다인원 채팅방 제목 변경 이벤트 //
+    // 다인원 채팅방 제목 변경 이벤트 //
     const onTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setRoomNameInputChange(event.target.value);
     }
@@ -75,7 +72,6 @@ export default function ChatManagerNamePopUp({selectRoomNumber, setPopUpNameStat
         setPopUpNameState(false);
     }
     
-    //            event handler           //
     // 변경 버튼 클릭 이벤트 //
     const onChangeClickHandler = async () => {
         const token = cookies.accessToken;
@@ -88,12 +84,11 @@ export default function ChatManagerNamePopUp({selectRoomNumber, setPopUpNameStat
         console.log("5" + roomNumber);
     }
 
-    // description : 취소 버튼 클릭 이벤트 //
+    // 취소 버튼 클릭 이벤트 //
     const onCancelClickHandler = () => {
         setPopUpNameState(false);
     }
 
-    //            effect           //
     useEffect(() => {
     if(roomNumberFlag) {
         setRoomNumberFlag(false);
@@ -104,11 +99,8 @@ export default function ChatManagerNamePopUp({selectRoomNumber, setPopUpNameStat
         navigator(ROOM_DETAIL_PATH(roomNumber));
         return;
     }
-    // if(!roomNumber) {
-    //     alert('채팅방 번호가 잘못되었습니다.');
-    //     navigator(MAIN_PATH);
-    //     return;
-    // }
+
+
     const accessToken = cookies.accessToken;
     getRoomRequest(selectRoomNumber, accessToken).then(getRoomResponseHnadler);
     }, [selectRoomNumber, roomTitle]);
@@ -120,7 +112,7 @@ export default function ChatManagerNamePopUp({selectRoomNumber, setPopUpNameStat
         changeButtonRef.current.click();
     }
     
-    //            render           //
+    
     return (
     <div id='popup-manager-wrapper'>
         <div className='popup-manager-box'>

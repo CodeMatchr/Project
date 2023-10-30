@@ -1,8 +1,7 @@
 import React from 'react';
 
-import './style.css';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
-import { useNavigate } from 'react-router-dom';
+import './style.css';
 
 interface Props {
     onClick: () => void
@@ -10,7 +9,7 @@ interface Props {
 }
 
 export default function RoomFullListItem({onClick, item} : Props) {
-  // state //
+
   const { roomNumber, roomTitle, roomImageUrl } = item;
   const { roomUserCount } = item;
   const { roomManagerNickname, roomManagerProfileImageUrl } = item;
@@ -19,17 +18,6 @@ export default function RoomFullListItem({onClick, item} : Props) {
   const roomManagerImageBackground = roomManagerProfileImageUrl ? { backgroundImage : `url(${roomManagerProfileImageUrl})` } : { backgroundColor: 'rgba(0, 0, 0, 0.6)' };
 
 
-  // function //
-  const navigator = useNavigate();
-
-  // event handler //
-  const onClickHandler = () => {
-    
-  }
-
-  // effect //
-
-  // render //
   return (
       <div className='room-list-full' onClick={onClick}>
             <div className='room-list-full-room-left'>

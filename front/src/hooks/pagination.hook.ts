@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getPagination } from '../utils';
-import { MAIN_ROOM_COUNT_BY_PAGE } from '../constants';
 
 
 // hook //
 // 페이지네이션 관련 상태관리 훅 함수 //
 const usePagination = () => {
-     // state //
+
      // 현재 페이지 상태 //
      const [currentPage, setCurrentPage] = useState<number>(1);
      // 현재 섹션 상태 //
@@ -22,7 +21,7 @@ const usePagination = () => {
      // 한 섹션에 최저 페이지 상태 //
      const [maxPage, setMaxPage] = useState<number>(0);
      
-     // event handler //
+
      // 페이지 클릭 이벤트 //
      const onPageClickHandler = (page : number) => {
           setCurrentPage(page);
@@ -42,7 +41,6 @@ const usePagination = () => {
           setCurrentPage(currentPage + 1);
      }
 
-     // function //
      // 현재 섹션이 변경될 때 호출할 함수 //
      const changeSection = (roomCount: number, countByPage: number) => {
           const { section, minPage, maxPage, totalPageCount } = getPagination(roomCount, currentSection, countByPage);
@@ -57,7 +55,6 @@ const usePagination = () => {
           setTotalPage(pageList);
      }
 
-     // render //
      return {totalPage, currentPage, currentSection, onPageClickHandler, onPreviousClickHandler, onNextClickHandler, changeSection};
 }
 

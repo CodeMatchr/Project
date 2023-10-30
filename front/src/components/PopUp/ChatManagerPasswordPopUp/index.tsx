@@ -1,28 +1,27 @@
 import React, { useState, useRef, ChangeEvent, useEffect, SetStateAction, Dispatch, KeyboardEvent } from 'react'
-import './style.css';
 import { useNavigate } from 'react-router-dom';
-import { MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH } from '../../../constants';
 import { useCookies } from 'react-cookie';
 import { useRoomStore } from 'src/store';
+import { PatchRoomPasswordRequest, getRoomRequest } from 'src/apis';
+import { MAIN_PATH, ROOM_DETAIL_PATH } from '../../../constants';
+import { PatchRoomPasswordRequestDto } from 'src/interfaces/request/room';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { PatchRoomPasswordRequestDto } from 'src/interfaces/request/room';
-import { PatchRoomPasswordRequest, getRoomRequest } from 'src/apis';
+import './style.css';
 
 interface Props {
     selectRoomNumber : number;
     setPopUpPasswordState : Dispatch<SetStateAction<boolean>>;
 }
 
-//            component           //
-// description : 채팅방 매니저 팝업창 //
+// 채팅방 매니저 비밀번호 팝업창 //
 export default function ChatManagerPasswordPopUp({selectRoomNumber, setPopUpPasswordState} : Props) {
-    //            state           //
+
     const { roomNumber, roomTitle, roomPassword, roomImage, roomImageUrl, resetRoom, setRoomNumber, setRoomImageUrl, setRoomImage, setRoomPassword, setRoomTitle } = useRoomStore();
 
     const [cookies, setCookie] = useCookies();
 
-    // description : 채팅방 비밀번호 변경 인풋 상태 //
+    // 채팅방 비밀번호 변경 인풋 상태 //
     const [roomPasswordInputChange, setRoomPasswordInputChange] = useState<string>('');
 
     // 채팅방 상태 //
@@ -33,8 +32,7 @@ export default function ChatManagerPasswordPopUp({selectRoomNumber, setPopUpPass
     // 변경 버튼 Ref 상태 //
     const changeButtonRef = useRef<HTMLDivElement | null>(null);
 
-    //            function           //
-    // description : 네비게이터 //
+
     const navigator = useNavigate();
 
     // 채팅방 불러오기 응답 처리 //
@@ -72,8 +70,7 @@ export default function ChatManagerPasswordPopUp({selectRoomNumber, setPopUpPass
         setPopUpPasswordState(false);
     }
 
-    //            event handler           //
-    // description : 변경 버튼 클릭 이벤트 //
+    // 변경 버튼 클릭 이벤트 //
     const onChangeClickHandler = async () => {
         const token = cookies.accessToken;
 
@@ -83,7 +80,7 @@ export default function ChatManagerPasswordPopUp({selectRoomNumber, setPopUpPass
 
         PatchRoomPasswordRequest(roomNumber, data, token).then(patchRoomPasswordResponseHandler);
     }
-    // description : 취소 버튼 클릭 이벤트 //
+    // 취소 버튼 클릭 이벤트 //
     const onCancelClickHandler = () => {
         setPopUpPasswordState(false);
     }
@@ -94,7 +91,6 @@ export default function ChatManagerPasswordPopUp({selectRoomNumber, setPopUpPass
         changeButtonRef.current.click();
     }
 
-    //            effect           //
     useEffect(() => {
         if(roomNumberFlag) {
             setRoomNumberFlag(false);
@@ -108,7 +104,8 @@ export default function ChatManagerPasswordPopUp({selectRoomNumber, setPopUpPass
         const accessToken = cookies.accessToken;
         getRoomRequest(selectRoomNumber, accessToken).then(getRoomResponseHnadler);
         }, [selectRoomNumber, roomPassword]);
-    //            render           //
+
+        
     return (
     <div id='popup-manager-wrapper'>
         <div className='popup-manager-box'>

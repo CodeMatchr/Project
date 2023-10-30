@@ -1,25 +1,19 @@
 import React, { useRef, useState, ChangeEvent, KeyboardEvent, useEffect } from 'react';
-import './style.css';
-import usePathStore from 'src/store/path.store';
+import moment from 'moment';
 import { socket } from 'src/utils/soket';
 import { MessageDto } from 'src/types';
-import moment from 'moment';
-import useRoomChatStore from 'src/store/roomChat.store';
+import usePathStore from 'src/store/path.store';
 import { useRoomStore, useUserStore } from 'src/store';
-import { useStore } from 'zustand';
 import useUserChatStore from 'src/store/userChat.store';
-import { GetUserResponseDto } from 'src/interfaces/response/User';
+import './style.css';
 
 interface Props {
   roomNumber: string | undefined;
-  // item : GetUserResponseDto;
 }
 
 
-// component //
 export default function RealtimeChat({ roomNumber }: Props) {
 
-  // state //
   // Send Button Ref 상태 //
   const sendButtonRef = useRef<HTMLDivElement | null>(null);
   // Room Container Ref 상태 //
@@ -27,7 +21,6 @@ export default function RealtimeChat({ roomNumber }: Props) {
   // path 상태 변경 함수 //
   const { setPath } = usePathStore();
   // room 상태 및 변경 함수 //
-  const { roomChat, setRoomChat } = useRoomChatStore();
   // 사용자 정보 상태 //
   const { id, nickname } = useUserChatStore();
   // 소켓 연결 상태 //
@@ -41,13 +34,10 @@ export default function RealtimeChat({ roomNumber }: Props) {
 
   const {user} = useUserStore();
 
-  // const {userEmail, userNickname, userProfileImageUrl} = item;
-
   const roomImageBackground =  roomImageUrl ? { backgroundImage : `url(${roomImageUrl})` } : { backgroundColor : 'rgba(0, 0, 0, 0.6)' };
 
-  // function //
 
-  // event handler ///
+  
   // 메세지 값 변경 처리 //
   const onMessageChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const message = event.target.value;
@@ -79,7 +69,7 @@ export default function RealtimeChat({ roomNumber }: Props) {
   }
   socket.on('receive', onReceiveHandler);
 
-  // component : 채팅 메세지 아이템 컴포넌트 //
+  // 채팅 메세지 아이템 컴포넌트 //
   interface ChatMessageItmeProps {
     messageItem: MessageDto;
   }
@@ -104,7 +94,6 @@ export default function RealtimeChat({ roomNumber }: Props) {
     );
   }
 
-  // effect //
   // 첫 마운트 시 소켓 연결 //
   let effectFlag = true;
   useEffect(() => {
@@ -131,7 +120,7 @@ export default function RealtimeChat({ roomNumber }: Props) {
     roomContainerRef.current.scrollTop = roomContainerRef.current.scrollHeight;
   }, [messageList])
 
-  // render //
+  
   return (
     <div className='chat-bottom'>
       <div className='chat-bottom-top'>채팅</div>

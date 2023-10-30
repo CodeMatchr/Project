@@ -1,24 +1,22 @@
-import React, { useState, useRef, Dispatch, SetStateAction, useEffect, DOMAttributes } from 'react'
-import './style.css';
+import React, { useState,  Dispatch, SetStateAction, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH } from '../../../constants';
 import { useCookies } from 'react-cookie';
-import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
-import ResponseDto from 'src/interfaces/response/response.dto';
 import { useRoomStore, useUserStore } from 'src/store';
 import { DeleteRoomRequest, PatchRoomExitRequest, getRoomRequest } from 'src/apis';
+import { MAIN_PATH, ROOM_DETAIL_PATH } from '../../../constants';
+import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
+import ResponseDto from 'src/interfaces/response/response.dto';
 import PatchRoomExitRequsetDto from 'src/interfaces/request/room/patch-room-exit-request.dto';
+import './style.css';
 
 interface Props {
     selectRoomNumber : number;
     setPopUpExitState : Dispatch<SetStateAction<boolean>>;
 }
 
-//            component           //
-// description : 채팅방 매니저 팝업창 //
+// 채팅방 매니저 팝업창 //
 export default function ChatManagerByePopUp({selectRoomNumber, setPopUpExitState} : Props) {
 
-    //            state           //
     const { roomNumber, roomTitle, roomPassword, roomImage, roomImageUrl, resetRoom, setRoomNumber, setRoomImageUrl, setRoomImage, setRoomPassword, setRoomTitle } = useRoomStore();
     const { user } = useUserStore();
 
@@ -27,10 +25,6 @@ export default function ChatManagerByePopUp({selectRoomNumber, setPopUpExitState
     // 채팅방 상태 //
     const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
 
-    const [roomNumberFlag, setRoomNumberFlag] = useState<boolean>(true);
-
-    //            function           //
-    // description : 네비게이터 //
     const navigator = useNavigate();
 
     // 채팅방 불러오기 응답 처리 //
@@ -73,14 +67,11 @@ export default function ChatManagerByePopUp({selectRoomNumber, setPopUpExitState
         navigator(MAIN_PATH);
     }
     
-    //            event handler           //
-    // description : 취소 버튼 클릭 이벤트 //
-    // todo : 변경 위치 다시 확인해서 수정해야함 //
+    // 취소 버튼 클릭 이벤트 //
     const onCancelClickHandler = () => {
         setPopUpExitState(false);
     }
-    // description : 나가기 버튼 클릭 이벤트 //
-    // todo : 변경 위치 다시 확인해서 수정해야함 //
+    // 나가기 버튼 클릭 이벤트 //
     const onExitClickHandler = async () => {
         const token = cookies.accessToken;
         const data : PatchRoomExitRequsetDto = {}
@@ -96,7 +87,6 @@ export default function ChatManagerByePopUp({selectRoomNumber, setPopUpExitState
         setPopUpExitState(false);
     }
 
-    //            effect           //
     useEffect(() => {
         if (!selectRoomNumber) {
             alert('채팅방 번호가 잘못되었습니다.');
@@ -107,7 +97,6 @@ export default function ChatManagerByePopUp({selectRoomNumber, setPopUpExitState
         getRoomRequest(selectRoomNumber, accessToken).then(getRoomResponseHnadler);
         }, [selectRoomNumber, roomTitle]);
 
-    //            render           //
     return (
     <div id='popup-manager-wrapper'>
         <div className='popup-manager-box'>

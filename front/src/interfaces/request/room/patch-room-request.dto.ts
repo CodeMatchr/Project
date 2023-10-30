@@ -1,3 +1,3 @@
-export default interface PatchRoomTitleRequestDto {
+export default interface PatchRoomRequestDto {
     roomTitle : string;
 }

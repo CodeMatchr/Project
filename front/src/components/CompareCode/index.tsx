@@ -2,10 +2,8 @@ import React, { useState, useRef } from 'react';
 
 import './style.css';
 
-// component //
 export default function CompareCode() {
 
-    // state //
     // Controll Group (왼쪽)
     const [leftText, setLeftText] = useState<string>('');
     // Experimental Group (오른쪽)
@@ -22,9 +20,6 @@ export default function CompareCode() {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // 비교 분석 결과 정보를 저장할 상태
-
-    // function //
-
     const handleLeftTextChange = (e : React.ChangeEvent<HTMLTextAreaElement>) => {
         const newText = e.target.value;
         setLeftText(newText);
@@ -35,7 +30,7 @@ export default function CompareCode() {
         setRightText(newText)
       }
   
-      // 틀린 텍스의 배열의 index 번호를 찾는 함수
+      // 틀린 텍스트 배열의 index 번호를 찾는 함수
       const findDifferences = (left : string, right : string) : number[] => {
         const differences: number[] = [];
         const maxLength = Math.max(left.length, right.length);
@@ -50,7 +45,6 @@ export default function CompareCode() {
   
       const differences = findDifferences(leftText, rightText);
 
-    // event handler //
     const compareButtonClickHandler = () => {
       if(leftText.trim() === "" && rightText.trim() === "") {
         alert("텍스트를 입력해주세요.");
@@ -86,9 +80,6 @@ export default function CompareCode() {
         alert("비교한 결과를 저장했습니다.");
       }
 
-    // effect //
-
-    // render //
     return (
       <div className='main-top'>
         <div className='main-top-title'>Compare Code</div>

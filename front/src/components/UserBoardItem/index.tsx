@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import './style.css';
-import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import { useNavigate } from 'react-router-dom';
+import { getBoardRequest } from 'src/apis';
 import { BOARD_DETAIL_PATH, MAIN_PATH } from '../../constants';
 import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
+import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { getBoardRequest } from 'src/apis';
+import './style.css';
 
 
 
@@ -13,28 +13,25 @@ interface Props {
     item: BoardListResponseDto;
   }
 
-//                      component                       //
 export default function UserBoardItem({item} :Props) {
 
-//                      state                       //
-// description : 네비게이터 함수 //
 const navigator = useNavigate();
 
-// description: 속성으로 받아오는 게시물 관련 상태 //
+// 속성으로 받아오는 게시물 관련 상태 //
 const { boardNumber, boardTitle, boardContents, boardImageUrl } = item;
 const { boardUserProfileImageUrl, boardUserNickname, boardWriteDatetime } = item;
 const { boardFavoriteCount, boardCommentCount, boardViewCount } = item;
 
-// description : 프로필 이미지 상태 //
+// 프로필 이미지 상태 //
 const roomProfileImageBackground = boardUserProfileImageUrl ? {backgroundImage : `url(${boardUserProfileImageUrl})`} : { backgroundColor : 'rgba(0, 0, 0, 0.6)' };
-// description : 게시물 이미지 상태 //
+// 게시물 이미지 상태 //
 const roomBoardImageBackground = boardImageUrl ? {backgroundImage : `url(${boardImageUrl})`} : { backgroundColor : 'rgba(0, 0, 0, 0.6)' };
 
 // 게시물 정보 상태 //
 const [board, setBoard] = useState<GetBoardResponseDto | null>(null);
 
-//                      function                       //
-// description: 게시물 불러오기 요청 함수 //
+
+// 게시물 불러오기 요청 함수 //
 const getBoardResponseHandler = (responseBody: GetBoardResponseDto | ResponseDto) => {
     const { code } = responseBody;
 
@@ -48,13 +45,14 @@ const getBoardResponseHandler = (responseBody: GetBoardResponseDto | ResponseDto
 
     setBoard(responseBody as GetBoardResponseDto);
     }
-//                      event handler                       //
-// description : 컴포넌트 클릭 이벤트 //
+
+
+// 컴포넌트 클릭 이벤트 //
 const onclickHandler = () => {
     navigator(BOARD_DETAIL_PATH(boardNumber));
 }
-//                      component                       //
-//                      effect                       //
+
+
 useEffect(() => {
     if (!boardNumber) {
       alert('게시물번호가 잘못되었습니다.');
@@ -66,7 +64,7 @@ useEffect(() => {
 
   }, [boardNumber]);
 
-//                      render                       //
+  
   return (
     <div id='user-board-wrapper' onClick={onclickHandler}>
         <div className='user-board-left-box'>

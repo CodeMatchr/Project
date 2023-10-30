@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react';
-
-import './style.css';
-import BoardListResponseDto from 'src/interfaces/response/board/board-list.response.dto';
-
-import { dateFormat } from 'src/utils';
-import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ResponseDto from 'src/interfaces/response/response.dto';
-import { BOARD_DETAIL_PATH, BOARD_PATH, MAIN_PATH } from 'src/constants';
+
+
 import { getBoardRequest } from 'src/apis';
+import { dateFormat } from 'src/utils';
+import { BOARD_DETAIL_PATH, MAIN_PATH } from 'src/constants';
+import BoardListResponseDto from 'src/interfaces/response/board/board-list.response.dto';
+import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
+import ResponseDto from 'src/interfaces/response/response.dto';
+import './style.css';
 
 interface Props {
   item : BoardListResponseDto;
 }
 
-// component //
 export default function BoardListItem({item} : Props) {
 
-  // state //
   const {boardNumber, boardTitle, boardContents, boardImageUrl} = item;
   const {boardViewCount, boardCommentCount, boardFavoriteCount} = item;
   const {boardWriteDatetime, boardUserNickname, boardUserProfileImageUrl} = item;
@@ -28,8 +26,8 @@ export default function BoardListItem({item} : Props) {
   const navigator = useNavigate();
   const [board, setBoard] = useState<GetBoardResponseDto | null>(null);
 
-  // function //
   const getBoardResponseHandler = (responseBody: GetBoardResponseDto | ResponseDto) => {
+
     const { code } = responseBody;
 
     if (code === 'NB') alert('존재하지 않는 게시물입니다.');
@@ -41,19 +39,17 @@ export default function BoardListItem({item} : Props) {
     }
 
     setBoard(responseBody as GetBoardResponseDto);
+
     }
     
-    // event handler //
     const onBoardClickHandler = () => {
       getBoardRequest(boardNumber).then(getBoardResponseHandler);
       navigator(BOARD_DETAIL_PATH(boardNumber));
     }
 
-  // effect //
 
-
-  // render //
   return (
+
     <div className='board-list' onClick={onBoardClickHandler}>
       <div className='board-list-left-image' style={ boardBackground }></div>
       <div className='board-list-mid'>
@@ -76,4 +72,5 @@ export default function BoardListItem({item} : Props) {
       </div>
     </div>
   )
+  
 }

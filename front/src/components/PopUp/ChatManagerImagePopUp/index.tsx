@@ -1,21 +1,20 @@
 import React, { useState, useRef, ChangeEvent, useEffect, SetStateAction, Dispatch } from 'react'
-import './style.css';
 import { useNavigate } from 'react-router-dom';
-import { MAIN_PATH, ROOM_DETAIL_PATH, ROOM_PATH } from '../../../constants';
-import { useRoomStore } from 'src/store';
 import { useCookies } from 'react-cookie';
-import { PatchRoomImageUrlRequestDto } from 'src/interfaces/request/room';
+import { useRoomStore } from 'src/store';
 import { PatchRoomImageUrlRequest, getRoomRequest, uploadFileRequest } from 'src/apis';
+import { MAIN_PATH, ROOM_DETAIL_PATH } from '../../../constants';
+import { PatchRoomImageUrlRequestDto } from 'src/interfaces/request/room';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
+import './style.css';
 
 interface Props {
     selectRoomNumber : number;
     setPopUpImageState : Dispatch<SetStateAction<boolean>>;
 }
 
-//            component           //
-// description : 채팅방 매니저 팝업창 //
+// 채팅방 매니저 이미지 팝업창 //
 export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageState} : Props) {
     //            state           //
     
@@ -26,10 +25,7 @@ export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageSt
     // 채팅방 상태 //
     const [room, setRoom] = useState<GetRoomResponseDto | null>(null);
 
-    // description : 채팅방 나가기 버튼 상태 //
-    const [roomExit, setRoomExit] = useState<boolean>(false);
-
-    // description : 파일 업로드 버튼 //
+    // 파일 업로드 버튼 //
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [roomNumberFlag, setRoomNumberFlag] = useState<boolean>(true);
@@ -37,8 +33,6 @@ export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageSt
     // 이미지를 저장할 상태 //
     const [roomImageState, setRoomImageState] = useState<string>('');
 
-    //            function           //
-    // 네비게이터 //
     const navigator = useNavigate();
 
     // 파일 업로드 //
@@ -91,8 +85,7 @@ export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageSt
         navigator(ROOM_DETAIL_PATH(roomNumber));
     }
 
-    //            event handler           //
-    // description : 변경 버튼 클릭 이벤트 //
+    // 변경 버튼 클릭 이벤트 //
     const onChangeClickHandler = async () => {
         const token = cookies.accessToken;
 
@@ -104,17 +97,16 @@ export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageSt
 
         PatchRoomImageUrlRequest(roomNumber, data, token).then(patchRoomImageUrlResponseHandler);
     }
-    // description : 취소 버튼 클릭 이벤트 //
+    // 취소 버튼 클릭 이벤트 //
     const onCancelClickHandler = () => {
         setPopUpImageState(false);
     }
-    // description : 파일 업로드 버튼 클릭 이벤트 //
+    // 파일 업로드 버튼 클릭 이벤트 //
     const onFileUploadClickHandler = () => {
         if(!fileInputRef.current) return;
         fileInputRef.current.click();
     }
 
-    //            effect           //
     useEffect(() => {
         console.log(`roomNumber : ${roomNumber}`)
         if(roomNumberFlag) {
@@ -130,7 +122,6 @@ export default function ChatManagerImagePopUp({selectRoomNumber, setPopUpImageSt
         getRoomRequest(roomNumber, accessToken).then(getRoomResponseHnadler);
         }, [roomNumber, roomTitle, roomPassword, roomImage, roomImageUrl]);
     
-    //            render           //
     return (
     <div id='popup-manager-wrapper'>
         <div className='popup-manager-box'>

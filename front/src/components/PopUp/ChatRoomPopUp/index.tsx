@@ -1,40 +1,36 @@
-import React, { Dispatch, SetStateAction, useState, ChangeEvent, useRef, useEffect, KeyboardEvent } from 'react'
-import './style.css'; 
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { AUTHENTICATION_PATH, CHAT_PATH, MAIN_PATH, POPUP_ROOM_PATH, ROOM_DETAIL_PATH, ROOM_PATH, ROOM_POST_PATH } from '../../../constants';
-import { Cookies, useCookies } from 'react-cookie';
-import PostRoomRequestDto from 'src/interfaces/request/room/post-room.request.dto';
-import { getRoomRequest, postRoomRequest, uploadFileRequest } from 'src/apis';
+import React, { useState, ChangeEvent, useRef, useEffect, KeyboardEvent } from 'react'
+import { useNavigate} from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import { useRoomStore, useUserStore } from 'src/store';
+import { getRoomRequest, postRoomRequest, uploadFileRequest } from 'src/apis';
+import { AUTHENTICATION_PATH, MAIN_PATH, ROOM_DETAIL_PATH } from '../../../constants';
+import PostRoomRequestDto from 'src/interfaces/request/room/post-room.request.dto';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { transpileModule } from 'typescript';
 import PostRoomResponseDto from 'src/interfaces/response/room/post-room.response.dto';
-import { eventNames } from 'process';
+import './style.css'; 
 
-//            component           //
-// description : 채팅방 만들기 팝업창 // 
+// 채팅방 만들기 팝업창 // 
 export default function ChatRoomPopUp() {
-//            state           //
-// description : 네비게이터 //
+
+
 const navigator = useNavigate();
 
 
-// description : 방 이름 상태 //
+// 방 이름 상태 //
 const [roomName, setRoomName] = useState<string>('');
-// description : 방 비밀번호 상태 //
+// 방 비밀번호 상태 //
 const [roomPasswordInput, setPasswordInput] = useState<string>('');
-// description : 방 이름 에러 상태 //
+// 방 이름 에러 상태 //
 const [roomNameError, setRoomNameError] = useState<boolean>(false);
-// description : 방 비밀번호 에러 상태 //
+// 방 비밀번호 에러 상태 //
 const [roomPasswordError, setRoomPasswordError] = useState<boolean>(false);
 
-// description : 파일 업로드 버튼 요소에 대한 참조 상태 //
+// 파일 업로드 버튼 요소에 대한 참조 상태 //
 const fileInputRef = useRef<HTMLInputElement>(null);
 
 const [cookies] = useCookies();
 
-const { pathname } = useLocation();
 
 // 로그인 사용자 정보 상태 //
 const { user, setUser } = useUserStore();
@@ -50,7 +46,7 @@ const [roomImageState, setRoomImageState] = useState<string>('');
 // 생성 버튼 Ref 상태 //
 const createButtonRef = useRef<HTMLDivElement | null>(null);
 
-//            function           //
+
 // 파일 업로드 //
 const fileUpload = async () => {
   if (roomImage === null) return null;
@@ -104,20 +100,19 @@ const getRoomResponseHandler = (responseBody : GetRoomResponseDto | ResponseDto)
 }
 
 
-//            event handler           //
-// description : 방 이름 변경 이벤트 처리 함수 //
+// 방 이름 변경 이벤트 처리 함수 //
 const onRoomNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
   const roomName = event.target.value;
   setRoomName(roomName);
 }
 
-// description : 방 비밀번호 변경 이벤트 처리 함수 //
+// 방 비밀번호 변경 이벤트 처리 함수 //
 const onRoomPasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
   const roomPassword = event.target.value;
   setPasswordInput(roomPassword);
 }
 
-// description : 채팅방 만들기 생성 클릭 이벤트 //
+// 채팅방 만들기 생성 클릭 이벤트 //
 const onCreateClickHandler = async () => {
   const token = cookies.accessToken;
 
@@ -136,11 +131,11 @@ const onCreateClickHandler = async () => {
     postRoomRequest(data, token).then(postRoomResponseHandler);
   
 }
-// description : 채팅방 만들기 취소 클릭 이벤트 //
+// 채팅방 만들기 취소 클릭 이벤트 //
 const onCancelClickHandler = () => {
   navigator(MAIN_PATH);
 }
-// description : 파일 업로드 버튼 클릭 이벤트 //
+// 파일 업로드 버튼 클릭 이벤트 //
 const onFileUploadClickHandler = () => {
   if(!fileInputRef.current) return;
   fileInputRef.current.click();
@@ -153,7 +148,7 @@ const onEnterKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
   createButtonRef.current.click();
 }
 
-//            effect           //
+
 // roomNumber 가 바뀔 때 마다 실행 //
 let roomNumberFlag = true;
 useEffect(() => {
@@ -170,7 +165,7 @@ useEffect(() => {
   getRoomRequest(roomNumber, accessToken).then(getRoomResponseHandler);
 }, [roomNumber]);
 
-//            render           //
+
   return (
     <div id='popup-wrapper'>
       <div className='popup-header'>

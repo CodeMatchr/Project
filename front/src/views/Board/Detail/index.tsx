@@ -1,23 +1,22 @@
 import React, { ChangeEvent, useEffect, useRef, useState, KeyboardEvent } from 'react';
-import './style.css';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useBoardWriteStore, useUserStore } from 'src/store';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+
+import { deleteBoardRequest, getBoardCommentListRequest, getBoardFavoriteListRequest, getBoardRequest, postCommentRequest, putFavoriteRequest } from 'src/apis';
+import Pagination from 'src/components/Pagination';
+import { BOARD_LIST_PATH, BOARD_UPDATE_PATH, COUNT_BY_PAGE_COMMENT, MAIN_PATH } from 'src/constants';
+import { usePagination } from 'src/hooks';
+import {  useUserStore } from 'src/store';
+import { dateFormat } from 'src/utils';
+import { PostCommentRequestDto } from 'src/interfaces/request/board';
 import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
 import GetFavoriteListResponseDto, { FavoriteListResponseDto } from 'src/interfaces/response/board/get-favorite-list.response.dto';
 import GetCommentListResponseDto, { CommentListResponseDto } from 'src/interfaces/response/board/get-comment-list.response.dto';
-import { BOARD_LIST_PATH, BOARD_UPDATE_PATH, COUNT_BY_PAGE_COMMENT, MAIN_PATH, UPDATE_PATH } from 'src/constants';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { usePagination } from 'src/hooks';
-import { deleteBoardRequest, getBoardCommentListRequest, getBoardFavoriteListRequest, getBoardRequest, postCommentRequest, putFavoriteRequest } from 'src/apis';
-import { dateFormat } from 'src/utils';
-import Pagination from 'src/components/Pagination';
-import { PatchBoardRequestDto, PostCommentRequestDto } from 'src/interfaces/request/board';
+import './style.css';
 
-// component //
 export default function BoardDetail() {
 
-    // state //
     // 게시물 path //
     const {boardNumber} = useParams();
 
@@ -51,19 +50,8 @@ export default function BoardDetail() {
     // 댓글 작성 버튼 Ref 상태 //
     const sendButtonRef = useRef<HTMLDivElement | null>(null);
 
-    // function //
     const navigator = useNavigate();
 
-    // 파일 업로드 //
-//     const fileUpload = async () => {
-//         if (boardImage === null) return null;
-
-//         const data = new FormData();
-//         data.append('file', boardImage);
-
-//         const imageUrl = await uploadFileRequest(data);
-//         return imageUrl;
-//   }
 
     // 댓글 리스트 페이지네이션 //
     const getPageCommentList = (commentList: CommentListResponseDto[]) => {
@@ -133,6 +121,7 @@ export default function BoardDetail() {
         alert('게시물 삭제 성공');
         navigator(MAIN_PATH);
       }
+
     // 좋아요 응답 //
     const putFavoriteResponseHandler = (code: string) => {
     if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
@@ -157,7 +146,6 @@ export default function BoardDetail() {
         
     }
 
-    // event handler //
     // Enter Key 누름 처리 //
     const onEnterKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if(event.key !== 'Enter') return;
@@ -177,34 +165,7 @@ export default function BoardDetail() {
         if(!boardNumber) return;
         navigator(BOARD_UPDATE_PATH(boardNumber));
 
-        // const token = cookies.accessToken;
-
-        //     const imageUrl = boardImage ?  await fileUpload() : boardImage ;
-
-        //     const data: PatchBoardRequestDto = {
-        //         boardTitle : boardTitle,
-        //         boardContents : boardContents,
-        //         boardImageUrl : imageUrl
-        //     }
-        //     patchBoardRequest(boardNumber, data, token).then(patchBoardResponseHandler);
-
     }
-
-    // 게시물 수정 응답 //
-    // const patchBoardResponseHandler = (code: string) => {
-    //     if (code === 'NE') alert('존재하지 않는 사용자 이메일입니다.');
-    //     if (code === 'NB') alert('존재하지 않는 게시물입니다.');
-    //     if (code === 'NP') alert('권한이 없습니다.');
-    //     if (code === 'VF') alert('필수 데이터를 입력하지 않았습니다.');
-    //     if (code === 'AF') alert('로그인이 필요합니다.');
-    //     if (code === 'DE') alert('데이터베이스 에러입니다.');
-    //     if (code !== 'SU') return;
-    
-    //     resetBoard();
-    
-    //     if (!boardNumber) return;
-    //     navigator(MAIN_PATH);
-    //   }
 
     // 게시물 삭제 클릭 //
     const onBoardDeleteClickHandler = () => {
@@ -232,8 +193,6 @@ export default function BoardDetail() {
     }
 
   
-
-    // effect //
     // 게시물 번호가 바뀌면 랜더링 //
     
     useEffect(() => {

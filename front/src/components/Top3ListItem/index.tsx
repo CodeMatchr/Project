@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import './style.css';
-import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
+import { getBoardRequest } from 'src/apis';
+import { BOARD_DETAIL_PATH, MAIN_PATH } from 'src/constants';
 import { dateFormat } from '../../utils';
 import GetBoardResponseDto from 'src/interfaces/response/board/get-board.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { BOARD_DETAIL_PATH, MAIN_PATH } from 'src/constants';
-import { useNavigate } from 'react-router-dom';
-import { getBoardRequest } from 'src/apis';
+import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
+import './style.css';
 
 interface Props {
     item: BoardListResponseDto;
 }
 
-// component //
 export default function Top3ListItem({item} : Props) {
 
-    // state //
+
     const { boardNumber, boardTitle, boardContents, boardImageUrl } = item;
     const { boardViewCount, boardCommentCount, boardFavoriteCount } = item;
     const { boardWriteDatetime, boardUserNickname, boardUserProfileImageUrl } = item;
@@ -26,10 +25,9 @@ export default function Top3ListItem({item} : Props) {
 
     const [board, setBoard] = useState<GetBoardResponseDto | null>(null);
 
-    // 네비게이터 함수 //
     const navigator = useNavigate();
     
-    // function //
+
     const getBoardResponseHandler = (responseBody: GetBoardResponseDto | ResponseDto) => {
         const { code } = responseBody;
     
@@ -45,15 +43,13 @@ export default function Top3ListItem({item} : Props) {
         }
     
 
-    // event handler //
     const onBoardClickHandler = () => {
         getBoardRequest(boardNumber).then(getBoardResponseHandler);
         navigator(BOARD_DETAIL_PATH(boardNumber));
     }
 
-    // effect //
 
-    // render //
+    
     return (
         <div className='top3-board-list' style={boardBackground} onClick={onBoardClickHandler}>
             <div className='top3-board-list-top'>

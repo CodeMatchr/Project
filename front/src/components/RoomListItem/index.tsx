@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 
-import './style.css';
 import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
-import ChatComePopUP from '../PopUp/ChatComePopUp';
-import { useNavigate } from 'react-router-dom';
+import './style.css';
 
 interface Props {
     onClick: () => void;
     item: RoomListResponseDto;
 }
 
-// component //
 export default function RoomListItem({onClick, item} : Props) {
 
-    // state //
     const { roomNumber, roomTitle, roomImageUrl } = item;
     const { roomUserCount } = item;
     const { roomManagerNickname } = item;
@@ -23,19 +19,14 @@ export default function RoomListItem({onClick, item} : Props) {
     // 채팅방 팝업창 상태 //
     const [popUpVisible, setPopUpVisible] = useState<boolean>(false);
 
-    // function //
-    const navigator = useNavigate();
 
-    // event handler //
     // 채팅방 입장 버튼 클릭 이벤트
     const onRoomEnterIconButtonClickHandler = () => {
         if (popUpVisible) setPopUpVisible(false);
         else setPopUpVisible(true);
     }
 
-    // effect //
-
-    // render //
+    
     return (
         <div className='room-list' onClick={onClick}>
             <div className='room-list-room-profile' style={roomImageBackground}></div>

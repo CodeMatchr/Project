@@ -1,63 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import './style.css';
-import Pagination from '../../components/Pagination';
-import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
-import Top3ListItem from '../../components/Top3ListItem';
-import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
-import RoomListItem from '../../components/RoomListItem';
-import { usePagination } from '../../hooks';
-import {BOARD_LIST_PATH,  MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH, WRITE_PATH} from '../../constants';
-
 import { useNavigate} from 'react-router-dom';
+
+import {  GetCurrentRoomListRequest, getCommentListRequest, getFavoriteListRequest, getViewListRequest } from 'src/apis';
+import Pagination from '../../components/Pagination';
+import Top3ListItem from '../../components/Top3ListItem';
+import RoomListItem from '../../components/RoomListItem';
 import ChatRoomPopUp from '../../components/PopUp/ChatRoomPopUp';
 import ChatComePopUP from '../../components/PopUp/ChatComePopUp';
 import CompareCode from 'src/components/CompareCode';
+import {BOARD_LIST_PATH,  MAIN_ROOM_COUNT_BY_PAGE, ROOM_PATH, WRITE_PATH} from '../../constants';
+import { usePagination } from '../../hooks';
+import { useRoomStore, useUserStore } from 'src/store';
+
+import RoomListResponseDto from '../../interfaces/response/room/room-list.response.dto';
+import BoardListResponseDto from '../../interfaces/response/board/board-list.response.dto';
 import GetTop3CommentResponseDto from 'src/interfaces/response/board/getTop3Comment.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import {  GetCurrentRoomListRequest, getCommentListRequest, getFavoriteListRequest, getViewListRequest } from 'src/apis';
 import GetTop3FavoriteResponseDto from 'src/interfaces/response/board/getTop3Favorite.response.dto';
 import GetTop3ViewResponseDto from 'src/interfaces/response/board/getTop3View.response.dto';
-import { useRoomStore, useUserStore } from 'src/store';
 import GetCurrentRoomListResponseDto from 'src/interfaces/response/room/get-current-room-list.response.dto';
+import './style.css';
 
-// component //
 export default function Main() {
 
-  // state //
-
-  // function //
-  // 페이지 이동을 위한 네비게이트 함수 //
   const navigator = useNavigate();
 
   
-  // event handler //
-
-  // effect //
-
-  
-  // component //
   // Main Top - Compare Code 컴포넌트 //
   const MainTop = () => {
 
-    // state //
-
-    // function //
-
-    // event handler //
-
-    // effect //
-
-    // render //
     return(
         <CompareCode/>
     );
   }
 
-  // component //
   // Main Mid - Top3 Board 컴포넌트 //
   const MainMid = () => {
 
-    // state //
     // Top3 에 해당하는 Board 리스트 상태 (View(default), Favorite, Comment) //
     const[currentTop3BoardList, setCurrentTop3BoardList] = useState<BoardListResponseDto[]>([]);
     // Top3 조회수 Board 리스트 Tab 버튼 클릭 상태 //
@@ -70,7 +49,6 @@ export default function Main() {
     // 타이틀 상태 //
     const [title, setTitle] = useState<string>('');
     
-    // function //
     // top3 좋아요 //
     const getTop3FavoriteListResponseHandler = (responseBody: GetTop3FavoriteResponseDto | ResponseDto) => {
       const { code } = responseBody;
@@ -112,7 +90,6 @@ export default function Main() {
         setTop3CommentBoardListTabState(false);
     }
   
-    // event handler //
     // Board 리스트 페이지 이동 버튼 클릭 이벤트 //
     const onBoardListClickHandler = () => {
       navigator(BOARD_LIST_PATH);  
@@ -143,14 +120,13 @@ export default function Main() {
       setTitle('댓글 TOP 3');
     }
 
-    // effect //
     // 맨처음 //
     useEffect(() => {
       getViewListRequest().then(getTop3ViewListResponseHandler);
       setTitle('조회수 TOP 3');
     }, []);
     
-    // render //
+
     return(
       <div className='main-mid'>
         <div className='main-mid-title' onClick={ onBoardListClickHandler }>TOP 3 Board</div>
@@ -174,11 +150,9 @@ export default function Main() {
     );
   }
 
-  // component //
   // Main Botoom - Chat 컴포넌트 //
   const MainBottom = () => {
 
-    // state //
     // 페이지네이션과 관련된 상태 및 함수
     const {totalPage, currentPage, currentSection, onPageClickHandler, onPreviousClickHandler, onNextClickHandler, changeSection} = usePagination();
     // 로그인 사용자 정보 상태 //
@@ -203,7 +177,6 @@ export default function Main() {
     const [selectRoomNumber, setSelectRoomNumber] = useState<string>('');
 
 
-    // function //
     // 페이지네이션 //
     const getPageRoomList = (roomList : RoomListResponseDto[]) => {
       const startIndex = MAIN_ROOM_COUNT_BY_PAGE * (currentPage - 1);
@@ -225,7 +198,6 @@ export default function Main() {
       changeSection(roomList.length, MAIN_ROOM_COUNT_BY_PAGE);
     }
 
-    // event handler //
     // Room 리스트 페이지 이동 버튼 클릭 이벤트 //
     const onRoomListButtonClickHandler = () => {
       navigator(ROOM_PATH);
@@ -264,7 +236,6 @@ export default function Main() {
       setSelectRoomNumber(String(roomNumber));
     }
    
-    // effect //
     // 현재 페이지가 바뀔때 마다 Room 리스트 변경//
     useEffect(() => {
       getPageRoomList(currentRoomList);
@@ -281,8 +252,6 @@ export default function Main() {
     }, [currentSection]);
 
     
-
-    // render //
     return(
       <div className='main-bottom'>
         <div className='main-bottom-title' onClick={ onRoomListButtonClickHandler }>Room</div>
@@ -306,7 +275,6 @@ export default function Main() {
             <div className='main-bottom-bottom-plus-button' onClick={ onRoomListButtonClickHandler }></div>
           </div>
           <div className='main-bottom-bottom-list-box'>
-            {/* map 함수 돌릴것 3개 */}
             {pageRoomList.map((item) => <><RoomListItem onClick={() => onRoomListItemClickHandler(item.roomNumber)} item={item}/></>)}
             {popUpRoomVisible && <div className='chat-room-pop-up'><ChatComePopUP selectRoomNumber={selectRoomNumber} /></div>}
           </div>
@@ -323,7 +291,6 @@ export default function Main() {
 
   
 
-  // render //
   return (
     <div id='main'>
       <MainTop/>

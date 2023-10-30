@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
-import './style.css';
-import ChatManagerPopUp from '../../components/PopUp/ChatManagerNamePopUp';
+import { getRoomRequest } from 'src/apis';
 import ChatManagerNamePopUp from '../../components/PopUp/ChatManagerNamePopUp';
 import ChatManagerPasswordPopUp from '../../components/PopUp/ChatManagerPasswordPopUp';
 import ChatManagerImagePopUp from '../../components/PopUp/ChatManagerImagePopUp';
 import ChatManagerByePopUp from '../../components/PopUp/ChatManagerByePopUp';
 import CompareCode from 'src/components/CompareCode';
-import { useNavigate, useParams } from 'react-router-dom';
+import RealtimeChat from 'src/components/RealtimeChat';
+import { MAIN_PATH } from 'src/constants';
 import { useRoomStore, useUserStore } from 'src/store';
-import { useCookies } from 'react-cookie';
 import GetRoomResponseDto from 'src/interfaces/response/room/get-room.response.dto';
 import ResponseDto from 'src/interfaces/response/response.dto';
-import { MAIN_PATH } from 'src/constants';
-import { getRoomRequest } from 'src/apis';
-import RealtimeChat from 'src/components/RealtimeChat';
+import './style.css';
 
-// component //
 export default function Chat() {
 
-    // state //
     // room 번호 path variable 상테 //
     const { roomNumber } = useParams();
     // 로그인 유저 정보 상태 //
@@ -44,9 +41,6 @@ export default function Chat() {
     const [popUpExitState, setPopUpExitState] = useState<boolean>(false);
 
     
-
-    // function //
-    // 네비게이트 함수 //
     const navigator = useNavigate();
 
     // 채팅방 불러오기 응답 처리 //
@@ -66,7 +60,6 @@ export default function Chat() {
     }
 
 
-    // event handler //
     // 이름 변경 버튼 클릭 이벤트 //
     const onNameIconButtonClickHandler = () => {
         if(popUpNameState) {
@@ -131,7 +124,6 @@ export default function Chat() {
         }
     }
 
-    // effect //
     useEffect(() => {
         const accessToken = cookies.accessToken;
         if(!roomNumber) return;
@@ -139,7 +131,6 @@ export default function Chat() {
     }, [roomNumber, roomTitle, roomPassword, roomImageUrl]);
 
     
-    // render //
     return (
     <div className='chat'>
         <div className='chat-top'>
