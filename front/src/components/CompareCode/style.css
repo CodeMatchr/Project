@@ -157,7 +157,8 @@
 .main-top-compare-result-show{
     margin: 60px auto 0 auto;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: center;
     align-items: center;
     width: 250px;
 }

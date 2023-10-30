@@ -40,4 +40,5 @@ public interface ResponseMessage {
     String EXISTED_ROOM_PASSWORD = "Existed Room Password";
 
     String NOT_CORRECT_PASSWORD =  "Not Correct Password";
+    
 }

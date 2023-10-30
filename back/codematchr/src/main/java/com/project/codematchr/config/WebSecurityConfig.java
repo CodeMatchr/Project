@@ -1,11 +1,8 @@
 package com.project.codematchr.config;
-
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -16,9 +13,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.project.codematchr.filter.JwtAuthenticationFilter;
-
 import lombok.RequiredArgsConstructor;
 
 @Configurable
@@ -56,7 +51,7 @@ class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
 @Override
   public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
-      throws IOException, ServletException {
+  throws IOException, ServletException {
 
     response.setContentType("application/json");
     response.setStatus(HttpServletResponse.SC_FORBIDDEN);

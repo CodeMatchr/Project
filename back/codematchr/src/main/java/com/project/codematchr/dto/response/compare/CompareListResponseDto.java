@@ -1,10 +1,7 @@
 package com.project.codematchr.dto.response.compare;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.project.codematchr.entity.CompareEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -37,4 +34,5 @@ public class CompareListResponseDto {
 
         return compareList;
     }
+    
 }

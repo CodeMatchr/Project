@@ -1,18 +1,16 @@
 package com.project.codematchr.dto.response.authentication;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import com.project.codematchr.common.response.ResponseCode;
 import com.project.codematchr.common.response.ResponseMessage;
 import com.project.codematchr.dto.response.ResponseDto;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
 public class SignInResponseDto extends ResponseDto{
+    
     private String token;
     private int expiredTime;
 

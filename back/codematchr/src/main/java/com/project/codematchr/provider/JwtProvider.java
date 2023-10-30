@@ -1,15 +1,13 @@
 package com.project.codematchr.provider;
-
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
 @Component
 public class JwtProvider {
     
@@ -17,10 +15,9 @@ public class JwtProvider {
     private String secretKey;
 
     public String create(String userEmail) {
-        // description : 토큰 만료 기간 //
+
         Date expiredDate = Date.from(Instant.now().plus(5,ChronoUnit.HOURS));
 
-        // description : JWT 생성 //
         String jwt = Jwts.builder()
             .signWith(SignatureAlgorithm.HS256, secretKey)
             .setSubject(userEmail).setIssuedAt(new Date()).setExpiration(expiredDate)
@@ -43,4 +40,5 @@ public class JwtProvider {
 
         return payload.getSubject();
     }
+
 }

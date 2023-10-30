@@ -1,6 +1,7 @@
 package com.project.codematchr.entity.resultSet;
 
 public interface RoomListResultSet {
+
     int getRoomNumber();
     String getRoomTitle();
     String getRoomImageUrl();
@@ -10,4 +11,5 @@ public interface RoomListResultSet {
     int getRoomUserCount();
     String getRoomManagerNickname();
     String getRoomManagerProfileImageUrl();
+    
 }

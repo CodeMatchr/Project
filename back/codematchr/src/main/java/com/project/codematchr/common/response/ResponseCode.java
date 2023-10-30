@@ -1,6 +1,7 @@
 package com.project.codematchr.common.response;
 
 public interface ResponseCode {
+    
     String SUCCESS = "SU";
 
     String REQUEST_PARAMETER_VALIDATION_FAIL = "RF";

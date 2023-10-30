@@ -1,17 +1,13 @@
 package com.project.codematchr.entity;
-
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import com.project.codematchr.dto.request.compare.PostCompareRequestDto;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity(name="compare")
 @Table(name="compare")
 public class CompareEntity {
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY) // AUTO INCREASEMENT
     private int compareResultNumber;
@@ -33,6 +30,7 @@ public class CompareEntity {
     
 
     public CompareEntity(String compareUserEmail, PostCompareRequestDto postCompareRequestDto) {
+
         Date now = Date.from(Instant.now());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String compareDatetime = simpleDateFormat.format(now);
@@ -42,5 +40,7 @@ public class CompareEntity {
         this.compareResult = postCompareRequestDto.getCompareResult();
         this.compareDatetime = compareDatetime;
         this.compareUserEmail = compareUserEmail;
+        
     }
+
 }

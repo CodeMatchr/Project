@@ -1,7 +1,5 @@
 package com.project.codematchr.controller;
-
 import javax.validation.Valid;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.project.codematchr.dto.request.board.PatchBoardRequestDto;
 import com.project.codematchr.dto.request.board.PostBoardRequestDto;
 import com.project.codematchr.dto.request.board.PostcommentRequestDto;
@@ -33,9 +30,7 @@ import com.project.codematchr.dto.response.board.PostBoardResponseDto;
 import com.project.codematchr.dto.response.board.PostCommentResponseDto;
 import com.project.codematchr.dto.response.board.PutFavoriteResponseDto;
 import com.project.codematchr.service.BoardService;
-
 import lombok.RequiredArgsConstructor;
-
 
 @RestController
 @RequestMapping("/api/v1/board")
@@ -44,7 +39,6 @@ public class BoardController {
     
     private final BoardService boardService;
 
-    // API : 게시물 작성 메서드 //
     @PostMapping("")
     public ResponseEntity<? super PostBoardResponseDto> postBoard(
         @AuthenticationPrincipal String boardWriterEmail,
@@ -54,18 +48,16 @@ public class BoardController {
         return response;
     }
 
-    // API : 게시물 수정 메서드 //
     @PatchMapping("/{boardNumber}")
     public ResponseEntity<? super PatchBoardResponseDto> patchBoard(
         @AuthenticationPrincipal String boardWriterEmail,
         @PathVariable Integer boardNumber, 
         @RequestBody @Valid PatchBoardRequestDto dto
-        ){
+    ){
         ResponseEntity<? super PatchBoardResponseDto> response = boardService.patchBoard(boardWriterEmail, boardNumber, dto);
         return response;
     }
 
-    // API : 게시물 삭제 메서드 //
     @DeleteMapping("/{boardNumber}")
     public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(
         @AuthenticationPrincipal String userEmail,
@@ -75,7 +67,6 @@ public class BoardController {
         return response;
     }
 
-    // API : 게시물 조회 메서드 //
     @GetMapping("/{boardNumber}")
     public ResponseEntity<? super GetBoardResponseDto> getBoard(
         @PathVariable Integer boardNumber
@@ -84,7 +75,6 @@ public class BoardController {
         return response;
     }
 
-    // API : 댓글 작성 메서드 //
     @PostMapping("/{commentBoardNumber}/comment")
     public ResponseEntity<? super PostCommentResponseDto> postComment(
         @AuthenticationPrincipal String commentUserEmail,
@@ -95,7 +85,6 @@ public class BoardController {
         return response;
     }
 
-    // API : 좋아요 기능 메서드 //
     @PutMapping("/{favoriteBoardNumber}/favorite")
     public ResponseEntity<? super PutFavoriteResponseDto> putFavorite(
         @AuthenticationPrincipal String favoriteUserEmail,
@@ -105,16 +94,14 @@ public class BoardController {
         return response;
     }
 
-    // API : 특정 유저의 게시물 리스트 조회 메서드 //
     @GetMapping("/user-board-list/{writerEmail}")
     public ResponseEntity<? super GetUserListResponseDto> getUserBoardList(
         @PathVariable String writerEmail
-        ){
+    ){
         ResponseEntity<? super GetUserListResponseDto> response = boardService.getUserBoardList(writerEmail);
         return response;
     }
 
-    // API : 특정 게시물의 댓글 리스트 조회 메서드 //
     @GetMapping("/{commentBoardNumber}/comment-list")
     public ResponseEntity<? super GetCommentListResponseDto> getCommentList(
         @PathVariable Integer commentBoardNumber
@@ -123,7 +110,6 @@ public class BoardController {
         return response;
     }
 
-    // API : 특정 게시물의 좋아요 리스트 조회 메서드 //
     @GetMapping("/{favoriteBoardNumber}/favorite-list")
     public ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(
         @PathVariable Integer favoriteBoardNumber
@@ -132,44 +118,38 @@ public class BoardController {
         return response;
     }
     
-    // API : 검색 게시물 리스트 조회 메서드 //
     @GetMapping("/search/{searchWord}")
     public ResponseEntity<? super GetSearchBoardResponseDto> getSearchBoard(
         @PathVariable String searchWord
-        ){
-            ResponseEntity<? super GetSearchBoardResponseDto> response = boardService.getSearchBoard(searchWord);
+    ){
+        ResponseEntity<? super GetSearchBoardResponseDto> response = boardService.getSearchBoard(searchWord);
         return response;
     }
     
-    // API : TOP3 게시물 최신순 리스트 조회 메서드 //
     @GetMapping("/top-3/current")
     public ResponseEntity<? super GetTop3CurrentListResponseDto> getTop3Current(){
         ResponseEntity<? super GetTop3CurrentListResponseDto> response = boardService.getTop3Current();
         return response;
     }
 
-    // API : TOP3 게시물 댓글순 리스트 조회 메서드 //
     @GetMapping("/top-3/comment")
     public ResponseEntity<? super GetTop3CommentListResponseDto> getTop3Comment(){
         ResponseEntity<? super GetTop3CommentListResponseDto> response = boardService.getTop3Comment();
         return response;
     }
 
-    // API : TOP3 게시물 좋아요순 리스트 조회 메서드 //
     @GetMapping("/top-3/favorite")
     public ResponseEntity<? super GetTop3FavoriteListResponseDto> getTop3Favorite(){
         ResponseEntity<? super GetTop3FavoriteListResponseDto> response = boardService.getTop3Favorite();
         return response;
     }
 
-    // API : TOP3 게시물 조회수순 리스트 조회 메서드 //
     @GetMapping("/top-3/view")
     public ResponseEntity<? super GetTop3ViewListResponseDto> getTop3View(){
         ResponseEntity<? super GetTop3ViewListResponseDto> response = boardService.getTop3View();
         return response;
     }
     
-    // API : 게시물 리스트 최신순 조회 메서드 //
     @GetMapping("/board-list/{section}")
     public ResponseEntity<? super GetBoardListResponseDto> getBoardList(
         @PathVariable Integer section
@@ -177,7 +157,7 @@ public class BoardController {
         ResponseEntity<? super GetBoardListResponseDto> response = boardService.getBoardList(section);
         return response;
     }
-    // API : 게시물 리스트 조회수 조회 메서드 //
+
     @GetMapping("/board-list/view/{section}")
     public ResponseEntity<? super GetBoardListResponseDto> getBoardViewList(
         @PathVariable Integer section
@@ -186,7 +166,6 @@ public class BoardController {
         return response;
     }
 
-    // API : 게시물 리스트 좋아요 조회 메서드 //
     @GetMapping("/board-list/favorite/{section}")
     public ResponseEntity<? super GetBoardListResponseDto> getBoardFavoriteList(
         @PathVariable Integer section
@@ -194,7 +173,7 @@ public class BoardController {
         ResponseEntity<? super GetBoardListResponseDto> response = boardService.getBoardFavoriteList(section);
         return response;
     }
-    // API : 게시물 리스트 댓글 조회 메서드 //
+    
     @GetMapping("/board-list/comment/{section}")
     public ResponseEntity<? super GetBoardListResponseDto> getBoardCommentList(
         @PathVariable Integer section

@@ -1,7 +1,5 @@
 package com.project.codematchr.dto.request.room;
-
 import javax.validation.constraints.NotBlank;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PostRoomRequestDto {
+
     @NotBlank
     private String roomTitle;
 
@@ -17,4 +16,5 @@ public class PostRoomRequestDto {
     private String roomPassword;
 
     private String roomImageUrl;
+
 }

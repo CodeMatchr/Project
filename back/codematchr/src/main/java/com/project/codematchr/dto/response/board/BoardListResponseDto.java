@@ -1,11 +1,8 @@
 package com.project.codematchr.dto.response.board;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.project.codematchr.entity.BoardViewEntity;
 import com.project.codematchr.entity.resultSet.BoardListResultSet;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -47,7 +44,6 @@ public class BoardListResponseDto {
     return boardList;
   }
 
-  // 최신 게시물 조회 //
   public BoardListResponseDto(BoardListResultSet boardListResultSet) {
     this.boardNumber = boardListResultSet.getBoardNumber();
     this.boardTitle = boardListResultSet.getBoardTitle();
@@ -70,4 +66,5 @@ public class BoardListResponseDto {
     }
     return boardList;
   }
+  
 }
