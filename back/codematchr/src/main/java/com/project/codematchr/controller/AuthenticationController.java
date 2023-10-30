@@ -32,6 +32,7 @@ public class AuthenticationController {
         return response;
     }
 
+    // API : 로그인 메서드 //
     @PostMapping("/sign-in")
     public ResponseEntity<? super SignInResponseDto> signIn(
         @RequestBody @Valid SignInRequestDto requestBody

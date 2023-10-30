@@ -141,7 +141,6 @@ public class BoardController {
         return response;
     }
     
-    // todo //
     // API : TOP3 게시물 최신순 리스트 조회 메서드 //
     @GetMapping("/top-3/current")
     public ResponseEntity<? super GetTop3CurrentListResponseDto> getTop3Current(){
