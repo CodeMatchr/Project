@@ -110,13 +110,15 @@
     display: flex;
     align-items: center;
     position: relative;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .board-list-left-image{
     width: 180px;
     height: 180px;
-    background-color: aquamarine;
     border-radius: 15px;
+    background-position: center;
+    background-size: cover;
 }
 
 .board-list-mid{
@@ -173,8 +175,9 @@
     margin-bottom: 10px;
     width: 100px;
     height: 100px;
-    background-color: aqua;
     border-radius: 50%;
+    background-position: center;
+    background-size: cover;
 }
 
 

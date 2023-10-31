@@ -319,9 +319,11 @@ const navigator = useNavigate();
     
   return (
     <div id='authentication-wrapper'>
-      <div className='authentication-left'></div>
-      <div className='authentication-right'>
-        {view === 'sign-in' ? (<SignInCard/>) : (<SignUpCard/>)}
+      <div className='box'>
+        <div className='authentication-left'></div>
+        <div className='authentication-right'>
+          {view === 'sign-in' ? (<SignInCard/>) : (<SignUpCard/>)}
+        </div>
       </div>
     </div>
   )

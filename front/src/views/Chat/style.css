@@ -94,7 +94,7 @@
     border-top-right-radius: 15px;
     font-size: 23px;
     font-weight: 500;
-    background-color: aqua;
+    /* background-color: aqua; */
 }
 
 .chat-bottom-mid{
@@ -133,7 +133,6 @@
     width: 450px;
     text-align: center;
     line-height: 50px;
-    background-color: aquamarine;
     border-radius: 15px;
 }
 
@@ -176,8 +175,6 @@
     height: 100px;
     border: none;
     outline: none;
-    /* box-sizing: border-box; */
-    background-color:antiquewhite ;
 }
 
 .chat-bottom-bottom-input::placeholder{
@@ -192,14 +189,13 @@
     font-size: 28px;
     text-align: center;
     line-height: 100px;
-    background-color: aquamarine;
     border-left: 5px solid #ccc;
     transition: all;
     cursor: pointer;
 }
 
 .chat-bottom-bottom-button:hover{
-    background-color: bisque;
+    background-color: #ccc;
 }
 
 

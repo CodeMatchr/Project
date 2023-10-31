@@ -1,24 +1,36 @@
 #authentication-wrapper {
     display: flex;
+    width: 1400px;
+    justify-content: center;
+    align-items: center;
   
     width: 100vw;
-    height: 100vh;
+    /* height: 100vh; */
+  }
+
+  .box{
+    width: 1400px;
+    height: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
   
-  .authentication-left {
+  /* .authentication-left {
     flex: 7;
   }
   
   .authentication-right {
     flex: 5;
-  }
+  } */
   
   .authentication-card {
-    width: calc(100% - 30%);
-    height: calc(100% - 100px - 100px);
+    width: 600px;
+    height: 800px;
 
-    margin: 30px 0 30px 0;
+    margin: 30px 0px 30px 0px;
     padding: 50px 50px 30px;
+    box-sizing: border-box;
     
     border-radius: 10px;
   
